@@ -34,9 +34,9 @@ export default function Navbar() {
 
   return (
     <nav className="relative flex items-center justify-between px-8 py-4 border-b border-gray-200 bg-white z-50">
-      <div className="text-xl font-semibold text-gray-800">
+      <a href="/" className="text-xl font-semibold text-gray-800 hover:text-gray-900">
         Logo
-      </div>
+      </a>
       <div className="flex items-center gap-8 text-sm text-gray-600">
         <a href="/test" className="hover:text-gray-900">Test de personnalité</a>
         <a href="#" className="hover:text-gray-900">Dark personnalité</a>
