@@ -1,8 +1,6 @@
 // =============================================================================
 // SOURCE DE VÉRITÉ — les 16 types de personnalité + les 4 rôles.
 // Utilisé par la navbar, le hub /types-de-personnalite et les pages [code].
-// Couleurs alignées sur le système visuel (réglables ici uniquement).
-// Contenu = placeholders à remplacer par tes propres textes (cf. document fondateur).
 // =============================================================================
 
 export type RoleKey = "analystes" | "diplomates" | "sentinelles" | "explorateurs";
@@ -10,19 +8,19 @@ export type RoleKey = "analystes" | "diplomates" | "sentinelles" | "explorateurs
 export interface Role {
   key: RoleKey;
   name: string;
-  letters: string; // ex. "_NT_"
+  letters: string;
   description: string;
-  color: string; // couleur principale (hex)
-  soft: string; // fond clair (hex)
+  color: string;
+  soft: string;
 }
 
 export interface PersonalityType {
-  code: string; // ex. "INTJ"
-  slug: string; // ex. "intj"
-  name: string; // ex. "Architecte"
+  code: string;
+  slug: string;
+  name: string;
   role: RoleKey;
-  variants: string; // ex. "INTJ-A / INTJ-T"
-  tagline: string; // courte phrase d'accroche
+  variants: string;
+  tagline: string;
 }
 
 export const ROLES: Record<RoleKey, Role> = {
@@ -65,22 +63,18 @@ export const ROLES: Record<RoleKey, Role> = {
 };
 
 export const TYPES: PersonalityType[] = [
-  // Analystes
   { code: "INTJ", slug: "intj", name: "Architecte", role: "analystes", variants: "INTJ-A / INTJ-T", tagline: "Esprits imaginatifs et stratèges, avec un plan pour tout." },
   { code: "INTP", slug: "intp", name: "Logicien", role: "analystes", variants: "INTP-A / INTP-T", tagline: "Inventeurs innovants avec une soif de connaissance insatiable." },
   { code: "ENTJ", slug: "entj", name: "Commandant", role: "analystes", variants: "ENTJ-A / ENTJ-T", tagline: "Dirigeants audacieux et pleins de volonté, qui trouvent toujours un moyen — ou le créent." },
   { code: "ENTP", slug: "entp", name: "Innovateur", role: "analystes", variants: "ENTP-A / ENTP-T", tagline: "Esprits astucieux et curieux, incapables de résister à un défi intellectuel." },
-  // Diplomates
   { code: "INFJ", slug: "infj", name: "Avocat", role: "diplomates", variants: "INFJ-A / INFJ-T", tagline: "Discrets et mystiques, source d'inspiration et idéalistes infatigables." },
   { code: "INFP", slug: "infp", name: "Médiateur", role: "diplomates", variants: "INFP-A / INFP-T", tagline: "Personnes poétiques, bienveillantes et altruistes, prêtes à aider une bonne cause." },
   { code: "ENFJ", slug: "enfj", name: "Protagoniste", role: "diplomates", variants: "ENFJ-A / ENFJ-T", tagline: "Leaders charismatiques et inspirants, capables de captiver leur public." },
   { code: "ENFP", slug: "enfp", name: "Inspirateur", role: "diplomates", variants: "ENFP-A / ENFP-T", tagline: "Esprits libres enthousiastes, créatifs et sociables, qui trouvent une raison de sourire." },
-  // Sentinelles
   { code: "ISTJ", slug: "istj", name: "Logisticien", role: "sentinelles", variants: "ISTJ-A / ISTJ-T", tagline: "Personnes pragmatiques et attentives aux faits, fiables en toute confiance." },
   { code: "ISFJ", slug: "isfj", name: "Défenseur", role: "sentinelles", variants: "ISFJ-A / ISFJ-T", tagline: "Protecteurs dévoués et chaleureux, toujours prêts à défendre leurs proches." },
   { code: "ESTJ", slug: "estj", name: "Directeur", role: "sentinelles", variants: "ESTJ-A / ESTJ-T", tagline: "Excellents gestionnaires, d'une efficacité inégalée pour gérer situations et gens." },
   { code: "ESFJ", slug: "esfj", name: "Consul", role: "sentinelles", variants: "ESFJ-A / ESFJ-T", tagline: "Personnes attentionnées, sociables et populaires, toujours prêtes à aider." },
-  // Explorateurs
   { code: "ISTP", slug: "istp", name: "Virtuose", role: "explorateurs", variants: "ISTP-A / ISTP-T", tagline: "Expérimentateurs hardis et pragmatiques, maîtres de toutes sortes d'outils." },
   { code: "ISFP", slug: "isfp", name: "Aventurier", role: "explorateurs", variants: "ISFP-A / ISFP-T", tagline: "Artistes flexibles et charmants, prêts à explorer et vivre de nouvelles expériences." },
   { code: "ESTP", slug: "estp", name: "Entrepreneur", role: "explorateurs", variants: "ESTP-A / ESTP-T", tagline: "Personnes intelligentes et perspicaces, qui aiment vivre sur le fil du rasoir." },
@@ -97,7 +91,10 @@ export function getType(slug: string): PersonalityType | undefined {
   return TYPES.find((t) => t.slug === slug.toLowerCase());
 }
 
-// Sections d'une fiche de type (onglets), comme sur 16P.
+export function getTypeByCode(code: string): PersonalityType | undefined {
+  return TYPES.find((t) => t.code === code.toUpperCase());
+}
+
 export const TYPE_SECTIONS = [
   { id: "introduction", label: "Introduction" },
   { id: "forces-faiblesses", label: "Forces & faiblesses" },
