@@ -5,7 +5,7 @@ export default function Navbar() {
         Logo
       </div>
       <div className="flex items-center gap-8 text-sm text-gray-600">
-        <a href="#" className="hover:text-gray-900">Test de personnalité</a>
+        <a href="/test" className="hover:text-gray-900">Test de personnalité</a>
         <a href="#" className="hover:text-gray-900">Types de personnalité</a>
         <a href="#" className="hover:text-gray-900">Pack carrière</a>
         <a href="#" className="hover:text-gray-900">Services</a>
