@@ -45,12 +45,12 @@ export default function Navbar() {
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
         >
-          <button className="hover:text-gray-900 flex items-center gap-1 py-2">
+          <a href="/types-de-personnalite" className="hover:text-gray-900 flex items-center gap-1 py-2">
             Types de personnalité
             <svg className={`w-3 h-3 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
-          </button>
+          </a>
 
           {open && (
             <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50">
