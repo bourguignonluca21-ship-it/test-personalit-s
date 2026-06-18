@@ -6,8 +6,8 @@ import { ROLE_ORDER, ROLES, typesByRole } from "../data/types";
 
 const NAV_LINKS = [
   { href: "/test", label: "Test de personnalité" },
+  { href: "/dark-personnalite", label: "Dark personnalité" },
   { href: "/types-de-personnalite", label: "Types de personnalité", hasMenu: true },
-  { href: "/pack-carriere-premium", label: "Pack carrière" },
   { href: "/equipes", label: "Services" },
   { href: "/articles", label: "Articles" },
 ];
