@@ -18,16 +18,16 @@ export default function ConnexionPage() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#4298b4]"
+            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[rgba(66,152,180,0.75)]"
           />
           <input
             type="password"
             placeholder="Mot de passe"
-            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#4298b4]"
+            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[rgba(66,152,180,0.75)]"
           />
           <button
             type="button"
-            className="w-full bg-[#4298b4] text-white font-semibold py-3 rounded-full text-sm hover:bg-[#367f9a] transition-colors"
+            className="w-full bg-[rgba(66,152,180,0.75)] text-white font-semibold py-3 rounded-full text-sm hover:bg-[#367f9a] transition-colors"
           >
             Connexion
           </button>
@@ -37,7 +37,7 @@ export default function ConnexionPage() {
         </p>
         <p className="text-sm text-center mt-6 text-gray-500">
           Pas encore de résultat ?{" "}
-          <Link href="/test" className="text-[#4298b4] font-semibold hover:underline">
+          <Link href="/test" className="text-[rgba(66,152,180,0.75)] font-semibold hover:underline">
             Faire le test
           </Link>
         </p>

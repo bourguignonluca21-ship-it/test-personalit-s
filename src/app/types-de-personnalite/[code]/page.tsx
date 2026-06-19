@@ -108,7 +108,7 @@ export default async function TypePage({ params }: { params: Promise<{ code: str
             « Une citation inspirante ira ici. »
             <span className="block not-italic font-semibold text-gray-800 mt-1">— Auteur</span>
           </blockquote>
-          <div className="bg-[#fdf6e8] border border-dashed border-[#e4ae3a] rounded-lg p-4 text-sm text-[#8a6d1f] mb-5">
+          <div className="bg-[#fdf6e8] border border-dashed border-[rgba(228,174,58,0.75)] rounded-lg p-4 text-sm text-[#8a6d1f] mb-5">
             🔧 Emplacement du texte d&apos;introduction de ton profil <strong>{type.name}</strong>. À
             rédiger avec tes propres mots (le contenu de 16Personalities est protégé).
           </div>

@@ -1,20 +1,19 @@
 const stats = [
-  { value: "0", label: "Tests effectués aujourd'hui", color: "text-[#4298b4]" },
-  { value: "0", label: "Tests effectués en France", color: "text-[#e4ae3a]" },
-  { value: "0", label: "Total de tests effectués", color: "text-[#88619a]" },
-  { value: "—", label: "Évaluation de la pertinence", color: "text-[#33a474]" },
+  { value: "16", label: "types de personnalité", color: "rgba(51,164,116,0.75)" },
+  { value: "48", label: "profils détaillés", color: "rgba(51,164,116,0.75)" },
+  { value: "~10 min", label: "pour faire le test", color: "rgba(51,164,116,0.75)" },
 ];
 
 export default function Stats() {
   return (
-    <section className="py-16 px-6 bg-white">
-      <div className="max-w-4xl mx-auto grid grid-cols-2 gap-10 text-center">
-        {stats.map((stat) => (
-          <div key={stat.label}>
-            <p className={`text-4xl md:text-5xl font-bold ${stat.color}`}>
-              {stat.value}
+    <section className="px-6 py-16 md:py-20">
+      <div className="max-w-4xl mx-auto grid grid-cols-3 gap-6 md:gap-10 text-center">
+        {stats.map((s) => (
+          <div key={s.label}>
+            <p className="text-4xl md:text-5xl font-bold tracking-tight" style={{ color: s.color }}>
+              {s.value}
             </p>
-            <p className="text-gray-500 mt-2">{stat.label}</p>
+            <p className="text-gray-500 mt-2 text-sm">{s.label}</p>
           </div>
         ))}
       </div>

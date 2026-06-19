@@ -19,7 +19,7 @@ export default function TypesPage() {
         </p>
         <Link
           href="/test"
-          className="inline-block bg-[#4298b4] text-white text-sm font-semibold py-2.5 px-6 rounded-full hover:bg-[#367f9a] transition-colors"
+          className="inline-block bg-[rgba(66,152,180,0.75)] text-white text-sm font-semibold py-2.5 px-6 rounded-full hover:bg-[#367f9a] transition-colors"
         >
           Faire le test →
         </Link>

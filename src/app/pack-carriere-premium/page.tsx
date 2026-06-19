@@ -17,7 +17,7 @@ const FEATURES = [
 export default function PremiumPage() {
   return (
     <div className="bg-white">
-      <section className="bg-[#88619a] text-white text-center py-16 px-6">
+      <section className="bg-[rgba(136,97,154,0.75)] text-white text-center py-16 px-6">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">Va au bout de ton profil</h1>
         <p className="max-w-2xl mx-auto text-white/90">
           Le test et le type sont gratuits. Le rapport complet, lui, dévoile toute la finesse de qui
@@ -27,7 +27,7 @@ export default function PremiumPage() {
 
       <section className="max-w-3xl mx-auto px-6 py-14">
         <div className="rounded-2xl border border-gray-100 shadow-sm p-8">
-          <p className="text-sm font-semibold text-[#88619a] uppercase tracking-wider mb-2">
+          <p className="text-sm font-semibold text-[rgba(136,97,154,0.75)] uppercase tracking-wider mb-2">
             Rapport complet
           </p>
           <p className="text-4xl font-bold text-gray-800 mb-1">
@@ -39,14 +39,14 @@ export default function PremiumPage() {
           <ul className="space-y-3 mb-8">
             {FEATURES.map((f) => (
               <li key={f} className="flex items-start gap-2 text-gray-700">
-                <span className="text-[#33a474] font-bold mt-0.5">✓</span>
+                <span className="text-[rgba(51,164,116,0.75)] font-bold mt-0.5">✓</span>
                 <span className="text-sm">{f}</span>
               </li>
             ))}
           </ul>
           <Link
             href="/test"
-            className="block text-center bg-[#88619a] text-white font-semibold py-3 rounded-full hover:opacity-90 transition-opacity"
+            className="block text-center bg-[rgba(136,97,154,0.75)] text-white font-semibold py-3 rounded-full hover:opacity-90 transition-opacity"
           >
             Commencer par le test gratuit →
           </Link>

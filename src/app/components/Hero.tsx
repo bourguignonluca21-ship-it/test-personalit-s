@@ -1,24 +1,31 @@
 import Link from "next/link";
+import TypedTitle from "./TypedTitle";
+import MeshGradient from "./MeshGradient";
 
 export default function Hero() {
   return (
-    <section className="bg-[#4298b4] text-white text-center py-20 px-6">
-      <h1 className="text-4xl md:text-5xl font-bold mb-6 max-w-3xl mx-auto leading-tight">
-        « C&apos;est incroyable d&apos;être enfin compris. »
+    <section className="relative overflow-hidden px-6 pt-24 md:pt-28 pb-16 text-center">
+      <MeshGradient />
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] whitespace-nowrap min-h-[1.2em]">
+        <TypedTitle />
       </h1>
-      <p className="text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed text-white/90">
-        Obtenez, en 10 minutes seulement, une description « incroyablement exacte » de qui vous êtes
-        et pourquoi vous agissez comme vous le faites.
+      <p className="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto mt-7 leading-relaxed">
+        Quelques minutes suffisent pour révéler, avec une précision déroutante, ce qui fait de toi… <span style={{ color: "rgba(51,164,116,0.75)" }}>Toi</span>.
       </p>
-      <Link
-        href="/test"
-        className="inline-block bg-white text-[#4298b4] font-semibold py-3 px-8 rounded-full text-lg hover:bg-white/90 transition-colors"
-      >
-        Faire le test →
-      </Link>
-      <p className="mt-5 text-xs text-white/70">
-        Gratuit · sans inscription · analyse présentée par IA
-      </p>
+      <div className="mt-10 flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
+        <Link
+          href="/test"
+          className="bg-[rgba(51,164,116,0.75)] text-white font-semibold py-3.5 px-9 rounded-full text-lg hover:opacity-90 transition"
+        >
+          Faire le test
+        </Link>
+        <Link
+          href="/types-de-personnalite"
+          className="text-gray-800 font-semibold py-3.5 px-9 rounded-full text-lg bg-transparent hover:bg-[rgba(0,0,0,0.02)] transition-colors duration-300"
+        >
+          Explorer les types ›
+        </Link>
+      </div>
     </section>
   );
 }

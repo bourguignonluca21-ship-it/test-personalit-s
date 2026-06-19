@@ -33,21 +33,21 @@ export default function ContactPage() {
           <input
             type="text"
             placeholder="Ton nom"
-            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#4298b4]"
+            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[rgba(66,152,180,0.75)]"
           />
           <input
             type="email"
             placeholder="Ton email"
-            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#4298b4]"
+            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[rgba(66,152,180,0.75)]"
           />
           <textarea
             placeholder="Ton message"
             rows={5}
-            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#4298b4]"
+            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[rgba(66,152,180,0.75)]"
           />
           <button
             type="button"
-            className="bg-[#4298b4] text-white font-semibold py-3 px-8 rounded-full text-sm hover:bg-[#367f9a] transition-colors"
+            className="bg-[rgba(66,152,180,0.75)] text-white font-semibold py-3 px-8 rounded-full text-sm hover:bg-[#367f9a] transition-colors"
           >
             Envoyer
           </button>

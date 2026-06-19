@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
+import Reveal from "./Reveal";
+import MeshGradient from "./MeshGradient";
 
 // Composant de test réutilisable (échelle 5 niveaux, barre de progression fixe).
-// Bulles : même taille. Non sélectionnées = contour coloré (vert accord / rouge désaccord / gris neutre).
-// Sélectionnées = remplies de la couleur, sans contour. Défile vers la question suivante au clic.
+// Habillage façon Apple (espace, typo, cartes arrondies) — couleurs et logique inchangées.
 
 export interface QuizStep {
   step: string;
@@ -17,111 +18,244 @@ export interface QuizStep {
 export interface QuizProps {
   title: string;
   subtitle: string;
+  badge?: string;
+  titleAccent?: string;
   questions: string[];
+  questionIds?: string[]; // clés des réponses (sinon index). Indispensable pour un set dynamique.
+  total?: number; // dénominateur de la barre (sinon questions.length).
+  phase1Count?: number; // si défini, insère phase2Intro juste avant la question à cet index.
+  phase2Intro?: ReactNode;
   steps?: QuizStep[];
   accent?: string;
   agreeColor?: string;
   disagreeColor?: string;
   resultLabel?: string;
   note?: string;
-  onSubmit?: (answers: Record<number, number>) => void;
+  onSubmit?: (answers: Record<string, number>) => void;
+  onAnswersChange?: (answers: Record<string, number>) => void;
 }
 
-const VALUES = [5, 4, 3, 2, 1];
+const VALUES = [1, 2, 3, 4, 5];
 const SIZE = 46;
-const NEUTRAL = "#9b9faa";
+// Rampe monochrome verte : Pas d'accord (pâle, gauche) → D'accord (foncé, droite)
+const RAMP = ["#c4e7d4", "#93d3b6", "#5cba8f", "#33a474", "#1f7d56"];
 
 export default function Quiz({
   title,
   subtitle,
+  badge,
+  titleAccent,
   questions,
+  questionIds,
+  total: totalProp,
+  phase1Count,
+  phase2Intro,
   steps,
-  accent = "#4298b4",
-  agreeColor = "#33a474",
-  disagreeColor = "#e8833a",
-  resultLabel = "Voir mon résultat →",
+  accent = "rgba(66,152,180,0.75)",
+  agreeColor = "rgba(51,164,116,0.75)",
+  resultLabel = "Voir mon résultat",
   note = "Réponds à toutes les questions pour voir ton résultat.",
   onSubmit,
+  onAnswersChange,
 }: QuizProps) {
-  const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [email, setEmail] = useState("");
+  const [newsletter, setNewsletter] = useState(false);
+  // Affichage de l'écran « Test terminé » avec fondu d'entrée/sortie (comme le bloc variante).
+  const [showEnd, setShowEnd] = useState(false);
+  const [endLeaving, setEndLeaving] = useState(false);
   const refs = useRef<(HTMLDivElement | null)[]>([]);
-  const answered = Object.keys(answers).length;
-  const progress = Math.round((answered / questions.length) * 100);
+  const endRef = useRef<HTMLElement>(null);
+  const introRef = useRef<HTMLDivElement>(null);
+  const prevLenRef = useRef(questions.length);
+
+  // Clé de réponse : id de question si fourni, sinon position.
+  const keyOf = (i: number) => questionIds?.[i] ?? String(i);
+  // Réponses comptées uniquement parmi les questions actuellement affichées
+  // (les réponses devenues hors-sujet après recalcul du type sont ignorées).
+  const answered = questions.reduce((n, _q, i) => (answers[keyOf(i)] != null ? n + 1 : n), 0);
+  const total = totalProp ?? questions.length;
+  const progress = Math.round((answered / total) * 100);
+
+  // Remonte les réponses au parent (pour recalcul du type / des questions de variante).
+  useEffect(() => {
+    onAnswersChange?.(answers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answers]);
+
+  // Remplissage léger des blocs (invisible en haut, apparaît en descendant)
+  // + fondu de sortie quand les blocs remontent et quittent l'écran.
+  const [fillP, setFillP] = useState(0);
+  const [exitP, setExitP] = useState(0);
+  useEffect(() => {
+    function onScroll() {
+      const y = window.scrollY;
+      setFillP(Math.max(0, Math.min(1, y / 520)));
+      setExitP(Math.max(0, Math.min(1, (y - 470) / 170)));
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   function handleAnswer(i: number, v: number) {
-    setAnswers((a) => ({ ...a, [i]: v }));
+    const k = keyOf(i);
+    // Re-cliquer la bulle déjà sélectionnée → on annule la réponse et on remonte d'une question.
+    if (answers[k] === v) {
+      setAnswers((a) => {
+        const copie = { ...a };
+        delete copie[k];
+        return copie;
+      });
+      const prev = refs.current[i - 1];
+      if (prev) {
+        setTimeout(() => prev.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
+      }
+      return;
+    }
+    setAnswers((a) => ({ ...a, [k]: v }));
+    // Dernière question de phase 1 : on laisse l'effet amener le bloc « variante » à l'écran.
+    if (phase1Count != null && i === phase1Count - 1) return;
     const next = refs.current[i + 1];
     if (next) {
       setTimeout(() => next.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
     }
   }
 
+  // Quand les questions de variante viennent d'apparaître → on descend sur le bloc d'intro.
+  useEffect(() => {
+    const prev = prevLenRef.current;
+    prevLenRef.current = questions.length;
+    if (phase1Count != null && prev <= phase1Count && questions.length > phase1Count) {
+      setTimeout(() => introRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 220);
+    }
+  }, [questions.length, phase1Count]);
+
+  // Dernière réponse atteinte → on amène l'écran « Test terminé » à l'écran.
+  useEffect(() => {
+    if (answered === total) {
+      const id = setTimeout(
+        () => endRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }),
+        220,
+      );
+      return () => clearTimeout(id);
+    }
+  }, [answered, total]);
+
+  // Carte « Test terminé » : montée au complet, démontée avec un fondu de sortie.
+  useEffect(() => {
+    if (answered === total) {
+      setShowEnd(true);
+      setEndLeaving(false);
+    } else if (showEnd) {
+      setEndLeaving(true);
+      const t = setTimeout(() => {
+        setShowEnd(false);
+        setEndLeaving(false);
+      }, 360);
+      return () => clearTimeout(t);
+    }
+  }, [answered, total, showEnd]);
+
   return (
     <div className="bg-white">
-      {/* Barre + compteur FIXÉS sous la navbar : suivent le scroll, même ligne */}
+
+      {/* Barre + compteur FIXÉS sous la navbar */}
       <div
-        className="fixed left-0 right-0 z-30 bg-white border-b border-gray-200 py-3 shadow-sm"
+        className="fixed left-0 right-0 z-30 bg-white/90 backdrop-blur border-b border-gray-200 py-3"
         style={{ top: "56px" }}
       >
         <div className="max-w-3xl mx-auto px-6 flex items-center gap-4">
           <div className="h-2 rounded-full bg-gray-100 overflow-hidden flex-1">
-            <div className="h-full transition-all" style={{ width: `${progress}%`, background: accent }} />
+            <div className="h-full transition-all" style={{ width: `${progress}%`, background: agreeColor }} />
           </div>
           <span className="text-xs font-medium text-gray-500 whitespace-nowrap">
-            {answered} / {questions.length}
+            {answered} / {total}
           </span>
         </div>
       </div>
 
-      {/* Espace pour compenser la hauteur de la barre fixe */}
-      <div aria-hidden style={{ height: "48px" }} />
+      {/* Titre — même espacement que le hero de l'accueil */}
+      <Reveal>
+        <section className="relative overflow-hidden text-center px-6 pt-24 md:pt-28 pb-16 min-h-[450px]">
+          <MeshGradient />
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-800 mb-3 inline-flex items-center justify-center gap-2.5 flex-wrap">
+            <span>{title}</span>
+            {titleAccent && <span style={{ color: agreeColor }}>{titleAccent}</span>}
+            {badge && (
+              <span className="text-white text-lg font-bold px-3 py-1 rounded-xl" style={{ background: agreeColor }}>
+                {badge}
+              </span>
+            )}
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto mt-7 leading-relaxed">{subtitle}</p>
+        </section>
+      </Reveal>
 
-      <section className="text-center pt-6 pb-6 px-6">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">{title}</h1>
-        <p className="text-gray-400 text-sm">{subtitle}</p>
-      </section>
-
-      {/* Les 3 étapes (sans illustration pour l'instant) */}
+      {/* Les 3 étapes — cartes arrondies, fondu au scroll */}
       {steps && steps.length > 0 && (
-        <section className="max-w-3xl mx-auto px-6 mb-10">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {steps.map((s) => (
-              <div key={s.step} className="rounded-xl p-5" style={{ background: s.bg }}>
-                <span
-                  className="inline-block text-[10px] font-bold text-white px-2.5 py-1 rounded mb-3 uppercase tracking-wider"
-                  style={{ background: s.color }}
+        <section
+          className="relative z-10 max-w-3xl mx-auto px-6 mb-16 -mt-[68px]"
+          style={{ opacity: 1 - exitP, transform: `translateY(${-exitP * 36}px)` }}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {steps.map((s, idx) => (
+              <Reveal key={s.step} delay={idx * 90}>
+                <div
+                  className="relative overflow-hidden rounded-3xl p-6 h-full border border-white/50 backdrop-blur-md"
+                  style={{ background: s.bg }}
                 >
-                  {s.step}
-                </span>
-                <h3 className="font-bold text-gray-800 text-sm mb-1.5 leading-snug">{s.title}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed">{s.description}</p>
-              </div>
+                  {/* Remplissage vert très léger, de haut en bas, calé sur le passage à l'écran */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 top-0"
+                    style={{
+                      height: `${fillP * 100}%`,
+                      background: "linear-gradient(to bottom, rgba(51,164,116,0.16), rgba(51,164,116,0.02))",
+                    }}
+                  />
+                  <div className="relative z-10">
+                    <span
+                      className="inline-block text-[10px] font-bold text-white px-2.5 py-1 rounded-full mb-3 uppercase tracking-wider"
+                      style={{ background: s.color }}
+                    >
+                      {s.step}
+                    </span>
+                    <h3 className="font-bold text-gray-800 text-base mb-1.5 leading-snug">{s.title}</h3>
+                    <p className="text-sm text-gray-500 leading-relaxed">{s.description}</p>
+                  </div>
+                </div>
+              </Reveal>
             ))}
           </div>
         </section>
       )}
 
-      <section className="max-w-3xl mx-auto px-6 mb-8 w-full">
+      {/* Questions — plus d'air entre chaque */}
+      <section className="max-w-3xl mx-auto px-6 mb-10 w-full">
         {questions.map((q, i) => (
+          <Fragment key={i}>
+            {phase1Count != null && i === phase1Count && phase2Intro && (
+              <div ref={introRef} className="scroll-mt-28">
+                {phase2Intro}
+              </div>
+            )}
           <div
-            key={i}
             ref={(el) => {
               refs.current[i] = el;
             }}
-            className={`py-9 scroll-mt-32 ${i > 0 ? "border-t border-gray-100" : ""}`}
+            className={`py-11 scroll-mt-32 ${i > 0 ? "border-t border-gray-100" : ""}`}
           >
-            {/* Question : 18px / interligne 28px */}
-            <p className="text-[18px] leading-[28px] mb-7 text-gray-800 text-left" style={{ fontWeight: 450 }}>
+            <p className="text-xl mb-8 leading-relaxed text-gray-800 text-left" style={{ fontWeight: 450 }}>
               {q}
             </p>
-            {/* Échelle pleine largeur : libellés aux bords, bulles réparties entre les deux */}
             <div className="flex items-center justify-between">
-              <span className="text-[18px] whitespace-nowrap" style={{ color: agreeColor, fontWeight: 450 }}>
-                D&apos;accord
+              <span className="text-[18px] whitespace-nowrap" style={{ color: "#7cc9a6", fontWeight: 450 }}>
+                Pas d&apos;accord
               </span>
-              {VALUES.map((v) => {
-                const active = answers[i] === v;
-                const c = v >= 4 ? agreeColor : v <= 2 ? disagreeColor : NEUTRAL;
+              {VALUES.map((v, idx) => {
+                const active = answers[keyOf(i)] === v;
+                const c = RAMP[idx];
                 return (
                   <button
                     key={v}
@@ -139,24 +273,78 @@ export default function Quiz({
                   />
                 );
               })}
-              <span className="text-[18px] whitespace-nowrap" style={{ color: disagreeColor, fontWeight: 450 }}>
-                Pas d&apos;accord
+              <span className="text-[18px] whitespace-nowrap" style={{ color: "#1f7d56", fontWeight: 450 }}>
+                D&apos;accord
               </span>
             </div>
           </div>
+          </Fragment>
         ))}
       </section>
 
-      <section className="max-w-3xl mx-auto px-6 pb-16 text-center">
-        <button
-          disabled={answered < questions.length}
-          onClick={() => onSubmit?.(answers)}
-          className="text-white font-semibold py-3 px-8 rounded-full text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-90"
-          style={{ background: accent }}
-        >
-          {resultLabel}
-        </button>
-        <p className="text-xs text-gray-400 mt-3">{note}</p>
+      <section ref={endRef} className="max-w-md mx-auto px-6 pt-12 pb-24 text-center scroll-mt-28">
+        {!showEnd ? (
+          <p className="text-sm text-gray-400">{note}</p>
+        ) : (
+          <div className={endLeaving ? "variante-leave" : "variante-enter"}>
+            <div className="bg-white border border-gray-100 rounded-[26px] shadow-[0_12px_40px_-12px_rgba(0,0,0,0.12)] px-8 py-9">
+              <p
+                className="text-xs font-bold uppercase tracking-[1.5px] mb-2.5"
+                style={{ color: "rgba(51,164,116,0.9)" }}
+              >
+                Test terminé
+              </p>
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-800 mb-2.5">
+                Ton portrait est prêt.
+              </h2>
+              <p className="text-gray-500 mb-6 leading-relaxed">
+                Laisse ton e-mail pour le recevoir et le retrouver quand tu veux. C&apos;est facultatif.
+              </p>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="ton@email.com"
+                className="w-full rounded-full py-4 text-base font-medium text-center text-gray-600 placeholder:text-[rgba(0,0,0,0.4)] outline-none mb-3"
+                style={{ background: "#ebedf0" }}
+              />
+              {email.trim() !== "" && (
+                <label className="newsletter-fade flex items-center justify-center gap-2.5 mb-4 text-sm text-gray-600 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={newsletter}
+                    onChange={(e) => setNewsletter(e.target.checked)}
+                    className="peer sr-only"
+                  />
+                  <span className="w-5 h-5 rounded-md border border-gray-600 bg-white flex items-center justify-center transition-colors peer-checked:bg-[rgba(51,164,116,0.85)] peer-checked:border-[rgba(51,164,116,0.85)]">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-3 h-3 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                  </span>
+                  <span className="transition-opacity peer-checked:opacity-50">Recevoir la newsletter</span>
+                </label>
+              )}
+              <button
+                onClick={() => onSubmit?.(answers)}
+                className="w-full text-white font-semibold py-4 rounded-full text-base transition hover:opacity-90"
+                style={{ background: accent }}
+              >
+                {resultLabel}
+              </button>
+              <p className="text-xs text-gray-400 mt-4">
+                Ton résultat s&apos;affiche directement, avec ou sans e-mail.
+              </p>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );

@@ -34,6 +34,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col">
+        <div className="grain-overlay" aria-hidden />
         <a href="#contenu" className="skip-link">
           Passer au contenu principal
         </a>

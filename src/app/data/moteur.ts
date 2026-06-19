@@ -1,6 +1,6 @@
-// Moteur de calcul — port (partiel) de moteur_calcul.py.
-// Pour l'instant : phase 1 uniquement → les 4 lettres du type.
-// (Variante, spectre et intensités viendront aux étapes suivantes.)
+// Moteur de calcul — port de moteur_calcul.py (100% déterministe).
+// Phase 1 : 60 réponses → type (4 lettres). Phase 2 : 9 réponses → variante (V1/V2/V3).
+// Les réponses sont indexées par id de question (comme le Python).
 
 import type { Phase1Question } from "./questions";
 
@@ -10,15 +10,15 @@ const POLE_BAS: Record<string, string> = { EI: "I", SN: "S", TF: "T", JP: "J" };
 // Tie-break (score = 45 exact) → I, N, F, J (cf. SYSTEME_SCORING.md).
 const TIEBREAK: Record<string, string> = { EI: "I", SN: "N", TF: "F", JP: "J" };
 
-// reponses : clé = index de la question dans le tableau, valeur = 1 à 5.
+// reponses : clé = id de la question, valeur = 1 à 5.
 export function calculerType(
   questions: Phase1Question[],
-  reponses: Record<number, number>,
+  reponses: Record<string, number>,
 ): string {
   const sommes: Record<string, number> = { EI: 0, SN: 0, TF: 0, JP: 0 };
 
-  questions.forEach((q, i) => {
-    const valeur = reponses[i];
+  questions.forEach((q) => {
+    const valeur = reponses[q.id];
     if (valeur == null) return;
     const points = q.sens === "direct" ? valeur : 6 - valeur;
     sommes[q.axe] += points;
@@ -30,4 +30,58 @@ export function calculerType(
     if (score < 45) return POLE_BAS[axe];
     return TIEBREAK[axe];
   }).join("");
+}
+
+// Noms des 48 variantes (recopiés de moteur_calcul.py).
+export const NOMS_VARIANTES: Record<string, Record<string, string>> = {
+  INTJ: { V1: "Architecte-Bâtisseur", V2: "Stratège de Conviction", V3: "Visionnaire" },
+  INTP: { V1: "Architecte Logique", V2: "Explorateur d'Idées", V3: "Penseur Humaniste" },
+  ENTJ: { V1: "Capitaine d'Industrie", V2: "Stratège Visionnaire", V3: "Leader Inspirant" },
+  ENTP: { V1: "Inventeur", V2: "Débatteur Analytique", V3: "Charmeur Visionnaire" },
+  INFJ: { V1: "Mentor", V2: "Visionnaire Mystique", V3: "Architecte d'Idéaux" },
+  INFP: { V1: "Poète", V2: "Rêveur Créatif", V3: "Idéaliste Engagé" },
+  ENFJ: { V1: "Guide", V2: "Leader de Mission", V3: "Animateur Charismatique" },
+  ENFP: { V1: "Explorateur Enthousiaste", V2: "Cœur Authentique", V3: "Fédérateur" },
+  ISTJ: { V1: "Gardien", V2: "Administrateur", V3: "Loyal Discret" },
+  ISFJ: { V1: "Protecteur", V2: "Gardien du Foyer", V3: "Soutien Réfléchi" },
+  ESTJ: { V1: "Dirigeant", V2: "Garant de l'Ordre", V3: "Leader Loyal" },
+  ESFJ: { V1: "Hôte", V2: "Gardien Bienveillant", V3: "Dévoué Réfléchi" },
+  ISTP: { V1: "Artisan", V2: "Aventurier", V3: "Stratège Silencieux" },
+  ISFP: { V1: "Artiste Sensible", V2: "Aventurier des Sens", V3: "Doux Idéaliste" },
+  ESTP: { V1: "Fonceur", V2: "Tacticien", V3: "Charmeur" },
+  ESFP: { V1: "Animateur", V2: "Cœur Généreux", V3: "Esthète Vivant" },
+};
+
+export interface VarianteResult {
+  variante: "V1" | "V2" | "V3";
+  nom: string;
+  scores: Record<string, number>;
+}
+
+// questionsVariante : les 9 questions du type (champs id + variante).
+// reponses : clé = id de la question, valeur = 1 à 5.
+export function calculerVariante(
+  type: string,
+  questionsVariante: { id: string; variante: string }[],
+  reponses: Record<string, number>,
+): VarianteResult {
+  const scores: Record<string, number> = { V1: 0, V2: 0, V3: 0 };
+  questionsVariante.forEach((q) => {
+    const valeur = reponses[q.id];
+    if (valeur == null) return;
+    scores[q.variante] += valeur;
+  });
+
+  // Variante gagnante : score max, tie-break V1 > V2 > V3.
+  const ordre: ("V1" | "V2" | "V3")[] = ["V1", "V2", "V3"];
+  let gagnante: "V1" | "V2" | "V3" = "V1";
+  ordre.forEach((v) => {
+    if (scores[v] > scores[gagnante]) gagnante = v;
+  });
+
+  return {
+    variante: gagnante,
+    nom: NOMS_VARIANTES[type]?.[gagnante] ?? gagnante,
+    scores,
+  };
 }

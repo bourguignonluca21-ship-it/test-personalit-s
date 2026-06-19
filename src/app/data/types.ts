@@ -30,7 +30,7 @@ export const ROLES: Record<RoleKey, Role> = {
     letters: "_NT_",
     description:
       "Types Intuitif (N) et Rationnel (T), reconnus pour leur rationalité, leur impartialité et leur excellence intellectuelle.",
-    color: "#88619a",
+    color: "rgba(136,97,154,0.75)",
     soft: "#f3eef6",
   },
   diplomates: {
@@ -39,7 +39,7 @@ export const ROLES: Record<RoleKey, Role> = {
     letters: "_NF_",
     description:
       "Types Intuitif (N) et Sensible (F), connus pour leur empathie, leurs compétences diplomatiques et leur idéalisme passionné.",
-    color: "#33a474",
+    color: "rgba(51,164,116,0.75)",
     soft: "#eef8f3",
   },
   sentinelles: {
@@ -48,7 +48,7 @@ export const ROLES: Record<RoleKey, Role> = {
     letters: "_S_J",
     description:
       "Types Observateur (S) et Organisé (J), connus pour leur sens pratique et leur attachement à l'ordre, à la sécurité et à la stabilité.",
-    color: "#4298b4",
+    color: "rgba(66,152,180,0.75)",
     soft: "#eef7fa",
   },
   explorateurs: {
@@ -57,7 +57,7 @@ export const ROLES: Record<RoleKey, Role> = {
     letters: "_S_P",
     description:
       "Types Observateur (S) et Prospectif (P), connus pour leur spontanéité, leur ingéniosité et leur flexibilité.",
-    color: "#e4ae3a",
+    color: "rgba(228,174,58,0.75)",
     soft: "#fdf6e8",
   },
 };

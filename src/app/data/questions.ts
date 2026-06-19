@@ -16,8 +16,9 @@ export interface Phase1Question {
 
 export interface Phase2Question {
   id: string;
+  type: string; // ex. "INTJ"
+  variante: string; // "V1" | "V2" | "V3"
   texte: string;
-  [key: string]: unknown;
 }
 
 // Les 60 questions de phase 1 (15 par axe).
@@ -28,3 +29,8 @@ export const PHASE1_AXES = data.phase1.axes;
 
 // Phase 2 (variantes) — déclenchée après calcul du type.
 export const PHASE2 = data.phase2 as { description: string; questions: Phase2Question[] };
+
+// Les 9 questions de variante d'un type donné (3 par variante).
+export function getPhase2Questions(type: string): Phase2Question[] {
+  return PHASE2.questions.filter((q) => q.type === type);
+}

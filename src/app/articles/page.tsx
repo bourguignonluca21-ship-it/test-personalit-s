@@ -35,7 +35,7 @@ export default function ArticlesPage() {
                 Image
               </div>
               <div className="p-5">
-                <span className="text-xs font-semibold text-[#4298b4]">{a.category}</span>
+                <span className="text-xs font-semibold text-[rgba(66,152,180,0.75)]">{a.category}</span>
                 <h3 className="font-bold text-gray-800 mt-1 mb-2">{a.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{a.excerpt}</p>
               </div>

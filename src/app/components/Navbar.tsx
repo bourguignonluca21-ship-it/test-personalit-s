@@ -17,11 +17,11 @@ export default function Navbar() {
   const [mobile, setMobile] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-8 py-3 border-b border-gray-200 bg-white/95 backdrop-blur">
+    <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 py-3.5 border-b border-black/5 bg-white/70 backdrop-blur-xl backdrop-saturate-150">
       {/* Logo (placeholder — à remplacer par ton identité) */}
-      <Link href="/" className="flex items-center gap-2 font-bold text-lg text-gray-800">
+      <Link href="/" className="flex items-center gap-2 font-semibold text-[17px] tracking-tight text-gray-800">
         <span className="grid grid-cols-4 gap-[3px]" aria-hidden>
-          {["#88619a", "#33a474", "#e4ae3a", "#4298b4", "#33a474", "#88619a", "#4298b4", "#e4ae3a"].map(
+          {["rgba(136,97,154,0.75)", "rgba(51,164,116,0.75)", "rgba(228,174,58,0.75)", "rgba(66,152,180,0.75)", "rgba(51,164,116,0.75)", "rgba(136,97,154,0.75)", "rgba(66,152,180,0.75)", "rgba(228,174,58,0.75)"].map(
             (c, i) => (
               <span key={i} className="w-[6px] h-[6px] rounded-full" style={{ background: c }} />
             ),
@@ -31,7 +31,7 @@ export default function Navbar() {
       </Link>
 
       {/* Liens (desktop) */}
-      <div className="hidden md:flex items-center gap-7 text-sm text-gray-600">
+      <div className="hidden md:flex items-center gap-8 text-[13px] font-normal text-gray-500">
         {NAV_LINKS.map((link) =>
           link.hasMenu ? (
             <div
@@ -40,7 +40,7 @@ export default function Navbar() {
               onMouseEnter={() => setOpen(true)}
               onMouseLeave={() => setOpen(false)}
             >
-              <Link href={link.href} className="hover:text-gray-900 flex items-center gap-1 py-2">
+              <Link href={link.href} className="hover:text-gray-900 transition-colors flex items-center gap-1 py-2">
                 {link.label}
                 <svg
                   className={`w-3 h-3 transition-transform ${open ? "rotate-180" : ""}`}
@@ -83,7 +83,7 @@ export default function Navbar() {
               )}
             </div>
           ) : (
-            <Link key={link.href} href={link.href} className="hover:text-gray-900">
+            <Link key={link.href} href={link.href} className="hover:text-gray-900 transition-colors">
               {link.label}
             </Link>
           ),
@@ -91,17 +91,16 @@ export default function Navbar() {
       </div>
 
       {/* Droite */}
-      <div className="hidden md:flex items-center gap-5 text-sm text-gray-600">
-        <Link href="/connexion" className="font-semibold text-gray-800 hover:text-gray-900">
+      <div className="hidden md:flex items-center gap-5 text-[13px] text-gray-500">
+        <Link href="/connexion" className="font-medium text-gray-800 hover:text-gray-900 transition-colors">
           Se connecter
         </Link>
-        <span className="flex items-center gap-1.5 border border-gray-200 rounded-full px-3 py-1.5">
-          <span
-            className="w-4 h-3 rounded-[2px]"
-            style={{ background: "linear-gradient(90deg,#0055A4 33%,#fff 33% 66%,#EF4135 66%)" }}
-          />
-          Français
-        </span>
+        <span
+          className="w-6 h-6 rounded-full border border-gray-200"
+          aria-label="Français"
+          title="Français"
+          style={{ background: "linear-gradient(90deg,#0055A4 33%,#fff 33% 66%,#EF4135 66%)" }}
+        />
       </div>
 
       {/* Burger (mobile) */}
