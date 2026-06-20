@@ -52,6 +52,66 @@ export const NOMS_VARIANTES: Record<string, Record<string, string>> = {
   ESFP: { V1: "Animateur", V2: "Cœur Généreux", V3: "Esthète Vivant" },
 };
 
+export interface SpectreAxe {
+  axe: string; // "EI" | "SN" | "TF" | "JP"
+  poleHaut: string; // E, N, F, P
+  poleBas: string; // I, S, T, J
+  lettre: string; // pôle dominant
+  scoreBrut: number; // 15 à 75
+  pctHaut: number; // % vers le pôle haut
+  pctBas: number; // % vers le pôle bas
+  pctDominant: number; // max des deux
+  intensite: "léger" | "modéré" | "fort";
+}
+
+// Construit le spectre à partir des 4 scores bruts (ordre EI, SN, TF, JP).
+export function spectreFromScores(scores: number[]): SpectreAxe[] {
+  return AXES.map((axe, idx) => {
+    const scoreBrut = scores[idx] ?? 45;
+    const pctHaut = ((scoreBrut - 15) / 60) * 100;
+    const pctBas = 100 - pctHaut;
+    const pctDominant = Math.max(pctHaut, pctBas);
+    const lettre = scoreBrut > 45 ? POLE_HAUT[axe] : scoreBrut < 45 ? POLE_BAS[axe] : TIEBREAK[axe];
+    const intensite = pctDominant >= 75 ? "fort" : pctDominant >= 60 ? "modéré" : "léger";
+    return {
+      axe,
+      poleHaut: POLE_HAUT[axe],
+      poleBas: POLE_BAS[axe],
+      lettre,
+      scoreBrut,
+      pctHaut: Math.round(pctHaut * 10) / 10,
+      pctBas: Math.round(pctBas * 10) / 10,
+      pctDominant: Math.round(pctDominant * 10) / 10,
+      intensite,
+    };
+  });
+}
+
+// Spectre depuis les réponses (port de calculer_personnalite + calculer_intensites).
+export function calculerSpectre(
+  questions: Phase1Question[],
+  reponses: Record<string, number>,
+): SpectreAxe[] {
+  const sommes: Record<string, number> = { EI: 0, SN: 0, TF: 0, JP: 0 };
+  questions.forEach((q) => {
+    const valeur = reponses[q.id];
+    if (valeur == null) return;
+    sommes[q.axe] += q.sens === "direct" ? valeur : 6 - valeur;
+  });
+  return spectreFromScores(AXES.map((a) => sommes[a]));
+}
+
+// Sérialise les 4 scores bruts pour l'URL (ex. "51-62-40-58").
+export function encoderScores(questions: Phase1Question[], reponses: Record<string, number>): string {
+  const sommes: Record<string, number> = { EI: 0, SN: 0, TF: 0, JP: 0 };
+  questions.forEach((q) => {
+    const valeur = reponses[q.id];
+    if (valeur == null) return;
+    sommes[q.axe] += q.sens === "direct" ? valeur : 6 - valeur;
+  });
+  return AXES.map((a) => sommes[a]).join("-");
+}
+
 export interface VarianteResult {
   variante: "V1" | "V2" | "V3";
   nom: string;

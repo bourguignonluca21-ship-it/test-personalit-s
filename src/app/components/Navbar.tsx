@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ROLE_ORDER, ROLES, typesByRole } from "../data/types";
 
 const NAV_LINKS = [
@@ -15,11 +16,24 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [mobile, setMobile] = useState(false);
+  const pathname = usePathname();
+
+  // Cliquer un lien vers la page déjà ouverte → on recharge (rejoue les animations).
+  const reloadIfSame = (href: string) => (e: React.MouseEvent) => {
+    if (pathname === href) {
+      e.preventDefault();
+      window.location.reload();
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 py-3.5 border-b border-black/5 bg-white/70 backdrop-blur-xl backdrop-saturate-150">
       {/* Logo (placeholder — à remplacer par ton identité) */}
-      <Link href="/" className="flex items-center gap-2 font-semibold text-[17px] tracking-tight text-gray-800">
+      <Link
+        href="/"
+        onClick={reloadIfSame("/")}
+        className="flex items-center gap-2 font-semibold text-[17px] tracking-tight text-gray-800"
+      >
         <span className="grid grid-cols-4 gap-[3px]" aria-hidden>
           {["rgba(136,97,154,0.75)", "rgba(51,164,116,0.75)", "rgba(228,174,58,0.75)", "rgba(66,152,180,0.75)", "rgba(51,164,116,0.75)", "rgba(136,97,154,0.75)", "rgba(66,152,180,0.75)", "rgba(228,174,58,0.75)"].map(
             (c, i) => (
@@ -40,7 +54,11 @@ export default function Navbar() {
               onMouseEnter={() => setOpen(true)}
               onMouseLeave={() => setOpen(false)}
             >
-              <Link href={link.href} className="hover:text-gray-900 transition-colors flex items-center gap-1 py-2">
+              <Link
+                href={link.href}
+                onClick={reloadIfSame(link.href)}
+                className="hover:text-gray-900 transition-colors flex items-center gap-1 py-2"
+              >
                 {link.label}
                 <svg
                   className={`w-3 h-3 transition-transform ${open ? "rotate-180" : ""}`}
@@ -83,7 +101,12 @@ export default function Navbar() {
               )}
             </div>
           ) : (
-            <Link key={link.href} href={link.href} className="hover:text-gray-900 transition-colors">
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={reloadIfSame(link.href)}
+              className="hover:text-gray-900 transition-colors"
+            >
               {link.label}
             </Link>
           ),
@@ -92,7 +115,11 @@ export default function Navbar() {
 
       {/* Droite */}
       <div className="hidden md:flex items-center gap-5 text-[13px] text-gray-500">
-        <Link href="/connexion" className="font-medium text-gray-800 hover:text-gray-900 transition-colors">
+        <Link
+          href="/connexion"
+          onClick={reloadIfSame("/connexion")}
+          className="font-medium text-gray-800 hover:text-gray-900 transition-colors"
+        >
           Se connecter
         </Link>
         <span
@@ -119,11 +146,26 @@ export default function Navbar() {
       {mobile && (
         <div className="absolute top-full left-0 right-0 bg-white border-b border-gray-200 px-6 py-4 flex flex-col gap-3 text-sm text-gray-700 md:hidden">
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} onClick={() => setMobile(false)} className="py-1">
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={(e) => {
+                setMobile(false);
+                reloadIfSame(link.href)(e);
+              }}
+              className="py-1"
+            >
               {link.label}
             </Link>
           ))}
-          <Link href="/connexion" onClick={() => setMobile(false)} className="py-1 font-semibold">
+          <Link
+            href="/connexion"
+            onClick={(e) => {
+              setMobile(false);
+              reloadIfSame("/connexion")(e);
+            }}
+            className="py-1 font-semibold"
+          >
             Se connecter
           </Link>
         </div>

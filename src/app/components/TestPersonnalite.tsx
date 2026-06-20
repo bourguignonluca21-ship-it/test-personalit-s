@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Quiz from "./Quiz";
+import TestPageTitle from "./TestPageTitle";
 import { PHASE1_QUESTIONS, getPhase2Questions } from "../data/questions";
-import { calculerType, calculerVariante } from "../data/moteur";
+import { calculerType, calculerVariante, encoderScores } from "../data/moteur";
 import { getTypeByCode } from "../data/types";
 
 const STEPS = [
@@ -33,16 +35,10 @@ const STEPS = [
 // 60 questions de phase 1 + 9 de variante = 69 (total affiché, sans rupture visible).
 const TOTAL = PHASE1_QUESTIONS.length + 9;
 
-interface Resultat {
-  code: string;
-  variante: string;
-  nom: string;
-}
-
 export default function TestPersonnalite() {
+  const router = useRouter();
   // Miroir des réponses du Quiz (clés = id de question) pour recalculer le type en continu.
   const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [resultat, setResultat] = useState<Resultat | null>(null);
 
   // Type provisoire dès que les 60 de phase 1 sont répondues (recalculé à chaque changement).
   const phase1Done = PHASE1_QUESTIONS.every((q) => answers[q.id] != null);
@@ -97,44 +93,11 @@ export default function TestPersonnalite() {
     </div>
   ) : null;
 
-  function refaire() {
-    setResultat(null);
-    setAnswers({});
-  }
-
-  if (resultat) {
-    const type = getTypeByCode(resultat.code);
-    return (
-      <section className="max-w-xl mx-auto px-6 py-28 text-center">
-        <p className="text-sm text-gray-400 mb-3 uppercase tracking-widest">Ton résultat</p>
-        <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-gray-800 mb-3">{resultat.code}</h1>
-        {type && (
-          <p className="text-2xl font-semibold mb-2" style={{ color: "rgba(51,164,116,0.75)" }}>
-            {type.name}
-          </p>
-        )}
-        <p className="text-lg font-semibold text-gray-700 mb-4">
-          {resultat.variante} · {resultat.nom}
-        </p>
-        {type && <p className="text-lg text-gray-500 mb-12 leading-relaxed max-w-md mx-auto">{type.tagline}</p>}
-        <button
-          onClick={refaire}
-          className="text-sm text-[rgba(51,164,116,0.75)] font-semibold hover:underline"
-        >
-          ↺ Refaire le test
-        </button>
-        <p className="text-xs text-gray-400 mt-8">
-          Ton compte-rendu détaillé (forces, relations, carrière…) arrivera bientôt.
-        </p>
-      </section>
-    );
-  }
-
   return (
     <Quiz
       title="Test de personnalité 2.0"
-      badge="IA"
-      subtitle="60 énoncés · 4 dimensions · échelle de Likert (1 à 5)"
+      titleNode={<TestPageTitle accent="rgba(51,164,116,0.75)" />}
+      subtitle="60 questions · 48 portraits possibles · Un seul te ressemble"
       questions={allQuestions.map((q) => q.texte)}
       questionIds={allQuestions.map((q) => q.id)}
       total={TOTAL}
@@ -147,7 +110,9 @@ export default function TestPersonnalite() {
       onSubmit={(ans) => {
         const code = calculerType(PHASE1_QUESTIONS, ans);
         const v = calculerVariante(code, getPhase2Questions(code), ans);
-        setResultat({ code, variante: v.variante, nom: v.nom });
+        const scores = encoderScores(PHASE1_QUESTIONS, ans);
+        const vs = `${v.scores.V1}-${v.scores.V2}-${v.scores.V3}`;
+        router.push(`/resultat/${code.toLowerCase()}-${v.variante.toLowerCase()}?s=${scores}&v=${vs}`);
       }}
     />
   );

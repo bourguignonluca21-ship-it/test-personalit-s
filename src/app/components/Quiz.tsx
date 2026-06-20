@@ -17,6 +17,7 @@ export interface QuizStep {
 
 export interface QuizProps {
   title: string;
+  titleNode?: ReactNode; // si fourni, remplace le rendu par défaut du titre (titre animé).
   subtitle: string;
   badge?: string;
   titleAccent?: string;
@@ -42,6 +43,7 @@ const RAMP = ["#c4e7d4", "#93d3b6", "#5cba8f", "#33a474", "#1f7d56"];
 
 export default function Quiz({
   title,
+  titleNode,
   subtitle,
   badge,
   titleAccent,
@@ -179,15 +181,17 @@ export default function Quiz({
       <Reveal>
         <section className="relative overflow-hidden text-center px-6 pt-24 md:pt-28 pb-16 min-h-[450px]">
           <MeshGradient />
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-800 mb-3 inline-flex items-center justify-center gap-2.5 flex-wrap">
-            <span>{title}</span>
-            {titleAccent && <span style={{ color: agreeColor }}>{titleAccent}</span>}
-            {badge && (
-              <span className="text-white text-lg font-bold px-3 py-1 rounded-xl" style={{ background: agreeColor }}>
-                {badge}
-              </span>
-            )}
-          </h1>
+          {titleNode ?? (
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-800 mb-3 inline-flex items-center justify-center gap-2.5 flex-wrap">
+              <span>{title}</span>
+              {titleAccent && <span style={{ color: agreeColor }}>{titleAccent}</span>}
+              {badge && (
+                <span className="text-white text-lg font-bold px-3 py-1 rounded-xl" style={{ background: agreeColor }}>
+                  {badge}
+                </span>
+              )}
+            </h1>
+          )}
           <p className="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto mt-7 leading-relaxed">{subtitle}</p>
         </section>
       </Reveal>

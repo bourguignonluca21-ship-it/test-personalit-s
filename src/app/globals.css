@@ -135,3 +135,18 @@ html {
   from { opacity: 1; transform: translateY(0); }
   to   { opacity: 0; transform: translateY(10px); }
 }
+
+/* Titre page test : chute avec rebond + badge en pop */
+.title-drop { display: inline-block; animation: titleDrop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes titleDrop {
+  0%   { transform: translateY(-130%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.badge-pop { display: inline-block; transform: scale(0); animation: badgePop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 1.15s both; }
+@keyframes badgePop {
+  0%   { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .title-drop, .badge-pop { animation: none !important; transform: none !important; opacity: 1 !important; }
+}
