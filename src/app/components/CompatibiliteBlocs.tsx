@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getTypeByCode } from "../data/types";
 
 const GREEN = "rgba(51,164,116,0.85)";
-const RED = "rgba(214,69,69,0.9)";
+const RED = "rgba(214,69,69,0.7)";
 
 export interface CompatibiliteBloc {
   titre: string;
@@ -58,7 +58,7 @@ export default function CompatibiliteBlocs({ blocs }: { blocs: CompatibiliteBloc
         {blocs.map((b) => {
           const positif = b.ton === "positif";
           const couleur = positif ? GREEN : RED;
-          const fond = positif ? "rgba(51,164,116,0.08)" : "rgba(214,69,69,0.08)";
+          const fond = positif ? "rgba(51,164,116,0.08)" : "rgba(214,69,69,0.035)";
           return (
             <div
               key={b.titre}

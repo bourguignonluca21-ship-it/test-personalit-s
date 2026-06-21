@@ -18,6 +18,32 @@ import { spectreFromScores, NOMS_VARIANTES } from "../../data/moteur";
 
 const GREEN = "rgba(51,164,116,0.85)";
 
+// ===== SQUELETTE FIGÉ — labels fixes communs à TOUS les profils =====
+// Ces libellés ne vivent qu'ici : on les change une fois, ils changent partout.
+// Le contenu propre à chaque profil (dans profils.ts) ne porte que le texte variable.
+const AGES = ["Enfance", "Jeunesse", "Adulte", "Ancien"] as const;
+const LABELS_BLOCS: Record<string, { negatif: string; positif: string }> = {
+  relations: { negatif: "Ce qui est toxique pour toi", positif: "Ce qui te réussit" },
+  carriere: { negatif: "Ce qui t'éteint", positif: "Ce qui te booste" },
+};
+const LABELS_COMPAT: Record<
+  string,
+  { negatif: string; positif: string; panelNegatif: string; panelPositif: string }
+> = {
+  relations: {
+    negatif: "Les –",
+    positif: "Les +",
+    panelNegatif: "Les profils les – compatible",
+    panelPositif: "Les profils les + compatible",
+  },
+  carriere: {
+    negatif: "Les environnements à éviter",
+    positif: "Les métiers faits pour toi",
+    panelNegatif: "Là où tu risques de t'éteindre",
+    panelPositif: "Des pistes qui te ressemblent",
+  },
+};
+
 function parseSlug(slug: string): { code: string; variante: string } {
   const m = slug.match(/^(.+)-(v\d)$/i);
   if (m) return { code: m[1].toUpperCase(), variante: m[2].toUpperCase() };
@@ -127,8 +153,8 @@ function BlocsPaires({ blocs }: { blocs: { titre: string; ton: "positif" | "nega
     <div className="grid sm:grid-cols-2 gap-5">
       {blocs.map((b) => {
         const positif = b.ton === "positif";
-        const couleur = positif ? GREEN : "rgba(214,69,69,0.9)";
-        const fond = positif ? "rgba(51,164,116,0.08)" : "rgba(214,69,69,0.08)";
+        const couleur = positif ? GREEN : "rgba(214,69,69,0.7)";
+        const fond = positif ? "rgba(51,164,116,0.08)" : "rgba(214,69,69,0.035)";
         return (
           <div key={b.titre} className="rounded-2xl border border-gray-100 p-5" style={{ background: fond }}>
             <h4
@@ -140,7 +166,7 @@ function BlocsPaires({ blocs }: { blocs: { titre: string; ton: "positif" | "nega
             <ul className="space-y-2">
               {b.items.map((it) => (
                 <li key={it} className="text-sm text-[rgba(0,0,0,0.7)] leading-relaxed flex gap-2">
-                  <span style={{ color: positif ? GREEN : "rgba(214,69,69,0.9)" }}>
+                  <span style={{ color: positif ? GREEN : "rgba(214,69,69,0.7)" }}>
                     {positif ? "+" : "–"}
                   </span>
                   <span>{it}</span>
@@ -165,9 +191,71 @@ function VarianteDetailBlock({ detail }: { detail: VarianteDetail }) {
   );
 }
 
+// « Tes leviers forts » : une colonne de forces à activer, formulées 100 % positif
+// (la faiblesse n'est jamais nommée). Cartes vertes, pas de paire ni de rouge.
+function LeviersBlock({ items }: { items: { titre: string; texte: string }[] }) {
+  return (
+    <div className="mt-12">
+      <h3 className="inline-block text-base font-bold mb-4 rounded-full px-6 py-2 text-white" style={{ background: GREEN }}>
+        Tes leviers forts
+      </h3>
+      <p className="text-gray-600 leading-relaxed mb-8">
+        Apprendre à se connaître est le chemin d&apos;une vie. Voici des clés qui sont déjà en toi, des forces à activer
+        pour devenir, jour après jour, la plus belle version de toi.
+      </p>
+      <div className="grid md:grid-cols-2 gap-4">
+        {items.map((l) => (
+          <div
+            key={l.titre}
+            className="rounded-2xl border border-gray-100 p-5 md:p-6"
+            style={{ background: "rgba(51,164,116,0.08)" }}
+          >
+            <p className="font-semibold text-[rgba(0,0,0,0.8)] mb-1">{l.titre}</p>
+            <p className="text-sm text-gray-600 leading-relaxed">{l.texte}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Bloc C — « Les questions à te poser » : un plan d'action volontaire sous forme de
+// questions introspectives, branchées sur les schémas qui font souffrir ce profil.
+function QuestionsBlock({ items }: { items: { situation: string; question: string }[] }) {
+  return (
+    <div className="mt-12">
+      <h3 className="inline-block text-base font-bold mb-4 rounded-full px-6 py-2 text-white" style={{ background: GREEN }}>
+        Les questions à te poser
+      </h3>
+      <p className="text-gray-600 leading-relaxed mb-2">
+        Ton accomplissement n&apos;est pas une liste de consignes, c&apos;est un jeu de questions à te poser quand un
+        schéma te fait souffrir. Y répondre honnêtement, c&apos;est déjà commencer à le désamorcer.
+      </p>
+      <div className="divide-y divide-gray-100">
+        {items.map((q) => (
+          <div key={q.question} className="py-9 text-center max-w-2xl mx-auto">
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[rgba(0,0,0,0.8)] mb-3">
+              {q.situation}
+            </p>
+            <p className="text-xl md:text-2xl font-medium leading-snug text-[rgba(0,0,0,0.8)]">
+              <span className="text-3xl leading-none mr-0.5 align-middle" style={{ color: "rgba(0,0,0,0.8)" }}>
+                “
+              </span>
+              {q.question}
+              <span className="text-3xl leading-none ml-0.5 align-middle" style={{ color: "rgba(0,0,0,0.8)" }}>
+                ”
+              </span>
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // Détail d'une grande section façon 16P : traits influents (verrouillé) +
 // forts/faibles (gratuit) + encarts premium (super-pouvoirs, risques…).
-function SectionDetailBlock({ detail }: { detail: SectionDetail }) {
+function SectionDetailBlock({ detail, section }: { detail: SectionDetail; section: string }) {
   return (
     <div className="mt-10">
       {/* « Comment tu évolues » — gratuit */}
@@ -183,9 +271,9 @@ function SectionDetailBlock({ detail }: { detail: SectionDetail }) {
 
           {detail.etapes && (
             <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {detail.etapes.map((e, i) => (
+              {detail.etapes.map((texte, i) => (
                 <div
-                  key={e.label}
+                  key={AGES[i] ?? i}
                   className="rounded-2xl border border-gray-100 p-5"
                   style={{ background: "rgba(51,164,116,0.08)" }}
                 >
@@ -193,9 +281,9 @@ function SectionDetailBlock({ detail }: { detail: SectionDetail }) {
                     className="inline-block text-sm font-bold mb-3 rounded-full px-4 py-1.5 text-white"
                     style={{ background: GREEN }}
                   >
-                    {i + 1}. {e.label}
+                    {AGES[i]}
                   </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">{e.texte}</p>
+                  <p className="text-sm text-gray-600 leading-relaxed">{texte}</p>
                 </div>
               ))}
             </div>
@@ -238,17 +326,27 @@ function SectionDetailBlock({ detail }: { detail: SectionDetail }) {
         </div>
       )}
 
-      {/* Paires de blocs (toxique / te réussit) */}
+      {/* Paires de blocs (toxique / te réussit) — titres injectés depuis le squelette */}
       {detail.blocs && (
         <div className="mt-12">
-          <BlocsPaires blocs={detail.blocs} />
+          <BlocsPaires
+            blocs={detail.blocs.map((b) => ({ ...b, titre: b.titre ?? LABELS_BLOCS[section]?.[b.ton] ?? "" }))}
+          />
         </div>
       )}
 
-      {/* Compatibilités (Les + / Les –) — survol → panneau de profils concrets */}
+      {/* Compatibilités (Les + / Les –) — titres + panneau injectés depuis le squelette */}
       {detail.compatibilites && (
         <div className="mt-5">
-          <CompatibiliteBlocs blocs={detail.compatibilites} />
+          <CompatibiliteBlocs
+            blocs={detail.compatibilites.map((c) => ({
+              ...c,
+              titre: c.titre ?? LABELS_COMPAT[section]?.[c.ton] ?? "",
+              panelTitre:
+                c.panelTitre ??
+                (c.ton === "positif" ? LABELS_COMPAT[section]?.panelPositif : LABELS_COMPAT[section]?.panelNegatif),
+            }))}
+          />
         </div>
       )}
 
@@ -271,19 +369,11 @@ function SectionDetailBlock({ detail }: { detail: SectionDetail }) {
         </div>
       )}
 
-      {/* « Tes pièges à éviter » — bloc visible avec descriptions (gratuit) */}
-      {detail.pieges && (
-        <div className="mt-12">
-          <GroupePoints titre="Tes pièges à éviter" items={detail.pieges} />
-        </div>
-      )}
+      {/* Tes leviers forts — colonne positive */}
+      {detail.leviersForts && <LeviersBlock items={detail.leviersForts} />}
 
-      {/* « Tes leviers de développement » — bloc visible avec descriptions */}
-      {detail.leviers && (
-        <div className="mt-12">
-          <GroupePoints titre="Tes leviers de développement" items={detail.leviers} />
-        </div>
-      )}
+      {/* Bloc C — Les questions à te poser */}
+      {detail.questions && <QuestionsBlock items={detail.questions} />}
 
       {/* Encart « Ton paradoxe » — tout en bas */}
       {detail.paradoxe && (
@@ -292,18 +382,56 @@ function SectionDetailBlock({ detail }: { detail: SectionDetail }) {
         </div>
       )}
 
-      {/* « Un mot pour la route » — clôture gratuite */}
-      {detail.motRoute && (
-        <div
-          className="mt-12 rounded-2xl p-6 md:p-8 text-center"
-          style={{ background: "rgba(51,164,116,0.08)" }}
-        >
-          <h3 className="text-base font-bold mb-3" style={{ color: GREEN }}>
-            Un mot pour la route
-          </h3>
-          <p className="text-[rgba(0,0,0,0.75)] leading-relaxed max-w-2xl mx-auto">{detail.motRoute}</p>
-        </div>
-      )}
+      {/* Le « mot pour la route » a été remplacé par la carte premium de fin (voir CarteFinPremium). */}
+    </div>
+  );
+}
+
+// Carte premium de fin (inspirée de la fin de parcours 16P, réécrite à notre voix).
+// Bloc générique du template : s'affichera à l'identique sur tous les profils.
+function CarteFinPremium() {
+  const strong = "font-semibold text-[rgba(0,0,0,0.8)]";
+  return (
+    <div className="my-14 rounded-2xl p-7 md:p-10" style={{ background: "rgba(51,164,116,0.08)" }}>
+      <span
+        className="inline-block text-xs font-bold uppercase tracking-wide rounded-full px-4 py-1.5 text-white mb-5"
+        style={{ background: GREEN }}
+      >
+        Accéder maintenant
+      </span>
+      <h2 className="text-2xl md:text-3xl font-bold text-[rgba(0,0,0,0.8)] mb-5">
+        Va au bout de toi-même
+      </h2>
+      <p className="text-gray-600 leading-relaxed mb-6">
+        Ton résumé n&apos;effleure que la surface. Le rapport complet plonge dans le détail : ton{" "}
+        <strong className={strong}>spectre exact</strong> sur les 4 axes, ta{" "}
+        <strong className={strong}>variante analysée en profondeur</strong> (1 profil sur 48), tes{" "}
+        <strong className={strong}>forces et tes zones d&apos;ombre</strong>, tes paradoxes, ta façon d&apos;aimer, de te
+        lier et tes <strong className={strong}>compatibilités</strong>, comment tu évolues à chaque âge de ta vie, et ton{" "}
+        <strong className={strong}>chemin de croissance</strong> avec tes <strong className={strong}>leviers forts</strong>{" "}
+        et les bonnes questions à te poser.
+      </p>
+      <div className="mb-8 pl-4 border-l-2" style={{ borderColor: GREEN }}>
+        <p className="text-[rgba(0,0,0,0.7)] leading-relaxed italic">
+          Et ce n&apos;est que ta <strong className="font-bold">lumière</strong>. Tu pourras ensuite révéler ta part
+          d&apos;<strong className="font-bold">ombre</strong>, puis débloquer un parcours personnalisé qui confronte ton{" "}
+          <strong className="font-bold">meilleur</strong> et ton{" "}
+          <strong className="font-bold">pire</strong>{" "}
+          pour t&apos;apprendre à vraiment te comprendre.
+        </p>
+      </div>
+      <p className="text-4xl font-bold text-[rgba(0,0,0,0.8)] mb-6">6 €</p>
+      <Link
+        href="/pack-carriere-premium"
+        className="inline-block text-white font-semibold py-4 px-10 rounded-full text-lg hover:opacity-90 transition"
+        style={{ background: GREEN }}
+      >
+        Débloquer mon rapport complet →
+      </Link>
+      <p className="text-sm text-gray-400 mt-4">
+        Ton test de personnalité s&apos;enregistre sur ton compte et pourra être confronté à ta dark personnalité, pour
+        bâtir ton parcours sur mesure Ombre et Lumière.
+      </p>
     </div>
   );
 }
@@ -419,7 +547,7 @@ export default async function ResultatPage({
               )}
 
               {getSectionDetail(code, variante, sec.id) && (
-                <SectionDetailBlock detail={getSectionDetail(code, variante, sec.id)!} />
+                <SectionDetailBlock detail={getSectionDetail(code, variante, sec.id)!} section={sec.id} />
               )}
 
               {content?.premium && (
@@ -438,17 +566,8 @@ export default async function ResultatPage({
           );
         })}
 
-        {/* CTA BAS */}
-        <div className="text-center py-12">
-          <p className="text-gray-500 mb-5">Tu n&apos;as vu qu&apos;un aperçu de ton portrait.</p>
-          <Link
-            href="/pack-carriere-premium"
-            className="inline-block text-white font-semibold py-4 px-10 rounded-full text-lg hover:opacity-90 transition"
-            style={{ background: GREEN }}
-          >
-            Débloquer le rapport complet →
-          </Link>
-        </div>
+        {/* CARTE PREMIUM DE FIN — remplace le « mot pour la route » et l'ancien CTA bas */}
+        <CarteFinPremium />
         </div>
       </div>
     </div>
