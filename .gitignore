@@ -24,6 +24,7 @@
 .DS_Store
 *.pem
 .fuse_hidden*
+esberr.txt
 
 # debug
 npm-debug.log*
