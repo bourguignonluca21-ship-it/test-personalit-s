@@ -52,13 +52,13 @@ Ce qui te porte, c'est la beauté saisie et l'instant sublimé. Tu ne te content
 
 Cette combinaison, l'énergie, la chaleur et la spontanéité, fait de toi la lumière de la soirée, celui qui fait que l'instant devient un souvenir. Ta présence transforme une journée, un groupe, un moment ordinaire. Le revers, c'est que ton goût de l'instant peut te rendre impulsif et te faire négliger ce qui se construit dans la durée. Ton plus beau chemin de croissance sera d'apprendre à bâtir une vie à la hauteur de ta joie.`,
 
-    "ESFP-V2": `Parmi les trois façons d'être de l'Amuseur, tu es le plus tourné vers le soin, l'authenticité et la fidélité aux gens. Tu n'es pas avant tout l'Animateur centré sur l'ambiance, ni l'Esthète Vivant tourné vers le beau, ce qui te caractérise, c'est ton cœur, ta générosité, la profondeur de tes valeurs sous la joie apparente. Aimer les gens, être là pour eux, agir selon tes valeurs, rester fidèle te comble plus que tout.
+    "ESFP-V2": `Des trois visages de l'Amuseur, c'est toi qui penches le plus vers le soin, l'authenticité et la fidélité aux gens. Tu n'es pas avant tout l'Animateur centré sur l'ambiance, ni l'Esthète Vivant tourné vers le beau, ce qui te caractérise, c'est ton cœur, ta générosité, la profondeur de tes valeurs sous la joie apparente. Aimer les gens, être là pour eux, agir selon tes valeurs, rester fidèle te comble plus que tout.
 
-Cette combinaison, la chaleur, la sensibilité et la générosité, fait de toi l'ami fidèle au grand cœur, celui dont la joie est faite d'amour. Ta présence réchauffe parce qu'elle est sincère, et ta générosité laisse une trace durable dans le cœur des gens. Le revers, c'est que tu peux trop donner, t'oublier et te blesser au moindre heurt de tes valeurs. Ton plus beau chemin de croissance sera d'apprendre à t'inclure dans l'amour que tu donnes.`,
+Cette combinaison, la chaleur, la sensibilité et la générosité, fait de toi l'ami fidèle au grand cœur, celui dont la joie est faite d'amour. Ta présence réchauffe parce qu'elle est sincère, et ta générosité laisse une trace durable dans le cœur des gens. Le revers, c'est que tu peux trop donner, t'oublier et souffrir dès qu'on bouscule ce à quoi tu tiens. Ton plus beau chemin de croissance sera d'apprendre à t'inclure dans l'amour que tu donnes.`,
 
-    "ESFP-V3": `Parmi les trois façons d'être de l'Amuseur, tu es le plus tourné vers la beauté et l'expression sensible. Tu n'es pas avant tout l'Animateur centré sur l'ambiance, ni le Cœur Généreux centré sur ses valeurs, ce qui te caractérise, c'est ton goût du beau, du style, de l'art de vivre. Voir et créer du beau, soigner le style, sublimer le présent, savourer ce qui est raffiné te comble plus que tout.
+    "ESFP-V3": `Des trois visages de l'Amuseur, c'est toi qui inclines le plus vers la beauté et l'expression sensible. Tu n'es pas avant tout l'Animateur centré sur l'ambiance, ni le Cœur Généreux centré sur ses valeurs, ce qui te caractérise, c'est ton goût du beau, du style, de l'art de vivre. Voir et créer du beau, soigner le style, sublimer le présent, savourer ce qui est raffiné te comble plus que tout.
 
-Cette combinaison, la vivacité, la sensibilité au beau et la spontanéité, fait de toi l'amoureux du beau qui sublime chaque instant. Là où d'autres voient du banal, tu vois et tu crées de la beauté, et ta présence embellit la vie. Le revers, c'est que ton attrait pour l'agréable peut te faire fuir ce qui pèse et négliger ce qui se construit lentement. Ton plus beau chemin de croissance sera d'apprendre à inscrire la beauté dans la durée.`,
+Cette combinaison, la vivacité, la sensibilité au beau et la spontanéité, fait de toi l'amoureux du beau qui sublime chaque instant. Là où d'autres voient du banal, tu vois et tu crées de la beauté, et ta présence embellit la vie. Le revers, c'est que ton penchant pour ce qui est plaisant peut te faire esquiver ce qui pèse et délaisser ce qui mûrit lentement. Ton plus beau chemin de croissance sera d'apprendre à inscrire la beauté dans la durée.`,
   },
 
   // Détail de variante : 6 forces, 6 ombres, paradoxe.
@@ -78,11 +78,11 @@ Cette combinaison, la vivacité, la sensibilité au beau et la spontanéité, fa
         { titre: "La fuite de ce qui pèse", accent: "fuite", texte: "Ton besoin de joie et de légèreté peut te faire éviter la routine, les contraintes et les sujets difficiles." },
         { titre: "La dépendance à la validation", accent: "validation", texte: "Ton attention aux autres et ton goût de plaire peuvent te rendre trop sensible à leur regard." },
         { titre: "Une difficulté à durer", accent: "durer", texte: "L'élan te porte, mais tenir au-delà de l'enthousiasme du début te coûte davantage." },
-        { titre: "Le risque de dispersion", accent: "dispersion", texte: "Tu peux illuminer mille instants et passer à côté de ce qui se bâtit lentement." },
+        { titre: "Le risque de dispersion", accent: "dispersion", texte: "Tu peux illuminer mille instants et négliger ce qui demande du temps pour prendre forme." },
       ],
       paradoxe: {
         tension:
-          "Ta joie de vivre illumine l'instant,\nmais elle peut t'empêcher de te projeter et d'affronter ce qui se construit dans la durée.",
+          "Ta joie de vivre illumine l'instant,\nmais elle peut t'empêcher de te projeter et d'affronter ce qui s'édifie au fil du temps.",
         lumiere:
           "Ton énergie, ta chaleur et ta capacité à vivre l'instant sont des cadeaux immenses, tu animes, tu réchauffes, tu rends la vie belle pour toi et pour les autres.",
         ombre:
@@ -114,7 +114,7 @@ Cette combinaison, la vivacité, la sensibilité au beau et la spontanéité, fa
         lumiere:
           "Ta chaleur, ta générosité et ta fidélité sont des cadeaux immenses, tu aimes vraiment, tu donnes, tu réchauffes.",
         ombre:
-          "Mais poussées trop loin, ces mêmes qualités peuvent te conduire à trop donner, à t'oublier et à te blesser au moindre heurt de tes valeurs.",
+          "Mais poussées trop loin, ces mêmes qualités peuvent te conduire à trop donner, à t'oublier et à être touché vif dès qu'on froisse tes convictions.",
         bascule:
           "Le jour où tu apprends à donner sans t'oublier et à prendre soin de toi autant que des autres, ta générosité cesse de te coûter pour devenir un don sain et durable.",
       },
@@ -131,10 +131,10 @@ Cette combinaison, la vivacité, la sensibilité au beau et la spontanéité, fa
       ombres: [
         { titre: "L'attrait du plaisir immédiat", accent: "plaisir", texte: "Ton goût de l'agréable peut te faire privilégier le plaisir du moment au détriment du reste." },
         { titre: "Du mal à te projeter", accent: "projeter", texte: "Ton ancrage dans le présent peut te rendre difficile la planification et l'action à long terme." },
-        { titre: "Une impulsivité possible", accent: "impulsivité", texte: "Ton goût de l'instant peut te faire saisir ce qui se présente sans penser aux conséquences." },
+        { titre: "Une impulsivité possible", accent: "impulsivité", texte: "Emporté par l'instant, tu peux te saisir de ce qui passe sans en mesurer les suites." },
         { titre: "Une sensibilité à la critique", accent: "critique", texte: "Tu peux vivre douloureusement un jugement, surtout sur ce qui touche à ton goût ou à ce que tu crées." },
         { titre: "La fuite de l'effort", accent: "effort", texte: "Tu peux éviter ce qui est moins gratifiant et passer à côté de ce qui demande de la constance." },
-        { titre: "Le risque de dispersion", accent: "dispersion", texte: "Tu peux faire de chaque instant quelque chose de beau et passer à côté de ce qui se construit lentement." },
+        { titre: "Le risque de dispersion", accent: "dispersion", texte: "Tu peux faire de chaque instant quelque chose de beau et délaisser ce qui mûrit lentement." },
       ],
       paradoxe: {
         tension:
@@ -182,10 +182,10 @@ Ce qui t'éteint, ce sont la routine, la bureaucratie et l'austérité. Ton prin
   // 1 paragraphe d'accroche (intro de « Ton chemin de croissance »).
   mindsetTexte: {
     "ESFP-V1": {
-      apercu: `Ton plus grand chantier n'est pas de mettre de la vie autour de toi, ça déborde, c'est d'apprendre à construire une vie à la hauteur de ta joie. Tu portes une énergie et une chaleur rares, mais aussi une tendance qui peut se retourner contre toi, l'impulsivité, la fuite de ce qui pèse, la difficulté à te projeter, la dépendance au regard des autres. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de mettre de la vie autour de toi, ça déborde, c'est d'apprendre à construire une vie à la hauteur de ta joie. Tu portes une énergie et une chaleur rares, mais aussi une tendance qui peut se retourner contre toi, l'impulsivité, la fuite de ce qui pèse, la difficulté à te projeter, la dépendance au regard des autres. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, pourvu que tu saches sur quoi agir.`,
     },
     "ESFP-V2": {
-      apercu: `Ton plus grand chantier n'est pas d'aimer les gens, ton cœur en déborde, c'est d'apprendre à t'inclure dans l'amour que tu donnes. Tu portes en toi une générosité et une profondeur de cœur rares, mais aussi une tendance à t'oublier, à te blesser au moindre heurt de tes valeurs, à fuir ce qui pèse. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas d'aimer les gens, ton cœur en déborde, c'est d'apprendre à t'inclure dans l'amour que tu donnes. Tu portes en toi une générosité et une profondeur de cœur rares, mais aussi une tendance à t'oublier, à encaisser durement le moindre froissement de tes valeurs, à fuir ce qui pèse. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, dès lors que tu sais par où commencer.`,
     },
     "ESFP-V3": {
       apercu: `Ton plus grand chantier n'est pas de voir le beau, ton œil le trouve partout, c'est d'apprendre à inscrire la beauté dans la durée. Tu portes en toi une sensibilité au beau et un art de vivre rares, mais aussi une tendance à chercher le plaisir immédiat, à fuir l'effort moins gratifiant, à mal vivre la critique. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
@@ -206,7 +206,7 @@ Ce qui t'éteint, ce sont la routine, la bureaucratie et l'austérité. Ton prin
       ],
       ombres: [
         { titre: "La fuite de la routine", accent: "routine", texte: "Ton goût de la stimulation peut te faire fuir le quotidien et les conversations lourdes." },
-        { titre: "Une impulsivité possible", accent: "impulsivité", texte: "Ton goût de l'instant peut te faire agir sans penser aux conséquences pour le lien." },
+        { titre: "Une impulsivité possible", accent: "impulsivité", texte: "Porté par l'élan du moment, tu peux agir vite sans en peser l'effet sur le lien." },
         { titre: "Du mal à te projeter", accent: "projeter", texte: "Ta difficulté à penser à demain peut compliquer les projets à deux et l'engagement durable." },
         { titre: "Le lien négligé dans le calme", accent: "négligé", texte: "Ton goût de l'instant peut te faire oublier d'entretenir le lien dans les temps calmes." },
         { titre: "La fuite de ce qui pèse", accent: "fuite", texte: "Ton besoin de légèreté peut te faire éviter les sujets difficiles et les moments lourds." },
@@ -264,7 +264,7 @@ Ce qui t'éteint, ce sont la routine, la bureaucratie et l'austérité. Ton prin
       ],
       paradoxe: {
         tension:
-          "Tu rêves d'une relation vivante et joyeuse,\nmais à fuir la routine et ce qui pèse, tu risques de manquer ce qui se construit dans la durée.",
+          "Tu rêves d'une relation vivante et joyeuse,\nmais à fuir la routine et ce qui pèse, tu risques de passer à côté de ce qui se bâtit patiemment.",
         lumiere:
           "Ta chaleur, ta joie et ton don d'animer font de toi un partenaire et un ami auprès de qui on se sent vivant et entraîné.",
         ombre:
@@ -354,12 +354,12 @@ Ce qui t'éteint, ce sont la routine, la bureaucratie et l'austérité. Ton prin
     "ESFP-V1-developpement": {
       evolution: `Ta personnalité n'est pas figée, elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton énergie et ton goût de l'instant, animer, vivre, profiter, faire la fête. C'est joyeux, mais souvent déséquilibré, tu peux être impulsif, fuir la routine et les contraintes, peiner à te projeter et à finir, dépendre de la validation. Tu illumines le présent, mais l'avenir et la structure te restent étrangers.
 
-Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'on peut se projeter sans renoncer à la joie, que construire pour demain ne tue pas le plaisir d'aujourd'hui, qu'un peu de structure libère ton énergie au lieu de l'étouffer. Tu apprends à te projeter, à structurer un peu, à tenir dans la durée, sans rien perdre de ta joie de vivre. Dans ta pleine maturité, tu deviens un animateur qui illumine l'instant et qui construit, joyeux et chaleureux, mais aussi capable de donner une direction à son énergie. C'est la version la plus aboutie de toi, et elle est entièrement à ta portée.`,
+Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'on peut se projeter sans renoncer à la joie, que construire pour demain ne tue pas le plaisir d'aujourd'hui, qu'un peu de structure libère ton énergie au lieu de l'étouffer. Tu apprends à te projeter, à structurer un peu, à tenir dans la durée, sans rien perdre de ta joie de vivre. Dans ta pleine maturité, tu deviens un animateur qui illumine l'instant et qui construit, joyeux et chaleureux, mais aussi capable de donner une direction à son énergie. C'est le plus beau visage de toi, et il est entièrement à ta portée.`,
       etapes: [
         "Tu attires déjà les autres par ton énergie et ta joie, tu animes, tu rassembles, tu rends l'instant vivant. Le monde est fait pour être vécu, et tu en es spontanément la lumière.",
         "Ton goût de l'instant est à son comble, tu animes, tu profites, tu fais la fête. C'est joyeux, mais souvent déséquilibré, tu peux être impulsif, fuir ce qui pèse, et te projeter ou finir ne va pas encore de soi.",
         "Tu comprends qu'on peut se projeter sans renoncer à la joie et qu'un peu de structure libère ton énergie. Tu apprends à penser à demain, à structurer un peu et à tenir dans la durée, sans rien perdre de ta joie.",
-        "Dans ta pleine maturité, tu es un animateur qui illumine l'instant et qui construit. Ta joie de vivre s'allie à la capacité de bâtir, la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un animateur qui illumine l'instant et qui construit. Ta joie de vivre s'allie à la capacité de bâtir, le plus beau visage de toi.",
       ],
       leviersForts: [
         { titre: "Apprends à te projeter", texte: "C'est ton plus grand levier. Te fixer un cap et donner une direction à ton énergie, sans renier ton goût de l'instant, transforme ta joie en réalisations durables." },
@@ -543,14 +543,14 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'on peut s
       },
     },
     "ESFP-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée, elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ta générosité et ton goût de l'instant, aimer, donner, vivre, être là pour les gens. C'est chaleureux, mais souvent déséquilibré, tu peux t'oublier à force de donner, te blesser au moindre heurt de tes valeurs, peiner à te projeter, fuir ce qui pèse. Tu réchauffes tout le monde, mais ton équilibre repose trop sur les autres.
+      evolution: `Ta personnalité n'est pas un bloc figé, elle évolue, et ton type connaît une trajectoire de maturation assez lisible. Plus jeune, tu es surtout porté par ta générosité et ton goût de l'instant, aimer, donner, vivre, être là pour les gens. C'est chaleureux, mais souvent déséquilibré, tu peux t'oublier à force de donner, prendre de plein fouet le moindre accroc à tes valeurs, peiner à te projeter, fuir ce qui pèse. Tu réchauffes tout le monde, mais ton équilibre repose trop sur les autres.
 
-Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que donner sans s'oublier rend la générosité durable, que protéger ta sensibilité ne la trahit pas, que te projeter ouvre des possibilités. Tu apprends à prendre soin de toi, à poser des limites, à te projeter et à ne pas tout prendre de plein fouet, sans rien perdre de ta chaleur. Dans ta pleine maturité, tu deviens un cœur généreux qui donne sans se vider, chaleureux et fidèle, mais aussi capable de se préserver et de protéger sa sensibilité. C'est la version la plus aboutie de toi, et elle est entièrement à ta portée.`,
+Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que donner sans s'oublier rend la générosité durable, que protéger ta sensibilité ne la trahit pas, que te projeter ouvre des possibilités. Tu apprends à prendre soin de toi, à poser des limites, à te projeter et à ne pas tout prendre de plein fouet, sans rien perdre de ta chaleur. Dans ta pleine maturité, tu deviens un cœur généreux qui donne sans se vider, chaleureux et fidèle, mais aussi capable de se préserver et de protéger sa sensibilité. C'est toi dans ta plus belle expression, et rien ne t'en sépare vraiment.`,
       etapes: [
         "Tu es déjà sensible aux gens et généreux, tu remarques celui qui ne va pas, tu donnes, tu réchauffes. Le cœur tourné vers ceux que tu aimes.",
         "Ton cœur se révèle pleinement, tu aimes, tu donnes, tu es là pour tous. C'est chaleureux, mais souvent déséquilibré, tu t'oublies, tu te blesses au moindre heurt, et te projeter ou te préserver ne va pas encore de soi.",
         "Tu comprends que donner sans t'oublier rend ta générosité durable et que protéger ta sensibilité ne la trahit pas. Tu apprends à prendre soin de toi, à recevoir et à te projeter, sans rien perdre de ta chaleur.",
-        "Dans ta pleine maturité, tu es un cœur généreux qui donne depuis un cœur plein. Ta générosité s'allie à la solidité intérieure, la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un cœur généreux qui donne depuis un cœur plein. Ta générosité s'allie à la solidité intérieure, toi dans ta plus belle expression.",
       ],
       leviersForts: [
         { titre: "Donne sans t'oublier", texte: "C'est ton plus grand levier. Apprends à te compter, toi aussi, dans ta générosité. Prendre soin de toi te permet de donner durablement, depuis un cœur plein plutôt que vidé." },
@@ -587,12 +587,12 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que donner s
         { titre: "Un art de vivre partagé", accent: "art", texte: "Tu sais rendre la vie belle à deux, et tes proches aiment savourer de beaux moments avec toi." },
       ],
       ombres: [
-        { titre: "L'attrait du plaisir", accent: "plaisir", texte: "Ton goût de l'agréable peut te faire fuir la routine et les aspects moins reluisants du quotidien." },
+        { titre: "L'attrait du plaisir", accent: "plaisir", texte: "Ce penchant pour l'agréable peut te pousser à esquiver la routine et les côtés moins reluisants du quotidien." },
         { titre: "Du mal à te projeter", accent: "projeter", texte: "Ta difficulté à penser à demain peut compliquer les projets à deux." },
         { titre: "Une sensibilité aux heurts", accent: "heurts", texte: "Tu peux vivre les tensions et les jugements douloureusement, surtout sur ton goût." },
-        { titre: "La fuite des moments lourds", accent: "fuite", texte: "Ton goût de l'agréable peut te faire éviter les temps difficiles et les sujets qui pèsent." },
-        { titre: "Une impulsivité possible", accent: "impulsivité", texte: "Ton goût de l'instant peut te faire saisir l'agréable sans penser aux conséquences pour le lien." },
-        { titre: "Le risque de surface", accent: "surface", texte: "À soigner l'agréable, tu peux passer à côté de ce qui se construit dans la durée et la difficulté." },
+        { titre: "La fuite des moments lourds", accent: "fuite", texte: "Ton attrait pour ce qui est plaisant peut te faire contourner les temps difficiles et les sujets qui pèsent." },
+        { titre: "Une impulsivité possible", accent: "impulsivité", texte: "Happé par l'agréable du moment, tu peux foncer sans mesurer l'effet sur le lien." },
+        { titre: "Le risque de surface", accent: "surface", texte: "À soigner l'agréable, tu peux laisser de côté ce qui se bâtit dans le temps et dans l'effort." },
       ],
       blocs: [
         {
@@ -646,7 +646,7 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que donner s
       ],
       paradoxe: {
         tension:
-          "Tu rêves d'une relation belle et raffinée,\nmais à fuir le quotidien moins reluisant, tu risques de manquer ce qui se construit dans la durée.",
+          "Tu rêves d'une relation belle et raffinée,\nmais à fuir le quotidien moins reluisant, tu risques de passer à côté de ce qui s'édifie sur la longueur.",
         lumiere:
           "Ta sensibilité, ta chaleur et ton art d'embellir font de toi un partenaire et un ami auprès de qui la vie devient belle.",
         ombre:
@@ -665,7 +665,7 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que donner s
         { titre: "Un goût du concret", accent: "concret", texte: "Tu travailles bien dans le sensible et le tangible, où ton goût prend forme dans le réel." },
       ],
       ombres: [
-        { titre: "L'attrait du plaisir immédiat", accent: "plaisir", texte: "Ton goût de l'agréable peut te faire privilégier ce qui plaît maintenant au détriment de l'effort." },
+        { titre: "L'attrait du plaisir immédiat", accent: "plaisir", texte: "Ton appétit du plaisir immédiat peut te faire préférer ce qui séduit maintenant à l'effort qui paie plus tard." },
         { titre: "Du mal à te projeter", accent: "projeter", texte: "La planification et l'action à long terme ne sont pas ton terrain naturel." },
         { titre: "Une difficulté à structurer", accent: "structurer", texte: "Le suivi régulier et l'organisation dans la durée te pèsent et te lassent." },
         { titre: "Une sensibilité à la critique", accent: "critique", texte: "Un retour sur ton goût ou ce que tu crées peut te toucher fort et longtemps." },
@@ -734,14 +734,14 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que donner s
       },
     },
     "ESFP-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée, elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton goût du beau et de l'instant, savourer, sublimer, profiter, créer de l'agréable. C'est riche, mais souvent déséquilibré, tu peux chercher le plaisir immédiat, fuir ce qui pèse, peiner à te projeter, te montrer sensible à la critique. Tu embellis le présent, mais l'avenir et l'effort moins gratifiant te restent étrangers.
+      evolution: `Ta personnalité ne reste pas la même toute ta vie, elle se transforme, et ton type emprunte un chemin de maturité plutôt repérable. Plus jeune, tu es surtout porté par ton goût du beau et de l'instant, savourer, sublimer, profiter, créer de l'agréable. C'est riche, mais souvent déséquilibré, tu peux chercher le plaisir immédiat, fuir ce qui pèse, peiner à te projeter, te montrer sensible à la critique. Tu embellis le présent, mais l'avenir et l'effort moins gratifiant te restent étrangers.
 
-Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'on peut se projeter sans renoncer au beau, que construire pour demain ne tue pas le plaisir d'aujourd'hui, qu'affronter ce qui pèse permet de protéger ce qu'on aime. Tu apprends à te projeter, à structurer un peu, à concilier le plaisir et l'effort, sans rien perdre de ton goût du beau. Dans ta pleine maturité, tu deviens un esthète qui sublime l'instant et qui construit, sensible et raffiné, mais aussi capable de donner une direction durable à sa sensibilité. C'est la version la plus aboutie de toi, et elle est entièrement à ta portée.`,
+Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'on peut se projeter sans renoncer au beau, que construire pour demain ne tue pas le plaisir d'aujourd'hui, qu'affronter ce qui pèse permet de protéger ce qu'on aime. Tu apprends à te projeter, à structurer un peu, à concilier le plaisir et l'effort, sans rien perdre de ton goût du beau. Dans ta pleine maturité, tu deviens un esthète qui sublime l'instant et qui construit, sensible et raffiné, mais aussi capable de donner une direction durable à sa sensibilité. C'est toi à ton sommet, et ce sommet est à ta portée.`,
       etapes: [
         "Tu vois et tu crées déjà le beau, tu sublimes l'instant, tu soignes les choses. Le monde est fait pour être rendu beau, et tu en as spontanément le goût.",
         "Ton goût du beau est à son comble, tu savoures, tu sublimes, tu profites. C'est riche, mais souvent déséquilibré, tu peux chercher le plaisir immédiat, fuir ce qui pèse, et te projeter ou faire l'effort ne va pas encore de soi.",
         "Tu comprends qu'on peut se projeter sans renoncer au beau et qu'affronter ce qui pèse protège ce qu'on aime. Tu apprends à te projeter, à structurer un peu et à concilier plaisir et effort, sans rien perdre de ton goût.",
-        "Dans ta pleine maturité, tu es un esthète qui sublime l'instant et qui construit. Ton goût du beau s'allie à la capacité de bâtir, la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un esthète qui sublime l'instant et qui construit. Ton goût du beau s'allie à la capacité de bâtir, toi à ton sommet.",
       ],
       leviersForts: [
         { titre: "Apprends à te projeter", texte: "C'est ton plus grand levier. Te fixer un cap et donner une direction durable à ta sensibilité, sans renier ton goût de l'instant, transforme ton talent en réalisations qui durent." },

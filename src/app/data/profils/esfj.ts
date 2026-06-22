@@ -10,7 +10,7 @@
 const esfj = {
   // Texte commun au type, affiché sous les barres du spectre.
   traitsTexte: {
-    ESFJ: `Ton esprit est tourné vers l'extérieur et vers les gens : tu puises ton énergie dans le contact, le lien et la présence des autres, et ton attention va d'abord à ce qu'ils ressentent et à ce dont ils ont besoin. Là où d'autres laissent les relations au hasard, toi tu les tisses et tu les entretiens : tu sens le climat d'un groupe, tu remarques celui qu'on oublie, tu te souviens de ce qui compte pour chacun. Cette chaleur attentive, alliée à un vrai sens du concret, fait de toi quelqu'un autour de qui une communauté se forme et se sent bien.
+    ESFJ: `Ton esprit est tourné vers l'extérieur et vers les gens : tu puises ton énergie dans le contact, le lien et la présence des autres, et ton attention va d'abord à ce qu'ils ressentent et à ce dont ils ont besoin. Là où d'autres laissent les relations au hasard, toi tu les tisses et tu les entretiens : tu sens le climat d'un groupe, tu remarques celui qu'on oublie, tu gardes en mémoire ce qui tient à cœur à chacun. Cette chaleur attentive, alliée à un vrai sens du concret, fait de toi quelqu'un autour de qui une communauté se forme et se sent bien.
 
 Derrière cette générosité bat un cœur profondément dévoué, mais aussi sensible au regard des autres. Ton besoin d'harmonie et de reconnaissance est ta plus grande force, et il a son revers : tu peux trop dépendre de l'approbation, fuir les conflits et t'oublier à force de donner. Tout l'enjeu de ton chemin, c'est d'apprendre à prendre soin de toi autant que des autres et à t'appuyer sur ton propre jugement, pour que ta chaleur cesse de te coûter et devienne un don sain et durable.`,
   },
@@ -34,17 +34,17 @@ Derrière cette générosité bat un cœur profondément dévoué, mais aussi se
 
   // Introduction longue (~2 paragraphes), sous le héros.
   intros: {
-    "ESFJ-V1": `En tant que Consul (ESFJ), tu possèdes cette chaleur et cette sociabilité qui font les êtres autour desquels un groupe se forme et se sent bien. Là où d'autres attendent qu'on vienne les chercher, toi tu vas vers les gens, tu mets à l'aise, tu sens quand l'ambiance se tend et tu fais ce qu'il faut pour que chacun se sente bien. Tu remarques celui qu'on a oublié d'inclure, tu te souviens de ce qui compte pour les autres, tu fais en sorte que personne ne reste sur le bord. Parmi les trois façons d'être de ton type, tu es le plus tourné vers le lien : l'Hôte.
+    "ESFJ-V1": `En tant que Consul (ESFJ), tu possèdes cette chaleur et cette sociabilité qui font les êtres autour desquels un groupe se forme et se sent bien. Là où d'autres attendent qu'on vienne les chercher, toi tu vas vers les gens, tu mets à l'aise, tu sens quand l'ambiance se tend et tu fais ce qu'il faut pour que chacun se sente bien. Tu remarques celui qu'on a oublié d'inclure, tu retiens ce qui compte pour les autres, tu fais en sorte que personne ne reste sur le bord. Parmi les trois visages de ton type, tu es le plus tourné vers le lien : l'Hôte.
 
 Ce qui te porte, c'est le bonheur des gens et l'harmonie du groupe. Tu tires une vraie satisfaction de voir les autres bien ensemble, inclus, contents, et tu allies cette chaleur à un soin concret : ton attention ne reste pas au stade de l'intention, elle passe par des gestes et une présence fiable. Cette même chaleur peut se retourner contre toi : à force de veiller au bonheur de tous, tu peux dépendre de l'approbation et t'oublier toi-même. Ton plus beau terrain de croissance sera d'apprendre à t'inclure dans le soin que tu donnes.`,
 
-    "ESFJ-V2": `En tant que Consul (ESFJ), tu as la chaleur et le dévouement de ta famille d'âme, et tu les mets au service de la stabilité et du soin concret de ton cercle. Là où d'autres consomment la stabilité sans la voir, toi tu la crées, jour après jour, pour ceux que tu aimes : tu maintiens les repères, tu entretiens les habitudes qui rassurent, tu veilles à ce que rien ne manque. Tu te souviens de ce qui compte pour les tiens et tu agis concrètement pour leur bien-être. Parmi les trois façons d'être de ton type, tu es le Gardien Bienveillant.
+    "ESFJ-V2": `En tant que Consul (ESFJ), tu as la chaleur et le dévouement de ta famille d'âme, et tu les mets au service de la stabilité et du soin concret de ton cercle. Là où d'autres consomment la stabilité sans la voir, toi tu la crées, jour après jour, pour ceux que tu aimes : tu maintiens les repères, tu entretiens les habitudes qui rassurent, tu veilles à ce que rien ne manque. Tu gardes en tête ce qui compte pour les tiens et tu agis concrètement pour leur bien-être. Parmi les trois visages de ton type, tu es le Gardien Bienveillant.
 
 Ce qui te porte, c'est le bien-être et la sécurité des tiens. Tu tires une vraie satisfaction de voir ceux que tu aimes à l'abri, bien entourés, dans un cadre stable et chaleureux, et tu allies cette chaleur à un soin éminemment concret qui s'incarne dans les gestes du quotidien. Cette même chaleur peut se retourner contre toi : à force de tout porter, tu peux t'oublier, dépendre de la reconnaissance et te crisper sur ce qui ne doit pas bouger. Ton plus beau terrain de croissance sera d'apprendre à t'inclure dans le soin que tu donnes et à accueillir le changement sans crainte.`,
 
-    "ESFJ-V3": `En tant que Consul (ESFJ), tu as la chaleur et le dévouement de ta famille d'âme, mais tu les tempères d'un discernement plus marqué. Là où d'autres aident avec le cœur sans réfléchir, toi tu aides avec le cœur ET la tête : tu te soucies profondément des gens, mais tu sais aussi prendre du recul, peser, discerner ce qui aide vraiment de ce qui fait juste plaisir sur le moment. Tu allies la chaleur à un jugement posé, le dévouement à la lucidité. Parmi les trois façons d'être de ton type, tu es le Dévoué Réfléchi.
+    "ESFJ-V3": `En tant que Consul (ESFJ), tu as la chaleur et le dévouement de ta famille d'âme, mais tu les tempères d'un discernement plus marqué. Là où d'autres aident d'instinct, sans réfléchir, toi tu mêles l'élan et la réflexion : tu te soucies profondément des gens, mais tu sais aussi prendre du recul, peser, discerner ce qui aide vraiment de ce qui fait juste plaisir sur le moment. Tu allies la chaleur à un jugement posé, le dévouement à la lucidité. Parmi les trois visages de ton type, tu es le Dévoué Réfléchi.
 
-Ce qui te porte, c'est le bien-être des autres, mais un bien-être que tu veux réel et durable, pas seulement immédiat. Tu tires une vraie satisfaction d'aider de façon juste, de poser le bon cadre, de soutenir sans entretenir la dépendance. Cette double nature peut aussi te tirailler : ton cœur veut se donner, ta lucidité te retient, et tu peux rester pris entre les deux. Ton plus beau terrain de croissance sera d'apprendre à faire coopérer ton cœur et ta tête au lieu de les opposer.`,
+Ce qui te porte, c'est le bien-être des autres, mais un bien-être que tu veux réel et durable, pas seulement immédiat. Tu tires une vraie satisfaction d'aider de façon juste, de poser le bon cadre, de soutenir sans entretenir la dépendance. Cette double nature peut aussi te tirailler : ton élan veut se donner, ta lucidité te retient, et tu peux rester suspendu entre les deux. Ton plus beau terrain de croissance sera d'apprendre à faire travailler ensemble ce que tu ressens et ce que tu raisonnes, au lieu de les opposer.`,
   },
 
   // Texte long de la variante (~2 paragraphes), sous les barres de variante.
@@ -59,7 +59,7 @@ Cette combinaison, la chaleur, le sens du concret et le goût de la stabilité, 
 
     "ESFJ-V3": `Parmi les trois visages du Consul, tu es le plus tourné vers le soin lucide et structuré. Tu n'es pas avant tout l'hôte centré sur le lien social, ni le gardien bienveillant centré sur la stabilité du quotidien : ce qui te caractérise, c'est ta façon d'aider avec discernement, en alliant le cœur et la tête. Aider avec méthode, savoir poser un cadre, prendre du recul avant de te donner, soutenir sans entretenir la dépendance, voilà ce qui dessine ta façon d'être.
 
-Cette combinaison, la chaleur, le sens du concret et le discernement, fait de toi un dévoué dont l'aide est à la fois généreuse et juste, quelqu'un dont le conseil vaut autant que le réconfort. Le revers, c'est que cette double nature peut te tirailler : ton cœur te pousse à donner, ta tête te dit de te préserver, et tu peux rester coincé entre les deux. Ton plus beau chemin de croissance sera d'apprendre à laisser ton cœur et ta raison coopérer au lieu de se contredire.`,
+Cette combinaison, la chaleur, le sens du concret et le discernement, fait de toi un dévoué dont l'aide est à la fois généreuse et juste, quelqu'un dont le conseil vaut autant que le réconfort. Le revers, c'est que cette double nature peut te tirailler : ton cœur te pousse à donner, ta tête te dit de te préserver, et tu peux rester coincé entre les deux. Ton plus beau chemin de croissance sera d'apprendre à réconcilier l'élan et le discernement plutôt qu'à les laisser se contredire.`,
   },
 
   // Détail enrichi par variante : 6 forces, 6 ombres, 1 paradoxe central.
@@ -76,9 +76,9 @@ Cette combinaison, la chaleur, le sens du concret et le discernement, fait de to
       ombres: [
         { titre: "La dépendance à l'approbation", accent: "dépendance", texte: "Ton besoin d'être apprécié peut te rendre très sensible à la critique et au rejet, jusqu'à te blesser pour peu." },
         { titre: "L'oubli de soi", accent: "oubli", texte: "Ton souci des autres peut te faire négliger tes propres besoins, jusqu'à l'épuisement : tu donnes beaucoup et tu réclames peu." },
-        { titre: "La fuite du conflit", accent: "fuite", texte: "Ton besoin d'harmonie peut te faire éviter les désaccords et taire ce qui ne va pas, au lieu de le dire." },
+        { titre: "La fuite du conflit", accent: "fuite", texte: "Ta soif d'harmonie peut te pousser à esquiver les désaccords et à taire ce qui ne va pas, au lieu de le dire." },
         { titre: "Une méfiance du changement", accent: "méfiance", texte: "Ton attachement à ce qui est stable et familier peut te rendre réticent au neuf, même quand il serait bénéfique." },
-        { titre: "Un besoin de reconnaissance", accent: "reconnaissance", texte: "Tu peux attendre une gratitude que tu n'oses pas réclamer, et te sentir blessé quand elle ne vient pas." },
+        { titre: "Un besoin de reconnaissance", accent: "reconnaissance", texte: "Tu peux espérer une gratitude que tu n'oses pas demander, et te sentir blessé quand elle ne vient pas." },
         { titre: "Une chaleur qui peut peser", accent: "peser", texte: "Ton attention constante peut sembler envahissante à ceux qui ont besoin de plus de distance." },
       ],
       paradoxe: {
@@ -89,7 +89,7 @@ Cette combinaison, la chaleur, le sens du concret et le discernement, fait de to
         ombre:
           "Mais poussées trop loin, ces mêmes qualités peuvent te conduire à dépendre de l'approbation, à éviter tout conflit et à t'effacer derrière les besoins des autres jusqu'à ne jamais réclamer ta part.",
         bascule:
-          "Le jour où tu apprends à prendre soin des autres sans t'oublier, à t'appuyer sur ton propre jugement et à dire ce que tu ressens, ta chaleur cesse de te coûter pour devenir un don sain et durable.",
+          "Le jour où tu apprends à prendre soin des autres sans t'oublier, à te fier à ton propre jugement et à dire ce que tu ressens, ta chaleur cesse de te coûter pour devenir un don sain et durable.",
       },
     },
     "ESFJ-V2": {
@@ -97,7 +97,7 @@ Cette combinaison, la chaleur, le sens du concret et le discernement, fait de to
         { titre: "Un soin profondément concret", accent: "concret", texte: "Tu perçois les besoins des tiens et tu y réponds par des actes et des attentions pratiques, là où d'autres en restent aux bonnes intentions." },
         { titre: "Une stabilité rassurante", accent: "stabilité", texte: "Tu maintiens les repères, les habitudes et les traditions qui rassurent, et tu offres un socle sûr dans un monde mouvant." },
         { titre: "Une fiabilité solide", accent: "fiabilité", texte: "Quand on compte sur toi, tu es là, et ce que tu prends en charge est mené à bien, sans faille." },
-        { titre: "Une attention au détail", accent: "attention", texte: "Tu te souviens des habitudes et des petites choses qui font du bien, ce qui rend ton soin précis et personnel." },
+        { titre: "Une attention au détail", accent: "attention", texte: "Tu gardes en mémoire les habitudes et les petites choses qui font du bien, ce qui rend ton soin précis et personnel." },
         { titre: "Une chaleur qui sécurise", accent: "chaleur", texte: "Tu offres une présence douce et rassurante, un quotidien où l'on se sent en sécurité et aimé." },
         { titre: "Un point d'ancrage pour les tiens", accent: "ancrage", texte: "Ta constance et ton dévouement font de toi celui sur qui le quotidien repose et sur qui l'on peut vraiment se reposer." },
       ],
@@ -107,7 +107,7 @@ Cette combinaison, la chaleur, le sens du concret et le discernement, fait de to
         { titre: "La dépendance à l'approbation", accent: "dépendance", texte: "Ton attention aux autres peut te rendre sensible à la critique et au sentiment de ne pas être reconnu." },
         { titre: "Un soin parfois intrusif", accent: "intrusif", texte: "Ton désir de bien faire peut te pousser à t'occuper de ce qu'on ne t'a pas demandé ou à vouloir le bien des autres à ta façon." },
         { titre: "Une crispation sur les repères", accent: "crispation", texte: "Tu peux t'accrocher rigidement aux habitudes et vivre tout bouleversement comme une menace." },
-        { titre: "Une reconnaissance attendue", accent: "reconnaissance", texte: "À force de tout porter en silence, tu peux attendre une gratitude que tu n'oses pas réclamer." },
+        { titre: "Une reconnaissance attendue", accent: "reconnaissance", texte: "À force de tout porter en silence, tu peux guetter une gratitude que tu n'oses pas demander." },
       ],
       paradoxe: {
         tension:
@@ -117,14 +117,14 @@ Cette combinaison, la chaleur, le sens du concret et le discernement, fait de to
         ombre:
           "Mais poussées trop loin, ces mêmes qualités peuvent t'épuiser pour les autres, te faire dépendre de leur reconnaissance et te crisper sur les habitudes jusqu'à refuser le changement nécessaire.",
         bascule:
-          "Le jour où tu apprends à prendre soin sans t'oublier, à accueillir le changement sans te sentir menacé et à t'appuyer sur ton propre jugement, ton dévouement cesse de te coûter pour devenir un don sain et durable.",
+          "Le jour où tu apprends à prendre soin sans t'oublier, à accueillir le changement sans te sentir menacé et à écouter ton propre jugement, ton dévouement cesse de te coûter pour devenir un don sain et durable.",
       },
     },
     "ESFJ-V3": {
       forces: [
         { titre: "Une aide avec discernement", accent: "discernement", texte: "Tu réfléchis à ce qui aide vraiment plutôt que de céder à l'élan du moment, et tu donnes ce dont les gens ont besoin, pas seulement ce qui leur plaît." },
         { titre: "L'alliance du cœur et de la tête", accent: "alliance", texte: "Là où beaucoup penchent d'un côté, toi tu tiens la chaleur et le jugement ensemble, ce qui rend ton avis à la fois bienveillant et réfléchi." },
-        { titre: "Le sens du cadre", accent: "cadre", texte: "Ton dévouement ne t'empêche pas de fixer des limites quand c'est nécessaire, pour toi comme pour les autres, et de soutenir sans entretenir la dépendance." },
+        { titre: "Le sens du cadre", accent: "cadre", texte: "Ton dévouement ne t'empêche pas de fixer des limites quand c'est nécessaire, pour toi comme pour les autres, et d'aider sans rendre l'autre dépendant." },
         { titre: "Une chaleur sincère", accent: "chaleur", texte: "Malgré ton recul, tu n'es jamais froid : tu te soucies vraiment des gens et tu le montres." },
         { titre: "Un jugement posé", accent: "jugement", texte: "Tu sais prendre du recul avant d'agir ou de te prononcer, ce qui t'évite bien des erreurs et fait de toi un conseiller précieux." },
         { titre: "Un soutien fiable", accent: "soutien", texte: "Ta chaleur authentique doublée de lucidité fait de toi un appui sur qui l'on peut compter, pour le réconfort comme pour le conseil." },
@@ -143,9 +143,9 @@ Cette combinaison, la chaleur, le sens du concret et le discernement, fait de to
         lumiere:
           "Ta chaleur, ton dévouement et ton discernement sont des cadeaux immenses : tu aides avec justesse, tu allies l'empathie au recul, tu soutiens sans te perdre.",
         ombre:
-          "Mais cette double nature peut te tirailler : ton cœur te pousse à donner, ta tête te dit de te préserver, et tu peux te retrouver coincé, à hésiter, à t'analyser au lieu d'agir.",
+          "Mais cette double nature peut te tirailler : ton élan te pousse à donner, ta lucidité te dit de te préserver, et tu peux te retrouver coincé, à hésiter, à t'analyser au lieu d'agir.",
         bascule:
-          "Le jour où tu apprends à laisser le cœur et la raison coopérer au lieu de se contredire, à te faire confiance et à accepter qu'aucune mesure n'est parfaite, ton tiraillement devient ta plus grande force.",
+          "Quand tu parviens à faire dialoguer le cœur et la raison plutôt qu'à les dresser l'un contre l'autre, à te faire confiance et à accepter qu'aucune mesure n'est parfaite, ton tiraillement devient ta plus grande force.",
       },
     },
   },
@@ -158,7 +158,7 @@ Tes défis sont les revers de ta nature. Ton besoin d'harmonie peut te faire év
 
     "ESFJ-V2": `En amour comme en amitié, tu es dévoué, attentionné et profondément protecteur du quotidien. Quand tu aimes, tu prends soin, tu construis un cadre stable et chaleureux, tu places le confort et la sécurité de l'autre au cœur de tes préoccupations. Être aimé par toi, c'est se sentir choyé dans les petites choses, soutenu, certain d'avoir un foyer sûr. En amitié, tu es l'ami fidèle et attentionné : tu n'as pas forcément un large cercle, mais tes amitiés sont profondes, stables et anciennes.
 
-Tes défis sont les revers de ta nature. Ton dévouement peut te faire t'oublier et attendre une reconnaissance que tu n'oses pas réclamer. Ton attachement aux habitudes peut te rendre réticent aux changements que souhaite l'autre. Et ton besoin d'harmonie peut te faire taire ce qui te blesse. Ton chemin, c'est d'exprimer tes besoins, d'accueillir un peu de changement et de recevoir autant que tu donnes. Quand tu y parviens, tu offres une relation d'une tendresse et d'une fidélité rares.`,
+Tes défis sont les revers de ta nature. Ton dévouement peut te faire t'oublier et espérer en silence une reconnaissance que tu n'oses pas demander. Ton attachement aux habitudes peut te rendre réticent aux changements que souhaite l'autre. Et ta crainte des frictions peut t'amener à taire ce qui te blesse. Ton chemin, c'est d'exprimer tes besoins, d'accueillir un peu de changement et de recevoir autant que tu donnes. Quand tu y parviens, tu offres une relation d'une tendresse et d'une fidélité rares.`,
 
     "ESFJ-V3": `En amour comme en amitié, tu es chaleureux et dévoué, mais avec un discernement qui te distingue. Quand tu aimes, tu prends soin de l'autre tout en gardant la lucidité de ce qui est sain pour vous deux : tu offres une présence attentive et réfléchie, un soutien qui n'étouffe pas. Être aimé par toi, c'est se sentir choyé sans être materné, soutenu sans être enfermé. En amitié, tu es l'ami à la fois chaleureux et de bon conseil, celui qui soutient mais qui sait aussi dire les choses avec justesse.
 
@@ -183,13 +183,13 @@ Tu travailles avec sérieux, chaleur et discernement, en pensant au bien-être d
   // Section « Mindset & dév personnel » : accroche gratuite par variante.
   mindsetTexte: {
     "ESFJ-V1": {
-      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes une chaleur et un don du lien rares, mais aussi une tendance qui peut se retourner contre toi : la dépendance à l'approbation, l'oubli de soi, la fuite du conflit, la méfiance du changement. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes une chaleur et un don du lien rares, mais aussi une tendance qui peut se retourner contre toi : la dépendance à l'approbation, l'oubli de soi, la fuite du conflit, la méfiance du changement. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, dès lors que tu sais sur quel point agir.`,
     },
     "ESFJ-V2": {
-      apercu: `Ton plus grand chantier n'est pas de prendre soin des autres, ton dévouement n'en manque jamais, c'est d'apprendre à t'y inclure. Tu portes en toi une chaleur et une fiabilité rares, mais aussi une tendance à t'oublier, à dépendre de la reconnaissance, à te crisper sur tes repères et à refuser le changement. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de prendre soin des autres, ton dévouement n'en manque jamais, c'est d'apprendre à t'y inclure. Tu portes en toi une chaleur et une fiabilité rares, mais aussi une tendance à t'oublier, à dépendre de la reconnaissance, à te crisper sur tes repères et à refuser le changement. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, une fois que tu sais par où commencer.`,
     },
     "ESFJ-V3": {
-      apercu: `Ton plus grand chantier n'est pas de bien aider, tu sais le faire avec justesse, c'est d'apprendre à faire coopérer ton cœur et ta tête. Tu portes en toi la chaleur et le discernement, mais aussi une tendance à te tirailler entre les deux, à trop t'analyser, à t'oublier malgré ta lucidité. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de bien aider, tu sais le faire avec justesse, c'est d'apprendre à faire coopérer ton cœur et ta tête. Tu portes en toi la chaleur et le discernement, mais aussi une tendance à te tirailler entre les deux, à trop t'analyser, à t'oublier malgré ta lucidité. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de viser le bon endroit.`,
     },
   },
 
@@ -208,7 +208,7 @@ Tu travailles avec sérieux, chaleur et discernement, en pensant au bien-être d
       ombres: [
         { titre: "L'évitement des sujets qui fâchent", accent: "évitement", texte: "Ton besoin d'harmonie peut te faire éviter les désaccords, jusqu'à laisser des tensions s'accumuler en silence." },
         { titre: "L'oubli de soi", accent: "oubli", texte: "Ton dévouement peut te faire trop donner et t'oublier, jusqu'au déséquilibre ou au sentiment de ne pas être payé de retour." },
-        { titre: "Une reconnaissance attendue", accent: "reconnaissance", texte: "Tu peux attendre une gratitude que tu n'oses pas réclamer, et te sentir blessé quand elle manque." },
+        { titre: "Une reconnaissance attendue", accent: "reconnaissance", texte: "Tu peux espérer un merci que tu n'oses pas demander, et te sentir blessé quand il manque." },
         { titre: "Une vulnérabilité au rejet", accent: "vulnérabilité", texte: "Ton besoin d'approbation peut te rendre fragile au moindre signe de froideur ou de critique." },
         { titre: "Le silence sur ce qui blesse", accent: "silence", texte: "Ta peur du conflit peut te faire taire ce qui te touche au lieu de l'exprimer." },
         { titre: "Une attention envahissante", accent: "envahissante", texte: "Ton soin constant peut sembler excessif à ceux qui ont besoin de plus d'espace." },
@@ -353,14 +353,14 @@ Tu travailles avec sérieux, chaleur et discernement, en pensant au bien-être d
       },
     },
     "ESFJ-V1-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton besoin de lien et d'harmonie : plaire, rassembler, prendre soin, être apprécié. C'est généreux, mais souvent déséquilibré : tu peux dépendre énormément de l'approbation, te conformer aux attentes, t'oublier, fuir tout conflit et te blesser au moindre rejet. Tu prends soin de tout le monde, mais ton équilibre repose trop sur le regard des autres.
+      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Jeune, tu es surtout porté par ton besoin de lien et d'harmonie : plaire, rassembler, prendre soin, être apprécié. C'est généreux, mais souvent déséquilibré : tu peux dépendre énormément de l'approbation, te conformer aux attentes, t'oublier, fuir tout conflit et te blesser au moindre rejet. Tu prends soin de tout le monde, mais ton équilibre repose trop sur le regard des autres.
 
 Avec le temps, tu réalises que ta valeur ne dépend pas de l'approbation de chacun, que poser des limites n'abîme pas le lien, qu'un désaccord exprimé vaut mieux qu'une rancœur tue. Tu apprends à t'appuyer sur ton propre jugement, à recevoir, à t'affirmer, à t'ouvrir au changement, sans rien perdre de ta chaleur. Dans ta pleine maturité, tu deviens un hôte chaleureux qui réunit sans s'oublier, qui donne sans se vider, qui sait dire non et exprimer ce qu'il ressent : la chaleur du lien alliée à la solidité intérieure. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu sens déjà le climat des gens, tu remarques celui qu'on oublie et tu vas spontanément vers les autres pour créer du lien. Le cœur tourné vers le bonheur du groupe.",
         "Ton besoin de lien et d'harmonie est à son comble : plaire, rassembler, être apprécié. C'est généreux, mais souvent déséquilibré : tu dépends de l'approbation, tu fuis le conflit, tu t'oublies, et te blesser au moindre rejet va encore trop vite.",
         "Tu réalises que ta valeur ne dépend pas de l'approbation de chacun et que poser des limites n'abîme pas le lien. Tu apprends à t'appuyer sur ton jugement, à recevoir, à t'affirmer, sans rien perdre de ta chaleur.",
-        "Dans ta pleine maturité, tu es un hôte chaleureux qui réunit sans s'oublier et qui sait dire non. Ta chaleur s'allie à la solidité intérieure : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un hôte chaleureux qui réunit sans s'oublier et qui sait dire non. Ta chaleur s'allie à la solidité intérieure : c'est toi à ton plein épanouissement.",
       ],
       leviersForts: [
         { titre: "Appuie-toi sur ton propre jugement", texte: "Apprends à reconnaître ce que toi tu penses et veux, indépendamment de l'approbation des autres. Ton avis vaut autant que le leur, et t'y fier te rend libre et solide." },
@@ -400,7 +400,7 @@ Avec le temps, tu réalises que ta valeur ne dépend pas de l'approbation de cha
         { titre: "L'oubli de soi", accent: "oubli", texte: "Ton dévouement peut te faire trop donner et t'oublier, jusqu'au déséquilibre." },
         { titre: "Une reconnaissance attendue", accent: "reconnaissance", texte: "Tu peux attendre une gratitude que tu n'oses pas réclamer, et te sentir tenu pour acquis." },
         { titre: "La réticence au changement", accent: "réticence", texte: "Ton attachement aux habitudes peut te rendre rétif aux évolutions que souhaite l'autre." },
-        { titre: "Le silence sur ce qui blesse", accent: "silence", texte: "Ton besoin d'harmonie peut te faire taire ce qui te touche au lieu de l'exprimer." },
+        { titre: "Le silence sur ce qui blesse", accent: "silence", texte: "Ton désir de garder l'harmonie peut t'amener à ravaler ce qui te touche plutôt qu'à le dire." },
         { titre: "Un soin parfois intrusif", accent: "intrusif", texte: "Ton désir de bien faire peut te pousser à vouloir le bien des autres à ta façon plutôt qu'à la leur." },
         { titre: "Une dépendance au regard", accent: "dépendance", texte: "Ton attention aux autres peut te rendre vulnérable au moindre signe de froideur ou de critique." },
       ],
@@ -462,7 +462,7 @@ Avec le temps, tu réalises que ta valeur ne dépend pas de l'approbation de cha
         ombre:
           "Mais à t'oublier, à attendre une reconnaissance tue et à te crisper sur les habitudes, tu peux fragiliser l'équilibre des liens que tu chéris.",
         bascule:
-          "Le jour où tu exprimes tes besoins, où tu t'ouvres au changement et où tu reçois autant que tu donnes, ton dévouement trouve enfin son équilibre.",
+          "Quand tu oses dire tes besoins, t'ouvrir au changement et recevoir autant que tu donnes, ton dévouement trouve enfin son équilibre.",
       },
     },
     "ESFJ-V2-carriere": {
@@ -470,7 +470,7 @@ Avec le temps, tu réalises que ta valeur ne dépend pas de l'approbation de cha
         { titre: "Un soin concret au quotidien", accent: "concret", texte: "Tu fais tourner le quotidien des gens et tu réponds à des besoins tangibles, là où d'autres en restent aux intentions." },
         { titre: "Une fiabilité régulière", accent: "fiabilité", texte: "Tu honores tes engagements avec sérieux et constance, et on compte sur toi pour que les choses tiennent dans le temps." },
         { titre: "Le sens de la continuité", accent: "continuité", texte: "Tu assures le suivi et la stabilité, et tu fais que rien ne se perd et que tout reste en ordre." },
-        { titre: "Une attention au détail", accent: "détail", texte: "Tu te souviens de ce qui compte pour chacun et tu apportes un soin précis qui fait la différence." },
+        { titre: "Une attention au détail", accent: "détail", texte: "Tu retiens ce qui compte pour chacun et tu apportes un soin précis qui fait la différence." },
         { titre: "Une dimension humaine", accent: "humaine", texte: "Tu penses au bien-être de l'équipe et tu apportes une chaleur qui fait de toi un élément précieux." },
         { titre: "Une organisation solide", accent: "organisation", texte: "Tu anticipes, tu prépares, tu maintiens le cadre, et tu transformes ton attention en soin structuré et durable." },
       ],
@@ -540,29 +540,29 @@ Avec le temps, tu réalises que ta valeur ne dépend pas de l'approbation de cha
         ombre:
           "Mais ta résistance au changement, ta difficulté à dire non et ta dépendance à la reconnaissance peuvent te faire trop porter et te rigidifier.",
         bascule:
-          "Le jour où tu apprends à te préserver, à dire non et à accueillir le neuf, ton dévouement reste du côté de l'atout plutôt que de l'épuisement.",
+          "Quand tu apprends à te préserver, à dire non et à accueillir le neuf, ton dévouement demeure une force plutôt qu'une source d'épuisement.",
       },
     },
     "ESFJ-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton dévouement et ton attachement à la stabilité : prendre soin, maintenir les repères, sécuriser, être apprécié. C'est généreux, mais souvent déséquilibré : tu peux t'oublier, dépendre de l'approbation, te crisper sur les habitudes, refuser le changement et te blesser au moindre rejet. Tu prends soin de tout le monde, mais ton équilibre repose trop sur le regard des autres et sur l'immuabilité de tes repères.
+      evolution: `Ta personnalité n'est pas figée : elle évolue, et ton type suit une trajectoire de maturation assez nette. Plus jeune, tu es surtout porté par ton dévouement et ton attachement à la stabilité : prendre soin, maintenir les repères, sécuriser, être apprécié. C'est généreux, mais souvent déséquilibré : tu peux t'oublier, dépendre de l'approbation, te crisper sur les habitudes, refuser le changement et te blesser au moindre rejet. Tu prends soin de tout le monde, mais ton équilibre repose trop sur le regard des autres et sur l'immuabilité de tes repères.
 
-Avec le temps, tu réalises que ta valeur ne dépend pas de l'approbation de chacun, que le changement n'est pas une menace, que prendre soin de toi te permet de mieux prendre soin des autres. Tu apprends à t'affirmer, à recevoir, à t'ouvrir, à t'appuyer sur ton propre jugement, sans rien perdre de ta chaleur. Dans ta pleine maturité, tu deviens un gardien chaleureux qui prend soin sans s'oublier, qui sait accueillir le changement, qui s'affirme et reçoit autant qu'il donne : la chaleur du soin alliée à la solidité et à la souplesse. Et c'est entièrement à ta portée.`,
+Avec le temps, tu réalises que ta valeur ne dépend pas de l'approbation de chacun, que le changement n'est pas une menace, que prendre soin de toi te permet de mieux prendre soin des autres. Tu apprends à t'affirmer, à recevoir, à t'ouvrir, à te fier à ton propre jugement, sans que ta chaleur en souffre. Dans ta pleine maturité, tu deviens un gardien chaleureux qui prend soin sans s'oublier, qui sait accueillir le changement, qui s'affirme et reçoit autant qu'il donne : la chaleur du soin alliée à la solidité et à la souplesse. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu prends déjà soin du quotidien des tiens, tu entretiens les repères et tu veilles à ce que rien ne manque. Le cœur tourné vers la sécurité de ceux que tu aimes.",
         "Ton dévouement et ton attachement à la stabilité sont à leur comble : prendre soin, sécuriser, être apprécié. C'est généreux, mais souvent déséquilibré : tu t'oublies, tu te crispes sur les habitudes, et t'ouvrir au changement ne va pas encore de soi.",
-        "Tu réalises que ta valeur ne dépend pas de l'approbation et que le changement n'est pas une menace. Tu apprends à t'affirmer, à recevoir, à t'ouvrir, sans rien perdre de ta chaleur.",
-        "Dans ta pleine maturité, tu es un gardien chaleureux qui prend soin sans s'oublier et qui sait accueillir le neuf. Ton soin s'allie à la solidité et à la souplesse : la version la plus accomplie de toi.",
+        "Tu réalises que ta valeur ne dépend pas de l'approbation et que le changement n'est pas une menace. Tu apprends à t'affirmer, à recevoir, à t'ouvrir, sans que ta chaleur en pâtisse.",
+        "Dans ta pleine maturité, tu es un gardien chaleureux qui prend soin sans s'oublier et qui sait accueillir le neuf. Ton soin s'allie à la solidité et à la souplesse : c'est toi pleinement réalisé.",
       ],
       leviersForts: [
         { titre: "Ouvre-toi au changement", texte: "Accueille le neuf et l'imprévu avec un peu plus de souplesse, sans perdre ton précieux ancrage. T'ouvrir enrichit ta vie et te rend plus adaptable." },
         { titre: "Apprends à prendre soin de toi", texte: "Honore tes propres besoins, accorde-toi du repos, mets-toi parfois en premier sans culpabiliser. Te préserver, c'est ce qui te permet de prendre soin des autres durablement." },
-        { titre: "Appuie-toi sur ton propre jugement", texte: "Apprends à reconnaître ce que toi tu penses et veux, indépendamment de l'approbation des autres. Ton avis vaut autant que le leur." },
+        { titre: "Fie-toi à ton propre jugement", texte: "Apprends à distinguer ce que toi tu penses et veux, sans le suspendre à l'approbation des autres. Ton avis pèse autant que le leur." },
         { titre: "Laisse les tiens choisir", texte: "Prendre soin ne veut pas dire décider pour les autres. Respecter leurs choix, même différents des tiens, rend ton dévouement plus juste et plus apprécié." },
       ],
       questions: [
         { situation: "Quand un changement s'annonce", question: "Et si ce neuf enrichissait ma vie, plutôt que de menacer mes repères ?" },
         { situation: "Quand tu t'occupes de tout", question: "Qu'est-ce que je néglige chez moi pendant que je prends soin des autres ?" },
-        { situation: "Quand on ne reconnaît pas ton effort", question: "Est-ce que ma valeur dépend de cette gratitude, ou puis-je m'appuyer sur la mienne ?" },
+        { situation: "Quand on ne reconnaît pas ton effort", question: "Est-ce que ma valeur tient à cette gratitude, ou puis-je la trouver en moi-même ?" },
         { situation: "Quand tu veux le bien d'un proche", question: "Est-ce que je respecte son choix, même s'il diffère de ce que je ferais ?" },
         { situation: "Quand tu te sens débordé", question: "Qu'est-ce que je pourrais refuser ou déléguer pour me préserver ?" },
       ],
@@ -574,7 +574,7 @@ Avec le temps, tu réalises que ta valeur ne dépend pas de l'approbation de cha
         ombre:
           "Mais à t'oublier, à dépendre de la reconnaissance et à te crisper sur tes repères, ton beau dévouement peut devenir rigidité et épuisement.",
         bascule:
-          "Le jour où tu comprends que prendre soin de toi et accueillir le changement ne menacent pas ta stabilité mais la renforcent, ta croissance s'enclenche vraiment.",
+          "Quand tu réalises que prendre soin de toi et accueillir le changement ne menacent pas ta stabilité mais la consolident, ta croissance prend enfin son élan.",
       },
     },
     // ----------------------------------------------------------------- V3
@@ -731,18 +731,18 @@ Avec le temps, tu réalises que ta valeur ne dépend pas de l'approbation de cha
         ombre:
           "Mais ton tiraillement, ton autocritique et ton oubli de toi peuvent freiner ton équilibre et t'empêcher de trancher.",
         bascule:
-          "Le jour où tu apprends à te faire confiance, à trancher et à t'appliquer ta propre bienveillance, ton équilibre devient un atout pleinement déployé.",
+          "Quand tu apprends à te faire confiance, à trancher et à t'accorder ta propre bienveillance, ton équilibre devient un atout pleinement déployé.",
       },
     },
     "ESFJ-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es porté par ton dévouement et ton discernement naissant, mais souvent de façon déséquilibrée. Tu peux te tirailler entre ton cœur qui veut donner et ta tête qui te retient, t'analyser à l'excès, douter de tes élans, t'oublier malgré ta lucidité et dépendre encore de l'approbation. Tu as déjà la chaleur et le recul, mais ils se contredisent plus qu'ils ne coopèrent.
+      evolution: `Ta personnalité n'est pas figée : elle se développe, et ton type suit une trajectoire de croissance assez nette. Jeune encore, tu es porté par ton dévouement et ton discernement naissant, mais souvent de façon déséquilibrée. Tu peux te tirailler entre ton cœur qui veut donner et ta tête qui te retient, t'analyser à l'excès, douter de tes élans, t'oublier malgré ta lucidité et dépendre encore de l'approbation. Tu as déjà la chaleur et le recul, mais ils se contredisent plus qu'ils ne coopèrent.
 
 Avec le temps, tu réalises que le cœur et la raison ne sont pas ennemis, qu'ils peuvent travailler ensemble, qu'aucune décision n'est parfaite et que ça n'est pas grave. Tu apprends à te faire confiance, à t'appliquer ta propre bienveillance, à trancher sans tout sur-analyser, à t'ouvrir au changement. Tes deux forces cessent de se contredire pour se renforcer. Dans ta pleine maturité, tu deviens un dévoué dont l'aide est à la fois profondément chaleureuse et remarquablement juste, qui soutient sans s'épuiser, qui sait quand donner et quand se préserver : le cœur et la tête enfin alliés. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu te soucies déjà profondément des gens, mais tu sais aussi observer et peser avant de te donner. Le cœur chaleureux, déjà doublé d'un regard lucide.",
         "Ton dévouement et ton discernement sont à leur comble, mais ils se contredisent : ton cœur veut donner, ta tête te retient, tu t'analyses, tu doutes de tes élans, et trancher ne va pas encore de soi.",
-        "Tu réalises que le cœur et la raison ne sont pas ennemis et qu'aucune décision n'est parfaite. Tu apprends à te faire confiance, à trancher, à t'appliquer ta bienveillance, sans rien perdre de ta chaleur.",
-        "Dans ta pleine maturité, tu es un dévoué dont l'aide est à la fois chaleureuse et juste, qui sait quand donner et quand se préserver. Le cœur et la tête enfin alliés : la version la plus accomplie de toi.",
+        "Tu réalises que le cœur et la raison ne sont pas ennemis et qu'aucune décision n'est parfaite. Tu apprends à te faire confiance, à trancher, à t'accorder ta bienveillance, sans que ta chaleur en souffre.",
+        "Dans ta pleine maturité, tu es un dévoué dont l'aide est à la fois chaleureuse et juste, qui sait quand donner et quand se préserver. Le cœur et la tête enfin alliés : c'est toi au sommet de ton épanouissement.",
       ],
       leviersForts: [
         { titre: "Fais coopérer ton cœur et ta tête", texte: "Cesse de les opposer : laisse ton empathie et ton discernement travailler ensemble. C'est de leur alliance que naît ta plus grande force." },

@@ -44,26 +44,26 @@ Ce qui te distingue vraiment, c'est ton indépendance et ta capacité à structu
   intros: {
     "INTJ-V1": `En tant qu'Architecte (INTJ), tu fais partie des esprits les plus rares qui soient : ceux qui possèdent à la fois la capacité de voir loin et celle de bâtir solide. Là où la plupart avancent au jour le jour, ton esprit travaille déjà sur le plan d'ensemble, la structure cachée, le coup d'avance. Tu ne te contentes pas de rêver une meilleure façon de faire, tu la dessines, puis tu la construis. C'est cette alliance entre la vision et l'exécution qui te rend si singulier.
 
-Parmi les trois façons d'être de ton type, tu es l'Architecte-Bâtisseur, celui qui est le plus tourné vers le tangible. Une idée qui ne se concrétise pas n'a pas de valeur à tes yeux : tu mesures les choses à ce qu'elles produisent réellement, et tu as ce besoin presque physique d'optimiser ce qui est mal pensé. Ton plus beau terrain de croissance sera de relier cette puissance d'esprit à la chaleur des liens, pour devenir non seulement un bâtisseur redoutable, mais un être pleinement accompli.`,
+Des trois visages que peut prendre ton type, tu incarnes l'Architecte-Bâtisseur, celui qui est le plus tourné vers le tangible. Une idée qui ne se concrétise pas n'a pas de valeur à tes yeux : tu mesures les choses à ce qu'elles produisent réellement, et tu as ce besoin presque physique d'optimiser ce qui est mal pensé. Ton plus grand chemin de progrès consistera à relier cette puissance d'esprit à la chaleur des liens, pour devenir non seulement un bâtisseur redoutable, mais un être pleinement accompli.`,
     "INTJ-V2": `En tant qu'Architecte (INTJ), tu possèdes l'intelligence analytique et la vision à long terme qui caractérisent les esprits les plus stratégiques, mais chez toi cette puissance est arrimée à une boussole morale qui ne te lâche jamais. Tu construis, tu planifies, tu vises loin, toujours en te demandant : est-ce juste ? est-ce que ça sert ce en quoi je crois ? Ton esprit stratégique ne tourne jamais à vide, il est au service de quelque chose de plus grand que toi.
 
-Parmi les trois façons d'être de ton type, tu es le Stratège de Conviction, celui dont l'intelligence est la plus profondément liée aux valeurs. Une stratégie brillante au service de rien n'a aucune valeur à tes yeux : tu veux que ta force laisse le monde un peu meilleur. Ton plus beau terrain de croissance sera d'apprendre à tenir tes convictions avec souplesse, pour faire de ce que tu crois une force qui rallie plutôt qu'une exigence qui isole.`,
+Parmi les trois manières d'incarner ton type, tu es le Stratège de Conviction, celui dont l'intelligence est la plus profondément liée aux valeurs. Une stratégie brillante au service de rien n'a aucune valeur à tes yeux : tu veux que ta force laisse le monde un peu meilleur. Ta plus belle marge de progression sera d'apprendre à tenir tes convictions avec souplesse, pour faire de ce que tu crois une force qui rallie plutôt qu'une exigence qui isole.`,
     "INTJ-V3": `En tant qu'Architecte (INTJ), tu possèdes l'une des intelligences les plus profondes qui soient, celle qui ne se contente pas de résoudre mais qui cherche à comprendre en profondeur, à saisir le sens, à voir loin. Ton esprit absorbe d'énormes quantités d'informations, les laisse décanter, et soudain tout s'éclaire en une intuition limpide. Tu vois les systèmes, les schémas, les directions, souvent bien avant les autres.
 
-Parmi les trois façons d'être de ton type, tu es le Visionnaire, celui dont l'esprit plonge le plus loin dans les profondeurs. La compréhension, pour toi, est une fin en soi : tu as besoin de saisir le pourquoi profond avant, et parfois au lieu de faire. Ton plus beau terrain de croissance sera d'apprendre à ancrer tes visions dans le réel et à les partager, pour que ta clairvoyance cesse d'être un trésor caché et devienne une lumière pour les autres.`,
+Des trois déclinaisons de ton type, tu es le Visionnaire, celui dont l'esprit plonge le plus loin dans les profondeurs. La compréhension, pour toi, est une fin en soi : tu as besoin de saisir le pourquoi profond avant d'agir, et parfois même à la place d'agir. Ton plus bel espace de croissance sera d'apprendre à ancrer tes visions dans le réel et à les partager, pour que ta clairvoyance cesse d'être un trésor caché et devienne une lumière pour les autres.`,
   },
 
   // ---------------------------------------------------------------------------
   // 5. Texte long de la variante (~2 paragraphes, sous les barres de variante).
   // ---------------------------------------------------------------------------
   texteVariante: {
-    "INTJ-V1": `Parmi les trois visages de l'Architecte, tu es celui qui est le plus tourné vers la construction concrète. Ton intelligence stratégique ne tourne pas à vide : elle vise le résultat, la réalisation, l'édifice qui tient debout. Tu n'es pas le théoricien qui se contente de comprendre, ni l'idéaliste qui met sa vision au service d'une cause : tu es celui qui veut bâtir, déployer, livrer.
+    "INTJ-V1": `De toutes les façons d'être Architecte, la tienne est celle qui regarde le plus vers la construction concrète. Ton intelligence stratégique ne tourne pas à vide : elle vise le résultat, la réalisation, l'édifice qui tient debout. Tu n'es pas le théoricien qui se contente de comprendre, ni l'idéaliste qui met sa vision au service d'une cause : tu es celui qui veut bâtir, déployer, livrer.
 
 Ce qui te définit, c'est cette obsession saine du tangible. Une idée qui ne se concrétise pas n'a pas de valeur à tes yeux, et tu mesures les choses à ce qu'elles produisent réellement. Cette orientation fait de toi un redoutable réalisateur : tu prends une vision lointaine et tu la transformes, étape par étape, en quelque chose de réel. Là où le rêveur s'arrête au plan, toi tu poses les fondations et tu montes les murs.`,
-    "INTJ-V2": `Parmi les trois visages de l'Architecte, tu es celui dont l'intelligence est la plus profondément liée aux valeurs. Tu n'es pas le bâtisseur centré sur le résultat tangible, ni le penseur qui cherche la compréhension pour elle-même : tu es celui qui met sa stratégie au service d'une cause, d'un idéal, d'un principe.
+    "INTJ-V2": `Entre les trois figures de l'Architecte, tu es celui dont l'intelligence est la plus profondément liée aux valeurs. Tu n'es pas le bâtisseur centré sur le résultat tangible, ni le penseur qui cherche la compréhension pour elle-même : tu es celui qui met sa stratégie au service d'une cause, d'un idéal, d'un principe.
 
 Ce qui te caractérise, c'est cette exigence morale qui traverse tout ce que tu fais. Tu te bats pour ce qui te semble juste, tu refuses les compromis qui heurtent tes principes même quand ils seraient efficaces, et tu veux que ton intelligence laisse le monde un peu meilleur qu'elle ne l'a trouvé. Cette combinaison, la puissance du stratège et la flamme du convaincu, fait de toi quelqu'un qui peut déplacer des montagnes au nom de ce en quoi il croit.`,
-    "INTJ-V3": `Parmi les trois visages de l'Architecte, tu es le plus tourné vers la compréhension pure et la profondeur de la pensée. Tu n'es pas avant tout le bâtisseur qui veut concrétiser, ni le convaincu qui met sa stratégie au service d'une cause : tu es celui qui veut voir, comprendre, saisir le sens, celui dont l'esprit plonge le plus loin dans les profondeurs.
+    "INTJ-V3": `Parmi les trois incarnations de l'Architecte, tu es le plus tourné vers la compréhension pure et la profondeur de la pensée. Tu n'es pas avant tout le bâtisseur qui veut concrétiser, ni le convaincu qui met sa stratégie au service d'une cause : tu es celui qui veut voir, comprendre, saisir le sens, celui dont l'esprit plonge le plus loin dans les profondeurs.
 
 Ce qui te caractérise, c'est cette primauté de la compréhension sur l'action. Tu as besoin de saisir le pourquoi profond, de modéliser, de théoriser, avant et parfois au lieu de faire. Ton monde intérieur est ton royaume, et tes intuitions sur l'avenir et le sens des choses sont d'une acuité rare. Cette combinaison fait de toi un visionnaire au sens le plus noble : quelqu'un qui voit plus loin et plus profond que la plupart, et dont les idées, quand elles sont partagées, peuvent éclairer les autres.`,
   },
@@ -87,7 +87,7 @@ Ce qui te caractérise, c'est cette primauté de la compréhension sur l'action.
         { titre: "Un regard trop critique", accent: "critique", texte: "Ton œil repère instantanément les failles, et braqué en permanence sur les défauts, il décourage les autres et toi-même." },
         { titre: "Une indépendance isolante", accent: "indépendance", texte: "À ne compter que sur toi et à te méfier des avis extérieurs, tu peux te priver d'aides précieuses." },
         { titre: "La sur-optimisation", accent: "optimisation", texte: "Tout n'a pas besoin d'être amélioré : à traiter ta vie comme un système, tu passes à côté de ce qui ne se mesure pas." },
-        { titre: "Une rigidité face à l'imprévu", accent: "rigidité", texte: "Ton attachement au plan peut te rendre intransigeant quand la réalité dévie de ce que tu avais prévu." },
+        { titre: "Une rigidité face à l'imprévu", accent: "rigidité", texte: "Quand la réalité s'écarte du plan que tu avais tracé, ton besoin de maîtrise peut virer à l'entêtement." },
       ],
       paradoxe: {
         tension:
@@ -165,7 +165,7 @@ Ce qui te caractérise, c'est cette primauté de la compréhension sur l'action.
     "INTJ-V1": `En amour comme en amitié, tu ne cherches ni le nombre ni les démonstrations spectaculaires. Ton attachement s'exprime autrement : par la fiabilité, l'engagement réel, les actes plutôt que les mots. Quand tu choisis quelqu'un, c'est un choix réfléchi et sérieux, et donc d'autant plus solide. Tu veux un partenaire que tu respectes intellectuellement, qui te stimule et avec qui tu peux construire quelque chose de durable. La connexion d'esprit compte autant que le reste, et un proche qui comprend ton besoin d'espace et de profondeur est un trésor à tes yeux.
 
 Tes défis viennent des revers de ta nature. Ton confort avec la logique peut te rendre maladroit avec l'expression des émotions : tu ressens, mais tu ne sais pas toujours le montrer, et l'autre peut te croire distant alors que tu es profondément investi. Ton exigence peut virer à la critique là où l'on attend du soutien, et ton indépendance être lue comme du désintérêt. Ton chemin, c'est d'apprendre à verbaliser ce que tu ressens et à offrir de la chaleur autant que de la fiabilité. Et avec tes amis, n'oublie pas que ton attachement, si tu ne le dis jamais, reste invisible.`,
-    "INTJ-V2": `En amour comme en amitié, tu cherches bien plus qu'une simple histoire : tu cherches une alliance. Quand tu t'engages, c'est un choix réfléchi et sérieux, et donc d'autant plus solide. Ce qui compte le plus pour toi, c'est l'alignement profond : un partenaire qui partage ta vision du monde, ton exigence morale et ta soif de sens vaut mille fois mieux qu'une relation facile mais creuse. Tu as besoin de pouvoir admirer et respecter celui ou celle que tu aimes, et que cette personne respecte tes convictions sans chercher à les diluer.
+    "INTJ-V2": `En amour comme en amitié, tu cherches bien plus qu'une simple histoire : tu cherches une alliance. Quand tu t'engages, c'est au terme d'une décision pesée et assumée, et ce lien n'en est que plus indéfectible. Ce qui compte le plus pour toi, c'est l'alignement profond : un partenaire qui partage ta vision du monde, ton exigence morale et ta soif de sens vaut mille fois mieux qu'une relation facile mais creuse. Tu as besoin de pouvoir admirer et respecter celui ou celle que tu aimes, et que cette personne respecte tes convictions sans chercher à les diluer.
 
 Tes défis viennent des revers de ta nature. Ton exigence morale peut te rendre dur, voire jugeant, envers un proche qui ne partage pas exactement tes vues, et ton intransigeance sur les principes peut transformer un désaccord mineur en conflit de valeurs. Ta difficulté à exprimer tes émotions peut faire croire à de la distance alors que tu es profondément investi. Ton chemin, c'est d'apprendre à distinguer l'essentiel du secondaire, à offrir de la chaleur autant que de la fidélité, et à accepter que l'autre puisse différer sans te trahir.`,
     "INTJ-V3": `En amour comme en amitié, tu fonctionnes en profondeur, pas en surface. Tu n'es pas attiré par les relations légères : tu cherches une connexion d'esprit, quelqu'un avec qui explorer des idées, partager ton monde intérieur, te sentir compris dans ta complexité. Ce que tu cherches avant tout, c'est d'être vraiment compris : rencontrer quelqu'un capable d'entrer dans ton monde et d'apprécier ta profondeur est pour toi le plus précieux des trésors. Tu n'as pas besoin de quelqu'un en permanence présent, tu valorises l'espace et un proche qui respecte ton besoin de solitude.
@@ -193,13 +193,13 @@ Tu as un besoin vital d'autonomie et de calme : les interruptions constantes et 
   // ---------------------------------------------------------------------------
   mindsetTexte: {
     "INTJ-V1": {
-      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes une puissance d'esprit immense, mais aussi une orientation qui peut se retourner contre toi : l'efficacité érigée en seul but, la déconnexion émotionnelle, l'arrogance qui isole. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes une puissance d'esprit immense, mais aussi une orientation qui peut se retourner contre toi : l'efficacité érigée en seul but, la déconnexion émotionnelle, l'arrogance qui isole. La bonne nouvelle, c'est que ces failles sont la matière même de ta croissance : il suffit de savoir sur quel levier appuyer.`,
     },
     "INTJ-V2": {
-      apercu: `Ton plus grand chantier n'est pas de trouver une cause, tes convictions n'en manquent jamais, c'est d'apprendre à les porter sans t'isoler. Tu portes en toi une force morale rare, mais aussi une tendance à te rigidifier, à juger ceux qui diffèrent, à refuser les compromis utiles. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de trouver une cause, tes convictions n'en manquent jamais, c'est d'apprendre à les porter sans t'isoler. Tu portes en toi une force morale rare, mais aussi une tendance à te rigidifier, à juger ceux qui diffèrent, à refuser les compromis utiles. La bonne nouvelle, c'est que ces mêmes fragilités peuvent devenir tes plus puissants moteurs de croissance, dès lors que tu sais où poser ton effort.`,
     },
     "INTJ-V3": {
-      apercu: `Ton plus grand chantier n'est pas de comprendre, ton esprit voit déjà plus loin que la plupart, c'est de faire descendre tes visions dans le réel. Tu portes en toi une clairvoyance rare, mais aussi une tendance à vivre dans ta tête, à sur-analyser, à t'isoler de ceux qui pourraient l'entendre. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de comprendre, ton esprit voit déjà plus loin que la plupart, c'est de faire descendre tes visions dans le réel. Tu portes en toi une clairvoyance rare, mais aussi une tendance à vivre dans ta tête, à sur-analyser, à t'isoler de ceux qui pourraient l'entendre. La bonne nouvelle, c'est que ces fragilités cachent tes plus beaux leviers de croissance, pour peu que tu trouves le bon point d'appui.`,
     },
   },
 
@@ -212,7 +212,7 @@ Tu as un besoin vital d'autonomie et de calme : les interruptions constantes et 
     "INTJ-V1-relations": {
       forces: [
         { titre: "Une loyauté inébranlable", accent: "loyauté", texte: "Une fois engagé, tu es là concrètement et durablement : une forme d'amour discrète mais solide comme un roc." },
-        { titre: "Un engagement réfléchi", accent: "engagement", texte: "Quand tu choisis quelqu'un, c'est un choix mûri et sérieux, et donc d'autant plus solide." },
+        { titre: "Un engagement réfléchi", accent: "engagement", texte: "Tu ne choisis personne à la légère : ta décision est longuement mûrie, et c'est ce qui la rend si fiable." },
         { titre: "Une fiabilité totale", accent: "fiabilité", texte: "Tu ne joues pas, tu ne trahis pas : on peut compter sur toi quand ça compte vraiment." },
         { titre: "Une stimulation intellectuelle", accent: "stimulation", texte: "Avec toi, les échanges vont au fond : tu offres des conversations qui font vraiment réfléchir." },
         { titre: "Le respect de l'autonomie", accent: "autonomie", texte: "Tu n'étouffes pas l'autre : tu valorises l'espace et la liberté dans les deux sens." },
@@ -299,7 +299,7 @@ Tu as un besoin vital d'autonomie et de calme : les interruptions constantes et 
       ombres: [
         { titre: "Une impatience tranchante", accent: "impatience", texte: "Tu supportes mal la lenteur et l'incompétence, et tu peux devenir difficile à satisfaire." },
         { titre: "Une délégation difficile", accent: "délégation", texte: "Tu peux peiner à confier le travail, persuadé que personne ne le fera à ton niveau d'exigence." },
-        { titre: "Une rigidité au plan", accent: "rigidité", texte: "Ton attachement à l'ordre peut te rendre intransigeant quand la réalité dévie de ce que tu avais prévu." },
+        { titre: "Une rigidité au plan", accent: "rigidité", texte: "Tu tiens tant à l'ordre que le moindre écart entre le réel et tes prévisions peut te crisper." },
         { titre: "Le facteur humain négligé", accent: "humain", texte: "Tu peux oublier d'intégrer les émotions et les besoins des gens dans des décisions qui les concernent." },
         { titre: "La sur-analyse", accent: "sur-analyse", texte: "Tu peux trop peser et anticiper, au point de retarder une décision pourtant mûre." },
         { titre: "Une intolérance à l'irrationnel", accent: "irrationnel", texte: "Les environnements où la politique prime sur la logique te rendent profondément malheureux." },
@@ -366,14 +366,14 @@ Tu as un besoin vital d'autonomie et de calme : les interruptions constantes et 
       },
     },
     "INTJ-V1-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ta tête : la stratégie, la logique, la vision. C'est puissant, mais souvent déséquilibré. Tu peux être brillant et tranchant, sûr de ta supériorité intellectuelle, impatient avec ceux qui ne suivent pas, et déconnecté de tes propres émotions comme de celles des autres. Le monde des sentiments te semble flou, presque suspect. Cette période développe ta puissance d'esprit, mais elle peut aussi t'isoler.
+      evolution: `Ta personnalité n'a rien de figé : elle se transforme, et l'Architecte-Bâtisseur connaît l'une des évolutions les plus spectaculaires qui soient. Plus jeune, tu es tout entier dans ta tête : la stratégie, la logique, la vision. C'est puissant, mais souvent déséquilibré. Tu peux être brillant et tranchant, sûr de ta supériorité intellectuelle, impatient avec ceux qui ne suivent pas, et déconnecté de tes propres émotions comme de celles des autres. Le monde des sentiments te semble flou, presque suspect. Cette période développe ta puissance d'esprit, mais elle peut aussi t'isoler.
 
 Avec le temps, quelque chose de précieux s'ouvre en toi. Tu commences à comprendre que la logique n'explique pas tout, que les relations ont une valeur que l'efficacité ne mesure pas, que tes émotions ne sont pas des bugs à corriger mais des informations à écouter. Tu deviens moins rigide, plus capable de chaleur, plus à l'aise avec l'humain, sans rien perdre de ton intelligence. Dans ta pleine maturité, tu deviens redoutablement complet : un stratège qui sait aussi ressentir, un bâtisseur qui sait pourquoi et pour qui il construit. Et c'est entièrement à ta portée.`,
       etapes: [
         "Curieux et déjà tourné vers le pourquoi des choses, tu démontes ce qui t'entoure pour comprendre comment ça marche. Tu préfères souvent réfléchir seul, et tu sens très tôt que ton esprit fonctionne autrement.",
         "Tu es tout entier dans ta tête : la stratégie, la logique, la vision. C'est puissant, mais souvent déséquilibré. Tu peux être tranchant, impatient avec ceux qui ne suivent pas, et déconnecté de tes émotions comme de celles des autres. Une période brillante, où ta force cherche encore son équilibre.",
         "Tu comprends que la logique n'explique pas tout et que les relations ont une valeur que l'efficacité ne mesure pas. Tu deviens moins rigide, plus capable de chaleur, sans rien perdre de ta lucidité.",
-        "Dans ta pleine maturité, tu es un stratège qui sait aussi ressentir, un bâtisseur qui sait pourquoi et pour qui il construit. Tu allies la force de la tête à la richesse des liens : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un stratège qui sait aussi ressentir, un bâtisseur qui sait pourquoi et pour qui il construit. Tu allies la force de la tête à la richesse des liens : c'est là que tu donnes le meilleur de toi-même.",
       ],
       leviersForts: [
         { titre: "Développe ton intelligence émotionnelle", texte: "Apprendre à reconnaître, nommer et exprimer ce que tu ressens, et à percevoir ce que vivent les autres, ne diminue en rien ton intelligence : ça la complète et te rend presque imbattable." },
@@ -406,7 +406,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu commences à compre
         { titre: "Une loyauté incorruptible", accent: "loyauté", texte: "Une fois engagé, tu ne joues pas et tu ne trahis pas : ton attachement est profond et inébranlable." },
         { titre: "Le partage de valeurs", accent: "valeurs", texte: "Tu construis des liens sur l'alignement profond, le sens commun et une vision du monde partagée." },
         { titre: "Une intégrité rassurante", accent: "intégrité", texte: "On sait que ta parole et tes actes sont alignés, et que tu ne vendras jamais tes convictions." },
-        { titre: "Un engagement sérieux", accent: "engagement", texte: "Quand tu choisis quelqu'un, c'est un choix mûri et réfléchi, et donc d'autant plus solide." },
+        { titre: "Un engagement sérieux", accent: "engagement", texte: "Tu n'offres ton attachement qu'après l'avoir longuement pesé : cette gravité fait toute la solidité de tes liens." },
         { titre: "Une stimulation de fond", accent: "stimulation", texte: "Avec toi, on débat d'idées, on partage des convictions, on cherche ensemble ce qui est juste." },
         { titre: "Une présence fiable", accent: "fiable", texte: "Tu es là dans les moments qui comptent, et tu défends tes proches et tes principes sans flancher." },
       ],
@@ -493,7 +493,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu commences à compre
         { titre: "Le compromis refusé", accent: "compromis", texte: "Tu peux rejeter des compromis pourtant nécessaires à l'avancement de ta propre cause." },
         { titre: "Une intransigeance épuisante", accent: "intransigeance", texte: "Vouloir la perfection morale immédiate t'use et te met en friction avec les autres." },
         { titre: "Un ton moralisateur", accent: "moralisateur", texte: "Tu peux paraître donneur de leçons et prendre de haut ceux dont les vues diffèrent des tiennes." },
-        { titre: "Une rigidité au plan", accent: "rigidité", texte: "Ton attachement à la cohérence peut te rendre intransigeant quand la réalité dévie du prévu." },
+        { titre: "Une rigidité au plan", accent: "rigidité", texte: "Ton exigence de cohérence peut te raidir dès que les faits cessent de suivre la trajectoire prévue." },
         { titre: "Le mieux ennemi du bien", accent: "mieux", texte: "Tes principes peuvent figer ta décision et te faire refuser une option imparfaite mais utile." },
       ],
       blocs: [
@@ -558,14 +558,14 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu commences à compre
       },
     },
     "INTJ-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par la force brute de ta vision et de tes convictions : tu vois loin, tu sais ce qui est juste, et tu attends du monde qu'il s'y conforme. C'est puissant, mais souvent déséquilibré. Tu peux te rigidifier dans l'idéalisme, juger durement ceux qui ne partagent pas tes valeurs, et t'isoler dans une certitude morale que personne ne semble à la hauteur de comprendre. Tu portes de grands idéaux, mais ils se heurtent au réel, et tu peux le vivre comme une trahison permanente.
+      evolution: `Ta personnalité n'est pas gravée dans le marbre : elle évolue, et le Stratège de Conviction suit un chemin de maturation très reconnaissable. Plus jeune, tu es surtout porté par la force brute de ta vision et de tes convictions : tu vois loin, tu sais ce qui est juste, et tu attends du monde qu'il s'y conforme. C'est puissant, mais souvent déséquilibré. Tu peux te rigidifier dans l'idéalisme, juger durement ceux qui ne partagent pas tes valeurs, et t'isoler dans une certitude morale que personne ne semble à la hauteur de comprendre. Tu portes de grands idéaux, mais ils se heurtent au réel, et tu peux le vivre comme une trahison permanente.
 
 Avec le temps, quelque chose s'ouvre. Tu réalises qu'avoir raison ne suffit pas à changer les choses, qu'on rallie mieux qu'on ne juge, qu'un allié imparfait vaut mieux qu'une pureté solitaire. Tu apprends à composer sans te trahir, à choisir tes combats, à accueillir ceux qui avancent vers le juste par d'autres chemins. Tu ne perds rien de tes convictions, tu leur donnes les moyens d'agir. Dans ta pleine maturité, tu deviens un stratège dont la vision sert vraiment une cause : convaincu mais ouvert, exigeant mais ralliant. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu ressens déjà très fort ce qui est juste et ce qui ne l'est pas. Doté d'un sens aigu de l'équité, tu prends position tôt et tu n'aimes pas l'arbitraire ni la mauvaise foi.",
         "Tu es porté par la force brute de tes convictions : tu vois loin, tu sais ce qui est juste, et tu attends du monde qu'il s'y conforme. C'est puissant, mais tu peux te rigidifier, juger durement et t'isoler dans ta certitude. Une période intense, où ta flamme cherche encore sa juste mesure.",
         "Tu comprends qu'avoir raison ne suffit pas à changer les choses, et qu'on rallie mieux qu'on ne juge. Tu apprends à composer sans te trahir et à choisir tes combats, sans rien perdre de tes convictions.",
-        "Dans ta pleine maturité, tu es un stratège dont la vision sert vraiment une cause : convaincu mais ouvert, exigeant mais ralliant. Tu transformes tes idéaux en changements concrets : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un stratège dont la vision sert vraiment une cause : convaincu mais ouvert, exigeant mais ralliant. Tu transformes tes idéaux en changements concrets : c'est toi dans ta forme la plus pleine.",
       ],
       leviersForts: [
         { titre: "Apprends à rallier plutôt qu'à juger", texte: "Ceux qui ne partagent pas encore tes valeurs ne sont pas des adversaires, mais des alliés potentiels. Composer avec eux, sans renier ce qui te porte, démultiplie ton impact." },
@@ -598,7 +598,7 @@ Avec le temps, quelque chose s'ouvre. Tu réalises qu'avoir raison ne suffit pas
         { titre: "Une loyauté durable", accent: "loyauté", texte: "Une fois engagé, ton attachement est réel et constant, et tu offres une fidélité sans faille." },
         { titre: "Une connexion d'esprit", accent: "connexion", texte: "Tu cherches quelqu'un avec qui explorer des idées et partager ton monde intérieur en profondeur." },
         { titre: "Une profondeur rare", accent: "profondeur", texte: "Tu offres une relation d'une intensité et d'une authenticité que peu de gens savent donner." },
-        { titre: "Le respect de l'espace", accent: "espace", texte: "Tu n'étouffes pas l'autre : tu valorises l'autonomie et respectes son besoin de solitude comme le tien." },
+        { titre: "Le respect de l'espace", accent: "espace", texte: "Loin d'enfermer l'autre, tu chéris l'autonomie et honores son besoin de solitude autant que le tien." },
         { titre: "Une présence fiable", accent: "fiable", texte: "Tu n'es pas démonstratif, mais tu es là quand ça compte, et tes liens traversent le temps et les silences." },
         { titre: "Une vraie écoute des idées", accent: "écoute", texte: "Avec tes rares amis, tu creuses des sujets de fond que personne d'autre ne veut explorer." },
       ],
@@ -750,14 +750,14 @@ Avec le temps, quelque chose s'ouvre. Tu réalises qu'avoir raison ne suffit pas
       },
     },
     "INTJ-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ta tête : la réflexion, les intuitions, le monde intérieur. C'est d'une richesse rare, mais souvent déconnecté. Tu peux être brillant et profond, mais coupé du concret, difficile à suivre, replié dans tes pensées au point de négliger le réel et les autres. Tu vis dans tes modèles et tes visions, parfois au détriment de l'action et des liens. Cette période développe ta profondeur, mais elle peut aussi t'isoler dans ta tour d'observation.
+      evolution: `Ta personnalité n'est pas une donnée fixe : elle se déploie avec le temps, et le Visionnaire traverse une trajectoire de croissance d'une ampleur rare. Plus jeune, tu es tout entier dans ta tête : la réflexion, les intuitions, le monde intérieur. C'est d'une richesse rare, mais souvent déconnecté. Tu peux être brillant et profond, mais coupé du concret, difficile à suivre, replié dans tes pensées au point de négliger le réel et les autres. Tu vis dans tes modèles et tes visions, parfois au détriment de l'action et des liens. Cette période développe ta profondeur, mais elle peut aussi t'isoler dans ta tour d'observation.
 
 Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que comprendre ne suffit pas, qu'une vision qui ne se partage ni ne s'incarne reste stérile. Tu apprends à descendre dans le réel, à agir sur tes intuitions, à transmettre ce que tu vois. Tu te connectes davantage, tu habites mieux le présent, sans rien perdre de ta profondeur. Dans ta pleine maturité, tu deviens redoutablement accompli : un visionnaire qui sait aussi agir et partager, dont les intuitions éclairent les autres au lieu de rester enfouies. Et c'est entièrement à ta portée.`,
       etapes: [
         "Rêveur et observateur, tu vis déjà beaucoup dans ta tête, fasciné par le pourquoi des choses. Tu poses des questions que les autres ne se posent pas, et le monde intérieur t'attire plus que l'agitation extérieure.",
         "Tu es tout entier dans la réflexion et les intuitions. C'est d'une richesse rare, mais souvent déconnecté : coupé du concret, replié dans tes pensées, tu peux négliger le réel et les autres. Une période profonde, où ta clairvoyance cherche encore une prise sur le monde.",
         "Tu comprends qu'une vision qui ne se partage ni ne s'incarne reste stérile. Tu apprends à descendre dans le réel, à agir sur tes intuitions et à les transmettre, sans rien perdre de ta profondeur.",
-        "Dans ta pleine maturité, tu es un visionnaire qui sait aussi agir et partager. Tes intuitions profondes éclairent les autres au lieu de rester enfouies : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un visionnaire qui sait aussi agir et partager. Tes intuitions profondes éclairent les autres au lieu de rester enfouies : c'est l'aboutissement le plus accompli de qui tu es.",
       ],
       leviersForts: [
         { titre: "Ancre-toi dans le réel", texte: "Apprends à passer à l'action, à concrétiser au moins une partie de ce que tu conçois, à habiter le présent et ton corps. Tout ce qui te ramène sur terre donne une prise à ta clairvoyance." },

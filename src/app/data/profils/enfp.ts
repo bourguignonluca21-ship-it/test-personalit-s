@@ -13,13 +13,13 @@ export default {
   },
 
   intros: {
-    "ENFP-V2": `En tant qu'Inspirateur (ENFP), tu possèdes l'enthousiasme, la curiosité et la chaleur de ta famille d'âme, mais ce qui te porte par-dessus tout, c'est la quête d'authenticité et de connexion vraie. Là où l'explorateur court vers la nouveauté et le fédérateur rassemble les groupes, toi tu cherches la profondeur, la vérité, l'accord intime entre toi et ce que tu vis. Parmi les trois façons d'être de ton type, tu es le Cœur Authentique. Ce qui te définit, c'est ce besoin viscéral d'être vrai : tu ne peux ni faire semblant, ni jouer un rôle, ni vivre en désaccord avec tes valeurs sans en souffrir.
+    "ENFP-V2": `En tant qu'Inspirateur (ENFP), tu possèdes l'enthousiasme, la curiosité et la chaleur de ta famille d'âme, mais ce qui te porte par-dessus tout, c'est la quête d'authenticité et de connexion vraie. Là où l'explorateur court vers la nouveauté et le fédérateur rassemble les groupes, toi tu cherches la profondeur, la vérité, l'accord intime entre toi et ce que tu vis. Des trois visages que peut prendre ton type, tu incarnes le Cœur Authentique. Ce qui te définit, c'est ce besoin viscéral d'être vrai : tu ne peux ni faire semblant, ni jouer un rôle, ni vivre en désaccord avec tes valeurs sans en souffrir.
 
-Ce qui te porte, c'est la connexion profonde et le sens. Tu n'es pas attiré par le superficiel : tu cherches des liens sincères, des conversations qui comptent, une vie alignée avec ton cœur. Sous ton enthousiasme bat une grande sensibilité, tu ressens intensément et tu vibres avec les gens et le monde. Cette même richesse peut te rendre exigeant et te faire chercher partout une authenticité parfaite : ton plus beau terrain de croissance sera d'apprendre à chérir le vrai dans le réel, avec ses imperfections.`,
+Ce qui te porte, c'est la connexion profonde et le sens. Tu n'es pas attiré par le superficiel : tu cherches des liens sincères, des conversations qui comptent, une vie alignée avec ton cœur. Sous ton enthousiasme bat une grande sensibilité, tu ressens intensément et tu vibres avec les gens et le monde. Cette même richesse peut te rendre exigeant et te faire chercher partout une authenticité parfaite : le plus beau pas que tu aies à franchir sera d'apprendre à chérir le vrai dans le réel, avec ses imperfections.`,
 
-    "ENFP-V3": `En tant qu'Inspirateur (ENFP), tu possèdes l'enthousiasme, la curiosité et la chaleur de ta famille d'âme, et tu les mets au service du lien et du collectif. Là où l'explorateur court vers la nouveauté et le cœur authentique cherche la profondeur intime, toi tu rassembles les gens, tu crées de l'élan, tu relies les êtres entre eux. Parmi les trois façons d'être de ton type, tu es le Fédérateur. Ton énergie n'est pas tournée vers toi : elle entraîne et fédère, et tu as ce don rare de transformer une idée en mouvement collectif joyeux.
+    "ENFP-V3": `En tant qu'Inspirateur (ENFP), tu possèdes l'enthousiasme, la curiosité et la chaleur de ta famille d'âme, et tu les mets au service du lien et du collectif. Là où l'explorateur court vers la nouveauté et le cœur authentique cherche la profondeur intime, toi tu rassembles les gens, tu crées de l'élan, tu relies les êtres entre eux. Des trois visages que peut prendre ton type, tu incarnes le Fédérateur. Ton énergie n'est pas tournée vers toi : elle entraîne et fédère, et tu as ce don rare de transformer une idée en mouvement collectif joyeux.
 
-Ce qui te porte, c'est le lien et l'aventure partagée. Tu te sens vivant quand tu rassembles, quand tu vois un groupe se souder et avancer grâce à toi. Ton charisme est chaleureux et entraînant : les gens te suivent parce que tu donnes envie et que ta présence rend les choses excitantes. Le revers de ce don, c'est que tu peux faire dépendre ton équilibre de l'énergie du groupe et te disperser entre mille élans : ton plus beau terrain de croissance sera d'apprendre à rayonner d'une force qui vient aussi de l'intérieur, et à concrétiser ce que tu lances.`,
+Ce qui te porte, c'est le lien et l'aventure partagée. Tu te sens vivant quand tu rassembles, quand tu vois un groupe se souder et avancer grâce à toi. Ton charisme est chaleureux et entraînant : les gens te suivent parce que tu donnes envie et que ta présence rend les choses excitantes. Le revers de ce don, c'est que tu peux faire dépendre ton équilibre de l'énergie du groupe et te disperser entre mille élans : le plus beau pas que tu aies à franchir sera d'apprendre à rayonner d'une force qui vient aussi de l'intérieur, et à concrétiser ce que tu lances.`,
   },
 
   texteVariante: {
@@ -29,7 +29,7 @@ Cette combinaison, l'enthousiasme chaleureux et la profondeur authentique, fait 
 
     "ENFP-V3": `Parmi les trois visages de l'Inspirateur, tu es le plus tourné vers le collectif, le lien et l'élan partagé. Tu n'es pas avant tout l'explorateur enthousiaste qui court vers la nouveauté pour lui-même, ni le cœur authentique qui cherche la profondeur intime : tu es celui qui rassemble, qui crée du collectif, qui embarque les autres dans l'aventure. Rassembler les gens, créer de l'élan, relier les êtres te comble plus que tout.
 
-Cette combinaison, l'enthousiasme rayonnant et l'attention chaleureuse aux gens, fait de toi un fédérateur naturel, un créateur de liens et d'élan, quelqu'un dont l'énergie soude les groupes et les entraîne vers des aventures partagées. Le revers, c'est que tu peux n'exister que dans l'énergie du groupe et lancer plus que finir : ton plus beau chemin de croissance sera d'apprendre à puiser ton élan en toi-même et à mener au bout ce que tu commences.`,
+Cette combinaison, l'enthousiasme rayonnant et l'attention chaleureuse aux gens, fait de toi un fédérateur naturel, un créateur de liens et d'élan, quelqu'un dont l'énergie soude les groupes et les entraîne vers des aventures partagées. Le revers, c'est que tu peux ne plus te sentir vivant hors du collectif et lancer plus que finir : ton plus beau chemin de croissance sera d'apprendre à puiser ton élan en toi-même et à mener au bout ce que tu commences.`,
   },
 
   varianteDetail: {
@@ -37,7 +37,7 @@ Cette combinaison, l'enthousiasme rayonnant et l'attention chaleureuse aux gens,
       forces: [
         { titre: "Une authenticité qui inspire", accent: "authenticité", texte: "Tu es profondément vrai, fidèle à toi-même et à tes valeurs, incapable de jouer un rôle durablement." },
         { titre: "Un don pour les liens profonds", accent: "liens", texte: "Tu ne te contentes pas de la surface : tu crées des relations vraies où l'on se comprend et où l'on peut être soi." },
-        { titre: "Une chaleur qui réchauffe", accent: "chaleur", texte: "Tu mets les gens à l'aise, tu les valorises, tu crées une connexion sincère qui fait du bien." },
+        { titre: "Une chaleur qui réchauffe", accent: "chaleur", texte: "Près de toi, les gens se détendent et se sentent reconnus : tu crées une connexion sincère qui fait du bien." },
         { titre: "Une sensibilité profondément humaine", accent: "sensibilité", texte: "Tu ressens intensément, tu comprends les émotions, tu vibres avec les autres avec une finesse rare." },
         { titre: "Une quête de sens qui guide", accent: "sens", texte: "Tu ne vis pas en surface : tu cherches l'alignement et la profondeur, ce qui donne une cohérence à ta vie." },
         { titre: "Une intuition du vrai", accent: "intuition", texte: "Tu sens immédiatement le sincère du joué, et tu es attiré par ce qui a de la profondeur et du sens." },
@@ -64,11 +64,11 @@ Cette combinaison, l'enthousiasme rayonnant et l'attention chaleureuse aux gens,
     "ENFP-V3": {
       forces: [
         { titre: "Un don pour rassembler", accent: "rassembler", texte: "Tu sais donner envie, créer de l'élan, fédérer les gens autour d'un projet ou d'une aventure." },
-        { titre: "Une chaleur qui crée du lien", accent: "chaleur", texte: "Tu relies les êtres, tu mets les gens à l'aise, tu crées de la connexion et de la joie autour de toi." },
+        { titre: "Une chaleur qui crée du lien", accent: "chaleur", texte: "Tu relies les êtres, tu détends les atmosphères, tu crées de la connexion et de la joie autour de toi." },
         { titre: "Une énergie communicative", accent: "énergie", texte: "Tu insuffles de l'enthousiasme et de la vie, tu dynamises les groupes et les projets et tu les rends excitants." },
         { titre: "Une intuition des possibles", accent: "intuition", texte: "Tu perçois le potentiel des projets et des gens, et tu embarques les autres vers des possibles qu'ils n'auraient pas vus seuls." },
         { titre: "Une empathie qui soude", accent: "empathie", texte: "Tu te soucies du bien-être de chacun et tu veilles à ce que tout le monde se sente inclus, ce qui crée des liens durables." },
-        { titre: "Un charisme entraînant", accent: "charisme", texte: "Les gens te suivent parce que ta présence rend les choses joyeuses et qu'elle les fait se sentir partie d'une aventure commune." },
+        { titre: "Un charisme entraînant", accent: "charisme", texte: "Les gens te suivent parce que ta présence rend les choses joyeuses et leur donne le sentiment d'embarquer dans quelque chose de grand." },
       ],
       ombres: [
         { titre: "La dépendance à l'énergie du groupe", accent: "dépendance", texte: "Tu peux faire reposer ton équilibre sur la présence des autres, et te sentir vide dès que l'élan retombe." },
@@ -84,7 +84,7 @@ Cette combinaison, l'enthousiasme rayonnant et l'attention chaleureuse aux gens,
         lumiere:
           "Ton enthousiasme, ta chaleur et ton don de rassembler sont des cadeaux immenses qui créent du lien et de l'élan partout où tu passes.",
         ombre:
-          "Mais poussées à l'extrême, ces forces peuvent te déséquilibrer : tu peux n'exister que dans l'énergie du groupe, te disperser et te sentir vide dès que l'élan retombe.",
+          "Mais poussées à l'extrême, ces forces peuvent te déséquilibrer : tu peux ne tenir debout que porté par le collectif, te disperser et te sentir vide dès que l'élan retombe.",
         bascule:
           "Le jour où tu puises ton énergie en toi-même autant que dans le groupe et où tu concrétises ce que tu lances, ton don de fédérer devient une vraie force créatrice de liens et de réalisations.",
       },
@@ -113,10 +113,10 @@ Tu es excellent dans les phases de lancement, de mobilisation et de création d'
 
   mindsetTexte: {
     "ENFP-V2": {
-      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes une authenticité et une profondeur rares, mais aussi une exigence qui peut se retourner contre toi : l'insatisfaction chronique, la sensibilité qui submerge, la fuite de ce qui contraint ta liberté. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes une authenticité et une profondeur rares, mais aussi une exigence qui peut se retourner contre toi : l'insatisfaction chronique, la sensibilité qui submerge, la fuite de ce qui contraint ta liberté. La bonne nouvelle, c'est que ces mêmes failles, bien comprises, deviennent les points d'appui de ta plus belle transformation.`,
     },
     "ENFP-V3": {
-      apercu: `Ton plus grand chantier n'est pas de créer de l'élan, il déborde, c'est d'apprendre à le faire venir aussi de l'intérieur. Tu portes en toi une énergie et une chaleur immenses, mais aussi une tendance à dépendre du groupe, à te disperser, à fuir ce qui est difficile. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de créer de l'élan, il déborde, c'est d'apprendre à le faire venir aussi de l'intérieur. Tu portes en toi une énergie et une chaleur immenses, mais aussi une tendance à dépendre du groupe, à te disperser, à fuir ce qui est difficile. La bonne nouvelle, c'est que ces mêmes fragilités, une fois apprivoisées, deviennent le carburant de ta plus belle croissance.`,
     },
   },
 
@@ -126,7 +126,7 @@ Tu es excellent dans les phases de lancement, de mobilisation et de création d'
         { titre: "Une présence vraie", accent: "vraie", texte: "Avec toi, pas de masque : on sait que ce qu'on voit est sincère, et cela crée une confiance rare." },
         { titre: "Le don des liens profonds", accent: "profonds", texte: "Tu vas au fond des choses et tu crées des relations où l'on se comprend et où l'on peut être soi." },
         { titre: "Une écoute sensible", accent: "écoute", texte: "Ta finesse émotionnelle te fait percevoir ce que l'autre vit au-delà des mots." },
-        { titre: "Une chaleur sincère", accent: "chaleur", texte: "Ta présence met les gens à l'aise, les valorise et leur fait du bien." },
+        { titre: "Une chaleur sincère", accent: "chaleur", texte: "Ta présence apaise les autres, les valorise et leur fait du bien." },
         { titre: "Une loyauté tendre", accent: "loyauté", texte: "Une fois engagé, tu offres une fidélité profonde et une intimité émotionnelle rare." },
         { titre: "Le goût des liens singuliers", accent: "singuliers", texte: "Tu préfères quelques amitiés vraies et profondes à un large cercle de surface." },
       ],
@@ -166,7 +166,7 @@ Tu es excellent dans les phases de lancement, de mobilisation et de création d'
           items: [
             "Les tempéraments très factuels, peu portés sur l'émotion.",
             "Les profils directs dont la franchise peut te blesser.",
-            "Les personnalités froides ou contrôlantes qui rognent ta liberté.",
+            "Les personnalités froides ou contrôlantes qui étouffent ta liberté.",
           ],
           profils: [
             { code: "ESTJ", raison: "son pragmatisme et son attachement aux règles peuvent te sembler froids et contraindre ta liberté." },
@@ -184,7 +184,7 @@ Tu es excellent dans les phases de lancement, de mobilisation et de création d'
           profils: [
             { code: "INFJ", raison: "il partage ta profondeur et ta quête de sens, et te rejoint dans la sincérité." },
             { code: "INFP", raison: "son authenticité et son monde intérieur résonnent avec ta soif de vrai." },
-            { code: "ISFJ", raison: "sa présence fiable et posée t'ancre et te montre qu'on peut s'engager sans se perdre." },
+            { code: "ISFJ", raison: "sa présence fiable et posée t'ancre et te prouve que l'engagement n'est pas une cage." },
           ],
         },
       ],
@@ -204,7 +204,7 @@ Tu es excellent dans les phases de lancement, de mobilisation et de création d'
         { titre: "Un moteur, le sens", accent: "sens", texte: "Quand ton travail résonne avec tes valeurs, tu t'investis avec enthousiasme et profondeur." },
         { titre: "Une vraie humanité", accent: "humanité", texte: "Tu apportes une attention sincère aux gens que les esprits purement fonctionnels n'ont pas." },
         { titre: "Une authenticité qui rassure", accent: "authenticité", texte: "Tu es intègre et fidèle à toi-même, ce qui inspire confiance et respect." },
-        { titre: "Un don pour la connexion", accent: "connexion", texte: "Tu crées des liens vrais et tu mets les gens à l'aise, un atout dans tout métier humain." },
+        { titre: "Un don pour la connexion", accent: "connexion", texte: "Tu crées des liens vrais et tu instaures un climat de confiance, un atout dans tout métier humain." },
         { titre: "Une intuition des enjeux", accent: "intuition", texte: "Tu perçois ce qui compte vraiment et tu vois au-delà des apparences." },
         { titre: "Une créativité chaleureuse", accent: "créativité", texte: "Tu apportes de l'âme et des idées neuves dans les domaines où l'humain et le sens comptent." },
       ],
@@ -278,14 +278,14 @@ Tu es excellent dans les phases de lancement, de mobilisation et de création d'
       },
     },
     "ENFP-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Jeune, tu es tout entier dans ta quête d'authenticité et ta sensibilité : chercher le vrai, fuir le faux, vibrer intensément, aspirer à des liens profonds. C'est beau et sincère, mais souvent déséquilibré : tu peux être submergé par tes émotions, chroniquement déçu par un monde imparfait, et avoir du mal à concrétiser et à t'engager.
+      evolution: `Ta personnalité n'est pas figée : elle se transforme au fil des années, et ton type connaît une évolution intérieure particulièrement profonde. Jeune, tu es tout entier dans ta quête d'authenticité et ta sensibilité : chercher le vrai, fuir le faux, vibrer intensément, aspirer à des liens profonds. C'est beau et sincère, mais souvent déséquilibré : tu peux être submergé par tes émotions, chroniquement déçu par un monde imparfait, et avoir du mal à concrétiser et à t'engager.
 
-Avec le temps, tu comprends que l'authenticité parfaite n'existe pas, que la profondeur se cultive dans le réel avec ses imperfections, et que s'engager n'est pas trahir sa liberté mais l'approfondir. Tu apprends à accepter l'imperfection, à concrétiser, à te protéger émotionnellement, à t'ancrer, sans rien perdre de ta sincérité. Dans ta pleine maturité, tu deviens un cœur authentique qui vit ses valeurs et ses liens vrais dans le réel, dont la sincérité s'incarne au lieu de rester une quête insatisfaite. Et c'est entièrement à ta portée.`,
+Avec le temps, tu comprends que l'authenticité parfaite n'existe pas, que la profondeur se cultive dans le réel avec ses imperfections, et que s'engager n'est pas trahir sa liberté mais l'approfondir. Tu apprends à accepter l'imperfection, à concrétiser, à te protéger émotionnellement, à t'ancrer, sans rien perdre de ta sincérité. Dans ta pleine maturité, tu deviens un cœur authentique qui vit ses valeurs et ses liens vrais dans le réel, dont la sincérité s'incarne au lieu de rester une quête insatisfaite. Et ce chemin est vraiment le tien à parcourir.`,
       etapes: [
         "Tu es déjà sensible au vrai et au faux, tu vibres intensément avec les gens et le monde, et tu cherches spontanément des liens sincères. Le cœur tourné vers ce qui sonne juste.",
         "Ta quête d'authenticité est à son comble : tu cherches le vrai partout, tu fuis le faux, tu aspires à des liens parfaits. C'est sincère, mais souvent déséquilibré : tes émotions t'emportent, le monde imparfait te déçoit, et t'engager ne va pas encore de soi.",
         "Tu comprends que l'authenticité parfaite n'existe pas et que la profondeur se cultive dans le réel. Tu apprends à accepter l'imperfection, à concrétiser, à te protéger, sans rien perdre de ta sincérité.",
-        "Dans ta pleine maturité, tu es un cœur authentique qui vit ses valeurs et ses liens vrais dans le réel. Ta sincérité s'incarne au lieu de rester une quête : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un cœur authentique qui vit ses valeurs et ses liens vrais dans le réel. Ta sincérité s'incarne au lieu de rester une quête : c'est toi, enfin pleinement réalisé.",
       ],
       leviersForts: [
         { titre: "Chéris l'authentique dans le réel", texte: "Ta soif de vrai est un don précieux. Apprends à savourer ce qui est déjà beau et sincère autour de toi, c'est là que ta quête de vérité devient une source de joie." },
@@ -314,7 +314,7 @@ Avec le temps, tu comprends que l'authenticité parfaite n'existe pas, que la pr
     "ENFP-V3-relations": {
       forces: [
         { titre: "Une présence qui fait vibrer", accent: "vibrer", texte: "Avec toi, le quotidien s'illumine : tu apportes de la joie, de l'élan et le sentiment d'une aventure à vivre." },
-        { titre: "Un don pour relier", accent: "relier", texte: "Tu mets les gens à l'aise, tu crées du lien et de la complicité, tu rassembles autour de toi." },
+        { titre: "Un don pour relier", accent: "relier", texte: "Tu apprivoises les timidités, tu crées du lien et de la complicité, tu rassembles autour de toi." },
         { titre: "Une chaleur généreuse", accent: "chaleur", texte: "Ta présence chaleureuse fait que les autres se sentent bien, inclus et partie d'une aventure commune." },
         { titre: "Une énergie entraînante", accent: "énergie", texte: "Tu embarques tes proches dans des projets et des découvertes, et tu fais vivre la relation." },
         { titre: "Une empathie attentive", accent: "empathie", texte: "Tu perçois les dynamiques du groupe et tu veilles à ce que chacun se sente bien." },
@@ -356,7 +356,7 @@ Avec le temps, tu comprends que l'authenticité parfaite n'existe pas, que la pr
           items: [
             "Les tempéraments très réservés ou distants.",
             "Les profils peu portés sur le collectif et le lien.",
-            "Les personnalités contrôlantes qui rognent ta liberté.",
+            "Les personnalités contrôlantes qui enferment ta liberté.",
           ],
           profils: [
             { code: "ISTP", raison: "sa réserve et sa distance peuvent te faire douter et te laisser sur ta faim de lien." },
@@ -394,7 +394,7 @@ Avec le temps, tu comprends que l'authenticité parfaite n'existe pas, que la pr
         { titre: "Un don pour fédérer", accent: "fédérer", texte: "Tu connectes les gens, tu crées de l'élan collectif et tu redonnes de l'énergie à une équipe." },
         { titre: "Une énergie communicative", accent: "énergie", texte: "Tu insuffles de l'enthousiasme et de la vie, tu dynamises les projets et tu donnes envie d'y croire." },
         { titre: "Une étincelle qui démarre", accent: "étincelle", texte: "Tu excelles dans les phases de lancement et de mobilisation : tu donnes l'impulsion." },
-        { titre: "Une chaleur qui crée la cohésion", accent: "cohésion", texte: "Tu mets les gens à l'aise et tu crées une ambiance positive qui soude les équipes." },
+        { titre: "Une chaleur qui crée la cohésion", accent: "cohésion", texte: "Tu désamorces les tensions et tu crées une ambiance positive qui soude les équipes." },
         { titre: "Une intuition des possibles", accent: "intuition", texte: "Tu perçois le potentiel des projets et des gens et tu proposes des aventures enthousiasmantes." },
         { titre: "Une empathie au service du groupe", accent: "empathie", texte: "Tu veilles au bien-être de chacun, ce qui crée des collectifs durables et chaleureux." },
       ],
@@ -468,14 +468,14 @@ Avec le temps, tu comprends que l'authenticité parfaite n'existe pas, que la pr
       },
     },
     "ENFP-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Jeune, tu es tout entier dans ton énergie et ton don de fédérer : rassembler, enthousiasmer, créer de l'élan, vivre des aventures collectives. C'est lumineux et entraînant, mais souvent déséquilibré : tu peux n'exister que dans l'énergie du groupe, te disperser entre mille projets sans en finir aucun, et négliger ta propre profondeur.
+      evolution: `Ta personnalité n'est pas figée : elle se déploie au fil du temps, et ton type traverse une maturation intérieure particulièrement nette. Jeune, tu es tout entier dans ton énergie et ton don de fédérer : rassembler, enthousiasmer, créer de l'élan, vivre des aventures collectives. C'est lumineux et entraînant, mais souvent déséquilibré : tu peux ne te sentir vivant qu'au milieu des autres, te disperser entre mille projets sans en finir aucun, et négliger ta propre profondeur.
 
-Avec le temps, tu comprends que tu ne rayonnes durablement que si ton énergie vient aussi de l'intérieur, que ce que tu lances mérite d'être concrétisé, et que quelques liens profonds valent mieux que mille élans dispersés. Tu apprends à exister pour toi-même, à concrétiser, à approfondir, à affronter ce qui est difficile, sans rien perdre de ta chaleur. Dans ta pleine maturité, tu deviens un fédérateur dont l'énergie crée des liens et des réalisations durables, qui rassemble sans se disperser ni dépendre du groupe. Et c'est entièrement à ta portée.`,
+Avec le temps, tu comprends que tu ne rayonnes durablement que si ton énergie vient aussi de l'intérieur, que ce que tu lances mérite d'être concrétisé, et que quelques liens profonds valent mieux que mille élans dispersés. Tu apprends à exister pour toi-même, à concrétiser, à approfondir, à affronter ce qui est difficile, sans rien perdre de ta chaleur. Dans ta pleine maturité, tu deviens un fédérateur dont l'énergie crée des liens et des réalisations durables, qui rassemble sans se disperser ni dépendre du groupe. Et ce chemin est vraiment le tien à parcourir.`,
       etapes: [
         "Tu attires déjà les autres par ton énergie et ta chaleur, tu rassembles, tu donnes envie. Le monde est une aventure à vivre ensemble, et tu en es spontanément le moteur.",
         "Ton don de fédérer est à son comble : tu rassembles, tu enthousiasmes, tu crées de l'élan partout. C'est lumineux, mais souvent déséquilibré : tu existes dans le groupe, tu te disperses, et te poser ou finir ne va pas encore de soi.",
         "Tu comprends que ton énergie doit aussi venir de l'intérieur et que ce que tu lances mérite d'être mené au bout. Tu apprends à exister pour toi-même, à concrétiser, à approfondir, sans rien perdre de ta chaleur.",
-        "Dans ta pleine maturité, tu es un fédérateur dont l'énergie crée des liens et des réalisations durables. Tu rayonnes d'une force intérieure : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un fédérateur dont l'énergie crée des liens et des réalisations durables. Tu rayonnes d'une force intérieure : c'est toi, enfin pleinement déployé.",
       ],
       leviersForts: [
         { titre: "Apprends à être ta propre source d'élan", texte: "Cultive une énergie et un sentiment de valeur qui ne dépendent pas du groupe. Cette autonomie intérieure te rend bien plus solide et libre." },

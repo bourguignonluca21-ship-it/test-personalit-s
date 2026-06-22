@@ -9,7 +9,7 @@
 const enfj = {
   // Texte commun aux 3 variantes (sous les barres du spectre). 2 paragraphes.
   traitsTexte: {
-    ENFJ: `Ton esprit est tourné vers les autres et vers le sens. Ta boussole, c'est le cœur : tu te orientes selon tes valeurs, ton empathie et ton attention au bien des gens, et l'harmonie compte énormément pour toi. À cela s'ajoute une intuition fine sur l'humain, tu pressens les émotions, les motivations, le potentiel de chacun, ce qui fait de toi un guide, un confident, un fédérateur naturel. Là où d'autres voient des individus, toi tu vois ce qu'ils pourraient devenir.
+    ENFJ: `Ton esprit est tourné vers les autres et vers le sens. Ta boussole, c'est le cœur : tu t'orientes selon tes valeurs, ton empathie et ton attention au bien des gens, et l'harmonie compte énormément pour toi. À cela s'ajoute une intuition fine sur l'humain, tu pressens les émotions, les motivations, le potentiel de chacun, ce qui fait de toi un guide, un confident, un fédérateur naturel. Là où d'autres voient des individus, toi tu vois ce qu'ils pourraient devenir.
 
 Mais ta grande singularité, c'est d'allier cette chaleur à une vraie capacité d'organisation. Tu ne te contentes pas de vouloir aider : tu structures, tu planifies, tu mènes les choses au bout. Ta bienveillance se traduit en actes concrets, pas seulement en bonnes intentions. Tout l'enjeu de ton chemin, c'est de prendre soin de toi autant que des autres : ton don d'élever les gens peut te faire t'oublier, et tu deviens pleinement toi quand tu apprends à recevoir, à te préserver et à puiser ta valeur en toi-même.`,
   },
@@ -35,15 +35,15 @@ Mais ta grande singularité, c'est d'allier cette chaleur à une vraie capacité
   intros: {
     "ENFJ-V1": `En tant que Protagoniste (ENFJ), variante Guide, tu possèdes l'une des combinaisons humaines les plus précieuses qui soient : une intuition fine sur les gens, une chaleur naturelle, et le don de les accompagner vers le meilleur d'eux-mêmes. Là où le Leader de Mission porte une cause et l'Animateur Charismatique fédère par son énergie, toi tu te concentres sur les personnes, une par une, pour les aider à grandir. C'est ta vocation profonde, et elle fait de toi un mentor, un confident, un guide dont la présence change les trajectoires.
 
-Ce qui te porte, c'est l'impact humain et le sens : tu as besoin que ta vie serve les autres, qu'elle aide, élève, rapproche, et tu te sens accompli quand tu vois quelqu'un grandir grâce à toi. Tu perçois ce que les gens pourraient devenir, leurs talents endormis, leurs blocages, et tu sais les accompagner avec une justesse qui les fait avancer. Cette même générosité a son revers : à force de t'occuper de tous, tu peux t'oublier. Ton plus beau terrain de croissance sera d'apprendre à prendre soin de toi autant que des autres.`,
+Ce qui te porte, c'est l'impact humain et le sens : tu as besoin que ta vie serve les autres, qu'elle aide, élève, rapproche, et tu te sens accompli quand tu vois quelqu'un grandir grâce à toi. Tu perçois ce que les gens pourraient devenir, leurs talents endormis, leurs blocages, et tu sais les accompagner avec une justesse qui les fait avancer. Cette même générosité a son revers : à force de t'occuper de tous, tu peux t'oublier. Ton plus beau chemin de croissance sera d'apprendre à prendre soin de toi autant que des autres.`,
 
     "ENFJ-V2": `En tant que Protagoniste (ENFJ), variante Leader de Mission, tu possèdes la chaleur et l'intuition humaine de ta famille d'âme, mais tu les mets au service d'une cause, d'une vision, d'un idéal qui te dépasse. Là où le Guide accompagne les gens un par un et l'Animateur Charismatique fédère par sa seule énergie, toi tu rassembles les autres autour de quelque chose de plus grand : une mission qui donne du sens à ton action et à celle des autres. Tu ne te contentes pas d'y croire, tu entraînes.
 
-Ce qui te définit, c'est cette alliance de la conviction et du don de fédérer. Tu portes des valeurs et une vision fortes, tu sais les rendre désirables et créer un élan collectif vers un but qui compte. Ton charisme n'est pas tourné vers toi-même, il est au service de ce que tu défends. Cette même intensité a son revers : tu peux te sacrifier à ta cause au point de disparaître derrière elle. Ton plus beau terrain de croissance sera d'apprendre à servir ta mission sans t'y consumer.`,
+Ce qui te définit, c'est cette alliance de la conviction et du don de fédérer. Tu portes des valeurs et une vision fortes, tu sais les rendre désirables et créer un élan collectif vers un but qui compte. Ton charisme n'est pas tourné vers toi-même, il est au service de ce que tu défends. Cette même intensité a son revers : tu peux te sacrifier à ta cause au point de disparaître derrière elle. Tout l'enjeu de ta maturité sera d'apprendre à servir ta mission sans t'y consumer.`,
 
     "ENFJ-V3": `En tant que Protagoniste (ENFJ), variante Animateur Charismatique, tu possèdes la chaleur et l'intuition humaine de ta famille d'âme, et tu les exprimes à travers une présence sociale rayonnante. Là où le Guide accompagne les gens un par un et le Leader de Mission porte une cause, toi tu fédères par ton énergie, ta chaleur et ta capacité à créer du lien et de la joie. Tu es de ceux qui rassemblent, qui animent, qui font vivre les groupes, et dont la simple présence rend les choses plus légères.
 
-Ce qui te porte, c'est le lien humain et le partage : tu te sens vivant quand tu rassembles, quand tu crées de la connexion, quand tu vois les autres s'épanouir grâce à toi. Tu attires les gens non par calcul mais par ta chaleur sincère, ton attention, ta générosité. Cette même nature sociale a son revers : tu peux n'exister que dans le regard des autres et te sentir vide dès que tu es seul. Ton plus beau terrain de croissance sera d'apprendre à exister pour toi-même et à cultiver ta profondeur intérieure.`,
+Ce qui te porte, c'est le lien humain et le partage : tu te sens vivant quand tu rassembles, quand tu crées de la connexion, quand tu vois les autres s'épanouir grâce à toi. Tu attires les gens non par calcul mais par ta chaleur sincère, ton attention, ta générosité. Cette même nature sociale a son revers : tu peux finir par te chercher dans le regard des autres et te sentir vide dès que tu es seul. Ton plus beau chemin de croissance sera d'apprendre à exister pour toi-même et à cultiver ta profondeur intérieure.`,
   },
 
   // ~2 paragraphes sous les barres de variante (« Ta variante »).
@@ -52,11 +52,11 @@ Ce qui te porte, c'est le lien humain et le partage : tu te sens vivant quand tu
 
 Cette combinaison, l'intuition fine sur l'humain et la chaleur bienveillante, fait de toi un mentor, un guide, un confident naturel, quelqu'un dont la présence aide les autres à se révéler et à s'épanouir. Une parole, un encouragement, une attention de ta part peuvent changer une trajectoire. Le revers, c'est que tu peux te perdre dans le don : ton plus beau chemin de croissance sera d'apprendre à t'élever en même temps que tu élèves les autres.`,
 
-    "ENFJ-V2": `Parmi les trois façons d'être du Protagoniste, tu es le plus tourné vers les causes et la mobilisation collective. Tu n'es pas avant tout le Guide centré sur l'accompagnement individuel, ni l'Animateur Charismatique qui fédère par sa seule énergie : tu es celui qui porte une mission et qui rassemble les autres autour d'elle. Porter une vision, mobiliser les gens, contribuer collectivement à quelque chose de plus grand te comble plus que tout.
+    "ENFJ-V2": `Des trois visages que peut prendre le Protagoniste, tu es le plus tourné vers les causes et la mobilisation collective. Tu n'es pas avant tout le Guide centré sur l'accompagnement individuel, ni l'Animateur Charismatique qui fédère par sa seule énergie : tu es celui qui porte une mission et qui rassemble les autres autour d'elle. Porter une vision, mobiliser les gens, contribuer collectivement à quelque chose de plus grand te comble plus que tout.
 
 Cette combinaison, la conviction profonde et le don de rassembler, fait de toi un meneur de causes, capable de transformer des idéaux en mouvements et de donner aux autres l'envie de servir ce qui compte. Tu sais à la fois inspirer et organiser concrètement l'action pour aboutir. Le revers, c'est que tu peux te sacrifier entièrement à ta cause : ton plus beau chemin de croissance sera de durer assez pour la mener loin, en te préservant aussi toi-même.`,
 
-    "ENFJ-V3": `Parmi les trois façons d'être du Protagoniste, tu es le plus tourné vers le lien social, la chaleur et l'animation des groupes. Tu n'es pas avant tout le Guide centré sur l'accompagnement individuel, ni le Leader de Mission qui porte une cause : tu es celui qui rassemble par son énergie et sa chaleur, qui crée de la joie et de la connexion, qui fait vivre les groupes. Rassembler, créer de la chaleur, voir les autres se connecter te comble plus que tout.
+    "ENFJ-V3": `Parmi les trois manières d'incarner le Protagoniste, tu es le plus tourné vers le lien social, la chaleur et l'animation des groupes. Tu n'es pas avant tout le Guide centré sur l'accompagnement individuel, ni le Leader de Mission qui porte une cause : tu es celui qui rassemble par son énergie et sa chaleur, qui crée de la joie et de la connexion, qui fait vivre les groupes. Rassembler, créer de la chaleur, voir les autres se connecter te comble plus que tout.
 
 Cette combinaison, la chaleur rayonnante et l'intuition sociale, fait de toi un animateur naturel, un créateur de liens, quelqu'un dont la présence réchauffe et rassemble, et dont les autres ont besoin pour se sentir bien ensemble. Le revers, c'est que tu peux exister surtout dans le regard des autres et négliger ta propre profondeur : ton plus beau chemin de croissance sera de rayonner d'une lumière qui vient d'abord de l'intérieur.`,
   },
@@ -104,7 +104,7 @@ Cette combinaison, la chaleur rayonnante et l'intuition sociale, fait de toi un 
         { titre: "Le sacrifice de toi", accent: "sacrifice", texte: "À force de te donner pour ta mission, tu peux disparaître derrière elle et t'épuiser jusqu'au bout." },
         { titre: "La pression sur les autres", accent: "pression", texte: "Ton intensité peut te faire trop attendre des autres et mal vivre leur tiédeur ou leur désengagement." },
         { titre: "La dépendance au succès", accent: "succès", texte: "Tu mets tant de toi dans ta cause que ses revers t'affectent comme des échecs personnels." },
-        { titre: "L'évitement des conflits", accent: "évitement", texte: "Ton besoin d'harmonie peut te faire contourner les tensions internes jusqu'à ce qu'elles s'enveniment." },
+        { titre: "L'évitement des conflits", accent: "évitement", texte: "Par soif d'harmonie, tu peux contourner les tensions internes jusqu'à ce qu'elles s'enveniment." },
         { titre: "La difficulté à recevoir", accent: "recevoir", texte: "Tu portes tout le monde et la cause, mais tu acceptes mal d'être porté à ton tour." },
         { titre: "Le manque de recul", accent: "recul", texte: "Sous le coup de la conviction, tu peux décider vite, sans toujours prendre le temps du recul." },
       ],
@@ -131,14 +131,14 @@ Cette combinaison, la chaleur rayonnante et l'intuition sociale, fait de toi un 
       ombres: [
         { titre: "L'existence dans le regard", accent: "regard", texte: "Tu peux faire dépendre ta valeur de l'appréciation et de la présence des autres, et te sentir vide seul." },
         { titre: "Une profondeur négligée", accent: "profondeur", texte: "Tellement tourné vers le social, tu peux délaisser ta vie intérieure et tes besoins profonds." },
-        { titre: "La fuite du conflit", accent: "fuite", texte: "Ton besoin d'harmonie peut te faire éviter les tensions et masquer tes émotions derrière ta bonne humeur." },
+        { titre: "La fuite du conflit", accent: "fuite", texte: "Pour préserver l'harmonie, tu peux esquiver les tensions et masquer tes émotions derrière ta bonne humeur." },
         { titre: "L'oubli de soi", accent: "oubli", texte: "Ton attention aux autres peut te faire donner sans recevoir et t'épuiser à faire du bien à tous." },
         { titre: "Le besoin de plaire", accent: "plaire", texte: "Ton désir d'être apprécié peut te pousser à trop chercher à plaire et à trop donner." },
         { titre: "La difficulté à être seul", accent: "seul", texte: "Tu peux remplir chaque instant de social, jusqu'à ne jamais te retrouver avec toi-même." },
       ],
       paradoxe: {
         tension:
-          "Tu fais tellement de bien aux autres,\nque tu peux t'oublier et n'exister que dans leur regard.",
+          "Tu fais tellement de bien aux autres,\nque tu peux t'oublier et ne te sentir vivant qu'à travers eux.",
         lumiere:
           "Ta chaleur, ton don de créer du lien et ta générosité sont des cadeaux immenses pour ceux qui t'entourent.",
         ombre:
@@ -182,13 +182,13 @@ Ce qui t'éteint, c'est l'isolement et les environnements froids, techniques ou 
   // 1 paragraphe d'accroche (intro de « Ton chemin de croissance »).
   mindsetTexte: {
     "ENFJ-V1": {
-      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes un don rare pour révéler les autres, mais aussi une tendance qui peut se retourner contre toi : t'oublier à force de donner, absorber les émotions de tous, dépendre de leur reconnaissance. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes un don rare pour révéler les autres, mais aussi une tendance qui peut se retourner contre toi : t'oublier à force de donner, absorber les émotions de tous, dépendre de leur reconnaissance. La bonne nouvelle, c'est que ces mêmes fragilités sont aussi tes plus grands leviers de croissance, une fois que tu sais où appuyer.`,
     },
     "ENFJ-V2": {
-      apercu: `Ton plus grand chantier n'est pas de trouver une cause, ton cœur en déborde, c'est d'apprendre à la porter sans t'y consumer. Tu portes en toi une flamme fédératrice rare, mais aussi une tendance à te sacrifier, à faire dépendre ton équilibre du succès de ta mission, à trop pousser les autres. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de trouver une cause, ton cœur en déborde, c'est d'apprendre à la porter sans t'y consumer. Tu portes en toi une flamme fédératrice rare, mais aussi une tendance à te sacrifier, à faire dépendre ton équilibre du succès de ta mission, à trop pousser les autres. La bonne nouvelle, c'est que chacune de ces fragilités cache aussi un de tes plus puissants leviers de croissance, dès lors que tu sais où appuyer.`,
     },
     "ENFJ-V3": {
-      apercu: `Ton plus grand chantier n'est pas de créer du lien, tu le fais naturellement, c'est d'apprendre à exister pour toi-même. Tu portes en toi une chaleur rayonnante, mais aussi une tendance à n'exister que dans le regard des autres, à négliger ta profondeur, à fuir ce qui est difficile. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de créer du lien, tu le fais naturellement, c'est d'apprendre à exister pour toi-même. Tu portes en toi une chaleur rayonnante, mais aussi une tendance à te chercher surtout dans le regard des autres, à négliger ta profondeur, à fuir ce qui est difficile. La bonne nouvelle, c'est que ces fragilités sont en même temps tes plus grands leviers de croissance, pour peu que tu saches où appuyer.`,
     },
   },
 
@@ -400,7 +400,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne
         { titre: "La pression sur l'autre", accent: "pression", texte: "Ton intensité peut peser et te faire pousser l'autre plus qu'il ne le souhaite." },
         { titre: "L'oubli de toi", accent: "oubli", texte: "Ta tendance à te donner peut te faire t'oublier et attendre une reconnaissance que tu tais." },
         { titre: "La dispersion", accent: "dispersion", texte: "Tu peux te disperser entre tes engagements au détriment de l'entretien des liens." },
-        { titre: "L'évitement des tensions", accent: "évitement", texte: "Ton besoin d'harmonie peut te faire contourner les vrais désaccords du couple." },
+        { titre: "L'évitement des tensions", accent: "évitement", texte: "Par souci d'harmonie, tu peux contourner les vrais désaccords du couple." },
         { titre: "La difficulté à recevoir", accent: "recevoir", texte: "Tu portes et tu soutiens, mais tu acceptes mal d'être porté à ton tour." },
       ],
       blocs: [
@@ -543,14 +543,14 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne
       },
     },
     "ENFJ-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ta mission et ta flamme : porter une cause, mobiliser, fédérer, te donner pour ce qui compte. C'est beau et puissant, mais souvent déséquilibré : tu peux te sacrifier entièrement, faire dépendre ton équilibre du succès de ta cause et pousser trop fort ton entourage.
+      evolution: `Ta personnalité n'a rien de figé : elle évolue, et ton type connaît une maturation particulièrement nette au fil des années. Plus jeune, tu es tout entier dans ta mission et ta flamme : porter une cause, mobiliser, fédérer, te donner pour ce qui compte. C'est beau et puissant, mais souvent déséquilibré : tu peux te sacrifier entièrement, faire dépendre ton équilibre du succès de ta cause et pousser trop fort ton entourage.
 
 Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne peux porter une mission durablement que si tu te préserves, que ta valeur ne dépend pas du succès de ta cause, que respecter le rythme des autres renforce l'adhésion. Tu apprends à doser ton intensité, à distinguer ta valeur de tes résultats, à recevoir. Dans ta pleine maturité, tu deviens un leader de mission qui fédère sans se sacrifier, qui allie la flamme de la conviction à la sagesse de l'équilibre. Et c'est entièrement à ta portée.`,
       etapes: [
         "Très tôt, le sens de la justice et l'envie de rassembler t'animent. Tu défends les plus faibles et tu entraînes déjà les autres dans tes élans.",
         "Ta flamme est à son comble : tu portes des causes, tu mobilises, tu te donnes sans compter. C'est puissant, mais tu peux te sacrifier et lier ton équilibre au succès de ta mission.",
         "Tu comprends que tu portes une cause durablement seulement si tu te préserves. Tu apprends à doser ton intensité, à respecter le rythme des autres et à distinguer ta valeur de tes résultats.",
-        "Dans ta pleine maturité, tu es un leader qui fédère sans se sacrifier. Ta flamme est devenue durable et donc plus puissante : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un leader qui fédère sans se sacrifier. Ta flamme est devenue durable et donc plus puissante : le toi le plus pleinement réalisé.",
       ],
       leviersForts: [
         { titre: "Apprends à te préserver", texte: "Sers ta mission sans t'y sacrifier : protège ton énergie, accorde-toi du repos, honore tes propres besoins. Un leader qui dure porte sa cause loin." },
@@ -646,7 +646,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne
       ],
       paradoxe: {
         tension:
-          "Tu réchauffes tout le monde et tu crées du lien partout,\nmais tu peux n'exister que dans le regard des autres.",
+          "Tu réchauffes tout le monde et tu crées du lien partout,\nmais tu peux finir par te chercher tout entier dans les yeux des autres.",
         lumiere:
           "Ta chaleur, ta présence et ta générosité font de toi un proche rare, auprès de qui on se sent chéri et entouré.",
         ombre:
@@ -666,7 +666,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne
       ],
       ombres: [
         { titre: "La dépendance à l'appréciation", accent: "appréciation", texte: "Tu peux faire dépendre ton moral de l'approbation des autres au travail." },
-        { titre: "La fuite du conflit", accent: "fuite", texte: "Ton besoin d'harmonie peut te faire lisser les tensions au lieu de les régler." },
+        { titre: "La fuite du conflit", accent: "fuite", texte: "Ton attachement à l'harmonie peut te faire lisser les tensions au lieu de les régler." },
         { titre: "La profondeur négligée", accent: "profondeur", texte: "Tu peux rester en surface et délaisser ta propre vie intérieure et tes besoins." },
         { titre: "L'épuisement à plaire", accent: "épuisement", texte: "À vouloir faire du bien à tout le monde, tu peux donner sans recevoir et t'épuiser." },
         { titre: "La difficulté à trancher", accent: "trancher", texte: "Ton besoin de plaire peut te faire décider pour ne pas créer de tensions." },
@@ -734,14 +734,14 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne
       },
     },
     "ENFJ-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ta chaleur et ton rayonnement social : rassembler, animer, créer du lien, faire du bien aux autres. C'est lumineux et généreux, mais souvent déséquilibré : tu peux n'exister que dans le regard des autres, négliger ta profondeur et fuir ce qui est difficile.
+      evolution: `Ta personnalité ne reste pas figée : elle se transforme, et ton type traverse une évolution intérieure particulièrement profonde. Plus jeune, tu es tout entier dans ta chaleur et ton rayonnement social : rassembler, animer, créer du lien, faire du bien aux autres. C'est lumineux et généreux, mais souvent déséquilibré : tu peux finir par te définir entièrement par le regard des autres, négliger ta profondeur et fuir ce qui est difficile.
 
-Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne peux rayonner durablement que si ta lumière vient d'abord de l'intérieur, que ta valeur ne dépend pas de l'approbation des autres, que ta profondeur mérite d'être cultivée. Tu apprends à exister pour toi-même, à te montrer vrai, à affronter ce qui est difficile. Dans ta pleine maturité, tu deviens un animateur chaleureux dont le rayonnement vient d'une profondeur intérieure, qui crée du lien sans s'oublier. C'est la version la plus belle de toi, et elle est entièrement à ta portée.`,
+Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne peux rayonner durablement que si ta lumière vient d'abord de l'intérieur, que ta valeur ne dépend pas de l'approbation des autres, que ta profondeur mérite d'être cultivée. Tu apprends à exister pour toi-même, à te montrer vrai, à affronter ce qui est difficile. Dans ta pleine maturité, tu deviens un animateur chaleureux dont le rayonnement vient d'une profondeur intérieure, qui crée du lien sans s'oublier. C'est le plus beau visage de toi-même, et il est entièrement à ta portée.`,
       etapes: [
         "Sociable et chaleureux dès l'enfance, tu cherches le contact, tu fais rire, tu rassembles. Tu te sens vivant quand les autres sont là et que l'ambiance est bonne.",
-        "Ton rayonnement social est à son comble : tu animes, tu fédères, tu crées du lien partout. C'est lumineux, mais tu peux n'exister que dans le regard des autres et te sentir vide seul.",
+        "Ton rayonnement social est à son comble : tu animes, tu fédères, tu crées du lien partout. C'est lumineux, mais tu peux ne te sentir exister qu'à travers les autres et te sentir vide seul.",
         "Tu comprends que ta lumière doit venir d'abord de l'intérieur. Tu apprends à exister pour toi-même, à cultiver ta profondeur, à te montrer vrai et à affronter ce qui est difficile.",
-        "Dans ta pleine maturité, tu es un animateur dont le rayonnement vient d'une vraie plénitude. Tu crées du lien sans t'oublier et tu donnes sans dépendre : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un animateur dont le rayonnement vient d'une vraie plénitude. Tu crées du lien sans t'oublier et tu donnes sans dépendre : le toi le plus pleinement réalisé.",
       ],
       leviersForts: [
         { titre: "Apprends à exister pour toi-même", texte: "Cultive un sentiment de valeur qui ne dépend pas du regard des autres, apprends à être bien seul et à puiser ta lumière en toi." },

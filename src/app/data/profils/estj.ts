@@ -35,26 +35,26 @@ Mais cette même force a un revers : ton attachement à l'ordre et au contrôle 
 
 Ce qui te porte, c'est l'efficacité et le résultat concret : tu tires une vraie satisfaction de ce qui aboutit, un projet mené à terme, une organisation qui tourne, un engagement honoré. Et tu allies l'assurance à la fiabilité, car ton autorité ne tient pas qu'à ta présence mais à des actes, des résultats, une parole tenue. Cette même force peut te conduire à imposer plutôt qu'à proposer, à tout vouloir contrôler, à passer sur l'humain au nom du résultat : ton plus beau terrain de croissance sera d'apprendre à diriger en écoutant et à organiser en déléguant.`,
 
-    "ESTJ-V2": `En tant que Directeur (ESTJ), tu mets ta clarté et ton assurance au service du cadre : faire tenir les structures, faire respecter les règles, veiller à ce que tout soit fait comme il faut. Tu es de ceux qui font respecter les règles, qui maintiennent l'ordre, qui s'assurent que les choses sont faites correctement et que les engagements sont honorés. Quand tout le monde coupe les coins, tu rappelles ce qui doit être fait. Parmi les trois façons d'être de ton type, tu es le plus attaché à l'ordre et au devoir, le Garant de l'Ordre.
+    "ESTJ-V2": `En tant que Directeur (ESTJ), tu mets ta clarté et ton assurance au service du cadre : faire tenir les structures, faire respecter les règles, veiller à ce que tout soit fait comme il faut. Tu es de ceux qui maintiennent l'ordre, qui s'assurent que les choses sont faites correctement et que les engagements sont honorés. Quand tout le monde coupe les coins, tu rappelles ce qui doit être fait. Des trois visages de ton type, c'est à l'ordre et au devoir que tu tiens le plus, le Garant de l'Ordre.
 
 Ce qui te porte, c'est l'intégrité et le travail bien fait : tu tires une vraie satisfaction de ce qui est en règle, juste, honoré, et tu n'aimes pas voir la droiture bafouée. Tu allies la fermeté à la fiabilité, car ton attachement à l'ordre s'incarne dans une parole tenue et un sérieux constant. Cette même force peut te faire te raidir sur les règles, juger durement et appliquer le cadre sans voir la personne : ton plus beau terrain de croissance sera d'apprendre à maintenir l'ordre avec souplesse et à voir l'humain au-delà de la règle.`,
 
-    "ESTJ-V3": `En tant que Directeur (ESTJ), tu as l'autorité, l'assurance et le sens de l'organisation de ta famille d'âme, mais ce qui te met vraiment en mouvement, c'est de protéger et de faire avancer ceux qui comptent : ta famille, ton équipe, ton groupe. Tu prends les choses en main pour qu'ils soient en sécurité, soutenus, menés à bon port. Parmi les trois façons d'être de ton type, tu es le plus tourné vers la direction au service des tiens, le Leader Loyal.
+    "ESTJ-V3": `En tant que Directeur (ESTJ), tu as l'autorité, l'assurance et le sens de l'organisation de ta famille d'âme, mais ce qui te met vraiment en mouvement, c'est de protéger et de faire avancer ceux qui comptent : ta famille, ton équipe, ton groupe. Tu prends les choses en main pour qu'ils soient en sécurité, soutenus, menés à bon port. Des trois visages de ton type, c'est toi dont l'autorité se met le plus au service des siens, le Leader Loyal.
 
 Ce qui te porte, c'est la loyauté et le sens du devoir envers les tiens : tu tires une vraie satisfaction de voir ceux dont tu as la charge avancer, réussir, être à l'abri. Tu allies la fermeté à la fidélité, car ton autorité s'appuie sur un engagement réel envers les gens, une présence fiable, une parole tenue. Cette même force peut te conduire à décider à leur place, à tout porter seul, à passer sur ce qu'ils ressentent : ton plus beau terrain de croissance sera d'apprendre à protéger en laissant choisir et à mener en écoutant.`,
   },
 
   // --- Texte long de la variante (sous les barres des variantes) ----------
   texteVariante: {
-    "ESTJ-V1": `Parmi les trois visages du Directeur, tu es le plus tourné vers la prise de commandes et l'action. Tu n'es pas avant tout le Garant de l'Ordre attaché aux règles, ni le Leader Loyal dont l'autorité s'enracine dans le service des siens : ce qui te met en mouvement, c'est de décider et de faire avancer.
+    "ESTJ-V1": `Parmi les trois visages du Directeur, c'est toi qui te portes le plus vers la prise de commandes et l'action. Tu n'es pas avant tout le Garant de l'Ordre attaché aux règles, ni le Leader Loyal dont l'autorité s'enracine dans le service des siens : ce qui te met en mouvement, c'est de décider et de faire avancer.
 
 Ce qui te caractérise, c'est cet appétit pour l'initiative et l'aboutissement. Prendre les commandes, organiser, trancher, voir les choses se concrétiser, voilà ce qui te donne de l'élan. C'est la combinaison de l'assurance, du sens du concret et du goût du résultat qui dessine ta façon d'être : celui qui prend la situation en main, donne un cap et le tient. Ton plus beau chemin de croissance sera d'apprendre à mener avec les autres, et plus seulement devant.`,
 
-    "ESTJ-V2": `Parmi les trois visages du Directeur, tu es le plus tourné vers le maintien de l'ordre, de la règle et du devoir. Tu n'es pas avant tout le Dirigeant qui prend les commandes pour l'action, ni le Leader Loyal dont l'autorité s'enracine dans le service des siens : ce qui te met en mouvement, c'est que tout soit fait correctement et qu'on puisse s'y fier.
+    "ESTJ-V2": `Parmi les trois visages du Directeur, c'est au maintien de l'ordre, de la règle et du devoir que tu tiens le plus. Tu n'es pas avant tout le Dirigeant qui prend les commandes pour l'action, ni le Leader Loyal dont l'autorité s'enracine dans le service des siens : ce qui te met en mouvement, c'est que tout soit fait correctement et qu'on puisse s'y fier.
 
 Ce qui te caractérise, c'est cet attachement à l'ordre et au devoir bien accompli. Faire respecter le cadre, maintenir la structure, veiller à ce que les choses soient faites comme il se doit, voilà ce qui te donne ton assise. C'est la combinaison de la fermeté, du sens du concret et de la droiture qui dessine ta façon d'être : celui qui fait tenir les choses et sur qui le cadre repose. Ton plus beau chemin de croissance sera d'apprendre à tenir le cadre avec souplesse, au service des gens plutôt qu'au-dessus d'eux.`,
 
-    "ESTJ-V3": `Parmi les trois visages du Directeur, tu es le plus tourné vers la direction au service des tiens. Tu n'es pas avant tout le Dirigeant qui se définit par l'action et le résultat, ni le Garant de l'Ordre qui veille d'abord au cadre : ce qui te met en mouvement, c'est de mener pour protéger et faire avancer ceux qui comptent.
+    "ESTJ-V3": `Parmi les trois visages du Directeur, c'est toi qui diriges le plus au service des tiens. Tu n'es pas avant tout le Dirigeant qui se définit par l'action et le résultat, ni le Garant de l'Ordre qui veille d'abord au cadre : ce qui te met en mouvement, c'est de mener pour protéger et faire avancer ceux qui comptent.
 
 Ce qui te caractérise, c'est cette autorité loyale. Prendre les commandes pour le bien du groupe, te sentir responsable des tiens, les défendre et les guider, voilà ce qui te donne ton élan. C'est la combinaison de la fermeté, du sens du concret et de la fidélité qui dessine ta façon d'être : celui qui mène devant, mais pour les autres. Ton plus beau chemin de croissance sera d'apprendre à mener les tiens vers leur propre force, et pas seulement vers la tienne.`,
   },
@@ -95,7 +95,7 @@ Ce qui te caractérise, c'est cette autorité loyale. Prendre les commandes pour
         { titre: "Un sens du devoir solide", accent: "devoir", texte: "Quand on te confie une responsabilité, tu la portes jusqu'au bout et tu ne lâches pas le poste." },
         { titre: "Tu mets de l'ordre", accent: "ordre", texte: "Tu apportes clarté, méthode et conformité là où règne le flou, et tu maintiens les standards." },
         { titre: "Une fiabilité sans faille", accent: "fiabilité", texte: "Quand tu dis que tu fais, c'est fait, et bien fait : ce qui passe entre tes mains est en sécurité." },
-        { titre: "Tu défends ce qui est juste", accent: "défends", texte: "Tu n'as pas peur de rappeler les règles et de t'opposer à ce qui n'est pas correct, même quand c'est impopulaire." },
+        { titre: "Tu défends le cadre", accent: "défends", texte: "Tu n'as pas peur de rappeler les règles et de t'opposer à ce qui n'est pas correct, même quand c'est impopulaire." },
         { titre: "Une droiture rassurante", accent: "droiture", texte: "On sait avec toi à quoi s'en tenir, et cette intégrité inspire un respect qui ne se décrète pas." },
       ],
       ombres: [
@@ -153,11 +153,11 @@ Ce qui te caractérise, c'est cette autorité loyale. Prendre les commandes pour
 
 Tes défis sont les revers de ta nature. Ton sens du contrôle peut te pousser à vouloir tout organiser, jusque dans la relation, ta logique te rendre maladroit avec les émotions, et tes certitudes virer à l'imposition de ta façon de voir. La clé pour toi : écouter le ressenti, exprimer le tien, laisser de l'espace, et ne pas tout vouloir diriger. Quand tu y arrives, tu offres une relation et une amitié d'une solidité rare.`,
 
-    "ESTJ-V2": `En amour comme en amitié, tu es fiable et engagé. Quand tu t'engages, c'est sérieusement et dans la durée, et tu montres souvent ton attachement par la constance et la fidélité plus que par les grandes déclarations : tu assures, tu tiens, tu es là. Être aimé par toi, c'est se sentir en sécurité et certain de ta loyauté. Tu es l'ami droit, celui qui tient parole, sur qui on peut compter sans réserve, et avec qui on sait toujours à quoi s'en tenir.
+    "ESTJ-V2": `En amour comme en amitié, tu es fiable et engagé. Une fois ton engagement donné, il est pris au sérieux et fait pour durer, et tu montres souvent ton attachement par la constance et la fidélité plus que par les grandes déclarations : tu assures, tu tiens, tu es là. T'avoir à ses côtés, c'est se savoir en sécurité et certain de ta loyauté. Tu es l'ami droit, celui qui tient parole, sur qui on peut compter sans réserve, et avec qui on sait toujours à quoi s'en tenir.
 
 Tes défis sont les revers de ta nature. Ton attachement aux principes peut te rendre rigide ou critique dans la relation, ta droiture moralisatrice, et ta franchise parfois trop tranchante. La clé pour toi : assouplir, écouter le ressenti, comprendre avant de juger, et laisser de la place à la spontanéité. Quand tu y arrives, tu offres une relation et une amitié d'une fidélité rare.`,
 
-    "ESTJ-V3": `En amour comme en amitié, tu es fiable, engagé et protecteur. Quand tu t'engages, c'est sérieusement et dans la durée, avec un vrai sens des responsabilités envers l'autre, et tu montres ton amour par des actes : tu assures, tu protèges, tu construis, tu prends soin du concret et de l'avenir. Être aimé par toi, c'est se sentir en sécurité, soutenu, et certain que tu seras là quoi qu'il arrive. Tu es l'ami loyal qui veille sur les siens, qui défend le groupe et répond présent dans les moments qui comptent.
+    "ESTJ-V3": `En amour comme en amitié, tu es fiable, engagé et protecteur. Lorsque tu t'attaches, c'est pour de bon et sur le long terme, avec un vrai sens des responsabilités envers l'autre, et tu montres ton amour par des actes : tu assures, tu protèges, tu construis, tu prends soin du concret et de l'avenir. T'avoir dans sa vie, c'est se sentir en sécurité, soutenu, et certain que tu seras là quoi qu'il arrive. Tu es l'ami loyal qui veille sur les siens, qui défend le groupe et répond présent dans les moments qui comptent.
 
 Tes défis sont les revers de ta nature. Ton instinct de protéger peut te faire décider pour l'autre et le materner malgré toi, ta logique te rendre maladroit avec les émotions, et ta fermeté virer à l'imposition. La clé pour toi : laisser l'autre choisir, écouter son ressenti, exprimer le tien, et veiller sans étouffer. Quand tu y arrives, tu offres une relation d'une solidité et d'une fidélité rares.`,
   },
@@ -168,11 +168,11 @@ Tes défis sont les revers de ta nature. Ton instinct de protéger peut te faire
 
 Tu travailles avec méthode et sens du résultat : tu transformes une intention en plan d'action et tu le mènes au bout, ce qui fait de toi un moteur dans un collectif. En revanche, les environnements flous, chaotiques ou sans cap t'usent vite. Ton défi principal touche à ton rapport au contrôle et à l'humain : ta compétence est rarement en cause, mais à trop vouloir tout tenir, à mal déléguer et à te montrer trop directif, tu peux te mettre en tension avec les autres. Apprendre à déléguer, à écouter et à assouplir fait passer ton leadership d'efficace à vraiment rassembleur.`,
 
-    "ESTJ-V2": `Au travail, tu es à ton aise dans les rôles où l'on veille au cadre, où l'on fait respecter les standards, où l'on garantit que les choses sont faites correctement. Tu te révèles quand tu peux structurer, faire respecter les standards et garantir que tout soit fait dans les règles. C'est pour ça que tout ce qui touche à l'ordre, à la conformité et à la responsabilité te parle souvent : administration, gestion, droit, finance, audit, qualité, sécurité, fonctions de contrôle et de supervision, partout où la rigueur et le respect des standards comptent.
+    "ESTJ-V2": `Au travail, tu es à ton aise dans les rôles où l'on veille au cadre, où l'on fait respecter les standards, où l'on garantit que les choses sont faites correctement. Tu te révèles quand tu peux structurer, encadrer et garantir que tout soit fait dans les règles. C'est pour ça que tout ce qui touche à l'ordre, à la conformité et à la responsabilité te parle souvent : administration, gestion, droit, finance, audit, qualité, sécurité, fonctions de contrôle et de supervision, partout où la rigueur et le respect des standards comptent.
 
 Tu travailles avec rigueur, méthode et sens du devoir : tu fais les choses dans l'ordre, complètement, conformément aux standards, sans bâcler. En revanche, les environnements laxistes, chaotiques ou sans cadre t'usent vite. Ton défi principal touche à ta souplesse et à ton rapport à l'humain : ta fiabilité est rarement en cause, mais à être trop rigide, trop critique et trop attaché à la règle au détriment du contexte et des gens, tu peux te mettre en tension. Apprendre à assouplir, à comprendre avant de juger et à mettre l'humain dans la balance fait passer ta rigueur d'efficace à vraiment sage.`,
 
-    "ESTJ-V3": `Au travail, tu es à ton aise dans les rôles où l'on dirige une équipe, où l'on porte la responsabilité d'un groupe, où mener rime avec protéger. Tu te révèles quand tu peux mener une équipe et la faire avancer ensemble. C'est pour ça que tout ce qui touche à l'encadrement et à la responsabilité d'équipe te parle souvent : management de proximité, direction d'équipe ou d'opérations, fonctions où l'on est garant à la fois des résultats et des personnes. Tu portes bien la responsabilité des autres.
+    "ESTJ-V3": `Au travail, tu es à ton aise dans les rôles où l'on dirige une équipe, où l'on porte la responsabilité d'un groupe, où mener rime avec protéger. Tu donnes le meilleur de toi quand tu peux conduire une équipe et la faire avancer ensemble. C'est pour ça que tout ce qui touche à l'encadrement et à la responsabilité d'équipe te parle souvent : management de proximité, direction d'équipe ou d'opérations, fonctions où l'on est garant à la fois des résultats et des personnes. Tu portes bien la responsabilité des autres.
 
 Tu travailles avec méthode, sens du résultat et sens des gens : tu apportes structure, fiabilité et un vrai souci de mener le groupe à bon port. En revanche, les environnements purement individualistes, chacun-pour-soi ou sans cap te conviennent moins. Ton défi principal touche à ta façon de mener les gens : ta compétence est rarement en cause, mais à être trop directif, à décider à la place de ton équipe, à mal déléguer et à passer sur le ressenti, tu peux te mettre en tension. Apprendre à déléguer, à écouter et à laisser de l'autonomie fait passer ton leadership de protecteur à vraiment rassembleur.`,
   },
@@ -183,10 +183,10 @@ Tu travailles avec méthode, sens du résultat et sens des gens : tu apportes st
       apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes une vraie force d'action, mais aussi une tendance qui peut se retourner contre toi : le besoin de tout contrôler, la rigidité, l'oubli de l'humain au nom du résultat. La bonne nouvelle, c'est que ces points de vigilance sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
     },
     "ESTJ-V2": {
-      apercu: `Ton plus grand chantier n'est pas de faire tenir les choses, tu le fais déjà, c'est d'apprendre à le faire avec souplesse et sans oublier l'humain. Tu portes une droiture rare, mais aussi une tendance à te raidir, à juger vite et à faire passer la règle avant la personne. La bonne nouvelle, c'est que ces points de vigilance sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de faire tenir les choses, tu le fais déjà, c'est d'apprendre à le faire avec souplesse et sans oublier l'humain. Tu portes une droiture rare, mais aussi une tendance à te raidir, à juger vite et à faire passer la règle avant la personne. La bonne nouvelle, c'est que ces points de vigilance sont aussi tes plus grands leviers de croissance, pour peu que tu saches sur quoi agir.`,
     },
     "ESTJ-V3": {
-      apercu: `Ton plus grand chantier n'est pas de veiller sur les tiens, tu le fais déjà, c'est d'apprendre à les protéger sans les empêcher de respirer. Tu portes une loyauté agissante rare, mais aussi une tendance à décider pour eux, à tout porter seul et à passer sur leurs émotions. La bonne nouvelle, c'est que ces points de vigilance sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de veiller sur les tiens, tu le fais déjà, c'est d'apprendre à les protéger sans les empêcher de respirer. Tu portes une loyauté agissante rare, mais aussi une tendance à décider pour eux, à tout porter seul et à passer sur leurs émotions. La bonne nouvelle, c'est que ces points de vigilance sont aussi tes plus grands leviers de croissance, dès lors que tu sais sur quel levier appuyer.`,
     },
   },
 
@@ -387,9 +387,9 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'une autor
     // ==================== V2 GARANT DE L'ORDRE ===========================
     "ESTJ-V2-relations": {
       forces: [
-        { titre: "Une fiabilité totale", accent: "fiabilité", texte: "Quand tu t'engages, c'est sérieusement et dans la durée : ta loyauté donnée est solide." },
+        { titre: "Une fiabilité totale", accent: "fiabilité", texte: "Ton engagement est pris au sérieux et tenu dans le temps : ta loyauté donnée est solide." },
         { titre: "Une constance fidèle", accent: "constance", texte: "Tu montres ton attachement par la constance et la fidélité plus que par les grandes déclarations." },
-        { titre: "Une présence sécurisante", accent: "sécurisante", texte: "Être aimé par toi, c'est se sentir en sécurité et certain de ta loyauté." },
+        { titre: "Une présence sécurisante", accent: "sécurisante", texte: "T'avoir à ses côtés, c'est se savoir en sécurité et certain de ta loyauté." },
         { titre: "Une parole tenue", accent: "parole", texte: "On sait avec toi à quoi s'en tenir : tu prends l'engagement très au sérieux et tu le tiens." },
         { titre: "L'ami droit", accent: "droit", texte: "Celui qui tient parole, qui est là quand il faut, sur qui on peut compter sans réserve." },
         { titre: "Des amitiés durables", accent: "durables", texte: "Ton cercle n'est pas large, mais tes amitiés sont solides, souvent anciennes, et durent." },
@@ -542,14 +542,14 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'une autor
       },
     },
     "ESTJ-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton sens de l'ordre et du devoir : faire respecter les règles, maintenir le cadre, juger ce qui est conforme et ce qui ne l'est pas. C'est admirable de droiture, mais souvent déséquilibré : tu peux être trop rigide, trop critique, juger durement, appliquer la règle sans voir la personne, et refuser tout changement. Tu fais tenir les choses, mais parfois en étouffant ce qui voudrait évoluer.
+      evolution: `Ta personnalité n'est rien de figé : elle se transforme avec les années, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton sens de l'ordre et du devoir : faire respecter les règles, maintenir le cadre, juger ce qui est conforme et ce qui ne l'est pas. C'est admirable de droiture, mais souvent déséquilibré : tu peux être trop rigide, trop critique, juger durement, appliquer la règle sans voir la personne, et refuser tout changement. Tu fais tenir les choses, mais parfois en étouffant ce qui voudrait évoluer.
 
 Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que les meilleures règles servent les gens, que comprendre vaut mieux que juger, que le cadre doit parfois s'assouplir pour rester juste. Tu apprends à nuancer, à voir l'humain, à accueillir le changement utile, à tenir le cadre sans t'y enfermer. Dans ta pleine maturité, tu deviens un garant droit et fiable qui sait aussi comprendre, nuancer et assouplir : la solidité du cadre alliée à l'intelligence de l'humain. Et c'est entièrement à ta portée.`,
       etapes: [
         "Déjà, tu as un sens aigu de ce qui est juste et de ce qui ne l'est pas, et tu veilles à ce que les règles soient respectées autour de toi. Tu aimes l'ordre, tu tiens parole, et tu n'aimes pas voir tricher.",
         "Ton sens du devoir est à son comble : tu fais respecter les règles, tu maintiens le cadre, tu juges ce qui est conforme. C'est admirable de droiture, mais souvent en force : tu peux être trop rigide, juger durement, refuser le changement. Une période intense, où ton sens de l'ordre cherche encore sa juste mesure.",
         "Tu réalises que les meilleures règles servent les gens et que comprendre vaut mieux que juger. Tu apprends à nuancer, à voir l'humain, à accueillir le changement utile, sans rien perdre de ta droiture.",
-        "Dans ta pleine maturité, tu es un garant droit et fiable qui sait aussi comprendre, nuancer et assouplir, et faire respecter ce qui est juste sans perdre les personnes de vue : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un garant droit et fiable qui sait aussi comprendre, nuancer et assouplir, et faire respecter ce qui est juste sans perdre les personnes de vue : tout ce que tu peux devenir de meilleur.",
       ],
       leviersForts: [
         { titre: "Assouplis le cadre", texte: "C'est ton plus grand levier. Distingue ce qui doit tenir absolument de ce qui peut s'adapter aux circonstances : assouplir, ce n'est pas trahir l'ordre, c'est le rendre juste et adapté au réel." },
@@ -579,9 +579,9 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que les meil
     // ====================== V3 LEADER LOYAL ==============================
     "ESTJ-V3-relations": {
       forces: [
-        { titre: "Une fiabilité protectrice", accent: "fiabilité", texte: "Quand tu t'engages, c'est sérieusement et dans la durée : l'autre se sait soutenu quoi qu'il arrive." },
+        { titre: "Une fiabilité protectrice", accent: "fiabilité", texte: "Ton engagement est pris au sérieux et tenu sur la durée : l'autre se sait soutenu quoi qu'il arrive." },
         { titre: "Un amour qui se prouve", accent: "prouve", texte: "Tu montres ton amour par des actes : tu assures, tu protèges, tu construis, tu prends soin du concret." },
-        { titre: "Une présence sécurisante", accent: "sécurisante", texte: "Être aimé par toi, c'est se sentir en sécurité, soutenu et certain que tu seras là." },
+        { titre: "Une présence sécurisante", accent: "sécurisante", texte: "T'avoir dans sa vie, c'est se sentir en sécurité, soutenu et certain que tu seras là." },
         { titre: "Une loyauté totale", accent: "loyauté", texte: "Une fois ta loyauté donnée, elle est totale : tu offres un soutien concret et une fiabilité sans faille." },
         { titre: "L'ami qui veille", accent: "veille", texte: "Tu défends tes amis, tu fédères, tu réponds présent dans les moments qui comptent." },
         { titre: "Un appui pour le groupe", accent: "appui", texte: "Avec toi, on sait qu'on n'est pas seul : tu prends le rôle de celui qui organise et protège." },
@@ -734,14 +734,14 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que les meil
       },
     },
     "ESTJ-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton instinct de mener et de protéger : prendre les commandes pour les tiens, décider, organiser, veiller. C'est généreux, mais souvent déséquilibré : tu peux être trop directif, décider à la place des autres, tout porter seul, et passer sur les émotions. Tu protèges, mais parfois en étouffant.
+      evolution: `Ta personnalité n'a rien d'immuable : elle évolue au fil du temps, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton instinct de mener et de protéger : prendre les commandes pour les tiens, décider, organiser, veiller. C'est généreux, mais souvent déséquilibré : tu peux être trop directif, décider à la place des autres, tout porter seul, et passer sur les émotions. Tu protèges, mais parfois en étouffant.
 
 Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que protéger n'est pas décider à la place, que les tiens deviennent plus forts quand tu leur laisses de l'espace, qu'écouter leur ressenti vaut autant que régler leurs problèmes. Tu apprends à mener en associant, à veiller sans tout porter, à faire confiance. Dans ta pleine maturité, tu deviens un leader ferme et fiable qui sait aussi écouter, déléguer et laisser choisir, et qui mène les siens en les rendant plus forts plutôt qu'en les portant : la force de mener alliée au respect de ceux que tu mènes. Et c'est entièrement à ta portée.`,
       etapes: [
         "Déjà, tu veilles sur les tiens et tu prends spontanément leur défense quand il faut. Tu organises pour le groupe, tu mènes les jeux, tu réponds présent : ton sens des autres est là dès le départ.",
         "Ton instinct de mener et de protéger est à son comble : tu prends les commandes pour les tiens, tu décides, tu organises, tu veilles. C'est généreux, mais souvent en force : tu peux décider à leur place, tout porter, passer sur les émotions. Une période intense, où ta loyauté agissante cherche encore sa juste mesure.",
         "Tu réalises que protéger n'est pas décider à la place et que les tiens deviennent plus forts quand tu leur laisses de l'espace. Tu apprends à mener en associant, à veiller sans tout porter, à faire confiance.",
-        "Dans ta pleine maturité, tu es un leader ferme et fiable qui sait aussi écouter, déléguer et laisser choisir, et qui mène les siens en les rendant plus forts : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un leader ferme et fiable qui sait aussi écouter, déléguer et laisser choisir, et qui mène les siens en les rendant plus forts : le plus abouti de ce que tu portes en toi.",
       ],
       leviersForts: [
         { titre: "Laisse choisir les tiens", texte: "C'est ton plus grand levier. Laisse-les prendre leurs décisions, même imparfaites à tes yeux : les laisser choisir, ce n'est pas les abandonner, c'est les rendre plus forts et plus libres." },

@@ -42,15 +42,15 @@ Ce qui te distingue vraiment, c'est cette maîtrise tranquille du réel et cette
   //    « En tant que Virtuose (ISTP)… ».
   // ---------------------------------------------------------------------------
   intros: {
-    "ISTP-V1": `En tant que Virtuose (ISTP), tu fais partie de ceux qui comprennent le monde concret de l'intérieur. Là où d'autres restent dans la théorie, ton esprit a besoin de savoir comment ça marche, vraiment, dans le détail : tu démontes, tu analyses, tu manipules jusqu'à maîtriser. Ta logique pratique et ton sang-froid font de toi quelqu'un de précieux quand il faut vraiment régler les choses, et plus rare qu'on ne le croit.
+    "ISTP-V1": `En tant que Virtuose (ISTP), tu fais partie de ceux qui comprennent le monde concret de l'intérieur. Là où d'autres restent dans la théorie, ton esprit a besoin de savoir comment ça marche, vraiment, dans le détail : tu démontes, tu analyses, tu manipules jusqu'à maîtriser. Ta logique pratique et ton sang-froid te rendent précieux quand il faut vraiment régler les choses, et plus rare qu'on ne le croit.
 
-Parmi les trois façons d'être de ton type, tu es l'Artisan, celui qui est le plus tourné vers la maîtrise technique. Un problème concret résolu de tes mains te nourrit plus que mille discours, et tu tires une vraie satisfaction de réparer ce qui était cassé ou de faire fonctionner ce qui coinçait. Ton plus beau terrain de croissance sera de relier cette maîtrise du réel à la chaleur des liens, pour que ton sang-froid cesse de te tenir à distance et devienne une présence solide et rassurante.`,
+Parmi les trois visages du Virtuose, tu es l'Artisan, celui qui est le plus tourné vers la maîtrise technique. Un problème concret résolu de tes mains te nourrit plus que mille discours, et tu tires une vraie satisfaction de réparer ce qui était cassé ou de faire fonctionner ce qui coinçait. Ton plus beau terrain de croissance sera de relier cette maîtrise du réel à la chaleur des liens, pour que ton calme cesse de t'isoler et devienne une présence solide et rassurante.`,
     "ISTP-V2": `En tant que Virtuose (ISTP), tu possèdes la logique pratique et le sang-froid de ta famille d'âme, mais ce qui te définit avant tout, c'est le goût de l'action, de la sensation et du défi vécu dans l'instant. Là où d'autres hésitent, tu y vas ; là où ça devient intense, tu te sens vivant. Ton goût du risque n'est pas de l'inconscience : il s'appuie sur une lecture rapide et juste du réel et une maîtrise calme dans l'action.
 
-Parmi les trois façons d'être de ton type, tu es l'Aventurier, celui qui se jette le plus dans l'expérience directe. Vivre vite et fort te nourrit plus que mille promesses d'avenir, et tu as ce don rare de te donner entièrement à l'instant. Ton plus beau terrain de croissance sera d'apprendre à te projeter et à construire dans la durée sans renier ton feu, pour que ta soif d'aventure cesse de te disperser et devienne une énergie qui bâtit.`,
+Parmi les trois visages du Virtuose, tu es l'Aventurier, celui qui se jette le plus dans l'expérience directe. Vivre vite et fort te nourrit plus que mille promesses d'avenir, et tu as ce don rare de te donner entièrement à l'instant. Ton plus beau terrain de croissance sera d'apprendre à te projeter et à construire dans la durée sans renier ton feu, pour que ta soif d'aventure cesse de te disperser et devienne une énergie qui bâtit.`,
     "ISTP-V3": `En tant que Virtuose (ISTP), tu possèdes la logique pratique et le sang-froid de ta famille d'âme, mais ce qui te définit avant tout, c'est l'observation lucide et l'action calculée. Tu es de ceux qui voient venir, qui lisent une situation en silence, qui attendent le bon moment plutôt que de foncer tête baissée. Tu n'agis pas dans la précipitation : tu observes, tu anticipes, puis tu frappes juste, avec une précision que la hâte ne permet pas.
 
-Parmi les trois façons d'être de ton type, tu es le Stratège Silencieux, celui dont l'esprit voit le plus loin avant d'agir. Comprendre la tournure des choses te nourrit autant qu'agir, et ton calme n'est jamais de la passivité : c'est une attente active qui débouche sur une action précise. Ton plus beau terrain de croissance sera d'apprendre à entrer dans le jeu et à vivre autant qu'à observer, pour que ta clairvoyance cesse de te tenir en retrait et devienne une force au service d'une vie pleine.`,
+Parmi les trois visages du Virtuose, tu es le Stratège Silencieux, celui dont l'esprit voit le plus loin avant d'agir. Comprendre la tournure des choses te nourrit autant qu'agir, et ton calme n'est jamais de la passivité : c'est une attente active qui débouche sur une action précise. Ton plus beau terrain de croissance sera de quitter parfois ton poste d'observation pour vivre autant que pour comprendre, afin que ta clairvoyance cesse de te tenir en retrait et devienne une force au service d'une vie pleine.`,
   },
 
   // ---------------------------------------------------------------------------
@@ -97,7 +97,7 @@ Ce qui te distingue, c'est cette lucidité anticipatrice. Observer en silence, l
         ombre:
           "Mais poussées trop loin, ces mêmes qualités peuvent te couper des autres, te faire fuir l'affectif et sembler froid alors que tu ressens.",
         bascule:
-          "Le jour où tu apprends à te connecter aux autres et à exprimer ce que tu ressens, ton sang-froid cesse de te couper des autres pour devenir une présence solide et rassurante.",
+          "Le jour où tu apprends à te connecter aux autres et à mettre des mots sur ton ressenti, ton sang-froid cesse de t'isoler pour devenir un appui chaleureux et fiable.",
       },
     },
     "ISTP-V2": {
@@ -139,7 +139,7 @@ Ce qui te distingue, c'est cette lucidité anticipatrice. Observer en silence, l
       ],
       ombres: [
         { titre: "Une attente excessive", accent: "attente", texte: "À force d'observer et d'attendre le moment parfait, tu peux laisser passer des occasions ou rester en retrait." },
-        { titre: "Un retrait spectateur", accent: "retrait", texte: "Ton goût de l'observation peut te faire rester à distance plutôt qu'acteur engagé." },
+        { titre: "Un retrait spectateur", accent: "retrait", texte: "Ton goût de l'observation peut te faire rester en spectateur là où il faudrait t'engager." },
         { titre: "Une distance qui refroidit", accent: "distance", texte: "Ton calme et ton silence peuvent te faire sembler froid ou impénétrable, alors que tu ressens beaucoup." },
         { titre: "La fuite de l'affectif", accent: "fuite", texte: "Ta lucidité s'applique mieux aux situations qu'aux émotions, et tu peux éviter cette dimension qui te met mal à l'aise." },
         { titre: "Une décision différée", accent: "décision", texte: "Chercher le moment parfait peut te faire trop temporiser et différer ce qui compte." },
@@ -151,9 +151,9 @@ Ce qui te distingue, c'est cette lucidité anticipatrice. Observer en silence, l
         lumiere:
           "Ton observation, ton sang-froid et ton sens de l'anticipation sont des cadeaux : tu vois clair, tu agis juste, tu évites les pièges.",
         ombre:
-          "Mais poussées trop loin, ces mêmes qualités peuvent te conduire à trop attendre, à rester spectateur et à te tenir à distance des autres.",
+          "Mais poussées trop loin, ces mêmes qualités peuvent te conduire à trop attendre, à rester spectateur et à garder tes distances avec les autres.",
         bascule:
-          "Le jour où tu apprends à entrer dans le jeu et à agir sans attendre le moment parfait, ta lucidité cesse de te tenir en retrait pour devenir une force au service de ta vie pleine.",
+          "Le jour où tu apprends à prendre part à l'action et à agir sans attendre le moment parfait, ta lucidité cesse de te tenir en retrait pour devenir une force au service de ta vie pleine.",
       },
     },
   },
@@ -164,13 +164,13 @@ Ce qui te distingue, c'est cette lucidité anticipatrice. Observer en silence, l
   relationsTexte: {
     "ISTP-V1": `En amour comme en amitié, tu es indépendant, calme et loyal à ta façon. Tu n'es pas du genre démonstratif : tu montres ton attachement par les actes, le partage d'activités et la présence concrète, plus que par les mots ou les grandes déclarations. Être aimé par toi, c'est avoir quelqu'un de fiable et de stable, qui ne joue pas la comédie des sentiments mais qui est vraiment là, et qui rend service sans qu'on ait à le demander deux fois.
 
-Ton détachement n'est pas de l'indifférence : tu ressens intensément en interne, et une fois engagé, tu es loyal. Tes défis viennent de ta nature : ton besoin d'espace peut être pris pour de la froideur, ta difficulté à verbaliser les émotions peut laisser l'autre dans le doute, et ta réticence à l'engagement durable peut créer de la distance. Ton chemin, c'est d'apprendre à exprimer un peu plus ce que tu ressens, à rassurer par les mots autant que par les actes, et à t'engager sans te sentir prisonnier.`,
+Ton détachement n'est pas de l'indifférence : tu ressens intensément en interne, et une fois engagé, tu es loyal. Tes défis viennent de ta nature : ton besoin d'espace peut être pris pour de la froideur, ta difficulté à mettre des mots sur tes émotions peut laisser l'autre s'interroger, et ta réticence à l'engagement durable peut créer de la distance. Ton chemin, c'est d'apprendre à dire un peu plus ce qui se passe en toi, à rassurer par les mots autant que par les actes, et à t'engager sans te sentir prisonnier.`,
     "ISTP-V2": `En amour comme en amitié, tu es spontané, vivant et indépendant. Tu apportes de l'énergie, de l'aventure et de l'intensité à la relation, et tu montres ton attachement par les expériences partagées et la présence dans l'action plus que par les mots. Être aimé par toi, c'est vivre des choses, ne pas s'ennuyer, partager une vraie complicité dans le concret, et avoir un compagnon d'aventure qui propose et qui entraîne.
 
-Sous ton apparente légèreté, tu es capable d'un attachement réel et d'une loyauté sincère une fois engagé. Tes défis sont les revers de ta nature : ton besoin de stimulation peut te faire fuir la routine et t'ennuyer, ta difficulté à verbaliser les émotions peut laisser l'autre dans le doute, et ta réticence à l'engagement durable peut créer de la distance. Ton chemin, c'est d'apprendre à trouver de l'intensité dans la durée, à exprimer ce que tu ressens, et à entretenir le lien même dans les temps calmes.`,
+Sous ton apparente légèreté, tu es capable d'un attachement réel et d'une loyauté sincère une fois engagé. Tes défis sont les revers de ta nature : ton besoin de stimulation peut te faire fuir la routine et t'ennuyer, ton silence sur l'émotionnel peut laisser l'autre s'interroger, et ta réticence à l'engagement durable peut créer de la distance. Ton chemin, c'est d'apprendre à trouver de l'intensité dans la durée, à dire ce que tu ressens, et à entretenir le lien même dans les temps calmes.`,
     "ISTP-V3": `En amour comme en amitié, tu es posé, observateur et loyal à ta façon. Tu prends le temps de comprendre l'autre, sans démonstration ni précipitation, et tu montres ton attachement par une présence fiable et des actes réfléchis plus que par les mots. Être aimé par toi, c'est avoir quelqu'un de stable et de lucide, qui te comprend souvent mieux que tu ne le crois, et qui donne le bon conseil au bon moment.
 
-Ton calme n'est pas de l'indifférence : tu observes, tu ressens, tu comprends beaucoup, même si tu le montres peu, et une fois engagé, tu es loyal. Tes défis viennent de ta nature : ton observation peut te garder spectateur quand il faudrait t'impliquer, ta difficulté à verbaliser peut laisser l'autre dans le doute, et ton calme peut être pris pour de la distance. Ton chemin, c'est d'apprendre à entrer dans le jeu, à exprimer ce que tu observes et ressens, et à t'engager sans tout calculer.`,
+Ton calme n'est pas de l'indifférence : tu observes, tu ressens, tu comprends beaucoup, même si tu le montres peu, et une fois engagé, tu es loyal. Tes défis viennent de ta nature : ton observation peut te garder spectateur quand il faudrait t'impliquer, ta difficulté à te livrer peut laisser l'autre s'interroger, et ton calme peut être pris pour de la distance. Ton chemin, c'est d'apprendre à entrer dans le jeu, à partager ce que tu observes et ressens, et à t'engager sans tout calculer.`,
   },
 
   // ---------------------------------------------------------------------------
@@ -193,13 +193,13 @@ Ton recul, ta lecture juste des situations et ta capacité d'anticipation sont d
   // ---------------------------------------------------------------------------
   mindsetTexte: {
     "ISTP-V1": {
-      apercu: `Ton plus grand chantier n'est pas dans le monde des choses, où tu excelles, il est dans celui des liens. Tu portes une maîtrise du réel et un sang-froid rares, mais aussi une tendance qui peut se retourner contre toi : le détachement qui isole, la fuite de l'affectif, la difficulté à t'engager dans la durée. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas dans le monde des choses, où tu excelles, il est dans celui des liens. Tu portes une maîtrise du réel et un sang-froid rares, mais aussi une tendance qui peut se retourner contre toi : le détachement qui isole, la fuite de l'affectif, la difficulté à t'engager dans la durée. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, dès lors que tu sais sur quoi agir.`,
     },
     "ISTP-V2": {
-      apercu: `Ton plus grand chantier n'est pas de vivre intensément, ça tu sais le faire, c'est d'apprendre à construire ce qui dure sans perdre ton feu. Tu portes une audace et un sang-froid rares, mais aussi une tendance qui peut te coûter : la fuite de l'engagement, l'ennui qui te fait décrocher, le risque pris de trop. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de vivre intensément, ça tu sais le faire, c'est d'apprendre à construire ce qui dure sans perdre ton feu. Tu portes une audace et un sang-froid rares, mais aussi une tendance qui peut te coûter : la fuite de l'engagement, l'ennui qui te fait décrocher, le risque pris de trop. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, une fois que tu sais où porter l'effort.`,
     },
     "ISTP-V3": {
-      apercu: `Ton plus grand chantier n'est pas de voir clair, ça tu le fais mieux que personne, c'est d'apprendre à vivre autant qu'à observer. Tu portes une lucidité et un sang-froid rares, mais aussi une tendance qui peut te garder en retrait : l'attente excessive, le retrait spectateur, la distance qui refroidit. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de voir clair, ça tu le fais mieux que personne, c'est d'apprendre à vivre autant qu'à observer. Tu portes une lucidité et un sang-froid rares, mais aussi une tendance qui peut te garder en retrait : l'attente excessive, le retrait spectateur, la distance qui refroidit. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, pourvu que tu saches où concentrer ton énergie.`,
     },
   },
 
@@ -265,7 +265,7 @@ Ton recul, ta lecture juste des situations et ta capacité d'anticipation sont d
           items: [
             "Les tempéraments autonomes et concrets qui respectent ton espace.",
             "Les profils calmes qui partagent ton goût de l'action sans pression.",
-            "Les chaleureux qui t'aident en douceur à exprimer ce que tu ressens.",
+            "Les chaleureux qui t'aident en douceur à dire ce que tu ressens.",
           ],
           profils: [
             { code: "ISFP", raison: "son ancrage concret et son respect de la liberté résonnent avec ta façon d'être." },
@@ -364,18 +364,18 @@ Ton recul, ta lecture juste des situations et ta capacité d'anticipation sont d
       },
     },
     "ISTP-V1-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ta maîtrise et ton autonomie : comprendre, manier, résoudre, agir, sans t'embarrasser des autres ni du long terme. C'est efficace, mais souvent déséquilibré. Tu peux être détaché, fuir l'affectif, te désengager dès que l'intérêt retombe, et rester coupé du lien et de la projection. Tu maîtrises le réel, mais le monde des émotions et de la durée te reste étranger.
+      evolution: `Ta personnalité n'est pas un bloc figé : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ta maîtrise et ton autonomie : comprendre, manier, résoudre, agir, sans t'embarrasser des autres ni du long terme. C'est efficace, mais souvent déséquilibré. Tu peux être détaché, fuir l'affectif, te désengager dès que l'intérêt retombe, et rester coupé du lien et de la projection. Tu maîtrises le réel, mais le monde des émotions et de la durée te reste étranger.
 
-Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que le lien compte, que t'ouvrir aux autres ne te rend pas vulnérable mais plus complet, que te projeter ouvre des possibilités. Tu apprends à exprimer ce que tu ressens, à te connecter, à t'engager sans te sentir prisonnier. Tu ne perds rien de ton sang-froid, tu y ajoutes de la chaleur. Dans ta pleine maturité, tu deviens un virtuose qui maîtrise le réel et sait aussi manier le lien : calme, compétent, fiable, mais aussi présent et connecté. Et c'est entièrement à ta portée.`,
+Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que le lien compte, que t'ouvrir aux autres ne te rend pas vulnérable mais plus complet, que te projeter ouvre des possibilités. Tu apprends à dire ce que tu ressens, à te connecter, à t'engager sans te sentir prisonnier. Tu ne perds rien de ton sang-froid, tu y ajoutes de la chaleur. Dans ta pleine maturité, tu deviens un virtuose qui maîtrise le réel et sait aussi manier le lien : calme, compétent, fiable, mais aussi présent et connecté. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu démontes déjà tout ce qui te tombe sous la main pour comprendre comment ça marche. Curieux du concret, tu apprends en manipulant et tu te débrouilles seul bien avant les autres.",
         "Ta maîtrise et ton autonomie sont à leur comble : tu comprends, tu manies, tu résous, sans t'embarrasser des autres ni du long terme. C'est efficace, mais souvent déséquilibré : tu peux être détaché, fuir l'affectif et te désengager dès que l'intérêt retombe.",
-        "Tu réalises que le lien compte et que te projeter ouvre des possibilités. Tu apprends à exprimer ce que tu ressens, à te connecter et à t'engager, sans rien perdre de ton sang-froid.",
-        "Dans ta pleine maturité, tu maîtrises le réel et sais aussi manier le lien : calme, compétent et fiable, mais aussi présent et connecté. La version la plus accomplie de toi.",
+        "Tu réalises que le lien compte et que te projeter ouvre des possibilités. Tu apprends à dire ce que tu ressens, à te connecter et à t'engager, sans rien perdre de ton sang-froid.",
+        "Dans ta pleine maturité, tu maîtrises le réel et sais aussi manier le lien : calme, compétent et fiable, mais aussi présent et connecté. La version la plus aboutie de toi-même.",
       ],
       leviersForts: [
-        { titre: "Apprends à exprimer ce que tu ressens", texte: "C'est ton plus grand levier. Tu ressens plus que tu ne le montres : mettre des mots, même maladroits, sur ce qui se passe en toi rapproche les gens et t'allège." },
-        { titre: "Connecte-toi aux autres", texte: "Soigner le lien, rester en contact, t'intéresser à ce que vivent les gens ne te coûte pas ta liberté : cette connexion te rend plus complet et tes relations plus solides." },
+        { titre: "Apprends à dire ce que tu ressens", texte: "C'est ton plus grand levier. Tu ressens plus que tu ne le montres : mettre des mots, même maladroits, sur ce qui se passe en toi rapproche les gens et t'allège." },
+        { titre: "Connecte-toi aux autres", texte: "Soigner le lien, rester en contact, t'intéresser à ce que vivent les gens ne te coûte pas ta liberté : cette présence te rend plus complet et tes relations plus solides." },
         { titre: "Apprends à te projeter", texte: "Te fixer quelques repères à long terme et t'inscrire dans la durée, sans renier ta souplesse, ouvre des possibilités que l'instant seul ne permet pas." },
         { titre: "Canalise ton besoin de sensation", texte: "Ton goût de l'action est une force : oriente-le vers des défis qui te construisent plutôt que vers des risques qui te coûtent." },
       ],
@@ -394,7 +394,7 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que le lien 
         ombre:
           "Mais par peur de perdre ta liberté, tu peux fuir l'affectif, te couper des autres et rester maître des choses mais démuni dans le monde des liens.",
         bascule:
-          "Le jour où tu comprends que te connecter et t'engager ne t'enlève pas ta liberté mais te rend plus complet, ton sang-froid devient une présence solide et chaleureuse.",
+          "Le jour où tu comprends que te connecter et t'engager ne t'enlève pas ta liberté mais te rend plus complet, ta maîtrise du réel se double enfin d'une vraie chaleur humaine.",
       },
     },
     "ISTP-V2-relations": {
@@ -408,7 +408,7 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que le lien 
       ],
       ombres: [
         { titre: "Une fuite de la routine", accent: "routine", texte: "Ton besoin de stimulation peut te faire fuir le quotidien du couple et t'ennuyer quand l'intensité retombe." },
-        { titre: "Des émotions tues", accent: "émotions", texte: "Ta difficulté à verbaliser ce que tu ressens peut laisser l'autre dans le doute." },
+        { titre: "Des émotions tues", accent: "émotions", texte: "Quand tu gardes pour toi ce que tu ressens, l'autre peut se demander où il en est avec toi." },
         { titre: "Une réticence à l'engagement", accent: "engagement", texte: "Ton goût de l'instant et de la liberté peut te rendre prudent face aux engagements durables." },
         { titre: "Un détachement émotionnel", accent: "détachement", texte: "Ton ancrage dans l'action peut être pris pour de la froideur et mal compris." },
         { titre: "Des amis négligés", accent: "négligés", texte: "Quand l'aventure est ailleurs, tu peux négliger les amis et laisser le lien se distendre." },
@@ -472,7 +472,7 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que le lien 
         ombre:
           "Mais à fuir la routine, à taire ce que tu ressens et à craindre l'engagement, tu peux passer à côté des liens profonds que tu mérites.",
         bascule:
-          "Le jour où tu trouves de l'intensité aussi dans la durée et où tu oses exprimer ce que tu ressens, ta vitalité trouve enfin où s'enraciner.",
+          "Le jour où tu trouves de l'intensité aussi dans la durée et où tu oses dire ce que tu ressens, ta vitalité trouve enfin où s'enraciner.",
       },
     },
     "ISTP-V2-carriere": {
@@ -490,7 +490,7 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que le lien 
         { titre: "Une difficulté avec la constance", accent: "constance", texte: "Tenir au-delà du premier élan, dans la durée et le suivi, te demande un vrai effort." },
         { titre: "Une allergie aux procédures", accent: "procédures", texte: "La paperasse, les procédures lourdes et les réunions interminables te démotivent vite." },
         { titre: "Une décision trop rapide", accent: "décision", texte: "Ta rapidité peut négliger les conséquences à long terme et l'impact émotionnel de tes choix." },
-        { titre: "Un rapport au présent à l'argent", accent: "argent", texte: "Tourné vers l'instant, tu peux négliger l'épargne et la projection financière à long terme." },
+        { titre: "Une insouciance avec l'argent", accent: "argent", texte: "Tourné vers l'instant, tu peux négliger l'épargne et la projection financière à long terme." },
       ],
       blocs: [
         {
@@ -554,20 +554,20 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que le lien 
       },
     },
     "ISTP-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ta soif d'action et de sensation : oser, vivre fort, saisir l'instant, fuir l'ennui. C'est intense, mais souvent déséquilibré. Tu peux prendre des risques excessifs, fuir tout engagement, t'ennuyer dès que ça retombe, et rester coupé du lien et de la projection. Tu vis pleinement le présent, mais le long terme et l'affectif te restent étrangers.
+      evolution: `Ta personnalité n'a rien d'immuable : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ta soif d'action et de sensation : oser, vivre fort, saisir l'instant, fuir l'ennui. C'est intense, mais souvent déséquilibré. Tu peux prendre des risques excessifs, fuir tout engagement, t'ennuyer dès que ça retombe, et rester coupé du lien et de la projection. Tu vis pleinement le présent, mais le long terme et l'affectif te restent étrangers.
 
 Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'on peut trouver de l'intensité aussi dans ce qui dure, que se projeter ouvre des possibilités, que le lien compte autant que l'action. Tu apprends à t'engager sans te sentir prisonnier, à te connecter aux autres, à canaliser ton audace. Tu ne perds rien de ta vitalité, tu y ajoutes de la profondeur. Dans ta pleine maturité, tu deviens un aventurier qui vit pleinement et construit : audacieux, vivant, mais aussi capable de durer, de se projeter et de se connecter. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu te jettes déjà dans l'action et tu cherches la sensation : grimper, foncer, tester tes limites. Vif et intrépide, tu te sens vivant dès que ça bouge et que ça défie.",
         "Ta soif d'action et de sensation est à son comble : oser, vivre fort, saisir l'instant, fuir l'ennui. C'est intense, mais souvent déséquilibré : tu peux prendre des risques excessifs, fuir tout engagement et rester coupé du lien et de la projection.",
         "Tu réalises qu'on peut trouver de l'intensité aussi dans ce qui dure et que se projeter ouvre des possibilités. Tu apprends à t'engager, à te connecter et à canaliser ton audace, sans rien perdre de ta vitalité.",
-        "Dans ta pleine maturité, tu vis pleinement et tu construis : audacieux et vivant, mais aussi capable de durer, de te projeter et de te connecter. La version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu vis pleinement et tu construis : audacieux et vivant, mais aussi capable de durer, de te projeter et de te connecter. La version la plus aboutie de toi-même.",
       ],
       leviersForts: [
         { titre: "Apprends à te projeter", texte: "C'est ton plus grand levier. Te fixer un cap à long terme et t'inscrire dans la durée, sans renier ton goût de l'instant, transforme ton énergie en accomplissements durables." },
         { titre: "Trouve de l'intensité dans la durée", texte: "L'aventure n'est pas que dans le nouveau et le risque : il y a une intensité réelle à approfondir, à maîtriser et à construire, et la découvrir te libère de la fuite en avant." },
         { titre: "Canalise ton audace", texte: "Ton goût du défi est une force : oriente-le vers ce qui te construit plutôt que vers le risque gratuit, et ton audace dirigée déplace des montagnes." },
-        { titre: "Connecte-toi aux autres", texte: "Soigner le lien, exprimer ce que tu ressens et t'intéresser à ce que vivent les gens ne te coûte pas ta liberté : cette connexion te rend plus complet." },
+        { titre: "Crée du lien avec les autres", texte: "Entretenir le contact, oser dire ce que tu ressens et t'intéresser à ce que vivent les gens ne te coûte pas ta liberté : ces attaches te rendent plus complet." },
       ],
       questions: [
         { situation: "Quand un nouveau défi t'appelle", question: "Ce risque me construit-il, ou est-ce que je le paierai plus tard ?" },
@@ -597,8 +597,8 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'on peut t
         { titre: "Un respect de l'espace", accent: "respect", texte: "Tu laisses à l'autre sa liberté et tu ne presses jamais, créant une complicité tranquille." },
       ],
       ombres: [
-        { titre: "Un retrait spectateur", accent: "retrait", texte: "Ton observation peut te garder à distance quand il faudrait t'impliquer et entrer dans le jeu." },
-        { titre: "Des émotions tues", accent: "émotions", texte: "Ta difficulté à verbaliser ce que tu observes et ressens peut laisser l'autre dans le doute." },
+        { titre: "Un retrait spectateur", accent: "retrait", texte: "Ton observation peut te garder à distance quand il faudrait t'impliquer et prendre part à l'action." },
+        { titre: "Des émotions tues", accent: "émotions", texte: "Quand tu ne dis ni ce que tu observes ni ce que tu ressens, l'autre reste sans repère." },
         { titre: "Une distance perçue", accent: "distance", texte: "Ton calme et ton silence peuvent être pris pour de la froideur ou de l'indifférence." },
         { titre: "La fuite de l'affectif", accent: "fuite", texte: "La dimension émotionnelle te met mal à l'aise et tu peux l'éviter plutôt que de t'y impliquer." },
         { titre: "Une implication tardive", accent: "implication", texte: "À trop attendre le bon moment, tu peux t'impliquer trop tard ou pas assez dans la relation." },
@@ -660,7 +660,7 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'on peut t
         lumiere:
           "Ta lucidité, ton calme et ta fiabilité font de toi un proche profond et clairvoyant, sur qui on peut compter.",
         ombre:
-          "Mais à rester en retrait, à taire ce que tu ressens et à fuir l'affectif, tu peux sembler distant et laisser l'autre dans le doute.",
+          "Mais à rester en retrait, à taire ce que tu ressens et à fuir l'affectif, tu peux sembler distant et laisser l'autre s'interroger sur tes sentiments.",
         bascule:
           "Le jour où tu entres dans le jeu et où tu partages ce que tu observes et ressens, ta clairvoyance devient une présence chaleureuse et impliquée.",
       },
@@ -678,7 +678,7 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'on peut t
         { titre: "Une attente excessive", accent: "attente", texte: "Tu peux trop attendre, différer l'action en quête du moment parfait et manquer de bonnes occasions." },
         { titre: "Un retrait observateur", accent: "retrait", texte: "Ta tendance à rester spectateur peut te faire passer à côté de ce que tu pourrais accomplir." },
         { titre: "Une implication insuffisante", accent: "implication", texte: "Tu peux ne pas t'impliquer assez et laisser ta lucidité sans débouché concret." },
-        { titre: "Une allergie à la précipitation", accent: "précipitation", texte: "La réactivité bruyante et permanente imposée brise ta façon d'agir, qui a besoin de temps pour observer." },
+        { titre: "Une allergie à la précipitation", accent: "précipitation", texte: "L'agitation constante qu'on t'impose casse ta façon d'agir, qui a besoin de temps pour observer." },
         { titre: "Un relationnel secondaire", accent: "relationnel", texte: "Le travail purement social te convient moins et tu peux négliger la dimension relationnelle." },
         { titre: "Une décision trop logique", accent: "logique", texte: "Ton analyse peut négliger la dimension humaine et émotionnelle de tes choix." },
       ],
@@ -744,19 +744,19 @@ Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises qu'on peut t
       },
     },
     "ISTP-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton observation et ta lucidité : voir venir, analyser, attendre le bon moment, comprendre avant d'agir. C'est lucide, mais souvent déséquilibré. Tu peux trop attendre, rester spectateur, te tenir à distance des autres et de l'affectif, et passer à côté de ce que tu pourrais vivre. Tu comprends tout, mais tu t'impliques peu.
+      evolution: `Ta personnalité ne reste pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton observation et ta lucidité : voir venir, analyser, attendre le bon moment, comprendre avant d'agir. C'est lucide, mais souvent déséquilibré. Tu peux trop attendre, rester spectateur, garder tes distances avec les autres et avec l'affectif, et passer à côté de ce que tu pourrais vivre. Tu comprends tout, mais tu t'impliques peu.
 
-Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que voir venir n'a de valeur que si l'on agit, que vivre vaut mieux qu'observer de loin, que le lien compte. Tu apprends à entrer dans le jeu, à agir sans chercher le moment parfait, à te connecter aux autres. Tu ne perds rien de ta lucidité, tu la mets au service d'une vie pleine. Dans ta pleine maturité, tu deviens un stratège qui voit clair et qui vit : lucide, posé, mais aussi impliqué, présent et connecté. Et c'est entièrement à ta portée.`,
+Avec le temps et l'expérience, quelque chose s'ouvre. Tu réalises que voir venir n'a de valeur que si l'on agit, que vivre vaut mieux qu'observer de loin, que le lien compte. Tu apprends à t'engager dans l'action, à décider sans chercher le moment parfait, à te connecter aux autres. Tu ne perds rien de ta lucidité, tu la mets au service d'une vie pleine. Dans ta pleine maturité, tu deviens un stratège qui voit clair et qui vit : lucide, posé, mais aussi impliqué, présent et connecté. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu observes déjà avant d'agir : tu lis les situations, tu attends ton moment, tu comprends les choses en silence. Posé et attentif, tu vois souvent venir ce que d'autres subissent.",
-        "Ton observation et ta lucidité sont à leur comble : voir venir, analyser, attendre le bon moment. C'est lucide, mais souvent déséquilibré : tu peux trop attendre, rester spectateur et te tenir à distance des autres et de l'affectif.",
-        "Tu réalises que voir venir n'a de valeur que si l'on agit et que vivre vaut mieux qu'observer de loin. Tu apprends à entrer dans le jeu, à agir et à te connecter, sans rien perdre de ta lucidité.",
-        "Dans ta pleine maturité, tu vois clair et tu vis : lucide et posé, mais aussi impliqué, présent et connecté. La version la plus accomplie de toi.",
+        "Ton observation et ta lucidité sont à leur comble : voir venir, analyser, attendre le bon moment. C'est lucide, mais souvent déséquilibré : tu peux trop attendre, rester spectateur et garder tes distances avec les autres et avec l'affectif.",
+        "Tu réalises que voir venir n'a de valeur que si l'on agit et que vivre vaut mieux qu'observer de loin. Tu apprends à t'engager dans l'action et à te connecter, sans rien perdre de ta lucidité.",
+        "Dans ta pleine maturité, tu vois clair et tu vis : lucide et posé, mais aussi impliqué, présent et connecté. La version la plus aboutie de toi-même.",
       ],
       leviersForts: [
         { titre: "Apprends à entrer dans le jeu", texte: "C'est ton plus grand levier. Cesse parfois d'observer pour vivre et agir : ta lucidité ne vaut que si elle débouche sur l'action et l'expérience." },
         { titre: "Agis sans chercher le moment parfait", texte: "Le moment juste est souvent maintenant : apprendre à décider quand l'analyse suffit t'évite de laisser passer ce qui compte." },
-        { titre: "Connecte-toi aux autres", texte: "Partager ce que tu vois et ce que tu ressens et t'intéresser aux gens ne te coûte pas ta liberté : cette connexion te rend plus complet." },
+        { titre: "Tisse du lien avec les autres", texte: "Partager ce que tu vois et ce que tu ressens et t'intéresser aux gens ne te coûte pas ta liberté : ces attaches te rendent plus complet." },
         { titre: "Mets ta clairvoyance au service de l'action", texte: "Ta capacité à voir venir est un atout immense, à condition de t'en servir pour agir et pas seulement pour comprendre : anticipe, puis engage-toi." },
       ],
       questions: [

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import MeshGradient from "../../components/MeshGradient";
 import ResultatNav from "../../components/ResultatNav";
 import SpectreInteractif from "../../components/SpectreInteractif";
 import VarianteInteractif from "../../components/VarianteInteractif";
@@ -470,37 +469,37 @@ export default async function ResultatPage({
 
   return (
     <div className="bg-white">
-      {/* HÉROS — bandeau dégradé (comme l'accueil), texte à gauche, avatar à droite */}
-      <section className="relative isolate overflow-hidden px-6 pt-16 pb-14 border-b border-gray-100">
-        <MeshGradient />
+      {/* HÉROS — pastille verte alignée sur la grille du contenu (menu à gauche, texte à droite) */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 mt-4">
+      <section className="relative isolate overflow-hidden px-6 pt-16 pb-14 rounded-3xl" style={{ background: GREEN }}>
         <div className="relative max-w-3xl mx-auto flex flex-col-reverse md:flex-row md:items-center gap-8 md:gap-10">
           <div className="flex-1 text-center md:text-left">
-            <p className="text-sm font-semibold tracking-wide mb-2" style={{ color: "rgba(0,0,0,0.75)" }}>
+            <p className="text-sm font-semibold tracking-wide mb-2 text-white/90">
               Voici ta personnalité :
             </p>
             <h1
-              className="text-5xl md:text-6xl font-bold tracking-tight text-[rgba(0,0,0,0.75)]"
+              className="text-5xl md:text-6xl font-bold tracking-tight text-white"
               style={{ textShadow: "0 6px 18px rgba(0,0,0,0.18)" }}
             >
               {profil.nomType}
             </h1>
-            <p className="text-xl md:text-2xl font-semibold mt-2" style={{ color: GREEN }}>
+            <p className="text-xl md:text-2xl font-semibold mt-2 text-white">
               {profil.code} · {profil.nomVariante}
             </p>
-            <p className="text-lg md:text-xl text-gray-600 max-w-xl mx-auto md:mx-0 mt-5 leading-relaxed">
+            <p className="text-lg md:text-xl text-white/90 max-w-xl mx-auto md:mx-0 mt-5 leading-relaxed">
               {profil.accroche}
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-3">
               <button
                 type="button"
-                className="text-white font-semibold py-3.5 px-9 rounded-full text-base hover:opacity-90 transition"
-                style={{ background: GREEN }}
+                className="bg-white font-semibold py-3.5 px-9 rounded-full text-base hover:opacity-90 transition"
+                style={{ color: GREEN }}
               >
                 Partager mon profil
               </button>
               <Link
                 href="/test"
-                className="text-[rgba(0,0,0,0.75)] font-semibold py-3.5 px-7 rounded-full text-base bg-transparent hover:bg-[rgba(0,0,0,0.04)] transition-colors"
+                className="text-white font-semibold py-3.5 px-7 rounded-full text-base bg-transparent hover:bg-white/10 transition-colors"
               >
                 ↺ Refaire le test
               </Link>
@@ -508,6 +507,7 @@ export default async function ResultatPage({
           </div>
         </div>
       </section>
+      </div>
 
       {/* SOMMAIRE COLLANT (gauche) + LES 4 SECTIONS NUMÉROTÉES (droite) */}
       <div className="max-w-6xl mx-auto md:flex md:gap-12 md:px-6">

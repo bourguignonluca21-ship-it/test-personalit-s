@@ -19,7 +19,7 @@ Ta grande singularité, c'est cette alliance de la sensibilité et de la douceur
     "ISFP-V1":
       "Les Artistes Sensibles sont les plus tournés vers la vie intérieure et l'expression. Ils donnent forme à ce qu'ils ressentent et mettent du vrai et de la beauté dans tout ce qu'ils touchent.",
     "ISFP-V2":
-      "Les Aventuriers des Sens sont les plus tournés vers l'expérience directe et la beauté du concret. Ils vivent l'instant à pleins sens et savourent ce que d'autres ne remarquent même pas.",
+      "Les Aventuriers des Sens sont les plus tournés vers l'expérience directe et la beauté du concret. Ils vivent l'instant à pleins sens et savourent ce qui passe inaperçu pour les autres.",
     "ISFP-V3":
       "Les Doux Idéalistes sont les plus tournés vers la défense de leurs valeurs dans le monde. Ils agissent pour ce qui est juste avec une fermeté tranquille qui force le respect.",
   },
@@ -39,24 +39,24 @@ Ce qui te porte, c'est l'expression de ce que tu ressens et la beauté que tu y 
 
     "ISFP-V2": `En tant qu'Aventurier (ISFP), variante Aventurier des Sens, tu as la sensibilité et l'authenticité de ta famille d'âme, et ce qui te définit avant tout, c'est ton goût de l'expérience directe et de la beauté du concret. Là où l'artiste sensible vit d'abord par sa vie intérieure, et où le doux idéaliste tourne ses valeurs vers le monde, toi tu te définis d'abord par ta présence intense à l'instant : vivre, sentir, savourer.
 
-Ce qui te porte, c'est l'expérience pleinement vécue et la beauté saisie dans l'instant. Tu as ce don rare de te sentir pleinement vivant dans le moment, de goûter les textures, les couleurs, les sensations que d'autres ne remarquent même pas. Vivre intensément le présent te nourrit plus que n'importe quel plan d'avenir. Cette même intensité a son revers : ton goût du présent peut t'empêcher de te projeter et de construire pour demain. Ton plus beau terrain de croissance sera d'apprendre à bâtir sans cesser de savourer.`,
+Ce qui te porte, c'est l'expérience pleinement vécue et la beauté saisie dans l'instant. Tu as ce don rare de te sentir pleinement vivant dans le moment, de goûter les textures, les couleurs, les sensations qui échappent à la plupart des gens. Vivre intensément le présent te nourrit plus que n'importe quel plan d'avenir. Cette même intensité a son revers : ton goût du présent peut t'empêcher de te projeter et de construire pour demain. Ton plus beau terrain de croissance sera d'apprendre à bâtir sans cesser de savourer.`,
 
     "ISFP-V3": `En tant qu'Aventurier (ISFP), variante Doux Idéaliste, tu as la sensibilité et l'authenticité de ta famille d'âme, et ce qui te définit avant tout, c'est la façon dont tes valeurs se tournent vers le monde. Là où l'artiste sensible vit d'abord sa vie intérieure, et où l'aventurier des sens savoure l'instant, toi tu mets ta sensibilité au service de ce qui est juste : tu défends, doucement mais fermement, ce en quoi tu crois.
 
-Ce qui te porte, c'est la défense de ce qui est juste et la fidélité à tes idéaux. Tu as un sens aigu de la justice, et tu veux contribuer à un monde meilleur, non dans le fracas mais par tes choix, ta constance, ta présence. Cette même conviction a son revers : ton idéalisme peut se briser sur un réel qui n'est jamais à la hauteur. Ton plus beau terrain de croissance sera d'apprendre à ancrer tes idéaux dans le réel au lieu de les y briser.`,
+Ce qui te porte, c'est la défense de ce qui est juste et la fidélité à tes idéaux. Tu as un sens aigu de la justice, et tu veux contribuer à un monde meilleur, non dans le fracas mais par tes choix, ta constance, ta présence. Cette même conviction a son revers : ton idéalisme peut se briser sur un réel qui n'est jamais à la hauteur. Ton plus beau terrain de croissance sera d'apprendre à enraciner tes idéaux dans le réel au lieu de les y briser.`,
   },
 
   // ~2 paragraphes sous les barres de variante (« Ta variante »).
   texteVariante: {
-    "ISFP-V1": `Parmi les trois façons d'être de l'Aventurier, tu es le plus tourné vers la vie intérieure et l'expression de ce que tu portes. Tu n'es pas avant tout l'aventurier des sens en quête d'expérience, ni le doux idéaliste qui tourne ses valeurs vers le monde : ce qui te met en mouvement, c'est d'exprimer qui tu es, de rester fidèle à ton monde intérieur. Créer, mettre du sens et de la beauté dans ce que tu fais, vivre aligné avec tes valeurs te comble plus que tout.
+    "ISFP-V1": `Parmi les trois façons d'incarner l'Aventurier, tu es le plus tourné vers la vie intérieure et l'expression de ce que tu portes. Tu n'es pas avant tout l'aventurier des sens en quête d'expérience, ni le doux idéaliste qui tourne ses valeurs vers le monde : ce qui te met en mouvement, c'est d'exprimer qui tu es, de rester fidèle à ton monde intérieur. Créer, mettre du sens et de la beauté dans ce que tu fais, vivre aligné avec tes valeurs te comble plus que tout.
 
 Cette combinaison, la profondeur, la sensibilité et la douceur, dessine ta façon d'être : l'âme délicate qui met du vrai dans tout ce qu'elle touche. Tu donnes forme à ce que tu ressens, tu le rends tangible et beau. Le revers, c'est que tu peux porter une richesse intérieure immense et la garder pour toi par crainte de l'exposer : ton plus beau chemin de croissance sera d'apprendre à donner à voir ce que tu portes, sans en faire une prison.`,
 
-    "ISFP-V2": `Parmi les trois façons d'être de l'Aventurier, tu es le plus tourné vers l'expérience directe et la beauté du concret. Tu n'es pas avant tout l'artiste sensible centré sur sa vie intérieure, ni le doux idéaliste qui tourne ses valeurs vers le monde : ce qui te met en mouvement, c'est de vivre, de sentir, de savourer l'instant. Vivre pleinement l'expérience, savourer la beauté du monde, saisir spontanément ce qui se présente te comble plus que tout.
+    "ISFP-V2": `Des trois manières d'être l'Aventurier, tu es le plus tourné vers l'expérience directe et la beauté du concret. Tu n'es pas avant tout l'artiste sensible centré sur sa vie intérieure, ni le doux idéaliste qui tourne ses valeurs vers le monde : ce qui te met en mouvement, c'est de vivre, de sentir, de savourer l'instant. Vivre pleinement l'expérience, savourer la beauté du monde, saisir spontanément ce qui se présente te comble plus que tout.
 
 Cette combinaison, la vivacité, la sensibilité esthétique et la spontanéité, dessine ta façon d'être : l'esthète qui vit l'instant à pleins sens. Tu ne fais pas que vivre le moment, tu y mets du cœur et du sens. Le revers, c'est que cette présence au présent peut te disperser et te faire négliger ce qui se construit lentement : ton plus beau chemin de croissance sera d'apprendre à inscrire ta beauté dans la durée.`,
 
-    "ISFP-V3": `Parmi les trois façons d'être de l'Aventurier, tu es le plus tourné vers la défense de tes valeurs dans le monde. Tu n'es pas avant tout l'artiste sensible centré sur sa vie intérieure, ni l'aventurier des sens qui savoure l'instant : ce qui te met en mouvement, c'est de servir ce qui est juste, de contribuer à un monde meilleur. Agir pour ce qui est juste, défendre tes valeurs, contribuer doucement mais fermement à plus de justice te comble plus que tout.
+    "ISFP-V3": `Parmi les trois visages de l'Aventurier, tu es le plus tourné vers la défense de tes valeurs dans le monde. Tu n'es pas avant tout l'artiste sensible centré sur sa vie intérieure, ni l'aventurier des sens qui savoure l'instant : ce qui te met en mouvement, c'est de servir ce qui est juste, de contribuer à un monde meilleur. Agir pour ce qui est juste, défendre tes valeurs, contribuer doucement mais fermement à plus de justice te comble plus que tout.
 
 Cette combinaison, la conviction, la sensibilité et la douceur, dessine ta façon d'être : le porteur de valeurs silencieux dont la fermeté tranquille force le respect. Tu défends ce en quoi tu crois par la constance, l'exemple, l'engagement discret. Le revers, c'est que cet idéalisme peut se heurter douloureusement au réel et te désillusionner : ton plus beau chemin de croissance sera d'apprendre à transformer le monde pas à pas plutôt que d'exiger qu'il soit parfait.`,
   },
@@ -151,15 +151,15 @@ Cette combinaison, la conviction, la sensibilité et la douceur, dessine ta faç
 
   // ~2 paragraphes (« En amour » / « En amitié »).
   relationsTexte: {
-    "ISFP-V1": `En amour, tu es doux, attentionné et profondément sincère. Tu exprimes ton amour par les gestes, les attentions, le partage, plus que par les grandes déclarations. Être aimé par toi, c'est se sentir accepté tel qu'on est, accompagné avec délicatesse, aimé d'une façon authentique et sans calcul. Tu prends le temps de t'ouvrir et tu protèges ton monde intérieur, mais une fois que tu donnes ton cœur, tu aimes avec une intensité et une loyauté rares. En amitié, tu es l'ami fidèle et authentique, celui qui accueille sans juger et offre une écoute sans jugement.
+    "ISFP-V1": `En amour, tu es doux, attentionné et profondément sincère. Ton amour passe par les gestes, les attentions, le partage, bien plus que par les grandes déclarations. Être aimé par toi, c'est se sentir accepté tel qu'on est, accompagné avec délicatesse, aimé d'une façon authentique et sans calcul. Tu prends le temps de t'ouvrir et tu protèges ton monde intérieur, mais le jour où tu donnes ton cœur, tu aimes avec une intensité et une loyauté rares. En amitié, tu es l'ami fidèle et authentique, celui qui accueille sans juger et offre une écoute sans jugement.
 
 Tes défis sont les revers de ta nature : ton hypersensibilité peut te faire vivre les tensions douloureusement, ta difficulté à verbaliser tes besoins peut laisser l'autre dans le flou, et ton évitement du conflit peut laisser des choses non dites s'accumuler. Ton chemin, c'est d'apprendre à exprimer ce que tu ressens et ce dont tu as besoin, à ne pas fuir les sujets difficiles, et à ne pas tout prendre comme une atteinte à ce que tu es. Quand tu y parviens, tu offres une relation d'une tendresse et d'une authenticité rares.`,
 
-    "ISFP-V2": `En amour, tu es doux, présent et spontané. Tu exprimes ton amour par les gestes, les expériences partagées, les attentions du quotidien, plus que par les grandes déclarations. Être aimé par toi, c'est vivre des choses, savourer des moments, se sentir accepté et accompagné avec tendresse. Tu prends le temps de t'ouvrir, mais une fois que tu donnes ton cœur, tu aimes avec une intensité et une sincérité rares. En amitié, tu es le compagnon chaleureux et spontané, celui avec qui on vit de bons moments et qui apporte de la légèreté et du beau.
+    "ISFP-V2": `En amour, tu es doux, présent et spontané. Ton affection se dit par les gestes, les expériences partagées, les attentions du quotidien, plutôt que par les grandes déclarations. Être aimé par toi, c'est vivre des choses, savourer des moments, se sentir accepté et accompagné avec tendresse. Tu prends le temps de t'ouvrir, mais lorsque tu finis par confier ton cœur, tu aimes avec une intensité et une sincérité rares. En amitié, tu es le compagnon chaleureux et spontané, celui avec qui on vit de bons moments et qui apporte de la légèreté et du beau.
 
 Tes défis sont les revers de ta nature : ton goût de la spontanéité peut te faire fuir la routine et les contraintes du quotidien, ton hypersensibilité peut te faire vivre les tensions douloureusement, et ta difficulté à te projeter peut compliquer les projets à deux. Ton chemin, c'est d'apprendre à concilier ta liberté avec l'engagement durable, à exprimer ce que tu ressens, et à affronter ce qui doit l'être. Quand tu y parviens, tu offres une relation d'une vivacité et d'une tendresse rares.`,
 
-    "ISFP-V3": `En amour, tu es doux, sincère et fidèle à tes valeurs. Tu exprimes ton amour par les gestes, les attentions, la constance, plus que par les grandes déclarations. Être aimé par toi, c'est se sentir accepté, accompagné avec délicatesse, aimé par quelqu'un dont les valeurs sont solides et la loyauté profonde. Tu as besoin que la relation soit alignée avec ce qui compte pour toi, et une fois engagé, tu aimes avec une fidélité et une intensité rares. En amitié, tu es l'ami fidèle et intègre, celui qui défend les siens et reste loyal.
+    "ISFP-V3": `En amour, tu es doux, sincère et fidèle à tes valeurs. Tu montres ton amour par les gestes, les attentions, la constance, plus que par les grandes déclarations. Être aimé par toi, c'est se sentir accepté, accompagné avec délicatesse, aimé par quelqu'un dont les valeurs sont solides et la loyauté profonde. Tu as besoin que la relation soit alignée avec ce qui compte pour toi, et une fois engagé, tu aimes avec une fidélité et une intensité rares. En amitié, tu es l'ami fidèle et intègre, celui qui défend les siens et reste loyal.
 
 Tes défis sont les revers de ta nature : ton idéalisme peut te faire attendre beaucoup de la relation et être déçu quand le réel ne suit pas, ton hypersensibilité peut te faire vivre les tensions douloureusement, et ton évitement du conflit peut laisser des choses non dites. Ton chemin, c'est d'apprendre à aimer le réel autant que l'idéal, à exprimer ce que tu ressens, et à ne pas te replier quand ça frotte. Quand tu y parviens, tu offres une relation d'une profondeur et d'une fidélité rares.`,
   },
@@ -176,19 +176,19 @@ Tu travailles avec sensibilité, spontanéité et goût du concret, et l'on appr
 
     "ISFP-V3": `Au travail, tu es à ton aise dans les métiers qui ont du sens, où l'on peut servir ses valeurs et contribuer à quelque chose de juste, dans un cadre respectueux et avec de l'autonomie. Une carrière qui te convient te permet d'aligner ce que tu fais avec ce en quoi tu crois. Tu t'éteins dans le purement commercial et les environnements impersonnels, et tu prends vie dans tout ce qui touche au sens et au soin : métiers d'aide, causes, soin, éducation, création engagée, métiers de la nature, artisanat porteur de sens.
 
-Tu travailles avec sincérité, sens et fidélité à tes valeurs, et l'on apprécie auprès de toi cette dimension de conviction et d'authenticité. En revanche, le cynisme, le purement commercial et ce qui heurte tes convictions te démotivent. Ton défi principal touche à la projection, à la structure et au réalisme : ton intégrité est rarement en cause, mais l'idéalisme déçu, la difficulté à structurer et l'hypersensibilité peuvent te coûter. Apprendre à ancrer tes idéaux dans le réel et à structurer ton action donne toute sa portée à ton engagement.`,
+Tu travailles avec sincérité, sens et fidélité à tes valeurs, et l'on apprécie auprès de toi cette dimension de conviction et d'authenticité. En revanche, le cynisme, le purement commercial et ce qui heurte tes convictions te démotivent. Ton défi principal touche à la projection, à la structure et au réalisme : ton intégrité est rarement en cause, mais l'idéalisme déçu, la difficulté à structurer et l'hypersensibilité peuvent te coûter. Apprendre à arrimer tes idéaux au réel et à structurer ton action donne toute sa portée à ton engagement.`,
   },
 
   // { apercu } : 1 paragraphe d'accroche (intro de « Ton chemin de croissance »).
   mindsetTexte: {
     "ISFP-V1": {
-      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes une sensibilité et une authenticité rares, mais aussi des fragilités qui peuvent se retourner contre toi : l'hypersensibilité à la critique, le repli, la dévalorisation, la difficulté à donner corps à ce que tu portes. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes une sensibilité et une authenticité rares, mais aussi des fragilités qui peuvent se retourner contre toi : l'hypersensibilité à la critique, le repli, la dévalorisation, la difficulté à donner corps à ce que tu portes. La bonne nouvelle, c'est que ces mêmes fragilités sont aussi tes plus grands leviers de croissance, pour peu que tu saches sur lesquelles t'appuyer.`,
     },
     "ISFP-V2": {
-      apercu: `Ton plus grand chantier n'est pas de savourer l'instant, tu le fais déjà mieux que personne, c'est d'apprendre à construire pour demain sans cesser de vivre aujourd'hui. Tu portes une présence au monde et une sensibilité immenses, mais aussi une tendance à l'impulsivité, à fuir ce qui pèse et à négliger l'avenir. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de savourer l'instant, tu le fais déjà mieux que personne, c'est d'apprendre à construire pour demain sans cesser de vivre aujourd'hui. Tu portes une présence au monde et une sensibilité immenses, mais aussi une tendance à l'impulsivité, à fuir ce qui pèse et à négliger l'avenir. La bonne nouvelle, c'est que ces fragilités cachent aussi tes plus beaux leviers de croissance, dès lors que tu sais comment les actionner.`,
     },
     "ISFP-V3": {
-      apercu: `Ton plus grand chantier n'est pas de croire en quelque chose, tu y crois déjà profondément, c'est d'apprendre à ancrer tes idéaux dans le réel sans t'y briser. Tu portes des convictions et une sensibilité à la justice rares, mais aussi un idéalisme qui peut se désillusionner, un penchant au repli et une difficulté à structurer. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de croire en quelque chose, tu y crois déjà profondément, c'est d'apprendre à donner prise à tes idéaux dans le réel sans t'y briser. Tu portes des convictions et une sensibilité à la justice rares, mais aussi un idéalisme qui peut se désillusionner, un penchant au repli et une difficulté à structurer. La bonne nouvelle, c'est que ces fragilités renferment aussi tes plus grands leviers de croissance, à condition de savoir lesquels travailler.`,
     },
   },
 
@@ -351,14 +351,14 @@ Tu travailles avec sincérité, sens et fidélité à tes valeurs, et l'on appr�
       },
     },
     "ISFP-V1-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ta sensibilité et ton besoin d'authenticité : ressentir, exprimer, rester fidèle à toi, vivre selon tes valeurs. C'est précieux, mais souvent déséquilibré : tu peux être hypersensible, te replier, fuir le conflit, te dévaloriser, et peiner à donner corps à ta richesse intérieure.
+      evolution: `Ta personnalité n'est pas gravée dans le marbre : elle mûrit, et ton type connaît une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ta sensibilité et ton besoin d'authenticité : ressentir, exprimer, rester fidèle à toi, vivre selon tes valeurs. C'est précieux, mais souvent déséquilibré : tu peux être hypersensible, te replier, fuir le conflit, te dévaloriser, et peiner à donner corps à ta richesse intérieure.
 
 Avec le temps, tu réalises que ta sensibilité est une force quand tu apprends à la protéger sans t'en faire une prison, que recevoir une critique ne menace pas qui tu es, et que te projeter te permet de faire advenir ce que tu portes. Tu apprends à t'affirmer, à exprimer, à structurer, sans rien perdre de ta profondeur. Dans ta pleine maturité, tu deviens un artiste qui ressent profondément ET fait advenir : sensible, authentique, mais aussi capable de partager et de donner forme à ce qu'il porte. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu es déjà sensible et fidèle à ce qui résonne en toi, tu ressens fort et tu cherches à exprimer ce que tu portes. L'âme tournée vers le vrai et le beau.",
         "Ta sensibilité est à son comble : tu ressens intensément, tu tiens à ton authenticité, tu vis selon tes valeurs. C'est précieux, mais souvent déséquilibré : tu peux te replier, fuir le conflit, te dévaloriser, et avoir du mal à donner corps à ta richesse.",
         "Tu comprends que ta sensibilité est une force quand elle ne te fait pas prisonnier, et que te projeter te permet de faire advenir ce que tu portes. Tu apprends à t'affirmer, à exprimer, à structurer, sans rien perdre de ta profondeur.",
-        "Dans ta pleine maturité, tu es un artiste qui ressent profondément et fait advenir. Tu donnes au monde ta richesse au lieu de seulement la protéger : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un artiste qui ressent profondément et fait advenir. Tu offres au monde ta richesse au lieu de seulement la protéger : la version la plus accomplie de toi-même.",
       ],
       leviersForts: [
         { titre: "Apprends à faire advenir ce que tu portes", texte: "Te fixer un cap, structurer un minimum et passer à l'action donne corps à ta richesse intérieure au lieu de la laisser à l'état de potentiel." },
@@ -397,7 +397,7 @@ Avec le temps, tu réalises que ta sensibilité est une force quand tu apprends 
       ],
       ombres: [
         { titre: "La fuite de la routine", accent: "fuite", texte: "Ton goût de la spontanéité peut te faire fuir le quotidien et les contraintes de la relation." },
-        { titre: "Une hypersensibilité aux tensions", accent: "hypersensibilité", texte: "Tu peux vivre les frictions douloureusement et te replier au moindre jugement perçu." },
+        { titre: "Une hypersensibilité aux tensions", accent: "hypersensibilité", texte: "Les frictions, tu peux les vivre douloureusement et te refermer dès qu'un jugement t'effleure." },
         { titre: "Du mal à te projeter à deux", accent: "projeter", texte: "Ta difficulté à te projeter peut compliquer les projets communs et l'engagement durable." },
         { titre: "Une impulsivité possible", accent: "impulsivité", texte: "Ton goût de l'instant peut te faire agir sans toujours penser à l'effet sur le lien." },
         { titre: "Le lien négligé dans la durée", accent: "négligé", texte: "Ton attention au présent peut te faire oublier d'entretenir le lien sur le long terme." },
@@ -543,20 +543,20 @@ Avec le temps, tu réalises que ta sensibilité est une force quand tu apprends 
       },
     },
     "ISFP-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton goût de l'expérience et du présent : vivre, savourer, saisir l'instant, suivre tes envies. C'est intense, mais souvent déséquilibré : tu peux être impulsif, fuir les contraintes, peiner à te projeter, te montrer hypersensible, et passer à côté de ce qui se construit dans la durée.
+      evolution: `Ta personnalité n'a rien de figé : elle évolue, et ton type dessine une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton goût de l'expérience et du présent : vivre, savourer, saisir l'instant, suivre tes envies. C'est intense, mais souvent déséquilibré : tu peux être impulsif, fuir les contraintes, peiner à te projeter, te montrer hypersensible, et passer à côté de ce qui se construit dans la durée.
 
 Avec le temps, tu réalises qu'on peut se projeter sans renoncer à l'instant, que construire pour demain ne tue pas la joie d'aujourd'hui, et que canaliser ta spontanéité ouvre des possibilités. Tu apprends à structurer un peu, à te projeter, à inscrire ton énergie dans la durée, sans rien perdre de ta présence au monde. Dans ta pleine maturité, tu deviens un esthète qui vit pleinement ET construit : présent, sensible, spontané, mais aussi capable de donner corps à ce qu'il porte. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu savoures déjà l'instant à pleins sens, tu vis spontanément et tu cherches la beauté partout. Le monde est une expérience à goûter pleinement.",
         "Ton goût du présent est à son comble : tu vis intensément, tu suis tes envies, tu saisis l'instant. C'est intense, mais souvent déséquilibré : tu peux être impulsif, fuir les contraintes, peiner à te projeter, et passer à côté de ce qui dure.",
         "Tu comprends qu'on peut se projeter sans renoncer à l'instant et que construire ne tue pas la joie. Tu apprends à canaliser ta spontanéité, à te projeter, à inscrire ton énergie dans la durée, sans rien perdre de ta présence au monde.",
-        "Dans ta pleine maturité, tu es un esthète qui vit pleinement et construit. La joie de l'instant alliée à la capacité de bâtir : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un esthète qui vit pleinement et construit. La joie de l'instant alliée à la capacité de bâtir : c'est là que tu deviens pleinement toi-même.",
       ],
       leviersForts: [
         { titre: "Apprends à te projeter", texte: "Te fixer un cap et penser à demain, sans renier ton goût de l'instant, transforme ta vivacité en réalisations durables." },
         { titre: "Canalise ta spontanéité", texte: "Ton élan est une force : oriente-le et pose-toi quelques garde-fous, sans tuer ta joie. La spontanéité dirigée enrichit ta vie." },
         { titre: "Inscris ton énergie dans la durée", texte: "Apprends à construire et à entretenir dans le temps ce qui compte, tes projets comme tes liens. La durée donne du poids à ce que tu vis." },
-        { titre: "Protège ta sensibilité sans t'en faire une prison", texte: "Apprends à recevoir la critique sans la vivre comme une atteinte. Ta sensibilité est une force quand elle ne te fragilise pas." },
+        { titre: "Garde ta sensibilité ouverte, pas barricadée", texte: "Apprends à recevoir la critique sans la vivre comme une atteinte. Ta sensibilité est une force quand elle ne te fragilise pas." },
       ],
       questions: [
         { situation: "Quand une occasion t'emballe", question: "Est-ce que je la saisis en pensant à demain, ou juste pour l'instant présent ?" },
@@ -589,7 +589,7 @@ Avec le temps, tu réalises qu'on peut se projeter sans renoncer à l'instant, q
       ],
       ombres: [
         { titre: "Des attentes idéalistes", accent: "attentes", texte: "Ton idéalisme peut te faire attendre beaucoup de la relation et être déçu quand le réel ne suit pas." },
-        { titre: "Une hypersensibilité aux tensions", accent: "hypersensibilité", texte: "Tu peux vivre les frictions douloureusement et te replier au moindre jugement perçu." },
+        { titre: "Une hypersensibilité aux tensions", accent: "hypersensibilité", texte: "Tu encaisses mal les frictions et tu te replies sitôt qu'un jugement te paraît viser ce que tu es." },
         { titre: "Le repli devant le conflit", accent: "repli", texte: "Ton évitement du conflit peut laisser des choses non dites s'accumuler dans le lien." },
         { titre: "Un jugement parfois dur", accent: "jugement", texte: "Ton idéalisme peut te faire juger sévèrement ce qui heurte tes valeurs chez l'autre." },
         { titre: "Une déception face à l'imperfection", accent: "déception", texte: "Tu peux mal accueillir les défauts de l'autre quand ils s'éloignent de ce que tu espérais." },
@@ -735,14 +735,14 @@ Avec le temps, tu réalises qu'on peut se projeter sans renoncer à l'instant, q
       },
     },
     "ISFP-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par tes convictions et ta sensibilité à la justice : défendre ce qui est juste, rester fidèle à tes valeurs, agir selon ta conscience. C'est précieux, mais souvent déséquilibré : tu peux te heurter douloureusement au réel, te décevoir, te replier quand le monde ne suit pas, te montrer hypersensible, et peiner à structurer ton engagement.
+      evolution: `Ta personnalité n'est pas coulée une fois pour toutes : elle se transforme, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par tes convictions et ta sensibilité à la justice : défendre ce qui est juste, rester fidèle à tes valeurs, agir selon ta conscience. C'est précieux, mais souvent déséquilibré : tu peux te heurter douloureusement au réel, te décevoir, te replier quand le monde ne suit pas, te montrer hypersensible, et peiner à structurer ton engagement.
 
-Avec le temps, tu réalises que défendre tes valeurs ne veut pas dire exiger un monde parfait, qu'on transforme le réel pas à pas, et que composer n'est pas renier. Tu apprends à ancrer tes idéaux dans le réel, à structurer ton action, à rester engagé sans te décourager, sans rien perdre de tes convictions. Dans ta pleine maturité, tu deviens un porteur de valeurs qui défend ce qui est juste ET transforme vraiment : fidèle à tes idéaux, mais aussi réaliste, structuré, persévérant. Et c'est entièrement à ta portée.`,
+Avec le temps, tu réalises que défendre tes valeurs ne veut pas dire exiger un monde parfait, qu'on transforme le réel pas à pas, et que composer n'est pas renier. Tu apprends à enraciner tes idéaux dans le concret, à structurer ton action, à rester engagé sans te décourager, sans rien perdre de tes convictions. Dans ta pleine maturité, tu deviens un porteur de valeurs qui défend ce qui est juste ET transforme vraiment : fidèle à tes idéaux, mais aussi réaliste, structuré, persévérant. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu portes déjà un sens aigu de ce qui est juste, tu ressens l'injustice et tu veux agir pour ce qui compte. La conscience tournée vers un monde meilleur.",
         "Ta conviction est à son comble : tu défends tes valeurs, tu agis selon ta conscience, tu refuses ce qui te heurte. C'est précieux, mais souvent déséquilibré : tu peux te briser sur le réel, te replier, te montrer hypersensible, et peiner à structurer.",
         "Tu comprends que défendre tes valeurs ne veut pas dire exiger la perfection et qu'on transforme le réel pas à pas. Tu apprends à composer sans renier, à structurer ton action, à rester engagé sans te décourager.",
-        "Dans ta pleine maturité, tu es un porteur de valeurs qui défend ce qui est juste et transforme vraiment. La conviction alliée à l'action efficace sur le réel : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un porteur de valeurs qui défend ce qui est juste et transforme vraiment. La conviction alliée à l'action efficace sur le réel : la forme la plus accomplie de toi-même.",
       ],
       leviersForts: [
         { titre: "Ancre tes idéaux dans le réel", texte: "Apprends à transformer le monde pas à pas et à composer avec les choses telles qu'elles sont, sans renier ce en quoi tu crois. Tes valeurs ont plus de pouvoir ancrées que brisées." },

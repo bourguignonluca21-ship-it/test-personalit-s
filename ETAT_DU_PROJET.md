@@ -60,6 +60,25 @@ Fin du test → `/resultat/{code}-{variante}?s=…&v=…`
 ## 8 bis. Vision produit & monétisation (à lire)
 La stratégie long terme est capturée dans **`VISION_FUNNEL_ANGE_DEMON.md`** (même dossier) : funnel à 3 paliers (test sain → test dark → parcours « Ange & Démon »), comptes Supabase comme cœur du système, formation modulaire scalable, positionnement vs 16P. À lire avant de décider du paywall, des comptes ou du test dark.
 
+## 8 ter. POINT DE REPRISE (audit + dé-duplication — juin 2026)
+Les **48 profils sont remplis** : INFP×3 et ENFP-V1 inline dans `profils.ts`, les 14 autres types dans `src/app/data/profils/<type>.ts`. Build validé OK (31 pages). Le contenu n'est PAS abîmé : les « troncatures » vues au sandbox sont des **vues OneDrive tronquées** (faux négatifs) ; l'outil **Read** télécharge le vrai fichier.
+
+**Règle de cadrage (affinée et IMPORTANTE) :** on ne corrige QUE la répétition **à l'intérieur d'un même résumé** (une page = un type × variante). Les répétitions ENTRE profils sont **acceptées** : chaque profil doit rester propre à lui-même.
+
+**Audit complet des 48 fait → voir `AUDIT_48_PROFILS.md`** (même dossier). Constats clés :
+- 🔴 **ISTJ entièrement SANS ACCENTS** (`istj.ts` : « le jour ou tu », « ta fiabilite », « procedures »…). Pas un bug d'encodage, les accents sont absents. À **ré-accentuer en entier** (les 3 variantes). PRIORITAIRE.
+- **42 profils sur 48** ont des tics internes (phrases répétées dans le même résumé). Pires : ESFP-V3 « ton goût du beau » ×11, ISTJ-V3 « ce que tu portes » ×10, ISFP×3, ISTP, ISFJ-V2 (détail dans le rapport).
+
+**Passe anti-répétition (intra-résumé) :**
+- **ISFJ-V1 : FAIT** — titres des « points forts/faibles » diversifiés (un même titre ne revient plus 3× sur la page) + phrases de texte dé-dupliquées (« n'est pas de l'égoïsme » 3→1, ouvertures des 4 paradoxes variées, « prendre soin de toi » 6→3). Appliqué dans `isfj.ts`, vérifié.
+- Reste : ISFJ-V2/V3, puis tous les autres résumés par ordre de gravité du rapport.
+
+**Template `page.tsx` (s'applique aux 48) :** le bloc **héros** est passé en **pastille verte + texte blanc** (bouton « Partager » inversé en blanc). Alignement **EN COURS** : pastille calée sur le conteneur `max-w-6xl` ; reste à aligner son **bord droit au pixel** sur le texte (menu `ResultatNav` = `md:w-56`, `gap-12` ; colonne texte = `md:max-w-3xl md:mx-auto`, donc centrée et en retrait du bord du conteneur).
+
+**⚠️ Rien n'a été commité cette session.** Commit/push depuis Windows pour sauvegarder `isfj.ts` + `page.tsx`.
+
+LEÇON MÉTHODE : OneDrive sert des vues tronquées au sandbox (`bash`/`tsc`/`grep` = faux négatifs) ; l'outil **Read** est fiable. Les **édits séquentiels + relecture de vérif** depuis Cowork marchent. NE JAMAIS lancer de sous-agents qui écrivent en parallèle (c'est ça qui corrompt OneDrive). Toujours valider par un `npm run build` côté Windows.
+
 ## 9. Prochaines étapes
 - **Remplir les 47 autres profils**, UN PAR UN avec validation : suivre **`GABARIT_PROFIL.md`** (12 blocs de contenu par profil, source = rapport long du type). Référence à recopier = `INFP-V1`. Ne jamais toucher au template/labels figés, seulement ajouter des clés `CODE-Vx` dans `profils.ts`.
 - En attente / plus tard : bouton « Partager » fonctionnel (aujourd'hui inactif), capture e-mail réellement branchée (le `Quiz` collecte l'e-mail mais ne l'envoie nulle part), validation au build (48 clés présentes), passe responsive mobile, puis le système floutage + paiement (cf. `VISION_FUNNEL_ANGE_DEMON.md`).

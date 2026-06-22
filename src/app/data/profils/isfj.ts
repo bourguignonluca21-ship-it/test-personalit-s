@@ -38,13 +38,13 @@ Derrière ta discrétion se cache un cœur dévoué et d'une fiabilité absolue 
 
 Ce qui te porte, c'est le bien-être des autres et la fidélité. Tu trouves un sens profond dans le fait d'aider, de soutenir, de prendre soin, et tu es d'une loyauté indéfectible envers les gens et les engagements qui te tiennent à cœur. Ton dévouement n'est pas que des sentiments : il s'exprime par des actes concrets, des attentions pratiques, une présence fiable. Cette même générosité peut te conduire à t'oublier toi-même et à t'épuiser pour les autres : ton plus beau terrain de croissance sera d'apprendre à prendre soin de toi autant que de ceux que tu aimes.`,
 
-    "ISFJ-V2": `En tant que Défenseur (ISFJ), tu possèdes la chaleur, la fiabilité et le dévouement de ta famille d'âme, et tu les exprimes en créant de l'harmonie, du confort, un sentiment de chez-soi. Ce qui te définit, c'est ce don rare de créer de la chaleur : tu sais rendre un espace accueillant, une ambiance douce, un lien réconfortant, et tu fais des lieux et des liens autour de toi des refuges où les gens se sentent bien, accueillis, en sécurité. Parmi les trois façons d'être de ton type, tu es le Gardien du Foyer.
+    "ISFJ-V2": `En tant que Défenseur (ISFJ), tu possèdes la chaleur, la fiabilité et le dévouement de ta famille d'âme, et tu les exprimes en créant de l'harmonie, du confort, un sentiment de chez-soi. Ce qui te définit, c'est ce don rare de créer de la chaleur : tu sais rendre un espace accueillant, une ambiance douce, un lien réconfortant, et tu fais des lieux et des liens autour de toi des refuges où les gens se sentent bien, accueillis, en sécurité. Des trois visages que peut prendre ton type, tu es le Gardien du Foyer.
 
-Ce qui te porte, c'est l'harmonie, le confort et le bien-être des tiens. Tu trouves un sens profond à créer un environnement chaleureux où ceux que tu aimes se sentent bien, et la paix, la douceur, le sentiment de sécurité comptent énormément pour toi. Ton don ne tient pas qu'à l'ambiance : il s'incarne dans mille attentions concrètes et une présence fiable. Cette même quête d'harmonie peut te faire fuir tout conflit jusqu'à t'effacer et t'oublier : ton plus beau terrain de croissance sera d'apprendre à t'inclure, toi aussi, dans le refuge que tu crées pour les autres.`,
+Ce qui te porte, c'est l'harmonie, le confort et le bien-être des tiens. Tu trouves un sens profond à créer un environnement chaleureux où ceux que tu aimes se sentent bien, et la paix, la douceur, le sentiment de sécurité comptent énormément pour toi. Ton don ne tient pas qu'à l'ambiance : il s'incarne dans mille attentions concrètes et une présence fiable. Cette même quête d'harmonie peut te faire fuir tout conflit jusqu'à t'effacer et t'oublier : ta plus belle marge de progrès consistera à t'inclure, toi aussi, dans le refuge que tu crées pour les autres.`,
 
-    "ISFJ-V3": `En tant que Défenseur (ISFJ), tu possèdes la chaleur, la fiabilité et le dévouement de ta famille d'âme, mais tu les exprimes avec une finesse d'observation et de réflexion particulière. Ce qui te définit, c'est cette alliance de l'attention et de la réflexion : tu ne te contentes pas de vouloir aider, tu cherches à vraiment comprendre, à percevoir ce qui se joue, puis tu offres le soutien le plus juste, réfléchi et adapté. Parmi les trois façons d'être de ton type, tu es le Soutien Réfléchi.
+    "ISFJ-V3": `En tant que Défenseur (ISFJ), tu possèdes la chaleur, la fiabilité et le dévouement de ta famille d'âme, mais tu les exprimes avec une finesse d'observation et de réflexion particulière. Ce qui te définit, c'est cette alliance de l'attention et de la réflexion : tu ne te contentes pas de vouloir aider, tu cherches à vraiment comprendre, à percevoir ce qui se joue, puis tu offres le soutien le plus juste, réfléchi et adapté. Parmi les trois manières d'incarner ton type, tu es le Soutien Réfléchi.
 
-Ce qui te porte, c'est le bien-être des autres et la justesse. Tu veux offrir le bon soutien, pas n'importe quel soutien, et tu y mets une vraie exigence de discernement, alliée à une empathie sincère. Tu observes finement, tu retiens ce qui compte, et tu adaptes ton aide pour qu'elle touche juste. Cette même réflexion peut se retourner contre toi et te faire trop penser, t'inquiéter et t'effacer : ton plus beau terrain de croissance sera d'allier ton discernement à la sérénité et à l'affirmation de soi.`,
+Ce qui te porte, c'est le bien-être des autres et la justesse. Tu veux offrir le bon soutien, pas n'importe quel soutien, et tu y mets une vraie exigence de discernement, alliée à une empathie sincère. Tu observes finement, tu retiens ce qui compte, et tu adaptes ton aide pour qu'elle touche juste. Cette même réflexion peut se retourner contre toi et te faire trop penser, t'inquiéter et t'effacer : ton plus bel axe de progression sera d'allier ton discernement à la sérénité et à l'affirmation de soi.`,
   },
 
   // ~2 paragraphes sous les barres de variante.
@@ -53,13 +53,13 @@ Ce qui te porte, c'est le bien-être des autres et la justesse. Tu veux offrir l
 
 Cette combinaison, la chaleur, la fiabilité et l'instinct protecteur, fait de toi un protecteur au sens noble : quelqu'un auprès de qui les autres se sentent en sécurité, choyés, veillés, et sur qui ils peuvent s'appuyer en toute confiance. Le revers de ce don, c'est qu'à force de protéger tout le monde, tu peux t'oublier complètement et ne jamais savoir dire non : ton plus beau chemin de croissance sera d'apprendre à te protéger toi aussi, car on ne veille durablement sur les autres que si l'on veille aussi sur soi.`,
 
-    "ISFJ-V2": `Parmi les trois visages du Défenseur, tu es le plus tourné vers la création d'harmonie, de chaleur et de confort. Tu n'es pas avant tout le protecteur qui veille et défend activement, ni le soutien réfléchi qui épaule avec finesse : tu es celui qui crée le nid, qui fait que les gens se sentent chez eux, bien, en paix. Rendre un lieu et un lien chaleureux, créer du confort et du bien-être, faire que les autres se sentent accueillis te comble plus que tout.
+    "ISFJ-V2": `De toutes les facettes du Défenseur, tu es le plus tourné vers la création d'harmonie, de chaleur et de confort. Tu n'es pas avant tout le protecteur qui veille et défend activement, ni le soutien réfléchi qui épaule avec finesse : tu es celui qui crée le nid, qui fait que les gens se sentent chez eux, bien, en paix. Rendre un lieu et un lien chaleureux, créer du confort et du bien-être, faire que les autres se sentent accueillis te comble plus que tout.
 
-Cette combinaison, la chaleur, le sens du concret et le goût de l'harmonie, fait de toi un gardien du foyer au sens noble : quelqu'un qui crée des refuges, qui réchauffe les lieux et les liens, et auprès de qui les autres se sentent chez eux. Le revers de ce don, c'est que tu peux créer l'harmonie pour tout le monde et ne jamais l'avoir pour toi, et fuir tout ce qui dérange jusqu'à t'effacer : ton plus beau chemin de croissance sera d'apprendre à t'inclure toi aussi dans le refuge que tu offres.`,
+Cette combinaison, la chaleur, le sens du concret et le goût de l'harmonie, fait de toi un gardien du foyer au sens noble : quelqu'un qui crée des refuges, qui réchauffe les lieux et les liens, et auprès de qui les autres se sentent chez eux. Le revers de ce don, c'est que tu peux créer l'harmonie pour tout le monde et ne jamais l'avoir pour toi, et fuir tout ce qui dérange jusqu'à t'effacer : ta plus belle voie d'épanouissement sera d'apprendre à t'inclure toi aussi dans le refuge que tu offres.`,
 
-    "ISFJ-V3": `Parmi les trois visages du Défenseur, tu es le plus tourné vers le discernement et la justesse de l'aide. Tu n'es pas avant tout le protecteur qui veille avec instinct, ni le gardien du foyer qui crée la chaleur d'un nid : tu es celui qui observe, comprend et soutient avec une finesse de réflexion remarquable. Comprendre vraiment, discerner le bon soutien, aider avec justesse te comble plus que tout.
+    "ISFJ-V3": `Parmi les trois expressions du Défenseur, tu es le plus tourné vers le discernement et la justesse de l'aide. Tu n'es pas avant tout le protecteur qui veille avec instinct, ni le gardien du foyer qui crée la chaleur d'un nid : tu es celui qui observe, comprend et soutient avec une finesse de réflexion remarquable. Comprendre vraiment, discerner le bon soutien, aider avec justesse te comble plus que tout.
 
-Cette combinaison, la chaleur, l'observation et le discernement, fait de toi un soutien d'une qualité rare : quelqu'un dont l'aide n'est jamais maladroite ou à côté, mais toujours juste, réfléchie et adaptée, et sur qui on peut compter pour un soutien vraiment pertinent. Le revers de ce don, c'est que ta réflexion peut glisser vers la sur-réflexion, l'inquiétude et l'effacement : ton plus beau chemin de croissance sera d'apprendre à mettre ta belle réflexion au service de l'action sereine et à prendre ta juste place.`,
+Cette combinaison, la chaleur, l'observation et le discernement, fait de toi un soutien d'une qualité rare : quelqu'un dont l'aide n'est jamais maladroite ou à côté, mais toujours juste, réfléchie et adaptée, et sur qui on peut compter pour un soutien vraiment pertinent. Le revers de ce don, c'est que ta réflexion peut glisser vers la sur-réflexion, l'inquiétude et l'effacement : ton plus bel élan de croissance sera de mettre ta belle réflexion au service de l'action sereine et de prendre ta juste place.`,
   },
 
   varianteDetail: {
@@ -77,7 +77,7 @@ Cette combinaison, la chaleur, l'observation et le discernement, fait de toi un 
         { titre: "Du mal à dire non", accent: "non", texte: "Ton désir d'aider et ta crainte de décevoir peuvent te rendre incapable de refuser, même débordé." },
         { titre: "Tout prendre à cœur", accent: "cœur", texte: "Ta sensibilité te rend vulnérable aux critiques, aux conflits et à l'ingratitude, et tu gardes tes blessures pour toi." },
         { titre: "Une résistance au changement", accent: "changement", texte: "Ton attachement au stable et au connu peut te rendre réticent au nouveau, même quand il serait bénéfique." },
-        { titre: "Le risque d'être pris pour acquis", accent: "acquis", texte: "Tu donnes énormément et tu réclames peu, ce qui peut t'exposer à être pris pour acquis." },
+        { titre: "Le risque d'être pris pour acquis", accent: "acquis", texte: "Tu donnes énormément et tu réclames peu, si bien que ton apport finit par sembler aller de soi." },
         { titre: "Des besoins tus", accent: "besoins", texte: "Ta discrétion peut te faire taire ce que tu ressens et ce dont tu as besoin, au risque de t'effacer." },
       ],
       paradoxe: {
@@ -88,14 +88,14 @@ Cette combinaison, la chaleur, l'observation et le discernement, fait de toi un 
         ombre:
           "Mais poussées à l'extrême, ces forces peuvent te conduire à t'épuiser pour les autres, à ne jamais savoir dire non, à te négliger et à te laisser prendre pour acquis.",
         bascule:
-          "Le jour où tu apprends à prendre soin de toi autant que des autres, à poser des limites et à recevoir, ton dévouement cesse d'être une source d'épuisement pour devenir un don durable et épanouissant.",
+          "Le jour où tu apprends à veiller sur toi autant que sur les autres, à poser des limites et à recevoir, ton dévouement cesse d'être une source d'épuisement pour devenir un don durable et épanouissant.",
       },
     },
     "ISFJ-V2": {
       forces: [
         { titre: "Tu crées de la chaleur", accent: "chaleur", texte: "Tu as ce don de rendre les lieux et les liens accueillants et de créer une ambiance douce où les gens se sentent bien." },
         { titre: "Une attention constante au bien-être", accent: "bien-être", texte: "Tu te soucies du confort et du bonheur de ceux qui t'entourent, tu anticipes et tu prends soin de mille petites choses." },
-        { titre: "Une fiabilité absolue", accent: "fiabilité", texte: "On peut compter sur toi : tu tiens, tu assures, tu entretiens fidèlement ce que tu crées." },
+        { titre: "Une fiabilité absolue", accent: "fiabilité", texte: "Tu es de ceux sur qui on s'appuie sans crainte : tu tiens, tu assures, tu entretiens fidèlement ce que tu crées." },
         { titre: "Un sens du concret", accent: "concret", texte: "Tu ne te contentes pas de bonnes intentions, tu crées du confort réel par des attentions pratiques et un soin du détail." },
         { titre: "Une loyauté profonde", accent: "loyauté", texte: "Envers les gens et les liens qui comptent, tu entretiens, tu maintiens, tu restes, dans la durée." },
         { titre: "Un don pour l'harmonie", accent: "harmonie", texte: "Tu sais apaiser, adoucir et relier, et faire de ce qui t'entoure un refuge stable et paisible." },
@@ -156,11 +156,11 @@ Tes défis sont les revers de ta nature : ton dévouement peut te faire t'oublie
 
     "ISFJ-V2": `En amour comme en amitié, tu es tendre, dévoué et profondément attaché au bien-être de l'autre. Tu crées un cocon de douceur et de sécurité, tu prends soin du quotidien, tu fais de la relation et de la vie commune un refuge chaleureux. Être aimé par toi, c'est se sentir chez soi, choyé, enveloppé d'une tendresse constante. Tu es l'ami chaleureux qui accueille, qui se souvient de ce qui compte, et chez qui on se sent bien : tes amitiés sont peu nombreuses mais profondes et durables.
 
-Tes défis sont les revers de ta nature : ton besoin d'harmonie peut te faire fuir les conflits nécessaires, taire tes désaccords et t'effacer pour préserver la paix, au risque d'accumuler des frustrations, et ton dévouement peut te faire t'oublier. Ton chemin, c'est d'apprendre à exprimer tes désaccords et tes besoins, à voir que régler les tensions renforce l'harmonie au lieu de la briser, et à recevoir autant que tu donnes. Quand tu y parviens, tu offres une relation d'une tendresse et d'une stabilité rares.`,
+Tes difficultés ne sont que l'envers de tes qualités : ton besoin d'harmonie peut te faire fuir les conflits nécessaires, taire tes désaccords et t'effacer pour préserver la paix, au risque d'accumuler des frustrations, et à force de te dévouer tu finis par t'oublier. Ton chemin, c'est d'apprendre à exprimer tes désaccords et tes besoins, à voir que régler les tensions renforce l'harmonie au lieu de la briser, et à recevoir autant que tu donnes. Quand tu y parviens, tu offres une relation d'une tendresse et d'une stabilité rares.`,
 
     "ISFJ-V3": `En amour comme en amitié, tu es attentionné, dévoué et profondément à l'écoute. Tu observes, tu comprends l'autre en profondeur, et tu offres un soutien et une attention d'une justesse rare : tu perçois ses besoins, parfois avant lui, et tu y réponds avec finesse. Être aimé par toi, c'est se sentir vraiment compris, soutenu sur-mesure par quelqu'un qui sait exactement ce dont on a besoin. Tu es souvent le confident, celui qui écoute vraiment et dont le conseil tombe juste, et tes liens sont profonds et durables.
 
-Tes défis sont les revers de ta nature : ta tendance à trop réfléchir peut te faire t'inquiéter et sur-analyser la relation, ton dévouement peut te faire t'oublier, et ton effacement peut te faire taire tes propres besoins au point que l'autre ne les devine pas. Ton chemin, c'est d'apprendre à ne pas trop penser, à exprimer tes besoins et tes émotions, et à recevoir autant que tu donnes. Quand tu y parviens, tu offres une relation d'une attention et d'une profondeur rares.`,
+Tes fragilités prolongent tout simplement tes forces : ta tendance à trop réfléchir peut te faire t'inquiéter et sur-analyser la relation, ton don de toi peut te faire t'oublier, et ton effacement peut te faire taire tes propres besoins au point que l'autre ne les devine pas. Ton chemin, c'est d'apprendre à ne pas trop penser, à exprimer tes besoins et tes émotions, et à recevoir autant que tu donnes. Quand tu y parviens, tu offres une relation d'une attention et d'une profondeur rares.`,
   },
 
   proTexte: {
@@ -170,7 +170,7 @@ Tu travailles avec sérieux, fiabilité et attention aux autres : tu fais les ch
 
     "ISFJ-V2": `Au travail, tu es fait pour les rôles où l'on prend soin, où l'on crée du bien-être, où l'on entretient un environnement humain et harmonieux. Une carrière qui t'épanouit, c'est une carrière qui te permet de prendre soin des gens dans un cadre stable et bienveillant. Tu t'étioles dans les environnements froids, agressifs ou instables, et tu prends vie quand tu peux créer du confort et de l'harmonie : les métiers de la santé et du soin, l'accueil et l'hospitalité, l'éducation, les fonctions de support et l'administration au service des gens sont ton terrain.
 
-Tu travailles avec sérieux, fiabilité et attention au bien-être collectif : tu apportes de la chaleur, une attention à l'harmonie de l'équipe et une fiabilité précieuse, et tu es souvent celui qui veille à ce que chacun se sente bien. Ton défi principal, c'est ton propre équilibre et ton affirmation : tu peux trop t'oublier, fuir les conflits, ne pas savoir dire non et ne pas oser défendre tes intérêts. Apprendre à poser des limites, à exprimer tes désaccords et à faire reconnaître ta valeur rend ta belle vocation durable et justement reconnue.`,
+Tu travailles avec sérieux, fiabilité et attention au bien-être collectif : tu apportes de la chaleur, une attention à l'harmonie de l'équipe et une fiabilité précieuse, et tu es souvent celui qui veille à ce que chacun se sente bien. Ton défi principal, c'est ton propre équilibre et ton affirmation : tu peux trop t'oublier, fuir les conflits, ne pas savoir dire non et ne jamais oser faire valoir ce que tu mérites. Apprendre à poser des limites, à exprimer tes désaccords et à faire reconnaître ta valeur rend ta belle vocation durable et justement reconnue.`,
 
     "ISFJ-V3": `Au travail, tu es fait pour les rôles où l'on aide, où l'on comprend, où l'on soutient avec finesse. Une carrière qui t'épanouit, c'est une carrière qui te permet de mettre ton discernement et ton attention au service des autres, dans un cadre stable et bienveillant. Tu t'étioles dans les environnements froids, agressifs ou superficiels, et tu prends vie quand tu peux observer, comprendre et offrir un soutien juste : l'accompagnement et le conseil, les métiers de l'aide et du soin, l'écoute, l'éducation attentive, les ressources humaines et l'analyse au service des gens sont ton terrain.
 
@@ -179,13 +179,13 @@ Tu travailles avec finesse, sérieux et attention aux autres : tu observes, tu c
 
   mindsetTexte: {
     "ISFJ-V1": {
-      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes un dévouement et une chaleur rares, mais aussi une tendance qui peut se retourner contre toi : l'oubli de soi jusqu'à l'épuisement, l'incapacité à dire non, le fait de te laisser prendre pour acquis. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas autour de toi, il est en toi. Tu portes un dévouement et une chaleur rares, mais aussi une tendance qui peut se retourner contre toi : l'oubli de soi jusqu'à l'épuisement, l'incapacité à dire non, le fait de te laisser prendre pour acquis. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, pour peu que tu saches comment t'y prendre.`,
     },
     "ISFJ-V2": {
-      apercu: `Ton plus grand chantier n'est pas de créer de l'harmonie, tu en crées pour tout le monde, c'est d'apprendre à t'y inclure toi aussi. Tu portes une chaleur et un don du confort rares, mais aussi une tendance à t'oublier, à fuir le conflit jusqu'à t'effacer et à te recroqueviller dans le familier. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de créer de l'harmonie, tu en crées pour tout le monde, c'est d'apprendre à t'y inclure toi aussi. Tu portes une chaleur et un don du confort rares, mais aussi une tendance à t'oublier, à fuir le conflit jusqu'à t'effacer et à te recroqueviller dans le familier. La bonne nouvelle, c'est que ces mêmes fragilités cachent tes plus belles marges de progrès, dès lors que tu sais sur quoi agir.`,
     },
     "ISFJ-V3": {
-      apercu: `Ton plus grand chantier n'est pas de comprendre les autres, tu le fais avec une finesse rare, c'est d'apprendre à apaiser ton mental et à prendre ta place. Tu portes un discernement et une attention précieux, mais aussi une tendance à trop réfléchir, à t'inquiéter, à t'oublier et à t'effacer. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de comprendre les autres, tu le fais avec une finesse rare, c'est d'apprendre à apaiser ton mental et à prendre ta place. Tu portes un discernement et une attention précieux, mais aussi une tendance à trop réfléchir, à t'inquiéter, à t'oublier et à t'effacer. La bonne nouvelle, c'est que ces fragilités renferment aussi tes plus grands leviers d'évolution, une fois que tu sais où porter ton effort.`,
     },
   },
 
@@ -196,15 +196,15 @@ Tu travailles avec finesse, sérieux et attention aux autres : tu observes, tu c
         { titre: "Un cocon de sécurité", accent: "sécurité", texte: "Tu crées un environnement tendre et rassurant où l'autre se sent protégé, choyé et en confiance." },
         { titre: "Une attention qui anticipe", accent: "attention", texte: "Tu perçois les besoins de tes proches, souvent avant eux, et tu y réponds par mille attentions concrètes." },
         { titre: "Une loyauté totale", accent: "loyauté", texte: "Une fois engagé, tu offres une fidélité indéfectible et une présence fiable, dans la durée." },
-        { titre: "Une présence fidèle", accent: "présence", texte: "Tu es là dans les moments qui comptent, tu te souviens de ce qui touche chacun, tu soutiens concrètement." },
+        { titre: "Une présence fidèle", accent: "présence", texte: "Tu es là dans les moments qui comptent, tu gardes en mémoire ce qui touche chacun, tu soutiens concrètement." },
         { titre: "Une chaleur qui apaise", accent: "chaleur", texte: "Ta douceur et ta bienveillance font que les autres se sentent apaisés et compris auprès de toi." },
       ],
       ombres: [
-        { titre: "L'oubli de soi", accent: "oubli", texte: "À trop donner et veiller sur l'autre, tu peux te négliger et t'épuiser sans même t'en rendre compte." },
-        { titre: "Le risque d'être pris pour acquis", accent: "acquis", texte: "Tu donnes énormément sans oser réclamer, ce qui peut te laisser pris pour acquis et créer un déséquilibre." },
-        { titre: "Des besoins tus", accent: "besoins", texte: "Ta discrétion peut te faire taire tes besoins et tes attentes, au risque que l'autre ne les devine pas." },
-        { titre: "Une grande vulnérabilité", accent: "vulnérabilité", texte: "Ta sensibilité te fait vivre les tensions douloureusement, et tu gardes tes blessures pour toi." },
-        { titre: "Du mal à dire non", accent: "non", texte: "Ta crainte de décevoir peut te faire accepter trop et te surcharger pour les autres." },
+        { titre: "Toi, toujours en dernier", accent: "dernier", texte: "À trop donner et veiller sur l'autre, tu peux te négliger et t'épuiser sans même t'en rendre compte." },
+        { titre: "Un déséquilibre qui s'installe", accent: "déséquilibre", texte: "Tu donnes énormément sans oser réclamer, si bien que la réciprocité s'efface peu à peu." },
+        { titre: "Des attentes non dites", accent: "attentes", texte: "Ta discrétion peut te faire taire tes besoins et tes attentes, au risque que l'autre ne les devine pas." },
+        { titre: "Une grande vulnérabilité", accent: "vulnérabilité", texte: "Ta sensibilité te fait vivre les tensions douloureusement et ruminer longtemps un mot de travers." },
+        { titre: "Une crainte de décevoir", accent: "décevoir", texte: "Ta peur de blesser ou de décevoir peut te faire accepter ce qui ne te convient pas." },
         { titre: "La difficulté à recevoir", accent: "recevoir", texte: "Tu es toujours celui qui soutient, et tu peux avoir du mal à accepter qu'on prenne soin de toi en retour." },
       ],
       blocs: [
@@ -261,7 +261,7 @@ Tu travailles avec finesse, sérieux et attention aux autres : tu observes, tu c
         tension:
           "Tu donnes énormément à ceux que tu aimes,\nmais à trop te donner, tu risques de t'oublier et de te laisser prendre pour acquis.",
         lumiere:
-          "Ta chaleur, ta fidélité et ton instinct de protection font de toi un proche d'une tendresse rare, auprès de qui on se sent choyé et en sécurité.",
+          "Ton attention de chaque instant, ta fidélité et ton don de protéger font de toi un proche d'une tendresse rare, auprès de qui on se sent choyé et en sécurité.",
         ombre:
           "Mais à t'oublier, à ne pas oser dire non ni exprimer tes besoins, tu peux t'épuiser et créer un déséquilibre dans les liens que tu chéris.",
         bascule:
@@ -278,12 +278,12 @@ Tu travailles avec finesse, sérieux et attention aux autres : tu observes, tu c
         { titre: "Un dévouement constant", accent: "dévouement", texte: "Tu travailles avec sérieux et régularité, au service du bien-être de l'équipe et des gens." },
       ],
       ombres: [
-        { titre: "L'oubli de soi", accent: "oubli", texte: "Tu peux te surcharger en t'occupant de tout et de tout le monde, jusqu'à l'épuisement." },
-        { titre: "Du mal à dire non", accent: "non", texte: "Ta crainte de décevoir peut te faire accepter trop de tâches et te laisser déborder." },
+        { titre: "La surcharge silencieuse", accent: "surcharge", texte: "Tu peux te surcharger en t'occupant de tout et de tout le monde, jusqu'à l'épuisement." },
+        { titre: "Le oui de trop", accent: "oui", texte: "Tu acceptes trop de tâches de peur de décevoir, jusqu'à te laisser déborder." },
         { titre: "Un manque d'affirmation", accent: "affirmation", texte: "Tu peux ne pas oser défendre tes intérêts, demander une reconnaissance ou faire valoir ta valeur." },
-        { titre: "Le risque d'être pris pour acquis", accent: "acquis", texte: "À donner sans réclamer, ta contribution peut passer inaperçue et ne pas être justement reconnue." },
+        { titre: "Une contribution invisible", accent: "invisible", texte: "À donner sans réclamer, ta contribution peut passer inaperçue et ne pas être justement reconnue." },
         { titre: "Une sensibilité aux conflits", accent: "conflits", texte: "Les ambiances agressives, froides ou instables t'affectent profondément et te démotivent." },
-        { titre: "Une résistance au changement", accent: "changement", texte: "Ton attachement au stable peut te rendre réticent aux bouleversements, même bénéfiques." },
+        { titre: "L'attachement au connu", accent: "attachement", texte: "Ton attachement au stable peut te rendre réticent aux bouleversements, même bénéfiques." },
       ],
       blocs: [
         {
@@ -331,15 +331,15 @@ Tu travailles avec finesse, sérieux et attention aux autres : tu observes, tu c
           profils: [
             { nom: "Santé & soin", raison: "soignant, aide-soignant, auxiliaire de vie : prendre soin et protéger concrètement." },
             { nom: "Éducation & accompagnement", raison: "éducateur, enseignant, accompagnant : aider les gens à grandir dans la durée." },
-            { nom: "Support & ressources humaines", raison: "RH, assistant, fonctions de soutien : mettre ta fiabilité au service du bien-être." },
+            { nom: "Support & ressources humaines", raison: "RH, assistant, fonctions de soutien : mettre ta fiabilité au service des gens." },
           ],
         },
       ],
       paradoxe: {
         tension:
-          "Tu te donnes pleinement au service du bien-être des autres,\nmais à t'oublier et à ne pas t'affirmer, ta valeur peut rester invisible.",
+          "Tu te donnes pleinement pour le bien-être des autres,\nmais à t'oublier et à ne pas t'affirmer, ta valeur peut rester invisible.",
         lumiere:
-          "Ton dévouement, ta fiabilité et ton sens du soin font de toi un pilier précieux, sur qui une équipe et des gens peuvent vraiment compter.",
+          "Ton dévouement, ta fiabilité et ton sens du soin font de toi un appui précieux, sur qui une équipe et des gens peuvent vraiment compter.",
         ombre:
           "Mais à te surcharger, à ne pas savoir dire non et à ne pas oser faire reconnaître ta valeur, tu t'exposes à l'épuisement et à l'injustice.",
         bascule:
@@ -349,10 +349,10 @@ Tu travailles avec finesse, sérieux et attention aux autres : tu observes, tu c
     "ISFJ-V1-developpement": {
       evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ton dévouement et ton instinct de protection : prendre soin, veiller, aider, protéger. C'est beau et généreux, mais souvent déséquilibré : tu peux t'oublier complètement, ne jamais savoir dire non, te laisser prendre pour acquis et t'épuiser à donner. Tu prends soin de tout le monde, mais qui prend soin de toi ?
 
-Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne peux prendre soin durablement que si tu te préserves, que poser des limites n'est pas de l'égoïsme et que ta valeur mérite d'être reconnue. Tu apprends à t'affirmer, à recevoir, à exprimer tes besoins, à prendre soin de toi, sans rien perdre de ta chaleur. Dans ta pleine maturité, tu deviens un protecteur chaleureux qui veille sur les autres sans s'oublier, qui sait donner et recevoir, s'affirmer et poser des limites. Et c'est entièrement à ta portée.`,
+Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne peux prendre soin durablement que si tu te préserves, que poser des limites ne te rend pas moins généreux et que ta valeur mérite d'être reconnue. Tu apprends à t'affirmer, à recevoir, à exprimer tes besoins, à préserver ton énergie, sans rien perdre de ta chaleur. Dans ta pleine maturité, tu deviens un protecteur chaleureux qui veille sur les autres sans s'oublier, qui sait donner et recevoir, s'affirmer et poser des limites. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu remarques déjà ce dont les autres ont besoin et tu veilles spontanément sur ceux que tu aimes. Sensible et attentionné, tu prends soin tout naturellement, le cœur déjà tourné vers les autres.",
-        "Ton dévouement est à son comble : tu prends soin de tout le monde, tu protèges, tu donnes sans compter. C'est généreux, mais souvent déséquilibré : tu t'oublies, tu as du mal à dire non, et te préserver ne va pas encore de soi.",
+        "Ton dévouement est à son comble : tu es présent pour tout le monde, tu protèges, tu donnes sans compter. C'est généreux, mais souvent déséquilibré : tu t'oublies, tu as du mal à dire non, et te préserver ne va pas encore de soi.",
         "Tu comprends que tu ne peux veiller durablement sur les autres qu'en te préservant. Tu apprends à poser des limites, à recevoir et à exprimer tes besoins, sans rien perdre de ta chaleur.",
         "Dans ta pleine maturité, tu es un protecteur chaleureux qui veille sur les autres sans s'oublier. Tu sais donner et recevoir, t'affirmer et te protéger : la version la plus accomplie de toi.",
       ],
@@ -363,7 +363,7 @@ Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu co
         { titre: "Apprends à recevoir", texte: "Tu donnes énormément : laisse aussi les autres prendre soin de toi. Une relation saine repose sur la réciprocité, et recevoir te permet de te remplir pour continuer à donner." },
       ],
       questions: [
-        { situation: "Quand tu prends soin de tout le monde", question: "Et moi, qui prend soin de moi en ce moment ?" },
+        { situation: "Quand tu portes tout le monde", question: "Et moi, qui prend soin de moi en ce moment ?" },
         { situation: "Quand on te demande encore un service", question: "Est-ce que je dis oui par envie, ou par peur de décevoir ?" },
         { situation: "Quand tu te sens épuisé", question: "De quel repos ou de quel soutien ai-je besoin, là, maintenant ?" },
         { situation: "Quand une blessure te ronge", question: "Est-ce que j'ose l'exprimer, ou est-ce que je la garde encore pour moi ?" },
@@ -373,11 +373,11 @@ Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu co
         tension:
           "Pour veiller durablement sur ceux que tu aimes, tu dois aussi veiller sur toi,\nmais tu crains qu'en pensant à toi, tu trahisses ton dévouement.",
         lumiere:
-          "Ta chaleur, ta fidélité et ton instinct de protection sont une force rare : tu as déjà en toi tout ce qu'il faut pour faire du bien à ceux qui t'entourent.",
+          "Ton cœur, ta loyauté et ton dévouement sincère sont une force rare : tu as déjà en toi tout ce qu'il faut pour faire du bien à ceux qui t'entourent.",
         ombre:
           "Mais à t'oublier et à ne jamais te préserver, ton dévouement se transforme en source d'épuisement et te conduit à disparaître.",
         bascule:
-          "Le jour où tu comprends que prendre soin de toi n'est pas de l'égoïsme mais la condition de ta générosité, ton dévouement devient une lumière durable.",
+          "Le jour où tu comprends que te ménager est ce qui garde ta générosité vivante, ton dévouement devient une lumière durable.",
       },
     },
     "ISFJ-V2-relations": {
@@ -461,7 +461,7 @@ Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu co
     "ISFJ-V2-carriere": {
       forces: [
         { titre: "Un don du bien-être", accent: "bien-être", texte: "Tu crées des environnements humains et chaleureux où chacun se sent bien et accueilli." },
-        { titre: "Une fiabilité exemplaire", accent: "fiabilité", texte: "On peut compter sur toi : tu honores tes engagements et tu entretiens fidèlement ce que tu crées." },
+        { titre: "Une fiabilité exemplaire", accent: "fiabilité", texte: "Les autres savent qu'ils peuvent se reposer sur toi : tu honores tes engagements et tu entretiens fidèlement ce que tu crées." },
         { titre: "Une attention à l'harmonie", accent: "harmonie", texte: "Tu veilles au climat de l'équipe et tu fais que chacun se sente bien et inclus." },
         { titre: "Un sens du concret", accent: "concret", texte: "Tu transformes le souci du bien-être en attentions réelles et en confort tangible." },
         { titre: "Une chaleur précieuse", accent: "chaleur", texte: "Tu apportes une dimension humaine et une douceur qui font de toi un élément rare dans tout collectif." },
@@ -537,14 +537,14 @@ Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu co
       },
     },
     "ISFJ-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ton don de créer de l'harmonie : réchauffer, accueillir, prendre soin, faire que les autres se sentent bien. C'est beau et généreux, mais souvent déséquilibré : tu peux t'oublier complètement, fuir tout conflit jusqu'à t'effacer, ne jamais savoir dire non et te recroqueviller dans le familier. Tu crées un foyer pour tout le monde, mais en as-tu un pour toi ?
+      evolution: `Ta personnalité n'a rien de figé : elle évolue, et ton type connaît une trajectoire de maturation particulièrement nette. Plus jeune, tu es tout entier dans ton don de créer de l'harmonie : réchauffer, accueillir, prendre soin, faire que les autres se sentent bien. C'est beau et généreux, mais souvent déséquilibré : tu peux t'oublier complètement, fuir tout conflit jusqu'à t'effacer, ne jamais savoir dire non et te recroqueviller dans le familier. Tu crées un foyer pour tout le monde, mais en as-tu un pour toi ?
 
 Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu comprends que créer de l'harmonie ne veut pas dire t'effacer, que régler les tensions renforce les liens au lieu de les briser, et que ton bien-être compte autant que celui des autres. Tu apprends à t'affirmer, à exprimer tes désaccords, à prendre soin de toi, à t'ouvrir, sans rien perdre de ta chaleur. Dans ta pleine maturité, tu deviens un gardien du foyer chaleureux qui crée de l'harmonie sans s'effacer et qui s'inclut enfin dans le bien-être qu'il offre. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu aimes déjà rendre les choses douces et accueillantes, et tu prends soin du confort de ceux qui t'entourent. Sensible à l'ambiance, tu crées spontanément de la chaleur autour de toi.",
         "Ton don de créer de l'harmonie est à son comble : tu réchauffes, tu accueilles, tu prends soin de tous. C'est généreux, mais souvent déséquilibré : tu fuis les conflits, tu t'effaces, et t'inclure ne va pas encore de soi.",
         "Tu comprends que régler les tensions renforce les liens et que ton bien-être compte autant que celui des autres. Tu apprends à exprimer tes désaccords et à t'affirmer, sans rien perdre de ta chaleur.",
-        "Dans ta pleine maturité, tu es un gardien du foyer chaleureux qui crée de l'harmonie sans s'effacer. Tu t'inclus dans le refuge que tu offres : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un gardien du foyer chaleureux qui crée de l'harmonie sans s'effacer. Tu t'inclus dans le refuge que tu offres : la plus belle version de toi-même.",
       ],
       leviersForts: [
         { titre: "Inclus-toi dans le refuge que tu crées", texte: "C'est ton plus grand levier : honore tes propres besoins et accorde-toi du confort et du repos. La vraie harmonie te comprend toi aussi, et te préserver est ce qui te permet d'offrir ta chaleur durablement." },
@@ -653,7 +653,7 @@ Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu co
         { titre: "Un soutien juste", accent: "juste", texte: "Tu comprends ce qui se joue et tu offres une aide adaptée et pertinente, jamais à côté." },
         { titre: "Une observation fine", accent: "observation", texte: "Tu perçois ce que les autres ne voient pas et tu comprends les situations en profondeur." },
         { titre: "Un vrai discernement", accent: "discernement", texte: "Tu réfléchis avant d'agir, ce qui rend ton travail mûri, précis et bien pensé." },
-        { titre: "Une fiabilité exemplaire", accent: "fiabilité", texte: "On peut compter sur toi : tu honores tes engagements avec un sérieux et un soin remarquables." },
+        { titre: "Une fiabilité exemplaire", accent: "fiabilité", texte: "On sait pouvoir se fier à toi : tu honores tes engagements avec un sérieux et un soin remarquables." },
         { titre: "Une dimension humaine", accent: "humaine", texte: "Tu apportes une intelligence des gens et une attention que les esprits purement fonctionnels n'ont pas." },
         { titre: "Une attention au détail", accent: "détail", texte: "Tu remarques les signes et tu prépares les choses avec une précision rare." },
       ],
@@ -663,7 +663,7 @@ Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu co
         { titre: "L'effacement", accent: "effacement", texte: "Ta discrétion peut te faire rester en retrait et ne pas faire valoir ton discernement et ta valeur." },
         { titre: "L'hésitation", accent: "hésitation", texte: "Ta tendance à sur-analyser les conséquences peut te faire douter et retarder tes décisions." },
         { titre: "Une sensibilité aux ambiances", accent: "ambiances", texte: "La précipitation, l'agressivité et le travail bâclé te démotivent et te pèsent." },
-        { titre: "Un manque d'affirmation", accent: "affirmation", texte: "Tu peux ne pas oser défendre tes intérêts ni faire reconnaître ta valeur." },
+        { titre: "Un manque d'affirmation", accent: "affirmation", texte: "Tu peux hésiter à défendre tes intérêts et à mettre en avant ce que tu apportes." },
       ],
       blocs: [
         {
@@ -727,14 +727,14 @@ Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu co
       },
     },
     "ISFJ-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ta réflexion et ton dévouement attentif : observer, comprendre, soutenir avec justesse, te soucier des autres. C'est beau et précieux, mais souvent déséquilibré : tu peux trop réfléchir au point de t'inquiéter sans cesse, t'épuiser de soucis, t'oublier, t'effacer et taire tes besoins. Tu comprends tout le monde finement, mais tu te perds dans tes pensées et ton dévouement.
+      evolution: `Ta personnalité n'est jamais figée : elle se transforme, et ton type emprunte un chemin de maturation particulièrement net. Plus jeune, tu es tout entier dans ta réflexion et ton dévouement attentif : observer, comprendre, soutenir avec justesse, te soucier des autres. C'est beau et précieux, mais souvent déséquilibré : tu peux trop réfléchir au point de t'inquiéter sans cesse, t'épuiser de soucis, t'oublier, t'effacer et taire tes besoins. Tu comprends tout le monde finement, mais tu te perds dans tes pensées et ton dévouement.
 
 Avec le temps et l'expérience, quelque chose de précieux s'ouvre en toi. Tu comprends que trop réfléchir n'aide pas, que ton bien-être compte autant que celui des autres, que faire confiance et lâcher prise est aussi une sagesse, et que ta valeur mérite d'être affirmée. Tu apprends à apaiser ton mental, à t'affirmer, à exprimer tes besoins, à prendre soin de toi, sans rien perdre de ton discernement. Dans ta pleine maturité, tu deviens un soutien réfléchi d'une justesse exemplaire qui sait aussi lâcher prise, s'affirmer et prendre soin de lui. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu observes déjà finement et tu perçois ce dont les autres ont besoin. Sensible et attentif, tu offres spontanément le bon mot et le bon soutien, le cœur tourné vers les autres.",
         "Ta réflexion et ton dévouement sont à leur comble : tu comprends tout le monde, tu te soucies, tu soutiens sans compter. C'est précieux, mais souvent déséquilibré : tu t'inquiètes, tu t'effaces, et apaiser ton mental ne va pas encore de soi.",
         "Tu comprends que trop réfléchir n'aide pas et que ton bien-être compte autant que celui des autres. Tu apprends à lâcher prise, à t'affirmer et à exprimer tes besoins, sans rien perdre de ta finesse.",
-        "Dans ta pleine maturité, tu es un soutien réfléchi d'une justesse exemplaire qui sait aussi lâcher prise et prendre sa place. Ton discernement s'accompagne de sérénité : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un soutien réfléchi d'une justesse exemplaire qui sait aussi lâcher prise et prendre sa place. Ton discernement s'accompagne de sérénité : le toi le plus pleinement réalisé.",
       ],
       leviersForts: [
         { titre: "Apprends à apaiser ton mental", texte: "C'est ton plus grand levier : ta réflexion est une force, mais trop penser t'épuise. Apprends à lâcher prise, à faire confiance et à sortir de la rumination par l'action et l'apaisement." },

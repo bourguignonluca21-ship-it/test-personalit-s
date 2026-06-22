@@ -99,15 +99,15 @@ Mais ton ouverture a un revers que peu soupçonnent : tu lances plus facilement 
   // INTROS (~2 paragraphes, sous le héros)
   // ---------------------------------------------------------------------------
   intros: {
-    "ENTP-V1": `En tant qu'Innovateur (ENTP), ton cerveau est une fontaine qui ne tarit jamais : il génère, il connecte, il invente, il imagine ce qui n'existe pas encore. Là où d'autres subissent les contraintes, toi tu les contournes par l'inventivité. Ce qui te définit, c'est ta créativité tournée vers l'action : tu ne te contentes pas de rêver, tu veux inventer, créer, lancer du neuf, et les opportunités te sautent aux yeux là où les autres ne voient que du déjà-vu. Parmi les trois façons d'être de ton type, tu es l'Inventeur, le pionnier qui défriche.
+    "ENTP-V1": `En tant qu'Innovateur (ENTP), ton cerveau est une fontaine qui ne tarit jamais : il génère, il connecte, il invente, il imagine ce qui n'existe pas encore. Là où d'autres subissent les contraintes, toi tu les contournes par l'inventivité. Ce qui te définit, c'est ta créativité tournée vers l'action : tu ne te contentes pas de rêver, tu veux inventer, créer, lancer du neuf, et les opportunités te sautent aux yeux là où les autres ne voient que du déjà-vu. Des trois visages que peut prendre ton type, tu es l'Inventeur, le pionnier qui défriche.
 
 Ce qui te porte, c'est l'exploration et le défi de l'inédit : la routine t'éteint, le neuf te galvanise, et ton enthousiasme est contagieux. Mais cette même fertilité a son revers : tu lances mille étincelles sans toujours les mener au bout, tu te disperses, et le suivi laborieux t'ennuie. Ton plus beau terrain de croissance sera d'apprendre à canaliser ton inventivité pour faire exister pleinement quelques-unes de tes meilleures idées.`,
 
-    "ENTP-V2": `En tant qu'Innovateur (ENTP), tu ne débats pas pour gagner, tu débats pour comprendre : toute idée mérite d'être testée, toute position a ses failles, et tu considères presque comme un devoir de les trouver. Ce qui te définit, c'est l'alliance de deux forces redoutables : la génération d'idées et le filtre logique impitoyable. Tu imagines des angles neufs, puis tu les passes au crible de la raison, ce qui fait de toi à la fois un esprit créatif et un esprit critique d'exception. Parmi les trois façons d'être de ton type, tu es le Débatteur Analytique.
+    "ENTP-V2": `En tant qu'Innovateur (ENTP), tu ne débats pas pour gagner, tu débats pour comprendre : toute idée mérite d'être testée, toute position a ses failles, et tu considères presque comme un devoir de les trouver. Ce qui te définit, c'est l'alliance de deux forces redoutables : la génération d'idées et le filtre logique impitoyable. Tu imagines des angles neufs, puis tu les passes au crible de la raison, ce qui fait de toi à la fois un esprit créatif et un esprit critique d'exception. Parmi les trois variations possibles de ton type, tu es le Débatteur Analytique.
 
 Ce qui te passionne, c'est la confrontation des idées : anticiper les contre-arguments, repérer les incohérences en un éclair, démonter ce qui ne tient pas. Mais ce don a son revers : à force de tout contredire et de pointer les failles, tu peux blesser, lasser ou rester dans l'analyse sans jamais conclure ni agir. Ton plus beau terrain de croissance sera de mettre ton esprit critique au service des idées sans le retourner contre les personnes, et de passer de l'analyse à l'action.`,
 
-    "ENTP-V3": `En tant qu'Innovateur (ENTP), tu as les idées ET le don de les rendre irrésistibles. Tu vois les possibilités comme tous les esprits inventifs, mais tu sais en plus embarquer les autres, lire ton public, trouver l'angle qui touche et transformer une idée en mouvement. Ce qui te définit, c'est cette alliance de la créativité et du magnétisme : là où d'autres gardent leurs visions dans leur tête, toi tu les transformes en enthousiasme collectif. Parmi les trois façons d'être de ton type, tu es le Charmeur Visionnaire.
+    "ENTP-V3": `En tant qu'Innovateur (ENTP), tu as les idées ET le don de les rendre irrésistibles. Tu vois les possibilités comme tous les esprits inventifs, mais tu sais en plus embarquer les autres, lire ton public, trouver l'angle qui touche et transformer une idée en mouvement. Ce qui te définit, c'est cette alliance de la créativité et du magnétisme : là où d'autres gardent leurs visions dans leur tête, toi tu les transformes en enthousiasme collectif. Parmi les trois manières d'incarner ton type, tu es le Charmeur Visionnaire.
 
 Ce qui te caractérise, c'est ton aisance à fédérer, à inspirer, à donner envie de te suivre. Mais ce charme a son revers : tu peux rechercher l'effet plus que le fond, dépendre du regard des autres, te disperser dans mille projets séduisants et rester en surface. Ton plus beau terrain de croissance sera de mettre ton charisme au service de ce qui compte vraiment, et de puiser ta valeur en toi plutôt que dans l'admiration.`,
   },
@@ -118,15 +118,15 @@ Ce qui te caractérise, c'est ton aisance à fédérer, à inspirer, à donner e
   texteVariante: {
     "ENTP-V1": `Parmi les trois visages de l'Innovateur, tu es le plus tourné vers la création et le lancement d'idées neuves. Tu n'es pas avant tout le débatteur qui analyse et démonte, ni le charmeur qui rallie les foules : tu es celui qui invente, qui crée, qui défriche les territoires inexplorés. Cette fontaine d'idées et cette envie de les lancer dans le monde te caractérisent plus que tout.
 
-Inventer et créer du neuf te passionne, et tu vois des opportunités et des possibilités partout. Cette combinaison, la créativité débordante et l'énergie pour concrétiser, fait de toi un pionnier, un lanceur de projets, quelqu'un capable de donner vie à ce que personne n'avait imaginé. Le revers, c'est que cette même fertilité peut t'empêcher de finir : ton plus beau terrain de croissance sera d'apprendre à mener au bout quelques-unes de tes mille idées.`,
+Inventer et créer du neuf te passionne, et tu vois des opportunités et des possibilités partout. Cette combinaison, la créativité débordante et l'énergie pour concrétiser, fait de toi un pionnier, un lanceur de projets, quelqu'un capable de donner vie à ce que personne n'avait imaginé. Le revers, c'est que cette même fertilité peut t'empêcher de finir : tout l'enjeu, pour toi, sera de mener au bout quelques-unes de tes mille idées.`,
 
     "ENTP-V2": `Parmi les trois visages de l'Innovateur, tu es le plus tourné vers l'analyse critique et la joute intellectuelle. Tu n'es pas avant tout l'inventeur qui crée et lance, ni le charmeur qui rallie les foules : tu es celui qui pense, qui débat, qui démonte les raisonnements pour aller au fond des choses. Ce goût de tester la cohérence des idées et de repérer les failles te caractérise.
 
-Tu adores débattre et démonter les arguments, et tu repères instantanément ce qui cloche dans un raisonnement. Cette combinaison, la créativité qui génère et la logique qui teste, fait de toi un esprit critique d'exception, quelqu'un dont l'intelligence affûtée éclaire les débats et prévient les erreurs. Le revers, c'est que ce même tranchant peut blesser ou tourner à vide : ton plus beau terrain de croissance sera d'apprendre quand débattre et quand écouter, et à conclure plutôt qu'à analyser sans fin.`,
+Tu adores débattre et démonter les arguments, et tu repères instantanément ce qui cloche dans un raisonnement. Cette combinaison, la créativité qui génère et la logique qui teste, fait de toi un esprit critique d'exception, quelqu'un dont l'intelligence affûtée éclaire les débats et prévient les erreurs. Le revers, c'est que ce même tranchant peut blesser ou tourner à vide : ton chemin passera par discerner quand débattre et quand écouter, et par conclure plutôt qu'analyser sans fin.`,
 
     "ENTP-V3": `Parmi les trois visages de l'Innovateur, tu es le plus tourné vers les gens et l'influence. Tu n'es pas avant tout l'inventeur centré sur la création, ni le débatteur centré sur l'analyse critique : tu es celui qui rallie, qui entraîne, qui transforme ses idées en mouvement grâce à son charisme. Cette aisance à séduire, à entraîner, à influencer par ton énergie te caractérise.
 
-Tu aimes rallier les gens et les convaincre par ton enthousiasme, et tu es particulièrement sensible à l'effet que tu produis sur les autres. Cette combinaison, la créativité de l'inventeur et le magnétisme du meneur, fait de toi un visionnaire qui sait entraîner, capable de donner vie à ses idées en les faisant adopter. Le revers, c'est que ce charme peut tourner à vide : ton plus beau terrain de croissance sera de mettre ton magnétisme au service de la substance et de la profondeur.`,
+Tu aimes rallier les gens et les convaincre par ton enthousiasme, et tu es particulièrement sensible à l'effet que tu produis sur les autres. Cette combinaison, la créativité de l'inventeur et le magnétisme du meneur, fait de toi un visionnaire qui sait entraîner, capable de donner vie à ses idées en les faisant adopter. Le revers, c'est que ce charme peut tourner à vide : ton défi sera d'arrimer ton magnétisme à la substance et à la profondeur.`,
   },
 
   // ---------------------------------------------------------------------------
@@ -186,7 +186,7 @@ Tu aimes rallier les gens et les convaincre par ton enthousiasme, et tu es parti
         ombre:
           "Mais mal dosé, ce même don peut blesser, lasser, isoler : à tout contredire, tu peux gagner tous les débats et perdre les gens.",
         bascule:
-          "Le jour où tu mets ton esprit critique au service des idées sans le retourner contre les personnes, ton intelligence cesse d'être une arme à double tranchant pour devenir une vraie lumière.",
+          "Le jour où tu diriges ton esprit critique vers les idées plutôt que contre ceux qui les portent, ton intelligence cesse d'être une arme à double tranchant pour devenir une vraie lumière.",
       },
     },
     "ENTP-V3": {
@@ -214,7 +214,7 @@ Tu aimes rallier les gens et les convaincre par ton enthousiasme, et tu es parti
         ombre:
           "Mais livré à lui-même, ce même don tourne à vide : séduire pour le plaisir, courir après l'approbation, te disperser sans rien construire de durable.",
         bascule:
-          "Le jour où tu mets ton charisme au service de ce qui compte vraiment et de projets que tu mènes au bout, ton magnétisme cesse d'être un feu de paille pour devenir une force de transformation.",
+          "Le jour où tu attelles ton charisme à des causes qui en valent la peine et à des projets que tu mènes au bout, ton magnétisme cesse d'être un feu de paille pour devenir une force de transformation.",
       },
     },
   },
@@ -229,11 +229,11 @@ Tes défis sont les revers de ta nature. Ton goût de la nouveauté peut te fair
 
     "ENTP-V2": `En amour comme en amitié, tu es stimulant et vivant, et ce qui t'attire d'abord chez quelqu'un, c'est l'esprit : la capacité à te tenir tête, à te surprendre, à débattre sans se vexer. Une personne qui sait répondre à tes joutes t'attire bien plus qu'une présence décorative. Tu es l'ami avec qui on débat des heures et avec qui aucune idée n'est tabou, et tu offres un esprit qui stimule le tien, un interlocuteur qui ne te laisse jamais paresser intellectuellement.
 
-Tes défis sont les revers de ta nature. Ton goût du débat peut transformer des conversations anodines en confrontations, ou faire que l'autre se sente constamment challengé, voire critiqué. Ton confort avec la logique peut te rendre maladroit avec les émotions : tu peux vouloir résoudre par l'argument ce qui demande de l'écoute. Ton chemin, c'est d'apprendre à ranger ton esprit critique dans l'intimité, à reconnaître quand l'autre veut du soutien plutôt que du débat, et à offrir de la chaleur autant que de la stimulation.`,
+Tes difficultés sont le prolongement de tes forces. Ton goût du débat peut transformer des conversations anodines en confrontations, ou faire que l'autre se sente constamment challengé, voire critiqué. Ton confort avec la logique peut te rendre maladroit avec les émotions : tu peux vouloir résoudre par l'argument ce qui demande de l'écoute. Ton chemin, c'est d'apprendre à ranger ton esprit critique dans l'intimité, à reconnaître quand l'autre veut du soutien plutôt que du débat, et à offrir de la chaleur autant que de la stimulation.`,
 
     "ENTP-V3": `En amour comme en amitié, tu es charmeur, vivant, magnétique. Tu sais séduire, faire rire, donner à l'autre le sentiment d'être spécial, et tu apportes une présence qui illumine : avec toi, la relation a du panache et du jeu. Tu es l'ami rayonnant, celui qui met de l'ambiance, qui connecte les gens et rend tout plus vivant. Tu cherches un partenaire qui te stimule, qui a sa propre personnalité, et qui voit au-delà de ton charme, qui te connaît vraiment et pas seulement le brillant que tu montres.
 
-Tes défis sont les revers de ta nature. Ton besoin de plaire et ta sensibilité à l'effet produit peuvent te rendre dépendant de l'admiration, et ton charme social peut masquer une difficulté à aller dans la profondeur émotionnelle intime. Ta dispersion peut te faire fuir l'engagement ou négliger tes liens profonds au profit de la nouveauté. Ton chemin, c'est d'offrir de l'authenticité et pas seulement du charme, de puiser ta valeur ailleurs que dans l'admiration, et de cultiver quelques liens vraiment intimes où tu n'as pas à séduire.`,
+Tes fragilités naissent là même où naissent tes atouts. Ton besoin de plaire et ta sensibilité à l'effet produit peuvent te rendre dépendant de l'admiration, et ton charme social peut masquer une difficulté à aller dans la profondeur émotionnelle intime. Ta dispersion peut te faire fuir l'engagement ou négliger tes liens profonds au profit de la nouveauté. Ton chemin, c'est d'offrir de l'authenticité et pas seulement du charme, de puiser ta valeur ailleurs que dans l'admiration, et de cultiver quelques liens vraiment intimes où tu n'as pas à séduire.`,
   },
 
   // ---------------------------------------------------------------------------
@@ -250,7 +250,7 @@ Tu as besoin d'autonomie, de défis intellectuels et de liberté de penser : la 
 
     "ENTP-V3": `Au travail, tu es fait pour les rôles où l'on convainc, où l'on rallie, où l'on porte des idées. Tu t'étioles dans l'exécution solitaire et routinière ; tu prends vie quand tu peux communiquer, fédérer, vendre des idées, entraîner. Tu excelles dans la communication, le marketing, la vente, l'entrepreneuriat, le leadership, les relations publiques ou la prise de parole, tout ce qui combine idées et influence. Tu es un excellent ambassadeur, un fédérateur, un vendeur d'idées, à ton meilleur quand tu portes une vision et rallies une équipe.
 
-Tu as besoin d'autonomie, de contact humain et de scènes où exercer ton charisme : le micro-management, l'isolement et la routine te démotivent. Ton défi est double : ta dépendance à l'effet produit peut te faire privilégier le brillant sur le fond, et ta dispersion peut t'empêcher de concrétiser. Apprendre à mettre ton charisme au service d'une vraie substance, à mener tes projets au bout, et à ne pas faire dépendre ta motivation de l'admiration, est ce qui transforme ton magnétisme en réussite durable et respectée.`,
+Tu as besoin d'autonomie, de contact humain et de scènes où exercer ton charisme : le micro-management, l'isolement et la routine te démotivent. Tu fais face à un double écueil : ta dépendance à l'effet produit peut te faire privilégier le brillant sur le fond, et ta dispersion peut t'empêcher de concrétiser. Apprendre à mettre ton charisme au service d'une vraie substance, à mener tes projets au bout, et à ne pas faire dépendre ta motivation de l'admiration, est ce qui transforme ton magnétisme en réussite durable et respectée.`,
   },
 
   // ---------------------------------------------------------------------------
@@ -258,13 +258,13 @@ Tu as besoin d'autonomie, de contact humain et de scènes où exercer ton charis
   // ---------------------------------------------------------------------------
   mindsetTexte: {
     "ENTP-V1": {
-      apercu: `Ton plus grand chantier n'est pas de trouver des idées, tu n'en manques jamais, c'est d'en faire exister quelques-unes pleinement. Tu portes une inventivité débordante, mais aussi une tendance à ne jamais finir, à te disperser, à fuir le suivi laborieux vers la prochaine étincelle. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de trouver des idées, tu n'en manques jamais, c'est d'en faire exister quelques-unes pleinement. Tu portes une inventivité débordante, mais aussi une tendance à ne jamais finir, à te disperser, à fuir le suivi laborieux vers la prochaine étincelle. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, dès lors que tu sais sur quel levier appuyer.`,
     },
     "ENTP-V2": {
-      apercu: `Ton plus grand chantier n'est pas d'aiguiser ton esprit, il est déjà tranchant, c'est d'apprendre à bien l'employer. Tu portes une intelligence critique rare, mais aussi une tendance à débattre pour débattre, à blesser sans le vouloir, et à analyser sans jamais conclure ni agir. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas d'aiguiser ton esprit, il est déjà tranchant, c'est d'apprendre à bien l'employer. Tu portes une intelligence critique rare, mais aussi une tendance à débattre pour débattre, à blesser sans le vouloir, et à analyser sans jamais conclure ni agir. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, une fois que tu sais où porter l'effort.`,
     },
     "ENTP-V3": {
-      apercu: `Ton plus grand chantier n'est pas de séduire, ça te vient naturellement, c'est de mettre ton charme au service de ce qui compte vraiment. Tu portes un magnétisme rare, mais aussi une tendance à courir après l'effet, à dépendre de l'admiration, et à te disperser sans rien construire de durable. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de séduire, ça te vient naturellement, c'est de faire servir ton charme à quelque chose de vrai. Tu portes un magnétisme rare, mais aussi une tendance à courir après l'effet, à dépendre de l'admiration, et à te disperser sans rien construire de durable. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, pourvu que tu saches dans quelle direction pousser.`,
     },
   },
 
@@ -284,10 +284,10 @@ Tu as besoin d'autonomie, de contact humain et de scènes où exercer ton charis
       ],
       ombres: [
         { titre: "La peur de l'engagement", accent: "engagement", texte: "Ton goût de la nouveauté peut te faire craindre de t'installer ou de fermer des portes." },
-        { titre: "L'enthousiasme qui retombe", accent: "enthousiasme", texte: "L'élan du début peut faiblir quand vient la routine inhérente à tout lien durable." },
+        { titre: "L'élan qui retombe", accent: "élan", texte: "La ferveur du début peut faiblir quand vient la routine inhérente à tout lien durable." },
         { titre: "Le quotidien fui", accent: "quotidien", texte: "Tu fuis la part répétitive de la relation, là où se construit pourtant la profondeur." },
         { titre: "Les liens négligés", accent: "négligés", texte: "Ta dispersion te fait filer vers le prochain projet et oublier d'entretenir tes amitiés." },
-        { titre: "L'émotionnel survolé", accent: "émotionnel", texte: "Plongé dans tes idées, tu peux rater la dimension simple et affective du lien." },
+        { titre: "L'affectif laissé de côté", accent: "affectif", texte: "Plongé dans tes idées, tu peux rater la dimension simple et affective du lien." },
         { titre: "Une soif de stimulation", accent: "stimulation", texte: "Tu peux attendre de la relation une effervescence constante que le réel n'offre pas toujours." },
       ],
       blocs: [
@@ -364,8 +364,8 @@ Tu as besoin d'autonomie, de contact humain et de scènes où exercer ton charis
       ],
       ombres: [
         { titre: "Le suivi qui ennuie", accent: "suivi", texte: "Tu démarres fort, mais le travail patient et répétitif fait chuter ton énergie." },
-        { titre: "La dispersion", accent: "dispersion", texte: "Tu papillonnes d'un projet à l'autre et n'en mènes que peu au bout." },
-        { titre: "Du mal à finir", accent: "finir", texte: "Une fois l'idée lancée ou résolue dans ta tête, tu files vers la suivante." },
+        { titre: "Une tendance à la dispersion", accent: "dispersion", texte: "Tu papillonnes d'un projet à l'autre et n'en mènes que peu au bout." },
+        { titre: "La peine à finir", accent: "finir", texte: "Une fois l'idée lancée ou résolue dans ta tête, tu pars déjà vers la suivante." },
         { titre: "La routine étouffante", accent: "routine", texte: "Les environnements bureaucratiques et figés t'asphyxient et te rendent improductif." },
         { titre: "Une indécision féconde", accent: "indécision", texte: "Tu vois tant d'options que t'engager fermement sur une seule te coûte." },
         { titre: "Un rapport flou à l'argent", accent: "argent", texte: "Du flair pour les opportunités, mais une gestion en dents de scie faute de constance." },
@@ -434,14 +434,14 @@ Tu as besoin d'autonomie, de contact humain et de scènes où exercer ton charis
 
     // ===== V1 / DEVELOPPEMENT =====
     "ENTP-V1-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Jeune, tu es tout entier dans ton bouillonnement créatif : inventer, lancer, explorer, sauter d'une idée à l'autre. C'est lumineux et énergique, mais souvent dispersé : tu commences mille projets, tu en finis peu, et tu peines à concrétiser tout ce potentiel.
+      evolution: `Ta personnalité n'a rien de figé : elle se transforme avec les années, et ton type connaît une évolution particulièrement spectaculaire. Jeune, tu es tout entier dans ton bouillonnement créatif : inventer, lancer, explorer, sauter d'une idée à l'autre. C'est lumineux et énergique, mais souvent dispersé : tu commences mille projets, tu en finis peu, et tu peines à concrétiser tout ce potentiel.
 
-Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends qu'avoir des idées ne suffit pas, qu'il faut en mener quelques-unes jusqu'au bout pour qu'elles existent vraiment. Tu apprends à te concentrer, à finir, à approfondir, à t'entourer de ce qui te complète, sans renoncer à ta créativité. Dans ta pleine maturité, tu deviens redoutablement accompli : un créatif débordant qui sait aussi concrétiser et transformer ses idées en réalisations qui marquent. Et c'est entièrement à ta portée.`,
+Avec le temps, quelque chose de précieux se déploie en toi : tu comprends qu'avoir des idées ne suffit pas, qu'il faut en mener quelques-unes jusqu'au bout pour qu'elles existent vraiment. Tu apprends à te concentrer, à finir, à approfondir, à t'entourer de ce qui te complète, sans renoncer à ta créativité. Dans ta pleine maturité, tu deviens étonnamment complet : un créatif débordant qui sait aussi concrétiser et transformer ses idées en réalisations qui marquent. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu vois des solutions partout et tu poses mille questions. Le monde est un immense terrain de jeu plein de possibles, et ton imagination ne s'arrête jamais.",
-        "Ta créativité explose : tu inventes, tu lances, tu explores tous azimuts. C'est lumineux, mais souvent dispersé : tu commences beaucoup, tu finis peu, et canaliser ton énergie ne va pas encore de soi.",
+        "Ta créativité explose : tu inventes, tu lances, tu explores tous azimuts. C'est éclatant, mais éparpillé : tu commences beaucoup, tu finis peu, et canaliser ton énergie ne va pas encore de soi.",
         "Tu comprends qu'avoir des idées ne suffit pas. Tu apprends à choisir, à finir ce qui compte, à t'entourer de complémentaires, et à transformer ton inventivité en réalisations, sans rien perdre de ta créativité.",
-        "Dans ta pleine maturité, tu es un inventeur qui sait aussi accomplir. Tu as gardé ta fontaine d'idées, mais tu sais désormais en faire exister quelques-unes pleinement : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un inventeur qui sait aussi accomplir. Tu as gardé ta fontaine d'idées, mais tu sais désormais en faire exister quelques-unes pleinement : la version la plus créatrice et la plus aboutie de toi.",
       ],
       leviersForts: [
         { titre: "Mène une idée jusqu'au bout", texte: "Choisis, parmi tes mille idées, une qui compte vraiment et achève-la : voir le résultat concret te prouvera de quoi tu es capable et te donnera une satisfaction durable." },
@@ -471,18 +471,18 @@ Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends qu'avoir
     // ===== V2 / RELATIONS =====
     "ENTP-V2-relations": {
       forces: [
-        { titre: "Une présence stimulante", accent: "stimulante", texte: "Avec toi la relation est un échange permanent, vif et jamais ennuyeux." },
+        { titre: "Un échange qui stimule", accent: "stimule", texte: "Avec toi la relation est un échange permanent, vif et jamais ennuyeux." },
         { titre: "Le goût du répondant", accent: "répondant", texte: "Tu apprécies par-dessus tout ceux qui peuvent te tenir tête et aiment la joute autant que toi." },
-        { titre: "Une complicité d'esprit", accent: "complicité", texte: "Tu offres un esprit qui stimule le tien, un interlocuteur qui ne te laisse jamais paresser." },
+        { titre: "Une connivence d'esprit", accent: "connivence", texte: "Tu offres un esprit qui stimule le tien, un interlocuteur qui ne te laisse jamais paresser." },
         { titre: "Une franchise sincère", accent: "franchise", texte: "Tu dis le vrai et tu n'esquives pas les sujets : on sait à quoi s'en tenir avec toi." },
         { titre: "Un humour vif", accent: "humour", texte: "Ta vivacité et ton sens du jeu d'idées rendent les échanges drôles et inattendus." },
-        { titre: "Une loyauté à ta façon", accent: "loyauté", texte: "Sincère, elle passe par la complicité intellectuelle et le respect mutuel." },
+        { titre: "Une fidélité bien à toi", accent: "fidélité", texte: "Sincère, elle se vit dans la complicité intellectuelle et le respect mutuel." },
       ],
       ombres: [
         { titre: "Le débat qui blesse", accent: "blesse", texte: "Pour toi c'est un jeu, mais l'autre peut se sentir constamment challengé, voire critiqué." },
         { titre: "La contradiction réflexe", accent: "contradiction", texte: "Tu peux contredire par sport quand l'autre voulait juste être écouté." },
         { titre: "L'écoute qui manque", accent: "écoute", texte: "Tu peux rater le moment où l'autre cherche du soutien plutôt qu'un débat." },
-        { titre: "L'émotionnel négligé", accent: "émotionnel", texte: "Ton confort avec la logique peut te rendre maladroit avec les sentiments." },
+        { titre: "Les sentiments négligés", accent: "sentiments", texte: "Ton confort avec la logique peut te rendre maladroit avec les sentiments." },
         { titre: "Le besoin de résoudre", accent: "résoudre", texte: "Tu peux vouloir résoudre par l'argument ce qui demande de l'écoute et de la tendresse." },
         { titre: "L'attachement peu montré", accent: "attachement", texte: "Tu offres de la stimulation, mais tu montres moins ta présence affective." },
       ],
@@ -559,8 +559,8 @@ Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends qu'avoir
         { titre: "Un résolveur de problèmes", accent: "résolveur", texte: "Tu es à ton meilleur sur les problèmes qui exigent à la fois créativité et rigueur critique." },
       ],
       ombres: [
-        { titre: "La critique qui aliène", accent: "critique", texte: "Ta tendance à débattre et à pointer les failles peut t'aliéner des collègues." },
-        { titre: "L'analyse sans fin", accent: "analyse", texte: "Tu peux peser et examiner indéfiniment sans jamais conclure ni produire." },
+        { titre: "La critique qui éloigne", accent: "éloigne", texte: "Ta tendance à débattre et à pointer les failles peut te couper de tes collègues." },
+        { titre: "La paralysie de l'analyse", accent: "analyse", texte: "À tout soupeser sans relâche, tu peux ne jamais trancher ni rien produire." },
         { titre: "Du mal à exécuter", accent: "exécuter", texte: "L'exécution patiente et le suivi te pèsent, et tes projets peuvent s'enliser là." },
         { titre: "Le débat improductif", accent: "débat", texte: "Tu peux transformer un échange de travail en joute là où il fallait avancer." },
         { titre: "La routine étouffante", accent: "routine", texte: "Les environnements rigides, dogmatiques ou anti-intellectuels t'asphyxient." },
@@ -584,7 +584,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends qu'avoir
             "De la liberté de penser et de questionner.",
             "Le débat d'idées et la confrontation stimulante.",
             "De l'autonomie et de vrais défis intellectuels.",
-            "Une équipe qui assure le suivi que tu fuis.",
+            "Des coéquipiers qui prennent en charge le suivi qui t'ennuie.",
           ],
         },
       ],
@@ -630,18 +630,18 @@ Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends qu'avoir
 
     // ===== V2 / DEVELOPPEMENT =====
     "ENTP-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Jeune, tu es tout entier dans ton esprit critique et ta joute : débattre, challenger, démonter, briller intellectuellement. C'est vif et brillant, mais souvent déséquilibré : tu peux débattre pour débattre, blesser sans le vouloir, et rester dans l'analyse sans jamais conclure ni agir.
+      evolution: `Ta personnalité n'a rien d'immuable : elle se travaille au fil du temps, et ton type emprunte un chemin de maturation particulièrement net. Jeune, tu es tout entier dans ton esprit critique et ta joute : débattre, challenger, démonter, briller intellectuellement. C'est vif et brillant, mais souvent déséquilibré : tu peux débattre pour débattre, blesser sans le vouloir, et rester dans l'analyse sans jamais conclure ni agir.
 
-Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends que gagner un débat ne vaut rien si tu perds les gens, et qu'analyser ne remplace pas décider et agir. Tu apprends à doser ta critique, à écouter, à conclure, à intégrer l'humain, sans rien perdre de ta vivacité. Dans ta pleine maturité, tu deviens redoutablement accompli : un esprit critique brillant qui sait aussi écouter, conclure et tenir compte des gens, dont l'intelligence éclaire sans blesser. Et c'est entièrement à ta portée.`,
+Avec le temps, une prise de conscience précieuse se fait jour en toi : tu comprends que gagner un débat ne vaut rien si tu perds les gens, et qu'analyser ne remplace pas décider et agir. Tu apprends à doser ta critique, à écouter, à conclure, à intégrer l'humain, sans rien perdre de ta vivacité. Dans ta pleine maturité, tu deviens remarquablement équilibré : un esprit critique brillant qui sait aussi écouter, conclure et tenir compte des gens, dont l'intelligence éclaire sans blesser. Et tout cela est pleinement à ta portée.`,
       etapes: [
         "Tu questionnes déjà tout et tu ne prends rien pour acquis. Ton esprit vif repère ce qui cloche et tu adores comprendre comment les choses fonctionnent vraiment.",
-        "Ton esprit critique s'affûte : tu débats, tu challenges, tu démontes, tu brilles. C'est vif, mais souvent déséquilibré : tu peux blesser sans le vouloir, contredire par réflexe et rester dans l'analyse sans conclure.",
+        "Ton esprit critique s'affûte : tu débats, tu challenges, tu démontes, tu brilles. C'est tranchant, mais encore mal réglé : tu peux blesser sans le vouloir, contredire par réflexe et rester dans l'analyse sans conclure.",
         "Tu comprends que gagner un débat ne vaut rien si tu perds les gens. Tu apprends à doser ta critique, à écouter, à conclure et à agir, sans rien perdre de ton acuité.",
         "Dans ta pleine maturité, ton esprit critique éclaire sans blesser. Tu sais quand et comment l'employer, écouter et trancher : la version la plus accomplie et la plus sage de toi.",
       ],
       leviersForts: [
         { titre: "Écoute autant que tu débats", texte: "Souvent les gens veulent être entendus, pas contredits. Savoir quand débattre et quand simplement écouter transforme la qualité de tes relations." },
-        { titre: "Challenge les idées, pas les personnes", texte: "Mets ton acuité au service des idées sans la retourner contre ceux qui les portent : c'est ce qui fait grandir au lieu de blesser." },
+        { titre: "Challenge les idées, pas les personnes", texte: "Vise le raisonnement, jamais celui qui le défend : c'est cette nuance qui fait grandir au lieu de blesser." },
         { titre: "Apprends à conclure et à agir", texte: "Impose-toi de trancher et de passer à l'exécution : c'est l'action, pas la critique, qui transforme ta pensée brillante en impact réel." },
         { titre: "Mets ta critique au service du constructif", texte: "Ne te contente pas de démonter : propose, améliore, bâtis. Un esprit critique qui construit vaut infiniment plus qu'un esprit qui ne fait que détruire." },
       ],
@@ -672,7 +672,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends que gagn
         { titre: "Une âme fédératrice", accent: "fédératrice", texte: "Tu connectes les gens, tu mets de l'ambiance et tu rends tout plus vivant." },
         { titre: "Une énergie partagée", accent: "énergie", texte: "Tu apportes de la fantaisie et tu insuffles de la joie partout où tu passes." },
         { titre: "Une complicité stimulante", accent: "complicité", texte: "Tu aimes ceux avec qui tu peux à la fois t'amuser, débattre et te lancer dans des projets." },
-        { titre: "Une loyauté à ta façon", accent: "loyauté", texte: "Sincère, elle passe par l'énergie partagée et le plaisir d'une présence qui rencontre la tienne." },
+        { titre: "Un attachement à ta manière", accent: "attachement", texte: "Sincère, il se vit dans l'énergie partagée et le plaisir d'une présence qui rencontre la tienne." },
       ],
       ombres: [
         { titre: "La dépendance à l'admiration", accent: "admiration", texte: "Ton besoin de plaire peut te rendre dépendant du regard et de la réaction de l'autre." },
@@ -750,15 +750,15 @@ Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends que gagn
         { titre: "Un charisme qui rallie", accent: "charisme", texte: "Tu captes l'attention, tu donnes envie et tu mobilises les énergies autour de tes idées." },
         { titre: "Des idées en mouvement", accent: "mouvement", texte: "Tu transformes un concept en cause et une vision en élan collectif." },
         { titre: "Une lecture fine du public", accent: "lecture", texte: "Tu sens ce qui va toucher et tu trouves le bon angle pour convaincre chaque auditoire." },
-        { titre: "Une vraie substance", accent: "substance", texte: "Ton magnétisme s'appuie sur des idées réelles : ton influence est solide, pas creuse." },
-        { titre: "Une énergie communicative", accent: "énergie", texte: "Tu dynamises les groupes et les projets et tu donnes aux autres l'envie d'y croire." },
+        { titre: "Du fond sous l'éclat", accent: "fond", texte: "Ton magnétisme s'appuie sur des idées réelles : ton influence est solide, pas creuse." },
+        { titre: "Un entrain communicatif", accent: "entrain", texte: "Tu dynamises les groupes et les projets et tu donnes aux autres l'envie d'y croire." },
         { titre: "Un fédérateur né", accent: "fédérateur", texte: "Tu es un excellent ambassadeur et initiateur, celui qui lance et qui entraîne." },
       ],
       ombres: [
-        { titre: "L'effet avant le fond", accent: "effet", texte: "Ta dépendance à l'effet produit peut te faire privilégier le brillant sur la substance." },
-        { titre: "La dispersion", accent: "dispersion", texte: "Tu multiplies les projets et les sollicitations sans toujours concrétiser." },
+        { titre: "Le brillant avant le fond", accent: "brillant", texte: "Ta dépendance à l'effet produit peut te faire privilégier le paraître sur la substance." },
+        { titre: "Une énergie dispersée", accent: "dispersée", texte: "Tu multiplies les projets et les sollicitations sans toujours concrétiser." },
         { titre: "Le travail de l'ombre fui", accent: "ombre", texte: "L'exécution patiente et solitaire te pèse, et tes projets risquent de s'y enliser." },
-        { titre: "La motivation au regard", accent: "regard", texte: "Quand l'admiration manque, ta motivation et ton énergie peuvent retomber." },
+        { titre: "La motivation suspendue au public", accent: "public", texte: "Quand l'admiration manque, ta motivation et ton énergie peuvent retomber." },
         { titre: "L'isolement qui éteint", accent: "isolement", texte: "Les environnements purement techniques et sans dimension humaine t'éteignent." },
         { titre: "Un rapport à l'image", accent: "image", texte: "Attiré par ce qui brille, tu peux dépenser pour l'effet et négliger la gestion régulière." },
       ],
@@ -780,7 +780,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends que gagn
             "Des scènes où convaincre, fédérer et porter une vision.",
             "De la liberté, de la variété et de l'autonomie.",
             "Pouvoir vendre des idées et entraîner les autres.",
-            "Une équipe qui assure le suivi que tu fuis.",
+            "Des partenaires qui tiennent l'exécution dont tu te lasses.",
           ],
         },
       ],
@@ -826,12 +826,12 @@ Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends que gagn
 
     // ===== V3 / DEVELOPPEMENT =====
     "ENTP-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Jeune, tu es tout entier dans ton charme et ton énergie : séduire, rallier, briller, entraîner. C'est rayonnant, mais souvent déséquilibré : tu peux dépendre de l'admiration, privilégier l'effet sur le fond, te disperser et rester en surface des relations comme des choses.
+      evolution: `Ta personnalité n'a rien de figé : elle évolue avec le temps, et ton type décrit une trajectoire de croissance particulièrement frappante. Jeune, tu es tout entier dans ton charme et ton énergie : séduire, rallier, briller, entraîner. C'est rayonnant, mais souvent déséquilibré : tu peux dépendre de l'admiration, privilégier l'effet sur le fond, te disperser et rester en surface des relations comme des choses.
 
-Avec le temps, quelque chose de précieux s'ouvre en toi : tu comprends que séduire ne suffit pas, qu'un charme sans substance lasse, et que ce qui dure se construit dans la profondeur et l'authenticité. Tu apprends à mettre ton charisme au service de ce qui compte, à concrétiser, à puiser ta valeur en toi plutôt que dans le regard des autres. Dans ta pleine maturité, tu deviens redoutablement accompli : un charmeur dont le magnétisme sert de vraies idées, qui sait à la fois rallier les foules et nouer des liens profonds. Et c'est entièrement à ta portée.`,
+Avec le temps, quelque chose de précieux s'éveille en toi : tu comprends que séduire ne suffit pas, qu'un charme sans substance lasse, et que ce qui dure se construit dans la profondeur et l'authenticité. Tu apprends à mettre ton charisme au service de ce qui compte, à concrétiser, à puiser ta valeur en toi plutôt que dans le regard des autres. Dans ta pleine maturité, tu deviens magistralement abouti : un charmeur dont le magnétisme sert de vraies idées, qui sait à la fois rallier les foules et nouer des liens profonds. Et tout cela est entièrement à ta portée.`,
       etapes: [
         "Tu attires déjà naturellement les gens et tu adores être entouré. Ton énergie est contagieuse et tu sais, sans effort, mettre de l'ambiance et faire briller un groupe.",
-        "Ton magnétisme se révèle : tu séduis, tu rallies, tu brilles. C'est rayonnant, mais souvent déséquilibré : tu peux dépendre de l'admiration, privilégier l'effet sur le fond et te disperser.",
+        "Ton magnétisme se révèle : tu séduis, tu rallies, tu brilles. C'est éblouissant, mais encore instable : tu peux dépendre de l'admiration, privilégier l'effet sur le fond et te disperser.",
         "Tu comprends que séduire ne suffit pas. Tu apprends à mettre ton charme au service du fond, à concrétiser, à aller vers de vraies connexions et à puiser ta valeur en toi.",
         "Dans ta pleine maturité, ton magnétisme sert de vraies idées et de vrais liens. Tu brilles avec authenticité et profondeur : la version la plus puissante et la plus complète de toi.",
       ],

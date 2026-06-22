@@ -35,28 +35,28 @@ Mais cette puissance a un revers, et c'est tout l'enjeu de ton chemin. À force 
   intros: {
     "ENTJ-V1": `En tant que Commandant (ENTJ), tu possèdes ce mélange rare d'intelligence stratégique et de force d'exécution qui fait les grands meneurs : tu vois où il faut aller, et tu sais comment y conduire les autres. Tu n'es pas du genre à théoriser sans fin, tu veux du concret, des résultats, du tangible. Ce qui te définit, c'est ton orientation vers l'action efficace : tu transformes une vision en plan, un plan en résultats, et tu le fais à grande échelle. Tu organises naturellement tout ce qui t'entoure et tu mènes les équipes vers l'objectif avec une assurance qui inspire confiance.
 
-Ce qui te fait vibrer, c'est la performance et le défi : te fixer des objectifs ambitieux et les atteindre, voir une organisation tourner à plein régime grâce à toi, relever des challenges que d'autres jugent impossibles. Parmi les trois façons d'être de ton type, tu es le Capitaine d'Industrie, le plus tourné vers le commandement et le résultat concret. Ta capacité à décider sous pression est l'une de tes plus grandes forces, et ton charisme naturel donne aux autres l'envie de te suivre. Ton plus beau terrain de croissance sera d'ajouter l'humain à ta puissance d'action.`,
+Ce qui te fait vibrer, c'est la performance et le défi : te fixer des objectifs ambitieux et les atteindre, voir une organisation tourner à plein régime grâce à toi, relever des challenges que d'autres jugent impossibles. Parmi les trois visages que peut prendre ton type, tu incarnes le Capitaine d'Industrie, le plus tourné vers le commandement et le résultat concret. Ta capacité à décider sous pression est l'une de tes plus grandes forces, et ton charisme naturel donne aux autres l'envie de te suivre. Ton plus beau terrain de croissance sera d'ajouter l'humain à ta puissance d'action.`,
 
     "ENTJ-V2": `En tant que Commandant (ENTJ), tu ne te contentes pas de diriger ce qui existe : tu pilotes vers un futur que toi seul perçois clairement. Tu vois venir les bascules, les tendances, les opportunités, souvent des années avant les autres, et tu as la force de mener vers cet horizon. Tu possèdes une vision à long terme exceptionnelle et la capacité à la concrétiser : contrairement aux simples rêveurs, tu ne te contentes pas de voir, tu as la force d'exécution pour transformer la vision en réalité. C'est cette double capacité qui te distingue des gestionnaires comme des théoriciens.
 
-Ce qui te porte, c'est la transformation : tu n'as pas peur de remettre en cause ce qui marche si tu vois venir quelque chose de meilleur. Le statu quo t'ennuie, construire le futur te galvanise. Parmi les trois façons d'être de ton type, tu es le Stratège Visionnaire, le plus tourné vers la vision et le changement. Les gens te suivent parce que tu sembles toujours savoir ce qui vient. Ton plus beau terrain de croissance sera d'ancrer ta vision dans le présent et dans l'humain, pour que ta clairvoyance devienne une transformation partagée.`,
+Ce qui te porte, c'est la transformation : tu n'as pas peur de remettre en cause ce qui marche si tu vois venir quelque chose de meilleur. Le statu quo t'ennuie, construire le futur te galvanise. Des trois manières d'incarner ton type, tu es le Stratège Visionnaire, le plus tourné vers la vision et le changement. Les gens te suivent parce que tu sembles toujours savoir ce qui vient. Ton plus beau terrain de croissance sera d'ancrer ta vision dans le présent et dans l'humain, pour que ta clairvoyance devienne une transformation partagée.`,
 
     "ENTJ-V3": `En tant que Commandant (ENTJ), tu possèdes la puissance de commandement et l'intelligence stratégique des grands meneurs, mais chez toi, cette force est arrimée à des valeurs et à un vrai souci des gens. Tu ne diriges pas pour dominer ni pour le seul résultat : tu diriges pour élever, pour fédérer, pour servir une mission qui te dépasse. Ce qui te définit, c'est cette alliance entre la force et le cœur : tu sais prendre les commandes et décider, mais tu le fais en tenant compte des gens, en les faisant grandir, en leur donnant envie de te suivre.
 
-Ce qui te porte, c'est l'impact humain de ton leadership : faire grandir les gens et élever ceux qui t'entourent te tient à cœur autant que les résultats. Parmi les trois façons d'être de ton type, tu es le Leader Inspirant, le plus tourné vers l'humain et la mission. Ton charisme inspire plus qu'il n'impressionne : on te suit non par crainte de déplaire, mais parce que tu incarnes une vision, des valeurs, une intégrité. Ton plus beau terrain de croissance sera d'apprendre à t'élever en même temps que tu élèves les autres, sans jamais t'oublier.`,
+Ce qui te porte, c'est l'impact humain de ton leadership : faire grandir les gens et élever ceux qui t'entourent te tient à cœur autant que les résultats. Parmi les trois figures que recouvre ton type, tu es le Leader Inspirant, le plus tourné vers l'humain et la mission. Ton charisme inspire plus qu'il n'impressionne : on te suit non par crainte de déplaire, mais parce que tu incarnes une vision, des valeurs, une intégrité. Ton plus beau terrain de croissance sera d'apprendre à t'élever en même temps que tu élèves les autres, sans jamais t'oublier.`,
   },
 
   // --- TEXTE_VARIANTE[`CODE-Vx`] : ~2 paragraphes sous les barres de variante.
   texteVariante: {
-    "ENTJ-V1": `Parmi les trois grandes façons d'être de ton type, tu es le plus tourné vers l'action, le commandement et le résultat concret. Tu n'es pas avant tout le visionnaire qui pilote vers un futur lointain, ni le leader qui se concentre sur l'élévation des gens : tu es celui qui prend les commandes, qui organise, qui fait tourner les choses et qui livre.
+    "ENTJ-V1": `Des trois grands visages de ton type, tu es le plus tourné vers l'action, le commandement et le résultat concret. Tu n'es pas avant tout le visionnaire qui pilote vers un futur lointain, ni le leader qui se concentre sur l'élévation des gens : tu es celui qui prend les commandes, qui organise, qui fait tourner les choses et qui livre.
 
 Ce qui te caractérise, c'est ce goût du commandement et de la performance tangible. Tu aimes diriger, décider, faire avancer un groupe vers des résultats mesurables, et l'atteinte d'objectifs ambitieux te motive au quotidien. Cette combinaison, l'intelligence stratégique et la force d'exécution, fait de toi un bâtisseur d'organisations, un meneur qui transforme les ambitions en réalisations concrètes.`,
 
-    "ENTJ-V2": `Parmi les trois grandes façons d'être de ton type, tu es le plus tourné vers la vision à long terme et la transformation. Tu n'es pas avant tout le capitaine centré sur le résultat immédiat et l'organisation du présent, ni le leader concentré sur l'élévation des gens : tu es celui qui voit loin, qui anticipe, qui pilote le changement.
+    "ENTJ-V2": `Parmi les trois grandes manières d'incarner ton type, tu es le plus tourné vers la vision à long terme et la transformation. Tu n'es pas avant tout le capitaine centré sur le résultat immédiat et l'organisation du présent, ni le leader concentré sur l'élévation des gens : tu es celui qui voit loin, qui anticipe, qui pilote le changement.
 
 Ce qui te caractérise, c'est cette capacité à percevoir le futur et à y mener les autres. Tu anticipes les grands changements avant qu'ils ne soient visibles, et piloter une transformation profonde t'intéresse bien plus que la gestion courante. Cette combinaison, la clairvoyance du visionnaire et la force d'exécution du meneur, fait de toi quelqu'un capable de réinventer, de transformer, de construire l'avenir plutôt que de subir le présent.`,
 
-    "ENTJ-V3": `Parmi les trois grandes façons d'être de ton type, tu es le plus tourné vers l'humain et la mission. Tu n'es pas avant tout le capitaine centré sur le résultat et l'organisation, ni le stratège focalisé sur la vision du futur : tu es celui dont le leadership sert les gens et une cause, celui qui élève et qui fédère.
+    "ENTJ-V3": `Des trois grandes figures que peut prendre ton type, tu es le plus tourné vers l'humain et la mission. Tu n'es pas avant tout le capitaine centré sur le résultat et l'organisation, ni le stratège focalisé sur la vision du futur : tu es celui dont le leadership sert les gens et une cause, celui qui élève et qui fédère.
 
 Ce qui te caractérise, c'est ce souci de faire grandir les autres et d'avoir un impact humain. Tu veux que ton leadership ait du sens, qu'il laisse les gens meilleurs, qu'il serve quelque chose de plus grand que la seule performance. Cette combinaison, la puissance du meneur et la chaleur de celui qui se soucie vraiment, fait de toi un leader que l'on suit par conviction, le genre de meneur dont on se souvient.`,
   },
@@ -88,7 +88,7 @@ Ce qui te caractérise, c'est ce souci de faire grandir les autres et d'avoir un
         ombre:
           "Mais poussées à l'extrême, ces mêmes forces te coupent des autres : tu peux devenir si concentré sur l'objectif que tu oublies les humains qui le réalisent avec toi.",
         bascule:
-          "Le jour où tu comprends que diriger, ce n'est pas seulement obtenir des résultats mais aussi élever et embarquer les gens, tu passes du dirigeant qu'on respecte au leader qu'on suit par loyauté.",
+          "Le jour où tu comprends que diriger, ce n'est pas seulement obtenir des résultats mais aussi élever et embarquer les gens, tu cesses d'être le chef qu'on craint pour devenir le meneur auquel on s'attache.",
       },
     },
     "ENTJ-V2": {
@@ -97,7 +97,7 @@ Ce qui te caractérise, c'est ce souci de faire grandir les autres et d'avoir un
         { titre: "La vision alliée à l'exécution", accent: "exécution", texte: "Beaucoup voient loin, très peu savent y mener : toi tu as les deux, ce qui fait de toi un transformateur réel." },
         { titre: "Le courage de transformer", accent: "transformer", texte: "Là où d'autres s'accrochent au connu, tu oses remettre en cause et réinventer ce qui marche pour ce qui marchera mieux." },
         { titre: "Un charisme qui rallie", accent: "charisme", texte: "Tu sais rendre ta vision désirable et donner aux autres l'envie de te suivre vers l'avenir que tu perçois." },
-        { titre: "Une détermination inébranlable", accent: "détermination", texte: "Une fois ta vision arrêtée, tu tiens le cap : les sceptiques et les difficultés ne te détournent pas." },
+        { titre: "Une ténacité à toute épreuve", accent: "détermination", texte: "Une fois ta vision arrêtée, tu tiens le cap : les sceptiques et les difficultés ne te détournent pas." },
         { titre: "Une clairvoyance qui rassure", accent: "clairvoyance", texte: "Ta capacité à anticiper te donne la conviction de persévérer là où d'autres abandonneraient." },
       ],
       ombres: [
@@ -105,7 +105,7 @@ Ce qui te caractérise, c'est ce souci de faire grandir les autres et d'avoir un
         { titre: "Une course trop rapide", accent: "course", texte: "Tu vois si loin et tu vas si vite que les autres peinent à te suivre, et tu avances sans les embarquer." },
         { titre: "Le présent négligé", accent: "présent", texte: "À vivre dans l'avenir, tu peux survoler le présent et négliger les besoins immédiats des gens." },
         { titre: "L'humain comme moyen", accent: "humain", texte: "Absorbé par la transformation, tu peux traiter les personnes comme des moyens au service de ta vision." },
-        { titre: "Des émotions étouffées", accent: "émotions", texte: "Comme beaucoup de profils stratèges, tu refoules ta vie intérieure jusqu'à ce qu'elle déborde." },
+        { titre: "Une vie intérieure mise sous silence", accent: "émotions", texte: "Comme beaucoup de profils stratèges, tu refoules tes ressentis jusqu'à ce qu'ils débordent." },
         { titre: "L'impatience avec la lenteur", accent: "impatience", texte: "La lenteur des autres à comprendre ta vision peut te crisper et te faire avancer seul." },
       ],
       paradoxe: {
@@ -182,13 +182,13 @@ Ton défi professionnel principal est ton propre équilibre. Ta compétence et t
   // --- MINDSET_TEXTE[`CODE-Vx`] : { apercu }, accroche de « Ton chemin de croissance ».
   mindsetTexte: {
     "ENTJ-V1": {
-      apercu: `Ton plus grand chantier n'est pas une compétence de plus, tu en as à revendre, c'est d'ajouter l'humain à ta puissance d'action. Tu portes une force de commandement rare, mais aussi une tendance à brusquer, à dominer, à refouler tes émotions et celles des autres. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas une compétence de plus, tu en as à revendre, c'est d'ajouter l'humain à ta puissance d'action. Tu portes une force de commandement rare, mais aussi une tendance à brusquer, à dominer, à refouler tes émotions et celles des autres. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, dès lors que tu sais sur quel bouton presser.`,
     },
     "ENTJ-V2": {
-      apercu: `Ton plus grand chantier n'est pas de voir plus loin, tu vois déjà l'horizon, c'est d'apprendre à y mener les autres avec toi. Tu portes une clairvoyance rare, mais aussi une tendance à t'entêter, à courir seul, à négliger le présent et l'humain. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de voir plus loin, tu vois déjà l'horizon, c'est d'apprendre à y mener les autres avec toi. Tu portes une clairvoyance rare, mais aussi une tendance à t'entêter, à courir seul, à négliger le présent et l'humain. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, pour peu que tu identifies le bon levier à actionner.`,
     },
     "ENTJ-V3": {
-      apercu: `Ton plus grand chantier n'est pas de prendre soin des autres, ton cœur le fait déjà, c'est d'apprendre à prendre soin de toi en même temps. Tu portes un don rare pour élever les gens, mais aussi une tendance à t'oublier, à tout porter seul, à dépendre de leur reconnaissance. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de prendre soin des autres, ton cœur le fait déjà, c'est d'apprendre à prendre soin de toi en même temps. Tu portes un don rare pour élever les gens, mais aussi une tendance à t'oublier, à tout porter seul, à dépendre de leur reconnaissance. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, une fois que tu sais quel ressort travailler.`,
     },
   },
 
@@ -283,7 +283,7 @@ Ton défi professionnel principal est ton propre équilibre. Ta compétence et t
         { titre: "Une maîtrise du temps", accent: "temps", texte: "Tu planifies, tu structures et tu respectes les échéances là où d'autres se dispersent." },
       ],
       ombres: [
-        { titre: "Une impatience avec la lenteur", accent: "impatience", texte: "L'hésitation et l'incompétence te hérissent, et tu peux brusquer ceux qui ne suivent pas." },
+        { titre: "Un seuil de tolérance vite atteint", accent: "impatience", texte: "L'hésitation et l'incompétence te hérissent, et tu peux brusquer ceux qui ne suivent pas." },
         { titre: "La gestion humaine fragile", accent: "humaine", texte: "Ton vrai point faible n'est pas la compétence mais l'écoute et le management des gens." },
         { titre: "Le micro-management détesté", accent: "micro-management", texte: "Tu supportes mal qu'on te contrôle, et le manque d'autonomie t'éteint." },
         { titre: "Une décision trop solitaire", accent: "solitaire", texte: "Tu peux trancher trop vite et trop seul, sans assez consulter ni embarquer." },
@@ -352,14 +352,14 @@ Ton défi professionnel principal est ton propre équilibre. Ta compétence et t
       },
     },
     "ENTJ-V1-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ta force d'action : diriger, décider, performer, gagner. C'est puissant, mais souvent déséquilibré : tu peux être autoritaire, impatient, dur avec ceux qui ne suivent pas, et coupé de tes émotions comme de celles des autres.
+      evolution: `Ta personnalité n'a rien de figé : elle évolue, et ton type connaît une trajectoire de croissance particulièrement nette. Plus jeune, tu es tout entier dans ta force d'action : diriger, décider, performer, gagner. C'est puissant, mais souvent bancal : tu peux être autoritaire, impatient, dur avec ceux qui ne suivent pas, et coupé de tes émotions comme de celles des autres.
 
-Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que la réussite sans les gens est creuse, que diriger c'est aussi élever, et que tes émotions ne sont pas des inefficacités mais une part essentielle d'une vie pleine. Tu deviens plus à l'écoute, plus chaleureux, plus capable d'embarquer plutôt que d'imposer, sans rien perdre de ta force. Dans ta pleine maturité, tu es un dirigeant puissant qui sait aussi écouter, élever et se relier, dont les résultats vont de pair avec la loyauté de ceux qu'il mène : la version la plus accomplie de toi. Et c'est entièrement à ta portée.`,
+Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que la réussite sans les gens est creuse, que diriger c'est aussi élever, et que tes émotions ne sont pas des inefficacités mais une part essentielle d'une vie pleine. Tu deviens plus à l'écoute, plus chaleureux, plus capable d'embarquer plutôt que d'imposer, sans rien perdre de ta force. Arrivé à pleine maturité, tu es un dirigeant puissant qui sait aussi écouter, élever et se relier, dont les résultats vont de pair avec la loyauté de ceux qu'il mène : c'est là que tu donnes le meilleur de toi. Et cela est entièrement à ta portée.`,
       etapes: [
         "Tu prends déjà les choses en main : tu organises les jeux, tu donnes le cap, tu n'aimes pas qu'on décide à ta place. Énergique et sûr de toi, tu mènes naturellement le groupe.",
-        "Ta force d'action est à son comble : tu diriges, tu décides, tu veux performer et gagner. C'est puissant, mais souvent déséquilibré : tu peux être autoritaire, impatient et dur avec ceux qui ne suivent pas ton rythme. Une période intense, où ton commandement cherche encore sa juste mesure.",
+        "Ta force d'action atteint son sommet : tu diriges, tu décides, tu veux performer et gagner. C'est puissant, mais souvent bancal : tu peux être autoritaire, impatient et dur avec ceux qui ne suivent pas ton rythme. Une période intense, où ton commandement cherche encore sa juste mesure.",
         "Tu comprends que la réussite sans les gens est creuse et que diriger, c'est aussi élever. Tu apprends à écouter, à embarquer plutôt qu'à imposer, et à faire une place à tes émotions, sans rien perdre de ta force.",
-        "Dans ta pleine maturité, tu es un dirigeant puissant qui sait aussi écouter, élever et se relier. Tes résultats vont de pair avec la loyauté de ceux que tu mènes : la version la plus accomplie de toi.",
+        "Une fois ta pleine maturité atteinte, tu es un dirigeant puissant qui sait aussi écouter, élever et se relier. Tes résultats vont de pair avec la loyauté de ceux que tu mènes : c'est toi à ton plus haut.",
       ],
       leviersForts: [
         { titre: "Développe ton intelligence émotionnelle", texte: "C'est ton plus grand levier. Apprendre à reconnaître tes émotions et à percevoir celles des autres ne diminue pas ta force, ça la complète : un meneur qui maîtrise aussi l'humain est presque imbattable." },
@@ -382,7 +382,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que la r�
         ombre:
           "Mais à rester sourd à l'humain et à tes émotions, tu risques d'isoler, de durcir, et de gagner seul ce qui aurait pu se gagner ensemble.",
         bascule:
-          "Le jour où tu comprends que l'écoute et la chaleur ne diminuent pas ta force mais la décuplent, tu passes du dirigeant qu'on respecte au leader qu'on suit.",
+          "Le jour où tu comprends que l'écoute et la chaleur ne diminuent pas ta force mais la décuplent, ceux qui te respectaient se mettent à te suivre vraiment.",
       },
       motRoute: `Tu es un Capitaine d'Industrie, un de ces meneurs nés capables de transformer les ambitions en réalisations concrètes. Ta force de commandement est un don, ta capacité de décision une rareté, ton sens de l'organisation une puissance. Ne laisse jamais personne te convaincre que ton ambition ou ta force sont des défauts : ce sont tes atouts, et le monde a besoin de gens comme toi. Il te reste une seule grande conquête : faire rencontrer ta force d'action et ta dimension humaine. Le navire est prêt, à toi de mener l'équipage, pas seulement de barrer.`,
     },
@@ -472,13 +472,13 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que la r�
         { titre: "Une conduite du changement", accent: "changement", texte: "Tu oses transformer et réinventer ce qui marche pour ce qui marchera mieux." },
         { titre: "La vision alliée à l'action", accent: "action", texte: "Tu transformes une vision lointaine en étapes concrètes et tu organises l'action pour y aller." },
         { titre: "Une anticipation rare", accent: "anticipation", texte: "Tu vois les tendances et les bascules venir, et tu prends les bonnes positions au bon moment." },
-        { titre: "Une vision financière stratégique", accent: "financière", texte: "Tu penses investissement, croissance et long terme, et tu vois l'argent comme un levier." },
+        { titre: "Une vision financière stratégique", accent: "financière", texte: "Tu raisonnes en investissement, en croissance et en horizon long, et tu manies l'argent comme un levier de transformation." },
         { titre: "Une détermination longue", accent: "détermination", texte: "Tu tiens le cap sur des transformations longues et ambitieuses, malgré les sceptiques." },
       ],
       ombres: [
         { titre: "L'entêtement sur la vision", accent: "entêtement", texte: "Une fois que tu as vu, tu peux filtrer les signaux qui contredisent ta lecture du futur." },
         { titre: "La difficulté à embarquer", accent: "embarquer", texte: "Tu peux avancer sans rallier vraiment, et une vision que personne ne suit reste solitaire." },
-        { titre: "L'impatience avec la lenteur", accent: "impatience", texte: "Tu t'impatientes de la lenteur des autres à comprendre, et tu négliges d'expliquer." },
+        { titre: "Une impatience face au rythme des autres", accent: "impatience", texte: "Tu t'agaces de leur lenteur à comprendre, et tu négliges d'expliquer." },
         { titre: "Le présent survolé", accent: "présent", texte: "À vivre dans demain, tu peux négliger la gestion solide d'aujourd'hui." },
         { titre: "Une décision trop ferme", accent: "ferme", texte: "Tu peux décider trop vite et t'y tenir trop rigidement, même quand les faits divergent." },
         { titre: "L'humain comme moyen", accent: "humain", texte: "Tu peux traiter les gens comme des moyens au service de ta transformation." },
@@ -545,20 +545,20 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que la r�
       },
     },
     "ENTJ-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ta vision et ta force de transformation : voir loin, changer, mener vers l'avenir. C'est puissant, mais souvent déséquilibré : tu peux être entêté, impatient, courir si vite que personne ne te suit, et coupé du présent comme de tes émotions.
+      evolution: `Ta personnalité ne reste pas figée : elle se développe, et ton type connaît une trajectoire de croissance particulièrement nette. Plus jeune, tu es tout entier dans ta vision et ta force de transformation : voir loin, changer, mener vers l'avenir. C'est puissant, mais souvent bancal : tu peux être entêté, impatient, courir si vite que personne ne te suit, et coupé du présent comme de tes émotions.
 
-Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends qu'une vision que personne ne suit ne sert à rien, que la transformation se mène avec les gens et pas contre eux, et que le présent et l'humain ont une valeur que ton orientation vers l'avenir tend à oublier. Tu deviens plus à l'écoute, plus pédagogue, plus ouvert, plus présent, sans rien perdre de ta clairvoyance. Dans ta pleine maturité, tu es un visionnaire qui sait aussi embarquer, écouter et habiter le présent, dont les transformations réussissent parce qu'il y mène les autres avec lui : la version la plus accomplie de toi. Et c'est entièrement à ta portée.`,
+Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends qu'une vision que personne ne suit ne sert à rien, que la transformation se mène avec les gens et pas contre eux, et que le présent et l'humain ont une valeur que ton orientation vers l'avenir tend à oublier. Tu deviens plus à l'écoute, plus pédagogue, plus ouvert, plus présent, sans rien perdre de ta clairvoyance. À pleine maturité, tu es un visionnaire qui sait aussi embarquer, écouter et habiter le présent, dont les transformations réussissent parce qu'il y mène les autres avec lui : c'est là que tu donnes le meilleur de toi. Et cela est entièrement à ta portée.`,
       etapes: [
         "Tu te projettes déjà plus loin que les autres : tu imagines, tu anticipes, tu rêves de grands changements. Curieux du futur, tu n'aimes pas que les choses restent comme elles sont.",
-        "Ta vision et ta force de transformation sont à leur comble : tu vois loin, tu veux changer, tu mènes vers l'avenir. C'est puissant, mais souvent déséquilibré : tu peux être entêté, impatient, et courir si vite que personne ne te suit. Une période intense, où ta clairvoyance cherche encore à embarquer les autres.",
+        "Ta vision et ta force de transformation atteignent leur sommet : tu vois loin, tu veux changer, tu mènes vers l'avenir. C'est puissant, mais souvent bancal : tu peux être entêté, impatient, et courir si vite que personne ne te suit. Une période intense, où ta clairvoyance cherche encore à embarquer les autres.",
         "Tu comprends qu'une vision que personne ne suit ne sert à rien et que la transformation se mène avec les gens. Tu apprends à expliquer, à rallier, à rester ouvert et à habiter le présent, sans rien perdre de ta clairvoyance.",
-        "Dans ta pleine maturité, tu es un visionnaire qui sait aussi embarquer, écouter et habiter le présent. Tes transformations réussissent parce que tu y mènes les autres avec toi : la version la plus accomplie de toi.",
+        "Une fois ta pleine maturité atteinte, tu es un visionnaire qui sait aussi embarquer, écouter et habiter le présent. Tes transformations réussissent parce que tu y mènes les autres avec toi : c'est toi à ton plus haut.",
       ],
       leviersForts: [
         { titre: "Apprends à embarquer plutôt qu'à devancer", texte: "C'est ton plus grand levier. Une vision ne vaut que si les autres la suivent : prends le temps d'expliquer, de convaincre, de rallier patiemment. Faire avancer les gens avec toi transforme ta clairvoyance en impact réel." },
         { titre: "Reste ouvert même après avoir décidé", texte: "Ta vision est puissante mais faillible. Cultive l'humilité d'écouter ce qui la contredit et d'ajuster ta lecture face aux faits : un stratège qui sait corriger sa trajectoire va bien plus loin que celui qui s'entête." },
         { titre: "Ancre-toi dans le présent", texte: "Apprends à habiter l'instant, à savourer ce que tu construis chemin faisant, à être pleinement présent pour les gens ici et maintenant. Le futur que tu prépares n'a de sens que si tu vis aussi le voyage qui y mène." },
-        { titre: "Développe ton intelligence émotionnelle", texte: "Apprendre à reconnaître et exprimer tes émotions, et à percevoir celles des autres, ne diminue pas ta force stratégique : ça la complète d'une dimension humaine qui rend tes transformations plus justes." },
+        { titre: "Affine ta lecture des émotions", texte: "Apprendre à reconnaître et exprimer tes émotions, et à percevoir celles des autres, ne diminue pas ta force stratégique : ça la complète d'une dimension humaine qui rend tes transformations plus justes." },
       ],
       questions: [
         { situation: "Quand tu fonces vers ta vision", question: "Est-ce que les autres me suivent vraiment, ou est-ce que je cours seul devant ?" },
@@ -577,7 +577,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends qu'une vi
         bascule:
           "Le jour où tu apprends à mener les autres avec toi plutôt que devant eux, ta vision ne reste plus dans ta tête : elle change vraiment le monde.",
       },
-      motRoute: `Tu es un Stratège Visionnaire, un de ces meneurs rares qui voient l'avenir et qui ont la force d'y conduire les autres. Ta clairvoyance est un don, ta capacité à transformer une puissance, ton courage du changement une rareté. Ne laisse jamais personne te convaincre que ta soif de changement est de trop : c'est ta force et ta marque, et le monde a besoin de gens comme toi. Il te reste une seule grande conquête : faire de ta vision une transformation partagée. Tu vois l'horizon, apprends à y mener tout l'équipage.`,
+      motRoute: `Tu es un Stratège Visionnaire, un de ces meneurs rares qui voient l'avenir et qui ont la force d'y conduire les autres. Ta clairvoyance est un don, ta capacité à transformer une puissance, ton courage du changement une rareté. Ne laisse personne te faire croire que ta soif de changement est de trop : c'est ta force et ta signature, et le monde manque cruellement de gens comme toi. Il te reste un seul grand cap à franchir : faire de ta vision une transformation partagée. Tu vois l'horizon, apprends à y mener tout l'équipage.`,
     },
 
     // ======================= V3 LEADER INSPIRANT =======================
@@ -591,9 +591,9 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends qu'une vi
         { titre: "Le partage de valeurs", accent: "valeurs", texte: "Tu construis des liens fondés sur le sens, la profondeur et des convictions communes." },
       ],
       ombres: [
-        { titre: "L'oubli de soi", accent: "oubli", texte: "À force de porter l'autre, tu peux négliger tes propres besoins jusqu'à l'épuisement." },
+        { titre: "Le sacrifice de tes besoins", accent: "oubli", texte: "À force de porter l'autre, tu peux négliger ce dont tu as besoin jusqu'à l'épuisement." },
         { titre: "Une reconnaissance attendue", accent: "reconnaissance", texte: "Tu peux attendre une gratitude que tu n'oses pas demander, puis te sentir blessé." },
-        { titre: "L'ingérence bienveillante", accent: "ingérence", texte: "Ton désir de faire grandir l'autre peut glisser vers le besoin de tout diriger." },
+        { titre: "Un accompagnement trop directif", accent: "ingérence", texte: "Ton désir de faire grandir l'autre peut glisser vers le besoin de tout diriger." },
         { titre: "Une force qui se cache", accent: "force", texte: "À rester fort, tu peux t'empêcher de montrer ta vulnérabilité et de te laisser soutenir." },
         { titre: "Une sensibilité à la déloyauté", accent: "déloyauté", texte: "Le rejet et l'ingratitude te touchent profondément, plus que tu ne le montres." },
         { titre: "Le don à sens unique", accent: "don", texte: "Tu peux trop donner, jusqu'au ressentiment, quand ce n'est pas réciproque." },
@@ -738,14 +738,14 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends qu'une vi
       },
     },
     "ENTJ-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ton élan de leader généreux : mener, fédérer, faire grandir, porter la mission. C'est chaleureux et puissant, mais souvent déséquilibré : tu peux t'oublier complètement pour les autres, dépendre de leur approbation, t'immiscer dans leur vie en croyant bien faire, et t'épuiser à tout porter.
+      evolution: `Ta personnalité n'est pas gravée dans le marbre : elle s'épanouit, et ton type connaît une trajectoire de croissance particulièrement nette. Plus jeune, tu es tout entier dans ton élan de leader généreux : mener, fédérer, faire grandir, porter la mission. C'est chaleureux et puissant, mais souvent bancal : tu peux t'oublier complètement pour les autres, dépendre de leur approbation, t'immiscer dans leur vie en croyant bien faire, et t'épuiser à tout porter.
 
-Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne peux donner durablement que si tu te remplis aussi, que prendre soin des autres suppose de prendre soin de toi, et que faire grandir les gens c'est aussi respecter leurs choix. Tu apprends à poser des limites, à recevoir, à exprimer tes propres besoins, sans rien perdre de ta générosité. Dans ta pleine maturité, tu es un leader inspirant qui élève les autres sans s'oublier, qui sait donner et recevoir, dont le dévouement ne s'épuise pas parce qu'il se nourrit aussi lui-même : la version la plus accomplie de toi. Et c'est entièrement à ta portée.`,
+Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne peux donner durablement que si tu te remplis aussi, que prendre soin des autres suppose de prendre soin de toi, et que faire grandir les gens c'est aussi respecter leurs choix. Tu apprends à poser des limites, à recevoir, à exprimer tes propres besoins, sans rien perdre de ta générosité. Au sommet de ta maturité, tu es un leader inspirant qui élève les autres sans s'oublier, qui sait donner et recevoir, dont le dévouement ne s'épuise pas parce qu'il se nourrit aussi lui-même : c'est là que tu donnes le meilleur de toi. Et cela est entièrement à ta portée.`,
       etapes: [
         "Tu rassembles déjà les autres : tu fédères, tu prends soin de ton groupe, tu veux que tout le monde avance ensemble. Chaleureux et meneur, tu te soucies des autres autant que du résultat.",
-        "Ton élan de leader généreux est à son comble : mener, fédérer, faire grandir, porter la mission. C'est chaleureux et puissant, mais souvent déséquilibré : tu peux t'oublier pour les autres, dépendre de leur approbation et t'épuiser à tout porter. Une période intense, où ton dévouement cherche encore son équilibre.",
+        "Ton élan de leader généreux atteint son sommet : mener, fédérer, faire grandir, porter la mission. C'est chaleureux et puissant, mais souvent bancal : tu peux t'oublier pour les autres, dépendre de leur approbation et t'épuiser à tout porter. Une période intense, où ton dévouement cherche encore son équilibre.",
         "Tu comprends que tu ne peux donner durablement que si tu te remplis aussi, et que prendre soin des autres suppose de prendre soin de toi. Tu apprends à poser des limites, à recevoir et à exprimer tes besoins, sans rien perdre de ta générosité.",
-        "Dans ta pleine maturité, tu es un leader inspirant qui élève les autres sans s'oublier. Tu sais donner et recevoir, et ton dévouement ne s'épuise pas parce qu'il se nourrit aussi lui-même : la version la plus accomplie de toi.",
+        "Une fois ta pleine maturité atteinte, tu es un leader inspirant qui élève les autres sans s'oublier. Tu sais donner et recevoir, et ton dévouement ne s'épuise pas parce qu'il se nourrit aussi lui-même : c'est toi à ton plus haut.",
       ],
       leviersForts: [
         { titre: "Apprends à recevoir autant qu'à donner", texte: "C'est ton plus grand levier. Laisse les autres prendre soin de toi, accepte le soutien, exprime tes besoins. Un leadership sain repose sur la réciprocité : te remplir te permet de donner durablement." },
@@ -770,7 +770,7 @@ Avec le temps, quelque chose de précieux s'ouvre en toi. Tu comprends que tu ne
         bascule:
           "Le jour où ta générosité s'accompagne du soin de toi et où tu sais recevoir autant que donner, ton leadership cesse d'être un sacrifice pour devenir un épanouissement partagé.",
       },
-      motRoute: `Tu es un Leader Inspirant, un de ces meneurs rares dont la force est au service des gens et d'une mission. Ton charisme inspire la loyauté, ton don de faire grandir les autres est précieux, ton alliance de la puissance et du cœur est une rareté. Ne laisse jamais personne te convaincre que ta générosité affaiblit ton leadership : c'est précisément ce qui le rend inspirant, et le monde a besoin de gens comme toi. Il te reste une seule grande conquête : apprendre à t'élever en même temps que tu élèves les autres. Tu élèves les autres, apprends à monter avec eux.`,
+      motRoute: `Tu es un Leader Inspirant, un de ces meneurs rares dont la force est au service des gens et d'une mission. Ton charisme inspire la loyauté, ton don de faire grandir les autres est précieux, ton alliance de la puissance et du cœur est une rareté. Ne laisse personne te faire croire que ta générosité affaiblit ton leadership : c'est précisément ce qui le rend inspirant, et le monde manque cruellement de gens comme toi. Il te reste un seul grand cap à franchir : apprendre à t'élever en même temps que tu élèves les autres. Tu fais monter les autres, apprends à monter avec eux.`,
     },
   },
 };

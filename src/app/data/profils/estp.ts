@@ -39,7 +39,7 @@ Ce qui te porte, c'est le défi relevé et l'instant saisi. Tu tires une vraie s
 
     "ESTP-V2": `En tant qu'Entrepreneur (ESTP), variante Tacticien, tu possèdes l'énergie d'action et le sens de l'opportunité de ta famille d'âme, mais ce qui te définit avant tout, c'est l'intelligence pratique : lire vite, calculer, agir juste. Là où le Fonceur se définit par l'élan pur et où le Charmeur entraîne par son énergie sociale, toi tu allies l'action à une vraie finesse tactique. Tu ne fonces pas à l'aveugle : tu repères l'avantage que les autres ne voient pas, tu joues le bon coup et tu obtiens le résultat.
 
-Ce qui te porte, c'est le coup bien joué et le résultat obtenu. Tu tires une satisfaction profonde de lire une situation mieux que les autres, de négocier, d'obtenir ce que tu veux par ton agilité. Tu n'es pas seulement énergique : tu es malin, pragmatique, redoutablement efficace. Cette même finesse a son revers : à force de jouer le coup d'après, tu peux perdre de vue le long terme et l'humain. Ton plus beau terrain de croissance sera de mettre ta tactique au service d'une vision qui dure.`,
+Ce qui te porte, c'est le coup bien joué et le résultat obtenu. Tu tires une satisfaction profonde de lire une situation mieux que les autres, de négocier, d'obtenir ce que tu veux par ton agilité. Tu n'es pas seulement énergique : tu es malin, pragmatique, redoutablement efficace. Cette même finesse a son revers : à force de jouer le coup d'après, tu peux perdre de vue le long terme et l'humain. Ton plus beau terrain de croissance sera de mettre ton sens du coup au service d'une vision qui dure.`,
 
     "ESTP-V3": `En tant qu'Entrepreneur (ESTP), variante Charmeur, tu possèdes l'énergie d'action et le sens de l'opportunité de ta famille d'âme, mais ce qui te définit avant tout, c'est ton charisme et ton aisance avec les gens. Là où le Fonceur se définit par l'élan pur et où le Tacticien calcule et négocie, toi tu mets ton énergie au service du lien et de l'influence : tu séduis, tu entraînes, tu fédères. Tu lis les autres en un clin d'œil, tu sais quoi dire, comment créer le contact, comment rallier une salle.
 
@@ -48,15 +48,15 @@ Ce qui te porte, c'est le contact, l'effet que tu produis, l'énergie que tu cr�
 
   // ~2 paragraphes sous les barres de variante (« Ta variante »).
   texteVariante: {
-    "ESTP-V1": `Parmi les trois façons d'être de l'Entrepreneur, tu es le plus tourné vers l'action immédiate et le défi. Tu n'es pas avant tout le Tacticien qui calcule, ni le Charmeur qui entraîne par son énergie sociale : ce qui te met en mouvement, c'est l'élan, l'audace, le goût de foncer. Oser, relever un défi, vivre l'intensité du moment te comble plus que tout.
+    "ESTP-V1": `Des trois visages de l'Entrepreneur, tu es le plus tourné vers l'action immédiate et le défi. Tu n'es pas avant tout le Tacticien qui calcule, ni le Charmeur qui entraîne par son énergie sociale : ce qui te met en mouvement, c'est l'élan, l'audace, le goût de foncer. Oser, relever un défi, vivre l'intensité du moment te comble plus que tout.
 
 Cette combinaison, l'audace, l'énergie physique et la réactivité, dessine ta façon d'être : l'homme d'action qui saisit l'instant et fonce là où d'autres hésitent. Tu te sens vivant dans le mouvement, et ton sang-froid dans le feu de l'action fait de toi quelqu'un sur qui on peut compter quand ça chauffe. Le revers, c'est que cet élan peut te conduire à l'impulsivité et à négliger l'avenir : ton plus beau chemin de croissance sera d'apprendre à mesurer tes élans sans les tuer.`,
 
-    "ESTP-V2": `Parmi les trois façons d'être de l'Entrepreneur, tu es le plus tourné vers la maîtrise et l'efficacité concrète. Tu n'es pas avant tout le Fonceur porté par l'élan pur, ni le Charmeur qui entraîne par son énergie sociale : ce qui te caractérise, c'est ta façon de lire, de calculer et d'agir juste. Repérer l'avantage, négocier, agir au bon moment et obtenir le résultat te comble plus que tout.
+    "ESTP-V2": `Parmi les trois manières d'incarner l'Entrepreneur, tu es le plus tourné vers la maîtrise et l'efficacité concrète. Tu n'es pas avant tout le Fonceur porté par l'élan pur, ni le Charmeur qui entraîne par son énergie sociale : ce qui te caractérise, c'est ta façon de lire, de calculer et d'agir juste. Repérer l'avantage, négocier, agir au bon moment et obtenir le résultat te comble plus que tout.
 
-Cette combinaison, l'action, la logique et le pragmatisme, dessine ta façon d'être : le stratège du présent qui joue toujours le bon coup. Tu vois juste et tu joues juste, ce qui fait de toi un négociateur et un improvisateur redoutable. Le revers, c'est que cette finesse peut te limiter au présent et te faire traiter les gens comme des pièces à jouer : ton plus beau chemin de croissance sera de mettre ta tactique au service d'une vision et d'intégrer l'humain dans tes calculs.`,
+Cette combinaison, l'action, la logique et le pragmatisme, dessine ta façon d'être : le stratège du présent qui joue toujours le bon coup. Tu vois juste et tu joues juste, ce qui fait de toi un négociateur et un improvisateur redoutable. Le revers, c'est que cette finesse peut te limiter au présent et te faire traiter les gens comme des pièces à jouer : ton plus beau chemin de croissance sera d'adosser ta tactique à une vision et d'intégrer l'humain dans tes calculs.`,
 
-    "ESTP-V3": `Parmi les trois façons d'être de l'Entrepreneur, tu es le plus tourné vers les gens et l'influence. Tu n'es pas avant tout le Fonceur porté par l'élan pur, ni le Tacticien qui calcule : ce qui te met en mouvement, c'est de séduire, d'entraîner, de créer du lien et de l'énergie autour de toi. Animer, rallier, créer du contact te comble plus que tout.
+    "ESTP-V3": `Parmi les trois profils de l'Entrepreneur, tu es le plus tourné vers les gens et l'influence. Tu n'es pas avant tout le Fonceur porté par l'élan pur, ni le Tacticien qui calcule : ce qui te met en mouvement, c'est de séduire, d'entraîner, de créer du lien et de l'énergie autour de toi. Animer, rallier, créer du contact te comble plus que tout.
 
 Cette combinaison, l'aisance relationnelle, la vivacité et l'énergie, dessine ta façon d'être : le séducteur qui entraîne et fédère par sa seule présence. Tu es à l'aise partout, avec tout le monde, et tu sais exactement comment créer le contact. Le revers, c'est que ce charme peut te tenir à la surface des liens et te faire chercher l'effet pour lui-même : ton plus beau chemin de croissance sera d'apprendre à approfondir tes liens et à te montrer vraiment, au-delà de la séduction.`,
   },
@@ -74,7 +74,7 @@ Cette combinaison, l'aisance relationnelle, la vivacité et l'énergie, dessine 
       ombres: [
         { titre: "Une impulsivité possible", accent: "impulsivité", texte: "C'est l'ombre de ton goût de l'action : ton élan peut te faire foncer sans peser les conséquences ou prendre des risques excessifs." },
         { titre: "Du mal à te projeter", accent: "projeter", texte: "Ton ancrage dans le présent peut te rendre difficile la planification et la projection à long terme." },
-        { titre: "Un ennui qui vient vite", accent: "ennui", texte: "Ton besoin de stimulation peut te faire fuir la routine et lâcher dès que l'intensité retombe." },
+        { titre: "Un ennui qui vient vite", accent: "ennui", texte: "Avide de stimulation, tu fuis la routine et tu lâches dès que l'intensité retombe." },
         { titre: "Les conséquences négligées", accent: "conséquences", texte: "Dans la précipitation, tu peux passer sur les sentiments des autres et sur les effets de tes actes." },
         { titre: "Un rapport décomplexé à l'argent", accent: "argent", texte: "Tourné vers le présent, tu peux dépenser sur l'impulsion et négliger l'épargne à long terme." },
         { titre: "Une difficulté à durer", accent: "durer", texte: "Ce qui se construit lentement te pèse, et tu peux décrocher avant d'avoir mené les choses au bout." },
@@ -149,17 +149,17 @@ Cette combinaison, l'aisance relationnelle, la vivacité et l'énergie, dessine 
   },
 
   relationsTexte: {
-    "ESTP-V1": `En amour comme en amitié, tu es énergique, spontané et vivant. Tu apportes de l'aventure, de l'intensité et du fun, et tu montres ton intérêt par l'action et les expériences partagées plus que par les grandes déclarations. Être aimé par toi, c'est ne pas s'ennuyer, vivre des choses, partager une vraie complicité dans l'action. En amitié, tu es le compagnon d'action, celui qui propose et qui entraîne, là dans les coups durs et toujours prêt à mettre de la vie dans le groupe. Sous ton apparente légèreté, tu es capable d'un attachement réel et d'une loyauté sincère une fois engagé.
+    "ESTP-V1": `En amour comme en amitié, tu es énergique, spontané et vivant. Tu apportes de l'aventure, de l'intensité et du fun, et tu montres ton intérêt par l'action et les expériences partagées plus que par les grandes déclarations. Être aimé par toi, c'est ne pas s'ennuyer, vivre des choses, partager une vraie complicité dans l'action. En amitié, tu es le compagnon d'action, celui qui propose et qui entraîne, là dans les coups durs et toujours prêt à mettre de la vie dans le groupe. Sous ton apparente légèreté se cachent un attachement bien réel et une loyauté sans faille, une fois que tu t'engages.
 
-Tes défis sont les revers de ta nature : ton besoin de stimulation peut te faire fuir la routine et t'ennuyer, ton impulsivité te faire négliger les conséquences, et ta difficulté avec les conversations émotionnelles laisser l'autre sur sa faim. Ton chemin, c'est d'apprendre à t'engager dans la durée, à tenir compte de l'autre et de ses émotions, et à ne pas fuir ce qui touche au cœur. Quand tu y parviens, tu offres une relation d'une vivacité et d'une authenticité rares.`,
+Tes défis sont les revers de ta nature : ton besoin de stimulation peut te faire fuir la routine et t'ennuyer, ton impulsivité te faire négliger les conséquences, et ta difficulté avec les conversations émotionnelles laisser l'autre sur sa faim. Ton chemin, c'est d'apprendre à t'engager dans la durée, à tenir compte de l'autre et de ses émotions, et à ne pas fuir ce qui remue le cœur. Quand tu y parviens, tu offres une relation d'une vivacité et d'une authenticité rares.`,
 
-    "ESTP-V2": `En amour comme en amitié, tu es vif, pragmatique et présent. Tu apportes de l'énergie, de l'aventure et une vraie attention à ce qui fait plaisir à l'autre quand tu t'y mets, et tu montres ton intérêt par l'action plus que par les mots. Être aimé par toi, c'est partager une complicité vivante, ne pas s'ennuyer, avoir à ses côtés quelqu'un de débrouillard et de solide. En amitié, tu es le débrouillard fidèle, celui qui trouve toujours un moyen, qui propose des plans et rend service efficacement. Sous ton pragmatisme, tu es capable d'un attachement réel et d'une loyauté sincère une fois engagé.
+    "ESTP-V2": `En amour comme en amitié, tu es vif, pragmatique et présent. Tu apportes de l'énergie, de l'aventure et une vraie attention à ce qui fait plaisir à l'autre quand tu t'y mets, et tu montres ton intérêt par l'action plus que par les mots. Être aimé par toi, c'est partager une complicité vivante, ne pas s'ennuyer, avoir à ses côtés quelqu'un de débrouillard et de solide. En amitié, tu es le débrouillard fidèle, celui qui trouve toujours un moyen, qui propose des plans et rend service efficacement. Derrière ton pragmatisme, tu sais t'attacher pour de vrai et rester fidèle sans faillir, dès lors que tu t'es engagé.
 
-Tes défis sont les revers de ta nature : ton côté tactique peut te faire aborder la relation comme un terrain à gérer plutôt qu'à ressentir, ta difficulté avec les émotions laisser l'autre sur sa faim, et ton besoin de stimulation te faire fuir la routine. Ton chemin, c'est d'apprendre à ressentir et à exprimer, à ne pas tout traiter comme un coup à jouer, à t'engager dans la durée. Quand tu y parviens, tu offres une relation d'une vivacité et d'une solidité rares.`,
+Tes défis sont les revers de ta nature : ton côté tactique peut te faire aborder la relation comme un terrain à gérer plutôt qu'à ressentir, ta difficulté avec les émotions laisser l'autre sur sa faim, et ta soif de stimulation te détourner du quotidien posé. Ton chemin, c'est d'apprendre à ressentir et à exprimer, à ne pas tout traiter comme un coup à jouer, à t'engager dans la durée. Quand tu y parviens, tu offres une relation d'une vivacité et d'une solidité rares.`,
 
-    "ESTP-V3": `En amour comme en amitié, tu es charmeur, vivant et attentionné. Tu sais séduire, créer de la complicité, apporter de l'énergie et du plaisir, et tu montres ton intérêt par la présence et les expériences partagées. Être aimé par toi, c'est se sentir choisi par quelqu'un de magnétique, vivre une relation pleine d'énergie et de charme. En amitié, tu es le boute-en-train, celui qui crée l'ambiance, qui connaît tout le monde et met de la vie dans le groupe. Sous ton charme, tu es capable d'un attachement réel et d'une loyauté sincère une fois engagé pour de vrai.
+    "ESTP-V3": `En amour comme en amitié, tu es charmeur, vivant et attentionné. Tu sais séduire, créer de la complicité, apporter de l'énergie et du plaisir, et tu montres ton intérêt par la présence et les expériences partagées. Être aimé par toi, c'est se sentir choisi par quelqu'un de magnétique, vivre une relation pleine d'énergie et de charme. En amitié, tu es le boute-en-train, celui qui crée l'ambiance, qui connaît tout le monde et met de la vie dans le groupe. Derrière ton charme, tu portes un attachement profond et une loyauté entière, dès l'instant où tu t'engages pour de vrai.
 
-Tes défis sont les revers de ta nature : ton goût de séduire peut te faire chercher l'effet ou multiplier les conquêtes plutôt que d'approfondir, ton aisance sociale masquer une difficulté avec l'intimité, et ton besoin de stimulation te faire fuir la routine. Ton chemin, c'est d'apprendre à approfondir un lien, à aller vers le vrai au-delà du charme, à t'engager sincèrement. Quand tu y parviens, tu offres une relation d'une vivacité et d'une chaleur rares.`,
+Tes défis sont les revers de ta nature : ton goût de séduire peut te faire chercher l'effet ou multiplier les conquêtes plutôt que d'approfondir, ton aisance sociale masquer une difficulté avec l'intimité, et ton appétit de nouveauté te faire fuir la routine. Ton chemin, c'est d'apprendre à approfondir un lien, à aller vers le vrai au-delà du charme, à t'engager sincèrement. Quand tu y parviens, tu offres une relation d'une vivacité et d'une chaleur rares.`,
   },
 
   proTexte: {
@@ -178,13 +178,13 @@ Ton charisme et ton aisance sont rarement en cause ; ce qui peut te coûter, c'e
 
   mindsetTexte: {
     "ESTP-V1": {
-      apercu: `Ton plus grand chantier n'est pas de trouver l'énergie, elle déborde, c'est d'apprendre à savoir où tu vas. Tu portes en toi une audace et un sang-froid rares, mais aussi une tendance à foncer sans peser, à t'ennuyer dès que ça retombe, à négliger l'avenir et les conséquences. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de trouver l'énergie, elle déborde, c'est d'apprendre à savoir où tu vas. Tu portes en toi une audace et un sang-froid rares, mais aussi une tendance à foncer sans peser, à t'ennuyer dès que ça retombe, à négliger l'avenir et les conséquences. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, dès lors que tu sais sur quel ressort agir.`,
     },
     "ESTP-V2": {
-      apercu: `Ton plus grand chantier n'est pas de gagner le coup d'après, tu excelles à ça, c'est d'apprendre à voir où mène la partie. Tu portes en toi une finesse tactique et un pragmatisme rares, mais aussi une tendance au court-termisme, à la froideur calculatrice, à l'ennui dès que l'enjeu retombe. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de gagner le coup d'après, tu excelles à ça, c'est d'apprendre à voir où mène la partie. Tu portes en toi une finesse tactique et un pragmatisme rares, mais aussi une tendance au court-termisme, à la froideur calculatrice, à l'ennui dès que l'enjeu retombe. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, pourvu que tu repères le bon point d'appui.`,
     },
     "ESTP-V3": {
-      apercu: `Ton plus grand chantier n'est pas de séduire, tu le fais avec une facilité naturelle, c'est d'apprendre à faire de ton charme une porte vers le vrai. Tu portes en toi un magnétisme et une aisance rares, mais aussi une tendance à rester en surface, à chercher l'effet, à fuir l'intimité émotionnelle. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de séduire, tu le fais avec une facilité naturelle, c'est d'apprendre à faire de ton charme une porte vers le vrai. Tu portes en toi un magnétisme et une aisance rares, mais aussi une tendance à rester en surface, à chercher l'effet, à fuir l'intimité émotionnelle. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir quel ressort actionner.`,
     },
   },
 
@@ -196,13 +196,13 @@ Ton charisme et ton aisance sont rarement en cause ; ce qui peut te coûter, c'e
         { titre: "Une complicité dans l'action", accent: "complicité", texte: "Tu montres ton intérêt par les expériences partagées et la présence, et l'on ne s'ennuie jamais à tes côtés." },
         { titre: "Un compagnon d'action", accent: "action", texte: "Tu es celui qui propose, qui entraîne, avec qui on vit des choses et qui met de la vie dans le groupe." },
         { titre: "Une fiabilité dans les coups durs", accent: "fiabilité", texte: "Quand ça chauffe, tu es là, tu rends service concrètement et tu gardes ton sang-froid." },
-        { titre: "Une loyauté sincère", accent: "loyauté", texte: "Sous ton apparente légèreté, tu es capable d'un attachement réel une fois vraiment engagé." },
+        { titre: "Une loyauté sincère", accent: "loyauté", texte: "Sous ton apparente légèreté, un véritable attachement t'habite dès lors que tu t'engages pour de bon." },
         { titre: "Un respect de la liberté", accent: "liberté", texte: "Tu laisses de l'air à l'autre et tu apprécies une relation qui ne t'enferme pas dans la routine." },
       ],
       ombres: [
-        { titre: "La fuite de la routine", accent: "routine", texte: "Ton besoin de stimulation peut te faire t'ennuyer et fuir dès que la relation s'installe dans le calme." },
+        { titre: "La fuite de la routine", accent: "routine", texte: "Ton appétit de stimulation peut t'ennuyer et te faire prendre la fuite dès que la relation s'installe dans le calme." },
         { titre: "Une impulsivité possible", accent: "impulsivité", texte: "Ton élan peut te faire agir sans peser les conséquences pour l'autre." },
-        { titre: "Les conversations émotionnelles", accent: "émotionnelles", texte: "Ta difficulté avec ce qui touche au cœur peut laisser l'autre sur sa faim." },
+        { titre: "Les conversations émotionnelles", accent: "émotionnelles", texte: "Ton malaise face à ce qui touche à l'intime peut laisser l'autre sur sa faim." },
         { titre: "Les conséquences négligées", accent: "conséquences", texte: "Dans la précipitation, tu peux passer sur les sentiments et les besoins de tes proches." },
         { titre: "Le lien négligé", accent: "négligé", texte: "Quand l'aventure est ailleurs, tu peux délaisser ceux qui te sont proches." },
         { titre: "Une difficulté à durer", accent: "durer", texte: "L'engagement dans la durée te pèse, et tu peux lâcher quand l'intensité retombe." },
@@ -265,7 +265,7 @@ Ton charisme et ton aisance sont rarement en cause ; ce qui peut te coûter, c'e
         ombre:
           "Mais à fuir le calme, à négliger les émotions et à passer sur les conséquences, tu peux fragiliser les liens qui comptent le plus.",
         bascule:
-          "Le jour où tu t'engages dans la durée et où tu oses ce qui touche au cœur, ta vivacité trouve enfin où s'enraciner.",
+          "Le jour où tu t'engages dans la durée et où tu oses te laisser toucher au fond, ta vivacité trouve enfin où s'enraciner.",
       },
     },
     "ESTP-V1-carriere": {
@@ -347,14 +347,14 @@ Ton charisme et ton aisance sont rarement en cause ; ce qui peut te coûter, c'e
       },
     },
     "ESTP-V1-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton énergie d'action : oser, foncer, saisir l'instant, relever des défis. C'est intense, mais souvent déséquilibré : tu peux être impulsif, court-termiste, t'ennuyer vite et passer sur les conséquences et les sentiments des autres. Tu excelles dans l'action, mais l'avenir et l'humain te restent étrangers.
+      evolution: `Ta personnalité n'a rien d'un bloc figé : elle se transforme avec le temps, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton énergie d'action : oser, foncer, saisir l'instant, relever des défis. C'est intense, mais souvent déséquilibré : tu peux être impulsif, court-termiste, t'ennuyer vite et passer sur les conséquences et les sentiments des autres. Tu excelles dans l'action, mais l'avenir et l'humain te restent étrangers.
 
 Avec le temps, quelque chose s'ouvre. Tu réalises que se projeter ouvre des possibilités que l'action seule ne permet pas, que tenir compte des autres rend ton énergie mieux acceptée, et que mesurer ses élans n'est pas les tuer. Tu apprends à anticiper, à t'engager dans la durée, à intégrer la dimension humaine, sans rien perdre de ton audace. Dans ta pleine maturité, tu deviens un fonceur qui agit vite ET juste : audacieux et vivant, mais aussi capable de se projeter, de durer et de tenir compte des conséquences. Et c'est entièrement à ta portée.`,
       etapes: [
         "Plein d'énergie dès l'enfance, tu bouges, tu touches à tout, tu cherches le mouvement et le défi. Le monde est un terrain de jeu où l'on apprend en agissant, pas en attendant.",
         "Ton énergie d'action est à son comble : tu oses, tu fonces, tu saisis l'instant, tu vis pour l'intensité. C'est intense, mais souvent déséquilibré : tu peux être impulsif, t'ennuyer vite et passer sur les conséquences. Une période où ton audace se révèle et cherche encore sa juste mesure.",
         "Tu comprends que foncer ne suffit pas et que se projeter ouvre des possibilités que l'action seule ne donne pas. Tu apprends à anticiper, à mesurer tes élans et à tenir compte des autres, sans rien perdre de ton audace.",
-        "Dans ta pleine maturité, tu es un fonceur qui agit vite et juste. Tu as gardé ton énergie et ton sang-froid, mais tu sais désormais où tu vas et tu construis dans la durée : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un fonceur qui agit vite et juste. Tu as gardé ton énergie et ton sang-froid, mais tu sais désormais où tu vas et tu construis dans la durée : c'est là que tu donnes le meilleur de toi.",
       ],
       leviersForts: [
         { titre: "Apprends à te projeter", texte: "C'est ton plus grand levier : te fixer un cap et penser à demain, sans renier ton goût de l'action, transforme ton énergie en accomplissements durables." },
@@ -387,15 +387,15 @@ Avec le temps, quelque chose s'ouvre. Tu réalises que se projeter ouvre des pos
         { titre: "Une attention efficace", accent: "attention", texte: "Quand tu t'y mets, tu portes une vraie attention à ce qui fait plaisir à l'autre, par les actes plus que par les mots." },
         { titre: "Un débrouillard fidèle", accent: "débrouillard", texte: "Tu trouves toujours un moyen, tu proposes des plans et tu rends service concrètement." },
         { titre: "Une présence solide", accent: "solide", texte: "Dans les coups durs, tu es là, tu trouves des solutions et tu rassures par ta débrouillardise." },
-        { titre: "Une loyauté sincère", accent: "loyauté", texte: "Sous ton pragmatisme, tu es capable d'un attachement réel une fois vraiment engagé." },
+        { titre: "Une loyauté sincère", accent: "loyauté", texte: "Derrière ton pragmatisme, tu sais nouer un lien profond et y tenir une fois que tu t'es engagé." },
         { titre: "Un respect de la liberté", accent: "liberté", texte: "Tu apprécies une complicité qui ne t'enferme pas et tu laisses de l'air à l'autre." },
       ],
       ombres: [
         { titre: "La relation gérée", accent: "gérée", texte: "Ton côté tactique peut te faire aborder le lien comme un terrain à gérer plutôt qu'à ressentir." },
         { titre: "Les émotions difficiles", accent: "émotions", texte: "Ta difficulté avec le ressenti peut laisser l'autre sur sa faim affective." },
-        { titre: "La fuite de la routine", accent: "routine", texte: "Ton besoin de stimulation peut te faire t'ennuyer et fuir quand le calme s'installe." },
+        { titre: "La fuite de la routine", accent: "routine", texte: "En quête perpétuelle de stimulation, tu peux t'ennuyer et fuir quand le calme s'installe." },
         { titre: "Le calcul de trop", accent: "calcul", texte: "À tout traiter comme un coup à jouer, tu peux manquer la spontanéité du cœur." },
-        { titre: "Le lien négligé", accent: "négligé", texte: "Dans les temps calmes, ton besoin de stimulation peut te faire négliger le lien." },
+        { titre: "Le lien négligé", accent: "négligé", texte: "Dans les temps calmes, ta soif d'action peut te faire négliger le lien." },
         { titre: "Une difficulté à durer", accent: "durer", texte: "L'engagement dans la durée te pèse quand l'enjeu du début retombe." },
       ],
       blocs: [
@@ -404,7 +404,7 @@ Avec le temps, quelque chose s'ouvre. Tu réalises que se projeter ouvre des pos
           items: [
             "La routine figée, sans enjeu ni mouvement.",
             "Le contrôle et la jalousie qui rognent ta liberté.",
-            "Les relations qui t'enferment et te bridant.",
+            "Les relations qui t'enferment et te brident.",
             "Les longues conversations purement émotionnelles.",
             "Les reproches qui brident ton besoin d'agir.",
           ],
@@ -534,18 +534,18 @@ Avec le temps, quelque chose s'ouvre. Tu réalises que se projeter ouvre des pos
         ombre:
           "Mais à ne penser qu'au coup d'après et à négliger l'humain, tu peux passer à côté de la stratégie de fond et des liens.",
         bascule:
-          "Le jour où tu mets ta tactique au service d'une vision et où tu intègres l'humain, tu ne gagnes plus seulement des coups : tu remportes la partie.",
+          "Le jour où ta tactique sert une vraie vision et où tu intègres l'humain, tu ne gagnes plus seulement des coups : tu remportes la partie.",
       },
     },
     "ESTP-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton sens tactique et ton goût de l'action : lire, calculer, jouer le bon coup, saisir l'opportunité. C'est efficace, mais souvent déséquilibré : tu peux être court-termiste, froidement tactique, prendre des risques, t'ennuyer vite et négliger l'humain et le long terme. Tu gagnes les coups, mais la stratégie d'ensemble et les liens te restent étrangers.
+      evolution: `Ta personnalité n'a rien d'immuable : elle évolue au fil des années, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton sens tactique et ton goût de l'action : lire, calculer, jouer le bon coup, saisir l'opportunité. C'est efficace, mais souvent déséquilibré : tu peux être court-termiste, froidement tactique, prendre des risques, t'ennuyer vite et négliger l'humain et le long terme. Tu gagnes les coups, mais la stratégie d'ensemble et les liens te restent étrangers.
 
 Avec le temps, quelque chose s'ouvre. Tu réalises que jouer pour durer vaut mieux que gagner chaque coup, que tenir compte des gens rend ton efficacité mieux acceptée, et que se projeter démultiplie ta tactique. Tu apprends à viser loin, à intégrer l'humain, à mettre ton agilité au service d'une vision, sans rien perdre de ta finesse. Dans ta pleine maturité, tu deviens un tacticien qui joue juste ET voit loin : vif et pragmatique, mais aussi stratège dans la durée et attentif aux gens. Et c'est entièrement à ta portée.`,
       etapes: [
         "Malin et observateur dès l'enfance, tu lis vite les situations, tu repères ce qui se passe et tu trouves comment t'en sortir. Le monde est un jeu où il y a toujours un bon coup à jouer.",
         "Ton sens tactique est à son comble : tu lis, tu calcules, tu saisis l'opportunité, tu joues le bon coup. C'est efficace, mais souvent déséquilibré : tu peux être court-termiste, prendre des risques et négliger l'humain. Une période où ta vivacité se révèle et cherche encore sa portée.",
         "Tu comprends que jouer pour durer vaut mieux que gagner chaque coup. Tu apprends à viser loin, à intégrer les gens et à mettre ton agilité au service d'une vision, sans rien perdre de ta finesse.",
-        "Dans ta pleine maturité, tu es un tacticien qui joue juste et voit loin. Tu as gardé ton efficacité, mais tu sais désormais où mène la partie et tu prends soin des gens : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un tacticien qui joue juste et voit loin. Tu as gardé ton efficacité, mais tu sais désormais où mène la partie et tu prends soin des gens : c'est toi, enfin pleinement accompli.",
       ],
       leviersForts: [
         { titre: "Mets ta tactique au service d'une vision", texte: "C'est ton plus grand levier : apprends à viser loin et à penser la partie d'ensemble, pas seulement le coup d'après. Ta finesse devient redoutable quand elle sert une stratégie." },
@@ -578,7 +578,7 @@ Avec le temps, quelque chose s'ouvre. Tu réalises que jouer pour durer vaut mie
         { titre: "Une lecture des gens", accent: "lecture", texte: "Tu perçois vite les humeurs et ce qui touche l'autre, et tu sais exactement comment créer le contact." },
         { titre: "Une chaleur entraînante", accent: "chaleur", texte: "Le boute-en-train du groupe, tu crées l'ambiance, tu rassembles et tu mets de la vie partout." },
         { titre: "Une aisance partout", accent: "aisance", texte: "Avec tout le monde et dans toutes les situations, tu trouves ta place et tu crées le lien." },
-        { titre: "Une loyauté sincère", accent: "loyauté", texte: "Sous ton charme, tu es capable d'un attachement réel une fois engagé pour de vrai." },
+        { titre: "Une loyauté sincère", accent: "loyauté", texte: "Derrière ton charme, un attachement bien réel se révèle dès que tu t'engages pour de vrai." },
         { titre: "Une attention présente", accent: "attention", texte: "Quand tu t'y mets, tu offres une présence chaleureuse qui fait du bien à l'autre." },
       ],
       ombres: [
@@ -586,7 +586,7 @@ Avec le temps, quelque chose s'ouvre. Tu réalises que jouer pour durer vaut mie
         { titre: "Le risque de surface", accent: "surface", texte: "Ton aisance peut te faire multiplier les contacts sans toujours aller en profondeur." },
         { titre: "La fuite de l'intimité", accent: "intimité", texte: "Ton aisance sociale peut masquer une difficulté avec les émotions plus intimes." },
         { titre: "Une impulsivité possible", accent: "impulsivité", texte: "Ton goût de l'instant et de la stimulation peut te faire foncer sans peser." },
-        { titre: "La fuite de la routine", accent: "routine", texte: "Ton besoin de stimulation peut te faire t'ennuyer et fuir quand le quotidien s'installe." },
+        { titre: "La fuite de la routine", accent: "routine", texte: "Ton appétit de nouveauté peut te lasser et te pousser à fuir quand le quotidien s'installe." },
         { titre: "Le lien peu approfondi", accent: "approfondi", texte: "Ton large cercle peut cacher un manque de liens où tu te livres vraiment." },
       ],
       blocs: [
@@ -729,14 +729,14 @@ Avec le temps, quelque chose s'ouvre. Tu réalises que jouer pour durer vaut mie
       },
     },
     "ESTP-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton charme et ton goût du contact : séduire, entraîner, plaire, animer. C'est magnétique, mais souvent déséquilibré : tu peux chercher l'effet pour lui-même, rester en surface, multiplier les contacts sans profondeur, être impulsif et fuir l'intimité émotionnelle. Tu séduis tout le monde, mais le vrai et le durable te restent étrangers.
+      evolution: `Ta personnalité n'est jamais coulée dans le marbre : elle se façonne avec le temps, et ton type suit une trajectoire de croissance assez nette. Plus jeune, tu es surtout porté par ton charme et ton goût du contact : séduire, entraîner, plaire, animer. C'est magnétique, mais souvent déséquilibré : tu peux chercher l'effet pour lui-même, rester en surface, multiplier les contacts sans profondeur, être impulsif et fuir l'intimité émotionnelle. Tu séduis tout le monde, mais le vrai et le durable te restent étrangers.
 
 Avec le temps, quelque chose s'ouvre. Tu réalises que le charme n'a de valeur que s'il ouvre sur du vrai, qu'approfondir vaut mieux que multiplier, et que se montrer sincèrement crée des liens que la séduction seule ne donne pas. Tu apprends à aller en profondeur, à mettre ton charme au service de connexions sincères, à te projeter, sans rien perdre de ton magnétisme. Dans ta pleine maturité, tu deviens un charmeur dont l'aisance ouvre sur du vrai : magnétique et entraînant, mais aussi capable de liens profonds et sincères. Et c'est entièrement à ta portée.`,
       etapes: [
         "Sociable et magnétique dès l'enfance, tu crées le contact, tu fais rire, tu rallies les autres autour de toi. Tu te sens vivant entouré, au centre de l'attention.",
         "Ton charme est à son comble : tu séduis, tu entraînes, tu animes, tu plais partout. C'est magnétique, mais souvent déséquilibré : tu peux chercher l'effet, rester en surface et fuir l'intimité. Une période où ton charisme se révèle et te tient parfois à la surface des liens.",
         "Tu comprends que le charme n'a de valeur que s'il ouvre sur du vrai. Tu apprends à approfondir, à mettre ton magnétisme au service de liens sincères et à te montrer vraiment, sans rien perdre de ton aisance.",
-        "Dans ta pleine maturité, tu es un charmeur dont l'aisance ouvre sur du vrai. Tu as gardé ton magnétisme, mais tu sais désormais créer des liens profonds et sincères : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un charmeur dont l'aisance ouvre sur du vrai. Tu as gardé ton magnétisme, mais tu sais désormais créer des liens profonds et sincères : c'est la version la plus aboutie de toi-même.",
       ],
       leviersForts: [
         { titre: "Mets ton charme au service du vrai", texte: "C'est ton plus grand levier : utilise ton magnétisme pour créer des liens sincères, pas seulement pour plaire ou obtenir. Ton charme devient alors une force qui relie vraiment." },

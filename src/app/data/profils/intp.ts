@@ -1,5 +1,5 @@
 // =============================================================================
-// CONTENU DU PROFIL INTP — « Logicien » (3 variantes).
+// CONTENU DU PROFIL INTP : « Logicien » (3 variantes).
 // V1 Architecte Logique · V2 Explorateur d'Idées · V3 Penseur Humaniste.
 // Même forme que l'exemple INFP de profils.ts. Source : rapports longs INTP.
 // Voix « tu », pas de tirets longs, mot-clé en vert via le champ `accent`.
@@ -102,15 +102,15 @@ Mais cette même puissance a son revers : à force de vouloir l'analyse impeccab
   intros: {
     "INTP-V1": `En tant que Logicien (INTP), ta pensée est une cathédrale que tu construis pièce par pièce, avec une cohérence et une précision remarquables. Là où beaucoup se contentent d'une réponse satisfaisante, toi tu creuses jusqu'aux fondations, jusqu'à saisir le mécanisme exact qui fait fonctionner les choses. Ce qui te définit, c'est ta quête d'exactitude : tu ne supportes pas l'à-peu-près, tu démontes les idées jusqu'à leurs rouages, et tu repères les failles de logique que personne d'autre ne voit.
 
-Parmi les trois façons d'être de ton type, tu es l'Architecte Logique, le plus tourné vers la rigueur et la profondeur de l'analyse. Tu peux te plonger des heures dans un sujet, dans un état de concentration totale où le temps n'existe plus, et il y a chez toi une humilité intellectuelle rare : tu n'es pas attaché à avoir raison, tu es attaché à être exact. Cette même puissance peut pourtant rester enfermée dans ta tête : ton plus beau terrain de croissance sera de faire exister ta pensée dans le réel, sans rien perdre de ta rigueur.`,
+Des trois visages que peut prendre ton type, tu es l'Architecte Logique, le plus tourné vers la rigueur et la profondeur de l'analyse. Tu peux te plonger des heures dans un sujet, dans un état de concentration totale où le temps n'existe plus, et il y a chez toi une humilité intellectuelle rare : tu n'es pas attaché à avoir raison, tu es attaché à être exact. Cette même puissance peut pourtant rester enfermée dans ta tête : ta plus belle conquête sera de faire exister ta pensée dans le réel, sans rien perdre de ta rigueur.`,
 
     "INTP-V2": `En tant que Logicien (INTP), ton cerveau est une machine à connexions : il relie des domaines éloignés, génère sans cesse des possibilités neuves et se passionne pour tout. Là où d'autres se spécialisent et creusent un seul sillon, toi tu embrasses l'étendue, parce que tout est fascinant. Ce qui te définit, c'est ta curiosité pure et insatiable : tu vois dix approches là où d'autres n'en voient qu'une, tu fais des analogies surprenantes, tu trouves des liens que personne ne pense à rapprocher.
 
-Parmi les trois façons d'être de ton type, tu es l'Explorateur d'Idées, celui que la nouveauté appelle le plus fort. Ton esprit ne s'éteint jamais : il bouillonne, explore, imagine, connecte, et la vie avec toi n'est jamais ennuyeuse. Cette même richesse peut pourtant se disperser sans jamais rien accomplir : ton plus beau terrain de croissance sera d'apprendre à canaliser ton exploration pour mener tes meilleures idées jusqu'au bout, sans rien perdre de ta créativité.`,
+Des trois visages que peut prendre ton type, tu es l'Explorateur d'Idées, celui que la nouveauté appelle le plus fort. Ton esprit ne s'éteint jamais : il bouillonne, explore, imagine, connecte, et la vie avec toi n'est jamais ennuyeuse. Cette même richesse peut pourtant se disperser sans jamais rien accomplir : ta plus belle conquête sera de canaliser ton exploration pour mener tes meilleures idées jusqu'au bout, sans rien perdre de ta créativité.`,
 
     "INTP-V3": `En tant que Logicien (INTP), tu possèdes la rigueur et la profondeur d'un analyste, mais tu les tournes vers ce qu'il y a de plus complexe et de plus mouvant au monde : les êtres humains. Tu décortiques les comportements, les motivations et les relations avec une finesse logique doublée d'une vraie chaleur. Ce qui te définit, c'est cette alliance rare entre la tête qui analyse et le cœur qui comprend : tu n'es pas un observateur froid, tu es un analyste qui aime ce qu'il observe.
 
-Parmi les trois façons d'être de ton type, tu es le Penseur Humaniste, le plus tourné vers l'humain et la connexion. Tu vois les jeux relationnels, les non-dits, les ressorts psychologiques que les autres ne perçoivent pas, mais ta clairvoyance n'est jamais cynique : elle est au service de la compréhension et de l'aide. Cette même compréhension peut pourtant te tenir à distance de ce que tu saisis si bien : ton plus beau terrain de croissance sera d'apprendre à vivre les relations autant qu'à les analyser.`,
+Des trois visages que peut prendre ton type, tu es le Penseur Humaniste, le plus tourné vers l'humain et la connexion. Tu vois les jeux relationnels, les non-dits, les ressorts psychologiques que les autres ne perçoivent pas, mais ta clairvoyance n'est jamais cynique : elle est au service de la compréhension et de l'aide. Cette même compréhension peut pourtant te tenir à distance de ce que tu saisis si bien : ta plus belle conquête sera de vivre les relations autant que de les analyser.`,
   },
 
   // ---------------------------------------------------------------------------
@@ -261,13 +261,13 @@ Tu as besoin d'autonomie et d'un environnement qui valorise la réflexion et l'h
   // ---------------------------------------------------------------------------
   mindsetTexte: {
     "INTP-V1": {
-      apercu: `Ton plus grand chantier n'est pas de penser mieux, tu le fais déjà admirablement, c'est de faire sortir ta pensée de ta tête. Tu portes une rigueur et une profondeur immenses, mais aussi un perfectionnisme qui paralyse, un amour de l'abstraction qui éloigne du réel, et une difficulté à conclure et à te relier. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de penser mieux, tu le fais déjà admirablement, c'est de faire sortir ta pensée de ta tête. Tu portes une rigueur et une profondeur immenses, mais aussi un perfectionnisme qui paralyse, un amour de l'abstraction qui éloigne du réel, et une difficulté à conclure et à te relier. La bonne nouvelle, c'est que ces fragilités sont précisément les leviers sur lesquels tout ton esprit peut s'appuyer pour grandir.`,
     },
     "INTP-V2": {
-      apercu: `Ton plus grand chantier n'est pas de trouver des idées, tu n'en manques jamais, c'est d'en faire exister quelques-unes pleinement. Tu portes une curiosité et une créativité inépuisables, mais aussi une tendance à te disperser, à survoler sans approfondir et à fuir vers la prochaine nouveauté. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de trouver des idées, tu n'en manques jamais, c'est d'en faire exister quelques-unes pleinement. Tu portes une curiosité et une créativité inépuisables, mais aussi une tendance à te disperser, à survoler sans approfondir et à fuir vers la prochaine nouveauté. La bonne nouvelle, c'est que ces fragilités sont le terrain même où ta curiosité a le plus à gagner, dès que tu sais l'orienter.`,
     },
     "INTP-V3": {
-      apercu: `Ton plus grand chantier n'est pas de comprendre les autres, tu le fais mieux que presque personne, c'est d'apprendre à te relier pleinement à eux. Tu portes une lucidité et une chaleur rares, mais aussi une tendance à observer plutôt qu'à vivre, à suranalyser les liens et à négliger tes propres émotions. La bonne nouvelle, c'est que ces fragilités sont aussi tes plus grands leviers de croissance, à condition de savoir où appuyer.`,
+      apercu: `Ton plus grand chantier n'est pas de comprendre les autres, tu le fais mieux que presque personne, c'est d'apprendre à te relier pleinement à eux. Tu portes une lucidité et une chaleur rares, mais aussi une tendance à observer plutôt qu'à vivre, à suranalyser les liens et à négliger tes propres émotions. La bonne nouvelle, c'est que ces fragilités sont la porte d'entrée de ta plus belle évolution, pour peu que tu saches par où commencer.`,
     },
   },
 
@@ -275,7 +275,7 @@ Tu as besoin d'autonomie et d'un environnement qui valorise la réflexion et l'h
   // Détail enrichi des grandes sections (clé Vx-section).
   // ---------------------------------------------------------------------------
   sectionDetail: {
-    // ===================== V1 — ARCHITECTE LOGIQUE =====================
+    // ===================== V1 : ARCHITECTE LOGIQUE =====================
     "INTP-V1-relations": {
       forces: [
         { titre: "Une connexion par les idées", accent: "idées", texte: "Tu te lies par la pensée partagée et les conversations de fond, plus que par les conventions." },
@@ -435,14 +435,14 @@ Tu as besoin d'autonomie et d'un environnement qui valorise la réflexion et l'h
     },
 
     "INTP-V1-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ta tête : la logique, l'analyse, les idées. C'est brillant, mais souvent déconnecté du concret et des autres, perdu dans tes pensées, mal à l'aise avec les émotions, incapable de conclure ou d'agir.
+      evolution: `Loin d'être gravée une fois pour toutes, ta personnalité évolue, et ton type connaît l'une des trajectoires de maturation les plus nettes. Plus jeune, tu es tout entier dans ta tête : la logique, l'analyse, les idées. C'est brillant, mais souvent déconnecté du concret et des autres, perdu dans tes pensées, mal à l'aise avec les émotions, incapable de conclure ou d'agir.
 
 Avec le temps, tu comprends que comprendre ne suffit pas, qu'une idée qui ne se concrétise ni ne se partage ne sert à rien. Tu apprends à agir, à conclure, à accepter l'imparfait, à te connecter aux autres et à tes propres émotions, sans rien perdre de ta rigueur. Dans ta pleine maturité, tu deviens un esprit rigoureux qui sait aussi agir et se relier, dont les idées brillantes prennent forme dans le monde au lieu de rester enfermées : la version la plus puissante de toi. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu poses déjà mille questions et tu refuses les réponses toutes faites. Curieux du comment et du pourquoi, tu démontes les choses pour comprendre ce qui les fait fonctionner.",
         "Tu vis pleinement dans ta tête : la logique, les théories, l'exploration des idées. C'est brillant, mais souvent coupé du concret et des autres. T'affirmer, conclure et exprimer tes émotions ne va pas encore de soi. Une période intense, où ta puissance intellectuelle cherche encore sa prise sur le réel.",
         "Tu comprends que comprendre ne suffit pas. Tu apprends à agir, à conclure, à accepter l'imparfait et à te relier aux autres et à tes émotions, sans rien perdre de ta rigueur.",
-        "Dans ta pleine maturité, tu es un esprit rigoureux qui sait aussi agir et se relier. Tes idées prennent enfin forme dans le monde au lieu de rester enfermées : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un esprit rigoureux qui sait aussi agir et se relier. Tes idées prennent enfin forme dans le monde au lieu de rester enfermées : c'est toi, pleinement déployé.",
       ],
       leviersForts: [
         { titre: "Apprends à conclure et à agir", texte: "C'est ton plus grand levier. Impose-toi de finir et de concrétiser, même imparfaitement : l'action donne à ta pensée une valeur réelle que l'analyse infinie ne lui donnera jamais." },
@@ -470,7 +470,7 @@ Avec le temps, tu comprends que comprendre ne suffit pas, qu'une idée qui ne se
       motRoute: `Tu es un Architecte Logique, un de ces esprits rares dont la rigueur et la profondeur de pensée forcent le respect. Ne laisse jamais personne te convaincre que ton besoin de comprendre est de trop : c'est ta force et ta marque. Il te reste une seule grande conquête, l'aventure d'une vie : faire sortir ta pensée de ta tête pour qu'elle existe dans le monde. L'édifice est conçu, à toi de le bâtir dans le réel.`,
     },
 
-    // ===================== V2 — EXPLORATEUR D'IDÉES =====================
+    // ===================== V2 : EXPLORATEUR D'IDÉES =====================
     "INTP-V2-relations": {
       forces: [
         { titre: "Une séduction par l'esprit", accent: "esprit", texte: "Tu attires par ta capacité à surprendre et à stimuler : une conversation fascinante vaut tous les dîners." },
@@ -486,7 +486,7 @@ Avec le temps, tu comprends que comprendre ne suffit pas, qu'une idée qui ne se
         { titre: "Des liens peu entretenus", accent: "entretenus", texte: "Absorbé par ta prochaine exploration, tu peux passer des semaines sans donner signe de vie." },
         { titre: "Des besoins affectifs négligés", accent: "affectifs", texte: "À vivre dans tes idées, tu peux oublier les besoins concrets de ton partenaire." },
         { titre: "Une difficulté à se poser", accent: "poser", texte: "Quelqu'un de trop routinier t'étouffe, et tu peux confondre stabilité et ennui." },
-        { titre: "Une attention qui file", accent: "attention", texte: "Ton esprit captée par un nouveau sujet peut donner l'impression d'un désintérêt qui n'existe pas." },
+        { titre: "Une attention qui file", accent: "attention", texte: "Ton esprit capté par un nouveau sujet peut donner l'impression d'un désintérêt qui n'existe pas." },
       ],
       blocs: [
         {
@@ -630,14 +630,14 @@ Avec le temps, tu comprends que comprendre ne suffit pas, qu'une idée qui ne se
     },
 
     "INTP-V2-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es tout entier dans ton bouillonnement : la curiosité, les idées, l'exploration tous azimuts. C'est lumineux et créatif, mais souvent dispersé : tu commences mille choses, tu en finis peu, tu papillonnes sans jamais approfondir.
+      evolution: `Rien n'est figé en toi : ta personnalité se transforme avec les années, et ton type suit pour cela une trajectoire de croissance singulièrement marquée. Plus jeune, tu es tout entier dans ton bouillonnement : la curiosité, les idées, l'exploration tous azimuts. C'est lumineux et créatif, mais souvent dispersé : tu commences mille choses, tu en finis peu, tu papillonnes sans jamais approfondir.
 
 Avec le temps, tu comprends qu'avoir des idées ne suffit pas, qu'il faut en choisir quelques-unes et les mener jusqu'au bout pour qu'elles existent. Tu apprends à te concentrer, à approfondir, à finir, sans renoncer à ta curiosité, et tu te relies davantage aux autres et à tes émotions. Dans ta pleine maturité, tu deviens un esprit créatif et curieux qui sait aussi se concentrer et concrétiser, dont les idées foisonnantes débouchent sur des réalisations réelles : la version la plus puissante de toi. Et c'est entièrement à ta portée.`,
       etapes: [
         "Curieux de tout, tu touches à tout, tu te passionnes pour un sujet une semaine et un autre la suivante. Le monde entier est ton terrain de jeu intellectuel.",
         "Ton bouillonnement est à son comble : tu explores tous azimuts, plein d'idées et de connexions. C'est lumineux, mais souvent dispersé : tu commences beaucoup, tu finis peu, et approfondir ne va pas encore de soi. Une période foisonnante, où ta fertilité cherche encore son focus.",
         "Tu comprends que tes idées ne valent que menées jusqu'au bout. Tu apprends à en choisir quelques-unes, à approfondir et à finir, sans rien perdre de ta curiosité.",
-        "Dans ta pleine maturité, tu es un explorateur qui sait aussi concrétiser. Tu as gardé ta créativité, mais tu sais désormais en faire quelque chose de réel : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu es un explorateur qui sait aussi concrétiser. Tu as gardé ta créativité, mais tu sais désormais en faire quelque chose de réel : c'est toi, enfin abouti.",
       ],
       leviersForts: [
         { titre: "Apprends à te concentrer et à finir", texte: "C'est ton plus grand levier. Choisis, parmi tes mille idées, un petit nombre que tu mèneras vraiment au bout : la satisfaction d'achever te prouvera de quoi tu es capable." },
@@ -665,7 +665,7 @@ Avec le temps, tu comprends qu'avoir des idées ne suffit pas, qu'il faut en cho
       motRoute: `Tu es un Explorateur d'Idées, un de ces esprits rares dont la curiosité et la créativité ne connaissent pas de limites. Ne laisse jamais personne te convaincre que ta curiosité est de la dispersion : c'est la source de ta créativité, et elle est précieuse. Il te reste une seule grande conquête, l'aventure d'une vie : transformer ta fertilité d'idées en réalisations concrètes. La carte est immense, à toi d'explorer pour de vrai.`,
     },
 
-    // ===================== V3 — PENSEUR HUMANISTE =====================
+    // ===================== V3 : PENSEUR HUMANISTE =====================
     "INTP-V3-relations": {
       forces: [
         { titre: "Le don d'être compris", accent: "compris", texte: "Tu offres à l'autre la sensation d'être vu jusque dans ses contradictions, accepté sans jugement." },
@@ -825,14 +825,14 @@ Avec le temps, tu comprends qu'avoir des idées ne suffit pas, qu'il faut en cho
     },
 
     "INTP-V3-developpement": {
-      evolution: `Ta personnalité n'est pas figée : elle mûrit, et ton type suit une trajectoire de croissance particulièrement marquée. Plus jeune, tu es souvent partagé entre ta tête et ton cœur : tu comprends les gens avec une finesse rare, mais tu restes en retrait, observateur, plus à l'aise pour analyser les émotions que pour les vivre.
+      evolution: `Ta personnalité n'a rien de définitif : elle se construit au fil du temps, et ton type emprunte un chemin de maturation particulièrement net. Plus jeune, tu es souvent partagé entre ta tête et ton cœur : tu comprends les gens avec une finesse rare, mais tu restes en retrait, observateur, plus à l'aise pour analyser les émotions que pour les vivre.
 
 Avec le temps, tu comprends que comprendre les gens ne suffit pas, qu'il faut aussi se relier à eux, se livrer, vivre les émotions et pas seulement les disséquer. Tu apprends à habiter ta propre vie intérieure, à t'exposer, à passer de l'observation à la participation, sans rien perdre de ta lucidité. Dans ta pleine maturité, tu deviens un esprit qui comprend l'humain en profondeur et qui sait aussi se relier pleinement, vivre ses émotions et agir : la version la plus riche de toi. Et c'est entièrement à ta portée.`,
       etapes: [
         "Tu observes déjà les gens avec une finesse rare et tu pressens ce qu'ils ressentent. Curieux des êtres, tu cherches à comprendre pourquoi ils font ce qu'ils font.",
         "Tu comprends les gens en profondeur, mais tu restes en retrait, observateur. Tu analyses les émotions plus que tu ne les vis, tu donnes de l'écoute sans te livrer, et tu hésites entre distance et connexion. Une période riche, où ta lucidité cherche encore à se relier pleinement.",
         "Tu comprends que comprendre ne suffit pas. Tu apprends à te livrer, à vivre tes émotions et à passer de l'observation à la participation, sans rien perdre de ta lucidité.",
-        "Dans ta pleine maturité, tu comprends l'humain en profondeur et tu sais aussi te relier pleinement et vivre tes émotions. Tu es ce pont rare entre la tête et le cœur : la version la plus accomplie de toi.",
+        "Dans ta pleine maturité, tu comprends l'humain en profondeur et tu sais aussi te relier pleinement et vivre tes émotions. Tu es ce pont rare entre la tête et le cœur : c'est toi dans ta forme la plus entière.",
       ],
       leviersForts: [
         { titre: "Vis tes émotions, ne fais pas que les comprendre", texte: "C'est ton plus grand levier. Apprends à ressentir pleinement et à exprimer ce qui se passe en toi : ta compréhension de l'humain prend une tout autre dimension quand tu l'appliques à toi." },
@@ -849,15 +849,14 @@ Avec le temps, tu comprends que comprendre les gens ne suffit pas, qu'il faut au
       ],
       paradoxe: {
         tension:
-          "Pour grandir, tu dois te relier et vivre tes émotions,\nmais tu crains qu'en t'exposant, tu perdes ta lucidité tranquille.",
+          "Pour grandir, tu dois te relier autant que comprendre,\nmais tu te réfugies dans l'analyse là où il faudrait ressentir.",
         lumiere:
-          "Ta compréhension de l'humain, ta lucidité bienveillante et ton désir d'aider sont une base de croissance immense : tu as déjà tout en toi pour devenir une version accomplie de toi-même.",
+          "Ton alliance rare de la lucidité et de la sensibilité te fait comprendre l'humain comme peu de gens, et éclaire ce que les autres ne perçoivent pas.",
         ombre:
-          "Mais à rester observateur, à analyser sans vivre et à ne pas te livrer, ta belle compréhension peut demeurer un savoir distant.",
+          "Mais à tout observer de loin sans jamais t'y plonger, tu risques de rester au bord de ta propre vie et de tes liens.",
         bascule:
-          "Le jour où tu comprends que te relier et ressentir n'affaiblit pas ta lucidité mais la complète d'une vraie chaleur, ta croissance s'enclenche vraiment.",
+          "Le jour où tu vis tes émotions au lieu de seulement les analyser, ta compréhension se fait chaleur, et tu deviens ce pont rare entre la tête et le cœur.",
       },
-      motRoute: `Tu es un Penseur Humaniste, un de ces esprits rares qui allient la rigueur de l'analyste à la chaleur de celui qui se soucie vraiment des êtres. Ne laisse jamais personne te convaincre que ta sensibilité affaiblit ton intelligence : c'est précisément leur alliance qui fait ta valeur. Il te reste une seule grande conquête, l'aventure d'une vie : passer de celui qui comprend l'humain à celui qui le vit pleinement. Tu comprends les âmes, apprends aussi à laisser la tienne s'exprimer.`,
     },
   },
 };
