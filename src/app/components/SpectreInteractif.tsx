@@ -35,7 +35,7 @@ const DESCRIPTIONS: Record<string, string> = {
   J: "Les personnes Organisées aiment la clarté, les plans et les choses décidées. Elles structurent, anticipent, et se sentent bien quand tout est cadré.",
 };
 
-export default function SpectreInteractif({ axes }: { axes: SpectreAxe[] }) {
+export default function SpectreInteractif({ axes, isPaid = true }: { axes: SpectreAxe[]; isPaid?: boolean }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const current = axes.find((x) => x.axe === hovered) ?? null;
 
@@ -124,7 +124,23 @@ export default function SpectreInteractif({ axes }: { axes: SpectreAxe[] }) {
               {AXE_GROUPE[shown.axe]} · <span style={{ color: GREEN }}>{shown.pctDominant}%</span>{" "}
               {LETTRE_LABEL[shown.lettre]}
             </p>
-            <p className="text-sm text-gray-600 leading-relaxed">{DESCRIPTIONS[shown.lettre]}</p>
+            {isPaid ? (
+              <p className="text-sm text-gray-600 leading-relaxed">{DESCRIPTIONS[shown.lettre]}</p>
+            ) : (
+              <div className="relative">
+                <p aria-hidden="true" className="text-sm text-gray-600 leading-relaxed blur-[4px] select-none">
+                  {DESCRIPTIONS[shown.lettre]}
+                </p>
+                {/* Cadenas vert centré sur le flou */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="5" y="11" width="14" height="9" rx="2" fill={GREEN} />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke={GREEN} strokeWidth="2" strokeLinecap="round" />
+                    <circle cx="12" cy="15.3" r="1.4" fill="white" />
+                  </svg>
+                </div>
+              </div>
+            )}
           </>
         )}
       </div>

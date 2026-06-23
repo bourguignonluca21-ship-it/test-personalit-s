@@ -7,9 +7,9 @@
 Site web de test de personnalité (startup FR), concurrent de 16Personalities, avec **notre propre contenu** (jamais le leur — uniquement la structure/agencement peut s'inspirer d'eux). Next.js 16 (App Router) + Tailwind v4. Dépôt : `3_SITE/1_infrastructure/Next_js`, branche `main`, remote GitHub `test-personalit-s`. Déploiement visé : push → Vercel.
 
 ## 2. État actuel
-- La **page résultat** (`/resultat/[slug]`) est entièrement construite, stylée et **validée** pour **un seul profil : INFP-V1 (le Poète)**. C'est le profil de RÉFÉRENCE.
-- Le **squelette est FIGÉ** : tous les titres fixes, labels d'âge et titres de paires/compatibilité vivent une seule fois dans le template (voir §5/§9). Remplir un profil = ajouter du contenu dans `profils.ts`, jamais toucher au template.
-- Les 47 autres profils retombent sur du **placeholder** via `getProfil()`. Les remplir = suivre **`GABARIT_PROFIL.md`**.
+- La **page résultat** (`/resultat/[slug]`) est entièrement construite, stylée et **remplie pour les 48 profils**. INFP-V1 (le Poète) reste la **référence de style**.
+- Le **squelette est FIGÉ** : tous les titres fixes, labels d'âge et titres de paires/compatibilité vivent une seule fois dans le template (voir §5/§9). Remplir/corriger un profil = ajouter du contenu dans `profils.ts`, jamais toucher au template.
+- Remplir ou corriger un profil = suivre **`GABARIT_PROFIL.md`** (contenu clé par `CODE-Vx` dans `profils.ts` / `profils/<type>.ts`).
 - Le test, le moteur de calcul, la page d'accueil et les pages de type existaient déjà.
 
 ## 3. Flux et URL
@@ -34,7 +34,7 @@ Fin du test → `/resultat/{code}-{variante}?s=…&v=…`
 3. **Mes relations** — texte + faibles/forts + toxique/réussit + Les –/Les + (survol) + paradoxe.
 4. **Professionnel** — texte + faibles/forts + éteint/booste + à éviter/métiers (survol) + paradoxe.
 5. **Mindset & dév perso** — accroche + « Comment tu évolues » (+ frise Enfance→Ancien) + **« Tes leviers forts »** (cartes vertes 100 % positives, plus de « pièges/antidotes ») + **« Les questions à te poser »** (style éditorial, questions introspectives) + paradoxe.
-- **Carte de fin « Accéder maintenant »** (`CarteFinPremium`, dans le template) : argumentaire premium + prix (6 €) + bouton + phrase teaser Ombre/Lumière. Générique, identique sur tous les profils. A remplacé l'ancien « mot pour la route » et l'ancien CTA bas.
+- **Carte de fin « Accéder maintenant »** (`CarteFinPremium`, dans le template) : argumentaire premium + prix (7,90 €) + bouton + phrase teaser Ombre/Lumière. Générique, identique sur tous les profils. A remplacé l'ancien « mot pour la route » et l'ancien CTA bas.
 
 ## 6. Conventions de style / DA (à respecter absolument)
 - Police système, vert de marque `rgba(51,164,116,0.85)`, texte noir à 75 % `rgba(0,0,0,0.75)`.
@@ -46,7 +46,7 @@ Fin du test → `/resultat/{code}-{variante}?s=…&v=…`
 - **Panneaux au survol (les 3 identiques)** : ancrés **sous le menu** (top = bas du menu + 16 px), hauteur adaptée au contenu, fondu entrée/sortie (le contenu reste pendant la sortie).
 
 ## 7. Décisions produit
-- Le **système de floutage + paiement réel** n'est PAS encore monté (gros chantier, plus tard, cf. `VISION_FUNNEL_ANGE_DEMON.md`). En attendant, une **carte de fin premium est affichée** (visuel/argumentaire only, prix 6 €), mais sans paywall fonctionnel.
+- Le **floutage/brouillage est monté en prototype** (cf. §8 quater : `BlocVerrouille`, contenu verrouillé brouillé côté serveur, flag `isPaid` via `?paid=1`). Le **paiement réel** (Stripe) et les **comptes** (Supabase) ne sont PAS encore montés (cf. `VISION_FUNNEL_ANGE_DEMON.md`). Carte de fin premium affichée, prix 7,90 €.
 - **Recadrage « valoriser, pas pointer les failles »** : la section dév perso ne nomme plus de « pièges/faiblesses » ; on parle de « leviers forts » et de questions à se poser.
 - La **profondeur des variantes** est le différenciateur (16P ne l'a pas) : on la détaille au maximum.
 - Contenu tiré des **rapports longs de l'utilisateur** (`1_PRODUIT/test personnalités/personnalites/<TYPE>/rapport_long/…`) — c'est son contenu, on peut l'utiliser.
@@ -73,12 +73,32 @@ Les **48 profils sont remplis** : INFP×3 et ENFP-V1 inline dans `profils.ts`, l
 - **ISFJ-V1 : FAIT** — titres des « points forts/faibles » diversifiés (un même titre ne revient plus 3× sur la page) + phrases de texte dé-dupliquées (« n'est pas de l'égoïsme » 3→1, ouvertures des 4 paradoxes variées, « prendre soin de toi » 6→3). Appliqué dans `isfj.ts`, vérifié.
 - Reste : ISFJ-V2/V3, puis tous les autres résumés par ordre de gravité du rapport.
 
-**Template `page.tsx` (s'applique aux 48) :** le bloc **héros** est passé en **pastille verte + texte blanc** (bouton « Partager » inversé en blanc). Alignement **EN COURS** : pastille calée sur le conteneur `max-w-6xl` ; reste à aligner son **bord droit au pixel** sur le texte (menu `ResultatNav` = `md:w-56`, `gap-12` ; colonne texte = `md:max-w-3xl md:mx-auto`, donc centrée et en retrait du bord du conteneur).
-
-**⚠️ Rien n'a été commité cette session.** Commit/push depuis Windows pour sauvegarder `isfj.ts` + `page.tsx`.
-
 LEÇON MÉTHODE : OneDrive sert des vues tronquées au sandbox (`bash`/`tsc`/`grep` = faux négatifs) ; l'outil **Read** est fiable. Les **édits séquentiels + relecture de vérif** depuis Cowork marchent. NE JAMAIS lancer de sous-agents qui écrivent en parallèle (c'est ça qui corrompt OneDrive). Toujours valider par un `npm run build` côté Windows.
 
+## 8 quater. POINT DE REPRISE — session 23 juin 2026 (refonte visuelle page résultat + paywall prototype)
+
+**Page résultat finalisée visuellement** (template, donc s'applique aux 48) :
+- **Héros refait** : colonne centrée `max-w-3xl mx-auto` ; **emblème carré** à droite (monogramme du code, ex. « INFP », pastille blanche translucide, centré verticalement sur le bloc texte) ; accroche tenue sur une ligne (plus de `max-w-xl`) ; bouton « Refaire le test » **retiré** (reste « Partager mon profil »).
+- **Menu de gauche** (`ResultatNav`) : apparaît en **fondu au scroll** (scrollY > 80) ; sur grand écran (**xl**) il flotte à gauche de la colonne centrée (rail `absolute right-full`), sinon barre collante en haut (breakpoints passés de `md:` à `xl:`). Liens en **noir 55 %**, section active en vert.
+- **Menu de progression à droite** (`ProgressionMenu.tsx`, NOUVEAU) : titre « Ton résumé » ; liste toute la table des matières (sections + blocs : points forts/faibles, paradoxes, compatibilités, métiers, etc.), **coche verte = gratuit / cadenas = payant**. Chaque ligne apparaît quand son bloc atteint le bas de l'écran (repères `data-prog` posés devant chaque bloc dans `page.tsx`), apparaît en même temps que le menu de gauche, **dépliage animé**, **curseur de scroll vert custom** (sans flèches) qui grossit en douceur au survol, le panneau **suit la dernière ligne**, et s'arrête en bas de l'encart premium.
+- **Bloc de précision** (`PrecisionRating.tsx`, NOUVEAU) tout en bas : « À quel point ce portrait te ressemble ? » + 5 visages cliquables. **Visuel uniquement** (le vote n'est envoyé/stocké nulle part, à brancher plus tard).
+- **Prix de la carte de fin** `CarteFinPremium` : **7,90 €** (n'est plus 6 €).
+
+**Paywall PROTOTYPE (Phase 1, visuel + sécurité du contenu) :**
+- Flag **`isPaid` via `?paid=1`** (factice, le bouton « Débloquer » y mène). Composant **`BlocVerrouille.tsx`** (NOUVEAU) : floute le contenu premium + overlay CTA « Je débloque mon rapport » (le « (6 €) » a été retiré du bouton verrou).
+- **Découpage gratuit / verrouillé** : gratuit = traits, intros/aperçus, barres de variantes, **points forts/faibles** de chaque section ; verrouillé (flouté) = description des axes et des variantes (au survol), paradoxes, blocs toxique/réussit, compatibilités (Les +/–), environnements/métiers, « Comment tu évolues » + frise, leviers, questions.
+- **SÉCURITÉ : le vrai texte verrouillé n'est jamais envoyé au navigateur d'un non-payeur.** Côté serveur, quand non payé, les champs verrouillés sont **brouillés** (lettres aléatoires, **même longueur/structure exacte**, espaces/ponctuation conservés ; champ `ton` positif/négatif préservé pour ne pas casser couleurs/libellés) via `scrambleStr` / `scrambleDeep` / `brouillerSection` / `brouillerVariante` dans `page.tsx`. Les points forts/faibles gratuits restent réels.
+- **Panneaux au survol des blocs verrouillés** (compatibilités) : s'affichent **floutés + cadenas** (rouge sur bloc négatif, vert sur positif), rendus via **portail** (`createPortal`) pour se positionner correctement malgré le flou de l'ancêtre. `BlocVerrouille` laisse passer le survol (overlay `pointer-events-none`, seul le bouton `pointer-events-auto`).
+
+**48 profils : CONFIRMÉS COMPLETS** (16 types × 3 variantes) — 48/48 clés `CODE-Vx` vérifiées. INFP×3 + ENFP-V1 inline dans `profils.ts` (vue tronquée par OneDrive au sandbox, mais contenu réel présent, vérifié via l'outil Read + rendu de la page).
+
+**Nouveaux fichiers de composants :** `ProgressionMenu.tsx`, `BlocVerrouille.tsx`, `PrecisionRating.tsx` (dans `src/app/components/`).
+
+**⚠️ Tout le travail de cette session est NON COMMITÉ. Commit/push depuis Windows.**
+
+**Prochaine étape (validée avec l'utilisateur) :** concevoir la **page de paiement** (structure + design). Ensuite Phase 2/3 : **comptes Supabase**, **Stripe** (checkout + webhook + table `achats`), et **gating serveur réel** (ne servir le contenu premium qu'après achat vérifié ; le brouillage actuel est déjà une bonne base). Hébergement visé : Vercel (push GitHub → déploiement auto), tout côté serveur, indépendant de l'ordi de l'utilisateur.
+
 ## 9. Prochaines étapes
-- **Remplir les 47 autres profils**, UN PAR UN avec validation : suivre **`GABARIT_PROFIL.md`** (12 blocs de contenu par profil, source = rapport long du type). Référence à recopier = `INFP-V1`. Ne jamais toucher au template/labels figés, seulement ajouter des clés `CODE-Vx` dans `profils.ts`.
-- En attente / plus tard : bouton « Partager » fonctionnel (aujourd'hui inactif), capture e-mail réellement branchée (le `Quiz` collecte l'e-mail mais ne l'envoie nulle part), validation au build (48 clés présentes), passe responsive mobile, puis le système floutage + paiement (cf. `VISION_FUNNEL_ANGE_DEMON.md`).
+- **Concevoir la page de paiement** (structure + design), puis Phase 2/3 : **comptes Supabase**, **Stripe** (checkout + webhook + table `achats`), **gating serveur réel**.
+- **Contenu** : corriger ISTJ (ré-accentuer) et finir la passe anti-répétition intra-résumé (cf. §8 ter et `AUDIT_48_PROFILS.md`).
+- En attente / plus tard : bouton « Partager » fonctionnel (aujourd'hui inactif), capture e-mail réellement branchée (le `Quiz` collecte l'e-mail mais ne l'envoie nulle part), retour du bloc « À quel point ce portrait te ressemble » réellement enregistré, validation automatique au build (présence des 48 clés), passe responsive mobile.

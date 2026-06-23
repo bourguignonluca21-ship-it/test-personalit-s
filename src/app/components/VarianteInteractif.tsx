@@ -14,7 +14,13 @@ export interface VarianteItem {
 
 // Tableau des 3 variantes — même DA que les traits (barres vertes pleines),
 // + panneau d'explication qui s'ouvre au survol, calé sous le menu (desktop).
-export default function VarianteInteractif({ variantes }: { variantes: VarianteItem[] }) {
+export default function VarianteInteractif({
+  variantes,
+  isPaid = true,
+}: {
+  variantes: VarianteItem[];
+  isPaid?: boolean;
+}) {
   const [hovered, setHovered] = useState<string | null>(null);
   const current = variantes.find((x) => x.cle === hovered) ?? null;
 
@@ -97,7 +103,23 @@ export default function VarianteInteractif({ variantes }: { variantes: VarianteI
             <p className="text-xs font-bold uppercase tracking-wide mb-1.5 text-[rgba(0,0,0,0.75)]">
               <span style={{ color: GREEN }}>{shown.pct}%</span> · {shown.nom}
             </p>
-            <p className="text-sm text-gray-600 leading-relaxed">{shown.description}</p>
+            {isPaid ? (
+              <p className="text-sm text-gray-600 leading-relaxed">{shown.description}</p>
+            ) : (
+              <div className="relative">
+                <p aria-hidden="true" className="text-sm text-gray-600 leading-relaxed blur-[4px] select-none">
+                  {shown.description}
+                </p>
+                {/* Cadenas vert centré sur le flou */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="5" y="11" width="14" height="9" rx="2" fill={GREEN} />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke={GREEN} strokeWidth="2" strokeLinecap="round" />
+                    <circle cx="12" cy="15.3" r="1.4" fill="white" />
+                  </svg>
+                </div>
+              </div>
+            )}
           </>
         )}
       </div>

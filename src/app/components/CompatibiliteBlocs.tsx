@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { getTypeByCode } from "../data/types";
 
 const GREEN = "rgba(51,164,116,0.85)";
@@ -17,7 +18,14 @@ export interface CompatibiliteBloc {
 
 // Blocs « Les + / Les – » : au survol, un panneau s'ouvre en bas-gauche (sous le
 // menu, comme celui des barres) et révèle les profils compatibles concrets.
-export default function CompatibiliteBlocs({ blocs }: { blocs: CompatibiliteBloc[] }) {
+// `locked` : si vrai, le panneau s'affiche flouté avec un cadenas (teaser premium).
+export default function CompatibiliteBlocs({
+  blocs,
+  locked = false,
+}: {
+  blocs: CompatibiliteBloc[];
+  locked?: boolean;
+}) {
   const [hovered, setHovered] = useState<string | null>(null);
   const current = blocs.find((b) => b.titre === hovered) ?? null;
 
@@ -26,6 +34,10 @@ export default function CompatibiliteBlocs({ blocs }: { blocs: CompatibiliteBloc
   useEffect(() => {
     if (current) setShown(current);
   }, [current]);
+
+  // Portail (le panneau doit sortir du conteneur flouté pour se positionner correctement).
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   // On cale le panneau sur le menu collant (mêmes gauche + largeur).
   const [box, setBox] = useState<{ left: number; width: number; top: number } | null>(null);
@@ -51,6 +63,62 @@ export default function CompatibiliteBlocs({ blocs }: { blocs: CompatibiliteBloc
   }, []);
 
   const couleurCur = shown ? (shown.ton === "positif" ? GREEN : RED) : GREEN;
+
+  const liste = shown && (
+    <ul className="space-y-2.5">
+      {shown.profils.map((p, i) => {
+        const t = p.code ? getTypeByCode(p.code) : undefined;
+        const nom = p.code ? t?.name ?? p.code : p.nom;
+        return (
+          <li key={p.code ?? p.nom ?? i} className="text-sm leading-snug">
+            <span className="font-semibold text-[rgba(0,0,0,0.8)]">{nom}</span>
+            {p.code && <span className="text-gray-400"> ({p.code})</span>}
+            <span className="text-gray-600"> — {p.raison}</span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+
+  const panel = (
+    <div
+      aria-hidden={!current}
+      style={
+        box
+          ? { left: `${box.left}px`, width: `${box.width}px`, top: `${box.top}px` }
+          : { left: "1.5rem", top: "8rem" }
+      }
+      className={`hidden md:block fixed z-40 rounded-2xl border border-gray-100 bg-white shadow-[0_12px_40px_-12px_rgba(0,0,0,0.18)] p-5 transition-all duration-200 ${
+        current ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
+      }`}
+    >
+      {shown && (
+        <>
+          <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: couleurCur }}>
+            {shown.panelTitre ??
+              (shown.ton === "positif" ? "Les profils les + compatible" : "Les profils les – compatible")}
+          </p>
+          {locked ? (
+            <div className="relative">
+              <div aria-hidden="true" className="select-none blur-[4px]">
+                {liste}
+              </div>
+              {/* Cadenas vert centré sur le flou */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="5" y="11" width="14" height="9" rx="2" fill={couleurCur} />
+                  <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke={couleurCur} strokeWidth="2" />
+                  <circle cx="12" cy="15.3" r="1.4" fill="white" />
+                </svg>
+              </div>
+            </div>
+          ) : (
+            liste
+          )}
+        </>
+      )}
+    </div>
+  );
 
   return (
     <>
@@ -86,42 +154,9 @@ export default function CompatibiliteBlocs({ blocs }: { blocs: CompatibiliteBloc
         })}
       </div>
 
-      {/* Panneau d'explication — bas-gauche, sous le menu (desktop) */}
-      <div
-        aria-hidden={!current}
-        style={
-          box
-            ? { left: `${box.left}px`, width: `${box.width}px`, top: `${box.top}px` }
-            : { left: "1.5rem", top: "8rem" }
-        }
-        className={`hidden md:block fixed z-40 rounded-2xl border border-gray-100 bg-white shadow-[0_12px_40px_-12px_rgba(0,0,0,0.18)] p-5 transition-all duration-200 ${
-          current ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
-        }`}
-      >
-        {shown && (
-          <>
-            <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: couleurCur }}>
-              {shown.panelTitre ??
-                (shown.ton === "positif"
-                  ? "Les profils les + compatible"
-                  : "Les profils les – compatible")}
-            </p>
-            <ul className="space-y-2.5">
-              {shown.profils.map((p, i) => {
-                const t = p.code ? getTypeByCode(p.code) : undefined;
-                const nom = p.code ? t?.name ?? p.code : p.nom;
-                return (
-                  <li key={p.code ?? p.nom ?? i} className="text-sm leading-snug">
-                    <span className="font-semibold text-[rgba(0,0,0,0.8)]">{nom}</span>
-                    {p.code && <span className="text-gray-400"> ({p.code})</span>}
-                    <span className="text-gray-600"> — {p.raison}</span>
-                  </li>
-                );
-              })}
-            </ul>
-          </>
-        )}
-      </div>
+      {/* Panneau d'explication — rendu via portail pour se positionner correctement même
+          quand il est dans un bloc verrouillé (flouté). */}
+      {mounted ? createPortal(panel, document.body) : null}
     </>
   );
 }
