@@ -697,14 +697,12 @@ export default async function ResultatPage({
         })}
 
         </div>
-      </div>
 
-      {/* CARTE PREMIUM DE FIN — hors de la zone des menus, pour qu'ils s'arrêtent au bas du contenu (Ton paradoxe) */}
-      {!isPaid && (
-        <div className="max-w-3xl mx-auto px-4 md:px-0">
+        {/* CARTE PREMIUM DE FIN — dans la zone des menus, pour que les rails descendent jusqu'en bas de la carte (comme la version payée) */}
+        {!isPaid && (
           <CarteFinPremium unlockHref={unlockHref} produitNom={`${profil.code} · ${profil.nomVariante}`} />
-        </div>
-      )}
+        )}
+      </div>
 
       {/* RETOUR DE PRÉCISION — hors de la zone des menus collants */}
       <div className="max-w-3xl mx-auto px-4 md:px-0">

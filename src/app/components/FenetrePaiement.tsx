@@ -19,6 +19,40 @@ const SHADOW = "0 18px 55px -20px rgba(0,0,0,0.32)";
 // Stripe.js chargé une seule fois (clé publiable).
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
+// Critères du mot de passe (affichés + bloquants côté UI ; le vrai verrou se règle aussi dans Supabase).
+function critsMotDePasse(pw: string) {
+  return [
+    { ok: pw.length >= 8, label: "8 caractères" },
+    { ok: /[A-Z]/.test(pw), label: "une majuscule" },
+    { ok: /[a-z]/.test(pw), label: "une minuscule" },
+    { ok: /[0-9]/.test(pw), label: "un chiffre" },
+  ];
+}
+function mdpValide(pw: string) {
+  return critsMotDePasse(pw).every((c) => c.ok);
+}
+
+// Liste des critères qui se cochent en vert au fur et à mesure de la saisie.
+function ChecklistMdp({ password }: { password: string }) {
+  return (
+    <ul style={{ listStyle: "none", margin: "7px 0 0", padding: "0 2px", display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center", gap: 4, boxSizing: "border-box" }}>
+      {critsMotDePasse(password).map((c) => (
+        <li
+          key={c.label}
+          style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10.5, color: c.ok ? "rgba(0,0,0,0.72)" : "rgba(0,0,0,0.40)", transition: "color .2s ease", whiteSpace: "nowrap" }}
+        >
+          <span style={{ display: "grid", placeItems: "center", width: 13, height: 13, borderRadius: "50%", flexShrink: 0, background: c.ok ? GREEN_SOLID : "rgba(0,0,0,0.10)", transition: "background .2s ease" }}>
+            <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12l5 5L20 6" />
+            </svg>
+          </span>
+          {c.label}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 // Formulaire de paiement Stripe (doit vivre à l'intérieur de <Elements>).
 function PaiementInner({
   prix,
@@ -112,13 +146,19 @@ export default function FenetrePaiement({
 }) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<1 | 2>(1);
-  const [view, setView] = useState<"choix" | "connexion" | "inscription" | "reset">("choix");
+  const [view, setView] = useState<"choix" | "connexion" | "inscription" | "reset" | "nouveau" | "code">("choix");
   const [resetSent, setResetSent] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [code, setCode] = useState("");
+  const [codeEnvoye, setCodeEnvoye] = useState(false);
+  const [successAnim, setSuccessAnim] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmOuverte, setConfirmOuverte] = useState(false);
+  const [mailEnvoye, setMailEnvoye] = useState(false);
   const [supabase] = useState(() => createClient());
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [thumb, setThumb] = useState({ top: 0, height: 0, show: false });
@@ -151,6 +191,11 @@ export default function FenetrePaiement({
     setClientSecret(null);
     setShowPassword(false);
     setResetSent(false);
+    setConfirmOuverte(false);
+    setMailEnvoye(false);
+    setCode("");
+    setCodeEnvoye(false);
+    setSuccessAnim(false);
     setOpen(true);
   }
   function closeModal() {
@@ -181,7 +226,7 @@ export default function FenetrePaiement({
       setAuthError("Email ou mot de passe incorrect.");
       return;
     }
-    setStep(2);
+    reussiteConnexion();
   }
   async function handleSignUp() {
     setAuthError(null);
@@ -192,13 +237,17 @@ export default function FenetrePaiement({
       setAuthError(error.message);
       return;
     }
-    setStep(2);
+    reussiteConnexion();
   }
   async function handleReset() {
     setAuthError(null);
     setAuthLoading(true);
+    // On renvoie le client sur SA page de résultat (avec un marqueur), pour rouvrir la fenêtre
+    // sur l'écran "nouveau mot de passe" et enchaîner le paiement sans lui faire perdre son test.
+    const retour = new URL(window.location.href);
+    retour.searchParams.set("recovery", "1");
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/nouveau-mot-de-passe`,
+      redirectTo: retour.toString(),
     });
     setAuthLoading(false);
     if (error) {
@@ -206,6 +255,83 @@ export default function FenetrePaiement({
       return;
     }
     setResetSent(true);
+  }
+  async function handleSetNewPassword() {
+    setAuthError(null);
+    if (!mdpValide(password)) {
+      setAuthError("Ton mot de passe ne remplit pas encore tous les critères.");
+      return;
+    }
+    if (password !== password2) {
+      setAuthError("Les deux mots de passe ne correspondent pas.");
+      return;
+    }
+    setAuthLoading(true);
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) {
+      setAuthLoading(false);
+      setAuthError(error.message);
+      return;
+    }
+    // Email de sécurité (best effort, ne bloque pas le succès). L'adresse est déduite
+    // côté serveur à partir du jeton, pas envoyée par le navigateur.
+    let mail = false;
+    try {
+      const { data } = await supabase.auth.getSession();
+      const token = data.session?.access_token;
+      if (token) {
+        const r = await fetch("/api/auth/notif-mot-de-passe", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        mail = r.ok;
+      }
+    } catch {
+      // tant pis pour le mail, le changement de mot de passe a réussi
+    }
+    setAuthLoading(false);
+    setMailEnvoye(mail);
+    setPassword("");
+    setPassword2("");
+    // On ouvre la petite fenêtre de confirmation ; « Continuer » mènera au paiement.
+    setConfirmOuverte(true);
+  }
+  async function handleSendCode() {
+    setAuthError(null);
+    setAuthLoading(true);
+    // Envoie un code à 6 chiffres par email (crée le compte si besoin = inscription sans mot de passe).
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: true },
+    });
+    setAuthLoading(false);
+    if (error) {
+      setAuthError(error.message);
+      return;
+    }
+    setCode("");
+    setCodeEnvoye(true);
+  }
+  async function handleVerifyCode() {
+    setAuthError(null);
+    setAuthLoading(true);
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token: code.trim(),
+      type: "email",
+    });
+    setAuthLoading(false);
+    if (error) {
+      setAuthError("Code incorrect ou expiré.");
+      return;
+    }
+    reussiteConnexion();
+  }
+  // Anime un succès de connexion (coche verte) puis bascule en douceur sur le paiement.
+  function reussiteConnexion() {
+    setSuccessAnim(true);
+    window.setTimeout(() => setStep(2), 1000);
+    window.setTimeout(() => setSuccessAnim(false), 1200);
   }
 
   // Fermeture à Échap. On NE bloque PAS le scroll du fond : il reste défilable.
@@ -217,6 +343,32 @@ export default function FenetrePaiement({
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Retour depuis le lien "mot de passe oublié" : le client revient sur SA page de résultat
+  // avec ?recovery=1. On rouvre la fenêtre directement sur l'écran "nouveau mot de passe".
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("recovery") !== "1") return;
+    setView("nouveau");
+    setStep(1);
+    setEmail("");
+    setPassword("");
+    setPassword2("");
+    setAuthError(null);
+    setShowPassword(false);
+    setResetSent(false);
+    setConfirmOuverte(false);
+    setMailEnvoye(false);
+    setCode("");
+    setCodeEnvoye(false);
+    setSuccessAnim(false);
+    setOpen(true);
+    // On retire le marqueur pour ne pas re-déclencher au rechargement (sans toucher au reste de l'URL).
+    params.delete("recovery");
+    const qs = params.toString();
+    window.history.replaceState(null, "", window.location.pathname + (qs ? `?${qs}` : ""));
+  }, []);
 
   // Sur l'écran paiement, on demande au serveur de créer l'intention de paiement (montant
   // fixé côté serveur) et on récupère le client_secret pour afficher le formulaire Stripe.
@@ -283,9 +435,13 @@ export default function FenetrePaiement({
   };
   const pillSmall: CSSProperties = {
     flex: 1,
-    border: "none",
-    background: "rgba(51,164,116,0.10)",
-    color: GREEN_SOLID,
+    border: "1px solid rgba(255,255,255,0.6)",
+    background: "rgba(255,255,255,0.22)",
+    backdropFilter: "blur(8px)",
+    WebkitBackdropFilter: "blur(8px)",
+    boxShadow: "0 6px 18px -8px rgba(0,0,0,0.25)",
+    color: "#fff",
+    textShadow: "0 1px 3px rgba(0,0,0,0.35)",
     borderRadius: 999,
     padding: "11px 12px",
     cursor: "pointer",
@@ -349,20 +505,19 @@ export default function FenetrePaiement({
           left: "50%",
           top: "50%",
           width: "min(408px, 92vw)",
-          background:
-            "linear-gradient(to top, rgba(51,164,116,0.12) 0%, rgba(51,164,116,0.05) 35%, transparent 65%), #fff",
+          background: step === 1 && view === "choix" ? "transparent" : "#fff",
           borderRadius: 24,
-          boxShadow: SHADOW,
+          boxShadow: step === 1 && view === "choix" ? "none" : SHADOW,
           overflow: "hidden",
           maxHeight: "92vh",
           transformOrigin: "50% 115%",
           transform: open ? "translate(-50%,-50%) scale(1)" : "translate(-50%,-50%) scale(.18)",
           opacity: open ? 1 : 0,
           visibility: open ? "visible" : "hidden",
-          transition: "transform .42s cubic-bezier(.34,1.4,.5,1), opacity .3s ease, visibility .42s",
+          transition: "transform .42s cubic-bezier(.34,1.4,.5,1), opacity .3s ease, visibility .42s, background .35s ease, box-shadow .35s ease",
         }}
       >
-        <style>{".fp-noscroll{scrollbar-width:none}.fp-noscroll::-webkit-scrollbar{display:none}.fp-thumb{width:4px;background:rgba(51,164,116,0.85);transition:width .25s ease,background .25s ease}.fp-thumbwrap:hover .fp-thumb{width:7px;background:rgba(51,164,116,1)}.fp-link{color:rgba(0,0,0,0.50);transition:color .2s ease}.fp-link:hover{color:rgba(0,0,0,0.78)}"}</style>
+        <style>{".fp-noscroll{scrollbar-width:none}.fp-noscroll::-webkit-scrollbar{display:none}.fp-thumb{width:4px;background:rgba(51,164,116,0.85);transition:width .25s ease,background .25s ease}.fp-thumbwrap:hover .fp-thumb{width:7px;background:rgba(51,164,116,1)}.fp-link{color:rgba(0,0,0,0.50);transition:color .2s ease}.fp-link:hover{color:rgba(0,0,0,0.78)}.fp-pill{transition:transform .2s ease}.fp-pill:hover{transform:scale(1.04)}"}</style>
 
         {/* Fermer */}
         <button
@@ -418,6 +573,39 @@ export default function FenetrePaiement({
           </div>
         </div>
 
+        {/* SUCCÈS DE CONNEXION : la coche verte apparaît, puis on bascule vers le paiement */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 5,
+            background: "#fff",
+            display: "grid",
+            placeItems: "center",
+            opacity: successAnim ? 1 : 0,
+            visibility: successAnim ? "visible" : "hidden",
+            transition: "opacity .4s ease, visibility .4s",
+            pointerEvents: successAnim ? "auto" : "none",
+          }}
+        >
+          <div
+            style={{
+              width: 64,
+              height: 64,
+              borderRadius: "50%",
+              background: GREEN,
+              display: "grid",
+              placeItems: "center",
+              transform: successAnim ? "scale(1)" : "scale(.6)",
+              transition: "transform .45s cubic-bezier(.34,1.4,.5,1)",
+            }}
+          >
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12l5 5L20 6" />
+            </svg>
+          </div>
+        </div>
+
         {/* Conteneur à hauteur animée : la fenêtre épouse l'écran actif */}
         <div style={{ overflow: "hidden", height: trackH, transition: "height .4s ease" }}>
         {/* Piste qui glisse entre écran 1 (choix) et écran 2 (paiement) */}
@@ -443,14 +631,14 @@ export default function FenetrePaiement({
             >
               {view === "choix" ? (
                 <>
-                  <button type="button" onClick={() => setStep(2)} style={pillPrimary}>
+                  <button type="button" className="fp-pill" onClick={() => setStep(2)} style={pillPrimary}>
                     Continuer vers le paiement
                   </button>
                   <div style={{ display: "flex", gap: 10 }}>
-                    <button type="button" onClick={() => setView("connexion")} style={pillSmall}>
+                    <button type="button" className="fp-pill" onClick={() => setView("connexion")} style={pillSmall}>
                       Se connecter
                     </button>
-                    <button type="button" onClick={() => setView("inscription")} style={pillSmall}>
+                    <button type="button" className="fp-pill" onClick={() => setView("inscription")} style={pillSmall}>
                       Créer un compte
                     </button>
                   </div>
@@ -507,6 +695,171 @@ export default function FenetrePaiement({
                     </>
                   )}
                 </>
+              ) : view === "nouveau" ? (
+                <>
+                  <p style={{ fontSize: 12.5, color: INK50, textAlign: "center", margin: "0 0 2px", lineHeight: 1.5, whiteSpace: "nowrap" }}>
+                    Crée ton nouveau mot de passe, et on reprend où tu en étais.
+                  </p>
+                  <div style={{ position: "relative" }}>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Nouveau mot de passe"
+                      autoComplete="new-password"
+                      style={{ ...inputPill, paddingRight: 46 }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((v) => !v)}
+                      aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                      style={{ position: "absolute", top: "50%", right: 6, transform: "translateY(-50%)", width: 32, height: 32, border: "none", background: "none", cursor: "pointer", display: "grid", placeItems: "center", color: INK50, padding: 0 }}
+                    >
+                      {showPassword ? (
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                          <path d="M1 1l22 22" />
+                        </svg>
+                      ) : (
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                  {password.length > 0 && <ChecklistMdp password={password} />}
+                  <div style={{ position: "relative" }}>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={password2}
+                      onChange={(e) => setPassword2(e.target.value)}
+                      placeholder="Confirme le mot de passe"
+                      autoComplete="new-password"
+                      style={{ ...inputPill, paddingRight: 46 }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((v) => !v)}
+                      aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                      style={{ position: "absolute", top: "50%", right: 6, transform: "translateY(-50%)", width: 32, height: 32, border: "none", background: "none", cursor: "pointer", display: "grid", placeItems: "center", color: INK50, padding: 0 }}
+                    >
+                      {showPassword ? (
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                          <path d="M1 1l22 22" />
+                        </svg>
+                      ) : (
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                  {authError && (
+                    <p style={{ fontSize: 12, color: "#c0392b", textAlign: "center", margin: 0, lineHeight: 1.4 }}>
+                      {authError}
+                    </p>
+                  )}
+                  <button
+                    type="button"
+                    disabled={authLoading || !mdpValide(password)}
+                    onClick={handleSetNewPassword}
+                    style={{
+                      ...pillPrimary,
+                      opacity: authLoading || !mdpValide(password) ? 0.6 : 1,
+                      cursor: authLoading || !mdpValide(password) ? "default" : "pointer",
+                    }}
+                  >
+                    {authLoading ? "Un instant…" : "Valider mon nouveau mot de passe"}
+                  </button>
+                </>
+              ) : view === "code" ? (
+                <>
+                  {!codeEnvoye ? (
+                    <>
+                      <p style={{ fontSize: 13, color: INK50, textAlign: "center", margin: "0 0 2px", lineHeight: 1.5 }}>
+                        Entre ton email, on t&apos;envoie un code pour te connecter, sans mot de passe.
+                      </p>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Adresse email"
+                        autoComplete="email"
+                        style={inputPill}
+                      />
+                      {authError && (
+                        <p style={{ fontSize: 12, color: "#c0392b", textAlign: "center", margin: 0, lineHeight: 1.4 }}>
+                          {authError}
+                        </p>
+                      )}
+                      <button
+                        type="button"
+                        disabled={authLoading}
+                        onClick={handleSendCode}
+                        style={{ ...pillPrimary, opacity: authLoading ? 0.7 : 1 }}
+                      >
+                        {authLoading ? "Un instant…" : "Recevoir mon code"}
+                      </button>
+                      <button
+                        type="button"
+                        className="fp-link"
+                        onClick={() => { setView("connexion"); setAuthError(null); }}
+                        style={linkSmall}
+                      >
+                        Retour
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <p style={{ fontSize: 13, color: INK50, textAlign: "center", margin: "0 0 2px", lineHeight: 1.5 }}>
+                        On t&apos;a envoyé un code par email, colle-le ici pour te connecter.
+                      </p>
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={6}
+                        value={code}
+                        onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
+                        placeholder="Code reçu par email"
+                        autoComplete="one-time-code"
+                        style={{ ...inputPill, textAlign: "center", letterSpacing: "0.3em", fontSize: 16 }}
+                      />
+                      {authError && (
+                        <p style={{ fontSize: 12, color: "#c0392b", textAlign: "center", margin: 0, lineHeight: 1.4 }}>
+                          {authError}
+                        </p>
+                      )}
+                      <button
+                        type="button"
+                        disabled={authLoading || code.length < 6}
+                        onClick={handleVerifyCode}
+                        style={{
+                          ...pillPrimary,
+                          opacity: authLoading || code.length < 6 ? 0.6 : 1,
+                          cursor: authLoading || code.length < 6 ? "default" : "pointer",
+                        }}
+                      >
+                        {authLoading ? "Un instant…" : "Se connecter"}
+                      </button>
+                      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 18 }}>
+                        <button type="button" className="fp-link" onClick={handleSendCode} style={linkSmall}>
+                          Renvoyer le code
+                        </button>
+                        <button
+                          type="button"
+                          className="fp-link"
+                          onClick={() => { setCodeEnvoye(false); setCode(""); setAuthError(null); }}
+                          style={linkSmall}
+                        >
+                          Changer d&apos;email
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </>
               ) : (
                 <>
                   <input
@@ -559,6 +912,7 @@ export default function FenetrePaiement({
                       )}
                     </button>
                   </div>
+                  {view === "inscription" && password.length > 0 && <ChecklistMdp password={password} />}
                   {view === "connexion" ? (
                     <div style={{ position: "relative", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginTop: 2 }}>
                       <button
@@ -601,12 +955,26 @@ export default function FenetrePaiement({
                   )}
                   <button
                     type="button"
-                    disabled={authLoading}
+                    disabled={authLoading || (view === "inscription" && !mdpValide(password))}
                     onClick={view === "connexion" ? handleSignIn : handleSignUp}
-                    style={{ ...pillPrimary, opacity: authLoading ? 0.7 : 1 }}
+                    style={{
+                      ...pillPrimary,
+                      opacity: authLoading || (view === "inscription" && !mdpValide(password)) ? 0.6 : 1,
+                      cursor: authLoading || (view === "inscription" && !mdpValide(password)) ? "default" : "pointer",
+                    }}
                   >
                     {authLoading ? "Un instant…" : view === "connexion" ? "Se connecter" : "Créer mon compte"}
                   </button>
+                  {view === "connexion" && (
+                    <button
+                      type="button"
+                      className="fp-link"
+                      onClick={() => { setView("code"); setCode(""); setCodeEnvoye(false); setAuthError(null); }}
+                      style={linkSmall}
+                    >
+                      Recevoir un code par email à la place
+                    </button>
+                  )}
                   <button
                     type="button"
                     onClick={retourChoix}
@@ -763,6 +1131,52 @@ export default function FenetrePaiement({
             )}
           </div>
         </div>
+        </div>
+      </div>
+      {/* CONFIRMATION : mot de passe changé (s'ouvre par dessus la fenêtre) */}
+      <div
+        aria-hidden={!confirmOuverte}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 80,
+          display: "grid",
+          placeItems: "center",
+          padding: 16,
+          background: "rgba(20,22,21,0.28)",
+          backdropFilter: "blur(3px)",
+          WebkitBackdropFilter: "blur(3px)",
+          opacity: confirmOuverte ? 1 : 0,
+          visibility: confirmOuverte ? "visible" : "hidden",
+          transition: "opacity .3s ease, visibility .3s",
+        }}
+      >
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            width: "min(360px, 92vw)",
+            background: "#fff",
+            borderRadius: 22,
+            boxShadow: SHADOW,
+            padding: "30px 26px 26px",
+            textAlign: "center",
+            transform: confirmOuverte ? "scale(1)" : "scale(.9)",
+            transition: "transform .35s cubic-bezier(.34,1.4,.5,1)",
+          }}
+        >
+          <div style={{ width: 56, height: 56, margin: "0 auto 16px", borderRadius: "50%", background: GREEN, display: "grid", placeItems: "center" }}>
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12l5 5L20 6" />
+            </svg>
+          </div>
+          <p style={{ fontSize: 16.5, fontWeight: 700, color: INK, margin: "0 0 8px" }}>Ton mot de passe a bien été changé</p>
+          <p style={{ fontSize: 13, color: INK50, margin: "0 0 22px", lineHeight: 1.5 }}>
+            {mailEnvoye ? "Un email de sécurité vient de t'être envoyé." : "Tu peux reprendre où tu en étais."}
+          </p>
+          <button type="button" onClick={() => { setConfirmOuverte(false); setStep(2); }} style={pillPrimary}>
+            Continuer
+          </button>
         </div>
       </div>
     </>
