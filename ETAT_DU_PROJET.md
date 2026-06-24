@@ -98,7 +98,49 @@ LEÇON MÉTHODE : OneDrive sert des vues tronquées au sandbox (`bash`/`tsc`/`gr
 
 **Prochaine étape (validée avec l'utilisateur) :** concevoir la **page de paiement** (structure + design). Ensuite Phase 2/3 : **comptes Supabase**, **Stripe** (checkout + webhook + table `achats`), et **gating serveur réel** (ne servir le contenu premium qu'après achat vérifié ; le brouillage actuel est déjà une bonne base). Hébergement visé : Vercel (push GitHub → déploiement auto), tout côté serveur, indépendant de l'ordi de l'utilisateur.
 
+## 8 quinquies. POINT DE REPRISE, session 24 juin 2026 (comptes Supabase + paiement Stripe réel dans la fenêtre)
+
+**La « page de paiement » est une FENÊTRE (modale), pas une route.** Décision produit validée : le bouton « Débloquer mon rapport complet » ouvre une fenêtre qui s'agrandit par dessus la page résultat (fond légèrement flouté, scroll de fond conservé), et NON une nouvelle page. Composant : `src/app/components/FenetrePaiement.tsx` (client), branché dans `CarteFinPremium` (et seulement là pour l'instant ; les `BlocVerrouille` internes pointent encore vers `/pack-carriere-premium`, à rebrancher plus tard si voulu).
+
+**Structure de la fenêtre :**
+- Bande haut commune : emplacement « Ton logo » (placeholder, vrai logo à venir). Dégradé vert de la home (`MeshGradient`) porté par toute la fenêtre.
+- Écran 1 (choix) : une grande pastille verte « Continuer vers le paiement » + deux petites « Se connecter » / « Créer un compte ». Hauteur figée (`minHeight`) pour ne pas sauter quand on bascule vers le formulaire de connexion.
+- « Se connecter » / « Créer un compte » affichent un mini formulaire email + mot de passe (2 champs pilule à fin contour) dans la MÊME fenêtre, sans changer sa taille.
+- Écran 2 (paiement) : flèche retour seule, pastille verte « Finalise ton accès », récap (Rapport complet, 7,90 €), total, le formulaire Stripe, « Paiement unique… ».
+- La fenêtre épouse la hauteur de l'écran actif (animée, via `ResizeObserver`), plafonnée à `92vh`. L'écran paiement défile en interne avec un **curseur de scroll vert custom identique au `ProgressionMenu`** (natif masqué, thumb dessiné, grossit au survol : classes `fp-noscroll` / `fp-thumb` / `fp-thumbwrap`).
+- Fermeture (croix / clic fond / Échap) ramène en douceur sur l'encart `#encart-final` (« Va au bout de toi même »).
+- Bouton « Partager mon profil » (à côté de « Débloquer ») ouvre une 2e fenêtre `FenetrePartage.tsx` (icônes réseaux : Insta, Facebook, Messenger, Snapchat, WhatsApp, X, TikTok, Copier le lien). Boutons sans action pour l'instant (le vrai lien de partage viendra plus tard).
+
+**Comptes Supabase (email + mot de passe) — EN PLACE et fonctionnels :**
+- Décision : on construit **les comptes d'abord**, puis on rattachera le paiement dessus. « Continuer sans inscription » reste la porte douce (mène direct au paiement aujourd'hui).
+- Projet Supabase `ref = lxaxwsplkvplhcpfltfi`. Connecteur : `src/app/lib/supabase/client.ts` (`@supabase/ssr`, `createBrowserClient`).
+- `.env.local` (NON commité) contient `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publiques).
+- Les formulaires de la fenêtre appellent `supabase.auth.signUp` / `signInWithPassword`. Vérifié : créer un compte ajoute bien l'utilisateur dans Supabase → Authentication → Users.
+- **Confirmation par email DÉSACTIVÉE** dans Supabase (Authentication → Providers → Email) le temps des tests : un compte créé marche tout de suite. À réactiver avant la mise en ligne.
+- Table `public.achats` créée (user_id, produit, profil, montant_cents, devise, statut, stripe_payment_intent, created_at) avec **RLS** (politique : chacun ne lit que ses propres achats). Pas encore d'insert depuis le code (viendra via le webhook serveur).
+- Pas encore montés : `server.ts` (client Supabase serveur via cookies) ni `middleware.ts`. Donc la session n'est pas encore lue côté serveur (nécessaire pour le gating réel).
+
+**Paiement Stripe — RÉEL et intégré dans la fenêtre (mode test) :**
+- Compte Stripe créé (non vérifié, suffisant pour le mode test ; la vérification + un statut d'entreprise seront requis pour encaisser en vrai).
+- `.env.local` : `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` (pk_test) et `STRIPE_SECRET_KEY` (sk_test, serveur seulement).
+- `src/app/lib/stripe.ts` (client Stripe serveur). Route `src/app/api/paiement/intent/route.ts` : POST → crée un PaymentIntent de **790 centimes EUR**, `automatic_payment_methods: enabled`, renvoie le `client_secret`. **Le montant est fixé côté serveur.**
+- Dans la fenêtre : `<Elements>` + `<PaymentElement layout="tabs">` (compact), `appearance` à la DA (vert, police système, arrondis). Moyens affichés = ceux activés dans le dashboard Stripe (carte, Klarna, Bancontact, Amazon Pay, MB WAY…).
+- `confirmPayment({ redirect: "if_required", confirmParams.return_url })` : la carte reste en ligne, les moyens à redirection (Klarna) reviennent sur `return_url`.
+- **Gating encore prototype** : au succès, on fait `router.push(unlockHref)` qui ajoute `?paid=1` et re-rend le rapport déflouté. Le vrai gating (achat vérifié) reste à faire.
+- Librairies installées : `stripe`, `@stripe/stripe-js`, `@stripe/react-stripe-js`, `@supabase/supabase-js`, `@supabase/ssr`.
+
+**Nouveaux fichiers :** `components/FenetrePaiement.tsx`, `components/FenetrePartage.tsx`, `lib/supabase/client.ts`, `lib/stripe.ts`, `api/paiement/intent/route.ts`, `.env.local`.
+
+**⚠️ OneDrive :** le serveur de dev et `node_modules` / `.next` ont déclenché des pop-up OneDrive « supprimer N fichiers » (N qui grimpe). On a cliqué « Conserver les fichiers » et **mis OneDrive en pause**. Vraie solution à planifier : **sortir le projet de OneDrive** (réglera aussi les vues tronquées chroniques).
+
+**⚠️ Tout le travail de cette session est NON COMMITÉ.** Commit/push depuis Windows / Claude Code.
+
 ## 9. Prochaines étapes
-- **Concevoir la page de paiement** (structure + design), puis Phase 2/3 : **comptes Supabase**, **Stripe** (checkout + webhook + table `achats`), **gating serveur réel**.
+- **Fenêtre de paiement + comptes Supabase + Stripe : FAITS** (cf. §8 quinquies). Restent les vrais branchements serveur :
+  - **Session Supabase côté serveur** : monter `lib/supabase/server.ts` + `middleware.ts` pour lire l'utilisateur connecté côté serveur.
+  - **Webhook Stripe** (`api/paiement/webhook`) : à la confirmation du paiement, **insérer l'achat dans `achats`** (clé service_role, rattaché au user connecté + métadonnées profil).
+  - **Gating serveur réel** : remplacer le `?paid=1` factice par une vérif « cet utilisateur a-t-il acheté ce rapport ? » avant de servir le contenu déflouté. Gérer aussi le cas « sans inscription » (achat anonyme : jeton signé, ou pousser la création de compte au moment de payer).
+  - **Mise en ligne** : réactiver la confirmation email Supabase, vérifier le compte Stripe (statut entreprise) pour passer en live, déployer sur Vercel.
+- **Sortir le projet de OneDrive** (réglera les pop-up de suppression et les vues tronquées). À faire proprement avec Claude Code (déplacer le dossier, garder le dépôt Git, recâbler le dossier connecté).
 - **Contenu** : corriger ISTJ (ré-accentuer) et finir la passe anti-répétition intra-résumé (cf. §8 ter et `AUDIT_48_PROFILS.md`).
 - En attente / plus tard : bouton « Partager » fonctionnel (aujourd'hui inactif), capture e-mail réellement branchée (le `Quiz` collecte l'e-mail mais ne l'envoie nulle part), retour du bloc « À quel point ce portrait te ressemble » réellement enregistré, validation automatique au build (présence des 48 clés), passe responsive mobile.

@@ -7,6 +7,8 @@ import CompatibiliteBlocs from "../../components/CompatibiliteBlocs";
 import PrecisionRating from "../../components/PrecisionRating";
 import BlocVerrouille from "../../components/BlocVerrouille";
 import ProgressionMenu from "../../components/ProgressionMenu";
+import FenetrePaiement from "../../components/FenetrePaiement";
+import FenetrePartage from "../../components/FenetrePartage";
 import {
   getProfil,
   PROFIL_SECTIONS,
@@ -439,10 +441,10 @@ function SectionDetailBlock({
 
 // Carte premium de fin (inspirée de la fin de parcours 16P, réécrite à notre voix).
 // Bloc générique du template : s'affichera à l'identique sur tous les profils.
-function CarteFinPremium() {
+function CarteFinPremium({ unlockHref, produitNom }: { unlockHref: string; produitNom: string }) {
   const strong = "font-semibold text-[rgba(0,0,0,0.8)]";
   return (
-    <div className="my-14 rounded-2xl p-7 md:p-10" style={{ background: "rgba(51,164,116,0.08)" }}>
+    <div id="encart-final" className="my-14 rounded-2xl p-7 md:p-10 scroll-mt-24" style={{ background: "rgba(51,164,116,0.08)" }}>
       <span
         className="inline-block text-xs font-bold uppercase tracking-wide rounded-full px-4 py-1.5 text-white mb-5"
         style={{ background: GREEN }}
@@ -471,13 +473,24 @@ function CarteFinPremium() {
         </p>
       </div>
       <p className="text-4xl font-bold text-[rgba(0,0,0,0.8)] mb-6">7,90 €</p>
-      <Link
-        href="/pack-carriere-premium"
-        className="inline-block text-white font-semibold py-4 px-10 rounded-full text-lg hover:opacity-90 transition"
-        style={{ background: GREEN }}
-      >
-        Débloquer mon rapport complet →
-      </Link>
+      <div className="flex flex-wrap items-center gap-4">
+        <FenetrePaiement
+          unlockHref={unlockHref}
+          produitNom={produitNom}
+          ancreRetour="encart-final"
+          triggerClassName="inline-block text-white font-semibold py-4 px-10 rounded-full text-lg hover:opacity-90 transition"
+          triggerStyle={{ background: GREEN }}
+        >
+          Débloquer mon rapport complet →
+        </FenetrePaiement>
+        <FenetrePartage
+          ancreRetour="encart-final"
+          triggerClassName="inline-block font-semibold py-4 px-9 rounded-full text-lg transition hover:opacity-90"
+          triggerStyle={{ color: GREEN, background: "#fff" }}
+        >
+          Partager mon profil
+        </FenetrePartage>
+      </div>
       <p className="text-sm text-gray-400 mt-4">
         Ton test de personnalité s&apos;enregistre sur ton compte et pourra être confronté à ta dark personnalité, pour
         bâtir ton parcours sur mesure Ombre et Lumière.
@@ -678,7 +691,7 @@ export default async function ResultatPage({
 
         </div>
         {/* CARTE PREMIUM DE FIN — DANS la zone des menus, pour qu'ils s'arrêtent en bas de cet encart */}
-        {!isPaid && <CarteFinPremium />}
+        {!isPaid && <CarteFinPremium unlockHref={unlockHref} produitNom={`${profil.code} · ${profil.nomVariante}`} />}
       </div>
 
       {/* RETOUR DE PRÉCISION — hors de la zone des menus collants */}
