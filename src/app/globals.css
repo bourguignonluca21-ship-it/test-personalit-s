@@ -150,3 +150,4 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .title-drop, .badge-pop { animation: none !important; transform: none !important; opacity: 1 !important; }
 }
+

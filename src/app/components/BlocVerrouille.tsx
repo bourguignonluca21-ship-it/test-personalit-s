@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
+import Reveal from "./Reveal";
 
 const GREEN = "rgba(51,164,116,0.85)";
 
@@ -10,14 +10,13 @@ const GREEN = "rgba(51,164,116,0.85)";
 // unlockHref : lien de déblocage (en prototype, "?...&paid=1" ; plus tard, le checkout Stripe).
 export default function BlocVerrouille({
   isPaid,
-  unlockHref,
   children,
 }: {
   isPaid: boolean;
   unlockHref: string;
   children: ReactNode;
 }) {
-  if (isPaid) return <>{children}</>;
+  if (isPaid) return <Reveal threshold={0} distance={18}>{children}</Reveal>;
 
   return (
     <div className="relative mt-8">
@@ -39,13 +38,13 @@ export default function BlocVerrouille({
           <p className="text-sm text-gray-500 mb-5 leading-relaxed">
             Tes forces cachées, tes angles morts et comment t&apos;en servir t&apos;attendent dans ton rapport complet.
           </p>
-          <Link
-            href={unlockHref}
+          <a
+            href="#encart-final"
             className="inline-block text-white font-semibold py-3.5 px-9 rounded-full text-base hover:opacity-90 transition"
             style={{ background: GREEN }}
           >
             Je débloque mon rapport
-          </Link>
+          </a>
           <p className="text-xs text-gray-400 mt-3">Paiement unique, accès immédiat à vie.</p>
         </div>
       </div>

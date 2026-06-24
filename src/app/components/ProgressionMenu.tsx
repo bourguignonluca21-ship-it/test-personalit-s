@@ -64,7 +64,7 @@ function LockIcon() {
 
 // Panneau de progression (droite, desktop xl) : chaque ligne apparaît exactement quand son bloc
 // atteint l'écran (repères data-prog dans la page). Coche = gratuit, cadenas = payant.
-export default function ProgressionMenu() {
+export default function ProgressionMenu({ isPaid = false }: { isPaid?: boolean }) {
   const [revealed, setRevealed] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
   const [thumb, setThumb] = useState({ top: 0, height: 0, show: false });
@@ -148,6 +148,7 @@ export default function ProgressionMenu() {
         <ul>
           {ENTRIES.map((e, i) => {
             const open = i < revealed;
+            const verrouille = e.locked && !isPaid;
             return (
               <li
                 key={`${e.label}-${i}`}
@@ -160,12 +161,12 @@ export default function ProgressionMenu() {
               >
                 <div className="overflow-hidden min-h-0">
                   <div className={`flex items-start gap-2.5 pb-2.5 ${e.lead && i > 0 ? "pt-4" : ""}`}>
-                    {e.locked ? <LockIcon /> : <CheckIcon />}
+                    {verrouille ? <LockIcon /> : <CheckIcon />}
                     <span
                       className={
                         e.lead
                           ? "text-sm leading-snug font-semibold text-[rgba(0,0,0,0.55)]"
-                          : e.locked
+                          : verrouille
                             ? "text-sm leading-snug text-gray-400"
                             : "text-sm leading-snug font-medium text-[rgba(0,0,0,0.6)]"
                       }

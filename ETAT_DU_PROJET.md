@@ -2,6 +2,7 @@
 
 > Document de passation pour reprendre le projet dans une nouvelle session sans perdre le contexte.
 > Le code est la source de vérité ; ce fichier capture les **décisions**, **conventions** et **pièges**.
+> **Accès aux services** (Supabase, Stripe : références, liens dashboard, où sont les clés) : voir **`ACCES_ET_SERVICES.md`** (même dossier). Les clés secrètes ne sont QUE dans `.env.local` (non commité).
 
 ## 1. Le projet
 Site web de test de personnalité (startup FR), concurrent de 16Personalities, avec **notre propre contenu** (jamais le leur — uniquement la structure/agencement peut s'inspirer d'eux). Next.js 16 (App Router) + Tailwind v4. Dépôt : `3_SITE/1_infrastructure/Next_js`, branche `main`, remote GitHub `test-personalit-s`. Déploiement visé : push → Vercel.
@@ -129,7 +130,7 @@ LEÇON MÉTHODE : OneDrive sert des vues tronquées au sandbox (`bash`/`tsc`/`gr
 - **Gating encore prototype** : au succès, on fait `router.push(unlockHref)` qui ajoute `?paid=1` et re-rend le rapport déflouté. Le vrai gating (achat vérifié) reste à faire.
 - Librairies installées : `stripe`, `@stripe/stripe-js`, `@stripe/react-stripe-js`, `@supabase/supabase-js`, `@supabase/ssr`.
 
-**Nouveaux fichiers :** `components/FenetrePaiement.tsx`, `components/FenetrePartage.tsx`, `lib/supabase/client.ts`, `lib/stripe.ts`, `api/paiement/intent/route.ts`, `.env.local`.
+**Nouveaux fichiers :** `components/FenetrePaiement.tsx`, `components/FenetrePartage.tsx`, `components/ScrollHaut.tsx`, `lib/supabase/client.ts`, `lib/stripe.ts`, `api/paiement/intent/route.ts`, `.env.local`, et **`ACCES_ET_SERVICES.md`** (mémo des accès aux services, sans secrets). (`components/RevealShine.tsx` a été créé puis abandonné, à supprimer.)
 
 **⚠️ OneDrive :** le serveur de dev et `node_modules` / `.next` ont déclenché des pop-up OneDrive « supprimer N fichiers » (N qui grimpe). On a cliqué « Conserver les fichiers » et **mis OneDrive en pause**. Vraie solution à planifier : **sortir le projet de OneDrive** (réglera aussi les vues tronquées chroniques).
 

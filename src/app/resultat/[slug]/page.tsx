@@ -9,6 +9,7 @@ import BlocVerrouille from "../../components/BlocVerrouille";
 import ProgressionMenu from "../../components/ProgressionMenu";
 import FenetrePaiement from "../../components/FenetrePaiement";
 import FenetrePartage from "../../components/FenetrePartage";
+import ScrollHaut from "../../components/ScrollHaut";
 import {
   getProfil,
   PROFIL_SECTIONS,
@@ -574,6 +575,7 @@ export default async function ResultatPage({
 
   return (
     <div className="bg-white">
+      <ScrollHaut />
       {/* HÉROS — colonne centrée au milieu de l'écran (le menu flotte à gauche, hors de ce bloc) */}
       <div className="max-w-3xl mx-auto px-4 md:px-0 mt-4">
         <section className="relative isolate overflow-hidden rounded-3xl px-6 md:px-8 pt-16 pb-14" style={{ background: GREEN }}>
@@ -625,17 +627,22 @@ export default async function ResultatPage({
         </div>
         {/* RAIL DROIT : progression qui se révèle au scroll (xl uniquement) */}
         <div className="hidden xl:block xl:absolute xl:top-0 xl:left-full xl:ml-8 xl:h-full">
-          <ProgressionMenu />
+          <ProgressionMenu isPaid={isPaid} />
         </div>
-        <div className="py-10">
+        <div className="pt-10">
         <p className="text-gray-600 leading-relaxed whitespace-pre-line mb-2">{profil.introduction}</p>
-        {PROFIL_SECTIONS.map((sec) => {
+        {PROFIL_SECTIONS.map((sec, i) => {
           const isVariantes = sec.id === "variantes";
+          const isLast = i === PROFIL_SECTIONS.length - 1;
           const content = isVariantes
             ? null
             : profil.sections[sec.id as "traits" | "carriere" | "developpement" | "relations"];
           return (
-            <section key={sec.id} id={sec.id} className="py-12 border-b border-gray-100 scroll-mt-32">
+            <section
+              key={sec.id}
+              id={sec.id}
+              className={`pt-12 scroll-mt-32 ${isLast ? "pb-0" : "pb-12 border-b border-gray-100"}`}
+            >
               <h2 className="text-2xl md:text-3xl font-bold text-[rgba(0,0,0,0.75)] mb-7">
                 <span className="mr-1" style={{ color: GREEN }}>{sec.num}.</span>
                 {sec.label}
@@ -690,9 +697,14 @@ export default async function ResultatPage({
         })}
 
         </div>
-        {/* CARTE PREMIUM DE FIN — DANS la zone des menus, pour qu'ils s'arrêtent en bas de cet encart */}
-        {!isPaid && <CarteFinPremium unlockHref={unlockHref} produitNom={`${profil.code} · ${profil.nomVariante}`} />}
       </div>
+
+      {/* CARTE PREMIUM DE FIN — hors de la zone des menus, pour qu'ils s'arrêtent au bas du contenu (Ton paradoxe) */}
+      {!isPaid && (
+        <div className="max-w-3xl mx-auto px-4 md:px-0">
+          <CarteFinPremium unlockHref={unlockHref} produitNom={`${profil.code} · ${profil.nomVariante}`} />
+        </div>
+      )}
 
       {/* RETOUR DE PRÉCISION — hors de la zone des menus collants */}
       <div className="max-w-3xl mx-auto px-4 md:px-0">

@@ -112,11 +112,13 @@ export default function FenetrePaiement({
 }) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<1 | 2>(1);
-  const [view, setView] = useState<"choix" | "connexion" | "inscription">("choix");
+  const [view, setView] = useState<"choix" | "connexion" | "inscription" | "reset">("choix");
+  const [resetSent, setResetSent] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [supabase] = useState(() => createClient());
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [thumb, setThumb] = useState({ top: 0, height: 0, show: false });
@@ -147,6 +149,8 @@ export default function FenetrePaiement({
     setPassword("");
     setAuthError(null);
     setClientSecret(null);
+    setShowPassword(false);
+    setResetSent(false);
     setOpen(true);
   }
   function closeModal() {
@@ -159,6 +163,8 @@ export default function FenetrePaiement({
   }
   function payer() {
     router.push(unlockHref);
+    // On s'assure d'arriver en haut du rapport débloqué (pas là où on était au moment de payer).
+    if (typeof window !== "undefined") window.scrollTo({ top: 0 });
   }
   function retourChoix() {
     setView("choix");
@@ -187,6 +193,19 @@ export default function FenetrePaiement({
       return;
     }
     setStep(2);
+  }
+  async function handleReset() {
+    setAuthError(null);
+    setAuthLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/nouveau-mot-de-passe`,
+    });
+    setAuthLoading(false);
+    if (error) {
+      setAuthError(error.message);
+      return;
+    }
+    setResetSent(true);
   }
 
   // Fermeture à Échap. On NE bloque PAS le scroll du fond : il reste défilable.
@@ -229,11 +248,12 @@ export default function FenetrePaiement({
       setThumb((t) => (t.show ? { ...t, show: false } : t));
       return;
     }
-    const pad = 8;
-    const track = vh - pad * 2;
+    const padTop = 10;
+    const padBottom = 28;
+    const track = vh - padTop - padBottom;
     const h = Math.max(28, track * (vh / sh));
     const maxScroll = sh - vh;
-    const top = pad + (maxScroll ? (el.scrollTop / maxScroll) * (track - h) : 0);
+    const top = padTop + (maxScroll ? (el.scrollTop / maxScroll) * (track - h) : 0);
     setThumb({ top, height: h, show: true });
   }
 
@@ -286,6 +306,15 @@ export default function FenetrePaiement({
     background: "#fff",
     boxSizing: "border-box",
   };
+  const linkSmall: CSSProperties = {
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    font: "inherit",
+    fontSize: 12.5,
+    padding: 0,
+    textAlign: "center",
+  };
 
   return (
     <>
@@ -333,7 +362,7 @@ export default function FenetrePaiement({
           transition: "transform .42s cubic-bezier(.34,1.4,.5,1), opacity .3s ease, visibility .42s",
         }}
       >
-        <style>{".fp-noscroll{scrollbar-width:none}.fp-noscroll::-webkit-scrollbar{display:none}.fp-thumb{width:4px;background:rgba(51,164,116,0.85);transition:width .25s ease,background .25s ease}.fp-thumbwrap:hover .fp-thumb{width:7px;background:rgba(51,164,116,1)}"}</style>
+        <style>{".fp-noscroll{scrollbar-width:none}.fp-noscroll::-webkit-scrollbar{display:none}.fp-thumb{width:4px;background:rgba(51,164,116,0.85);transition:width .25s ease,background .25s ease}.fp-thumbwrap:hover .fp-thumb{width:7px;background:rgba(51,164,116,1)}.fp-link{color:rgba(0,0,0,0.50);transition:color .2s ease}.fp-link:hover{color:rgba(0,0,0,0.78)}"}</style>
 
         {/* Fermer */}
         <button
@@ -426,6 +455,58 @@ export default function FenetrePaiement({
                     </button>
                   </div>
                 </>
+              ) : view === "reset" ? (
+                <>
+                  {resetSent ? (
+                    <>
+                      <p style={{ fontSize: 13.5, color: INK75, textAlign: "center", margin: 0, lineHeight: 1.55 }}>
+                        Si un compte existe, le lien est parti. Va voir tes mails.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => { setView("connexion"); setResetSent(false); setAuthError(null); }}
+                        style={pillPrimary}
+                      >
+                        Revenir à la connexion
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <p style={{ fontSize: 13, color: INK50, textAlign: "center", margin: "0 0 2px", lineHeight: 1.5 }}>
+                        On t&apos;envoie un lien pour choisir un nouveau mot de passe.
+                      </p>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Adresse email"
+                        autoComplete="email"
+                        style={inputPill}
+                      />
+                      {authError && (
+                        <p style={{ fontSize: 12, color: "#c0392b", textAlign: "center", margin: 0, lineHeight: 1.4 }}>
+                          {authError}
+                        </p>
+                      )}
+                      <button
+                        type="button"
+                        disabled={authLoading}
+                        onClick={handleReset}
+                        style={{ ...pillPrimary, opacity: authLoading ? 0.7 : 1 }}
+                      >
+                        {authLoading ? "Un instant…" : "Envoyer le lien"}
+                      </button>
+                      <button
+                        type="button"
+                        className="fp-link"
+                        onClick={() => { setView("connexion"); setAuthError(null); }}
+                        style={linkSmall}
+                      >
+                        Retour
+                      </button>
+                    </>
+                  )}
+                </>
               ) : (
                 <>
                   <input
@@ -436,14 +517,83 @@ export default function FenetrePaiement({
                     autoComplete="email"
                     style={inputPill}
                   />
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Mot de passe"
-                    autoComplete={view === "connexion" ? "current-password" : "new-password"}
-                    style={inputPill}
-                  />
+                  <div style={{ position: "relative" }}>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Mot de passe"
+                      autoComplete={view === "connexion" ? "current-password" : "new-password"}
+                      style={{ ...inputPill, paddingRight: 46 }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((v) => !v)}
+                      aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        right: 6,
+                        transform: "translateY(-50%)",
+                        width: 32,
+                        height: 32,
+                        border: "none",
+                        background: "none",
+                        cursor: "pointer",
+                        display: "grid",
+                        placeItems: "center",
+                        color: INK50,
+                        padding: 0,
+                      }}
+                    >
+                      {showPassword ? (
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                          <path d="M1 1l22 22" />
+                        </svg>
+                      ) : (
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                  {view === "connexion" ? (
+                    <div style={{ position: "relative", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginTop: 2 }}>
+                      <button
+                        type="button"
+                        className="fp-link"
+                        onClick={() => { setView("inscription"); setAuthError(null); }}
+                        style={linkSmall}
+                      >
+                        Je veux me créer un compte !
+                      </button>
+                      <span
+                        aria-hidden="true"
+                        style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: 1, height: 14, background: "rgba(0,0,0,0.18)", pointerEvents: "none" }}
+                      />
+                      <button
+                        type="button"
+                        className="fp-link"
+                        onClick={() => { setView("reset"); setAuthError(null); setResetSent(false); }}
+                        style={linkSmall}
+                      >
+                        J&apos;ai oublié mon mot de passe
+                      </button>
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+                      <button
+                        type="button"
+                        className="fp-link"
+                        onClick={() => { setView("connexion"); setAuthError(null); }}
+                        style={linkSmall}
+                      >
+                        Déjà un compte ? Se connecter
+                      </button>
+                    </div>
+                  )}
                   {authError && (
                     <p style={{ fontSize: 12, color: "#c0392b", textAlign: "center", margin: 0, lineHeight: 1.4 }}>
                       {authError}
