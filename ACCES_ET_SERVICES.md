@@ -2,7 +2,7 @@
 
 > Mémo des services branchés sur le site et de leurs accès.
 > RÈGLE : aucune clé secrète ici. Les vraies clés vivent dans `.env.local` (non commité).
-> Mis à jour : session du 24 juin 2026 (mise en place comptes + paiement).
+> Mis à jour : session du 24 juin 2026 (suite : connexion par code email, mot de passe oublié, mails transactionnels).
 
 ## Supabase (comptes utilisateurs + base de données)
 
@@ -15,6 +15,10 @@
 - Clés : `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publiques) sont dans `.env.local`. La clé `service_role` (secrète) n'est PAS encore utilisée (viendra pour le webhook).
 - Auth : email + mot de passe. **Confirmation par email DÉSACTIVÉE** pour les tests (à réactiver avant la mise en ligne).
 - Table créée : `public.achats` (user_id, produit, profil, montant_cents, devise, statut, stripe_payment_intent, created_at) avec RLS (chacun ne lit que ses achats). Pas encore d'insertion (viendra via le webhook Stripe).
+- **Connexion par code email (OTP)** : Email OTP Length = **6**, Email OTP Expiration = **600 s** (Authentication → Providers → Email).
+- **SMTP custom = Gmail (TEMPORAIRE, pour les tests)** : `smtp.gmail.com:465`, identifiants = adresse gmail + **mot de passe d'application** (16 caractères, généré sur https://myaccount.google.com/apppasswords). Obligatoire pour pouvoir personnaliser les templates d'email. À remplacer par Resend SMTP + domaine à la mise en ligne.
+- **Templates email personnalisés** : « Magic Link or OTP » (code à 6 chiffres avec `{{ .Token }}`, objet `{{ .Token }} est ton code de connexion`) et « Reset Password » (renvoie vers la page résultat).
+- **Redirect URLs à autoriser** (URL Configuration) : `http://localhost:3000/resultat/**` et `http://localhost:3000/nouveau-mot-de-passe` (+ équivalents Vercel plus tard).
 
 ## Stripe (paiement)
 
@@ -27,6 +31,13 @@
 - Montant fixé côté serveur dans `src/app/api/paiement/intent/route.ts` : 790 centimes = 7,90 €.
 - Carte de test : `4242 4242 4242 4242`, date `12/34`, CVC `123`.
 
+## Resend (envoi d'emails transactionnels)
+
+- Sert aux mails **hors authentification** (ex. mail de sécurité « mot de passe changé »). Les mails d'**auth** (code de connexion, reset de mot de passe) partent par le **SMTP de Supabase** (Gmail en test), PAS par Resend.
+- Clé `RESEND_API_KEY` (secrète) dans `.env.local`. **Mode test** : expéditeur `onboarding@resend.dev`, n'envoie que vers l'adresse du compte Resend.
+- Appelée via l'API REST (`fetch`) depuis `src/app/api/auth/notif-mot-de-passe/route.ts`. Aucun package npm installé.
+- Dashboard : https://resend.com . À la mise en ligne : vérifier un domaine et envoyer depuis une adresse à ta marque (et idéalement router aussi les mails d'auth Supabase via Resend SMTP).
+
 ## Où sont les choses (code)
 
 - Connecteur Supabase navigateur : `src/app/lib/supabase/client.ts`
@@ -34,7 +45,11 @@
 - Route paiement : `src/app/api/paiement/intent/route.ts`
 - Fenêtre de paiement (modale) : `src/app/components/FenetrePaiement.tsx`
 - Fenêtre de partage : `src/app/components/FenetrePartage.tsx`
-- Variables d'environnement : `.env.local` (à la racine de `Next_js`, NON commité)
+- Route mail de sécurité (Resend) : `src/app/api/auth/notif-mot-de-passe/route.ts`
+- Visuels des mails (source partagée aperçu + envoi) : `src/app/lib/emails/motDePasseChange.ts`, `src/app/lib/emails/codeConnexion.ts`
+- Page nouveau mot de passe (filet de secours) : `src/app/nouveau-mot-de-passe/page.tsx`
+- Page d'aperçu des mails (**TEMPORAIRE, à supprimer avant la prod**) : `src/app/apercu-mail/page.tsx`
+- Variables d'environnement : `.env.local` (à la racine de `Next_js`, NON commité) — contient `NEXT_PUBLIC_SUPABASE_*`, `STRIPE_*`, `NEXT_PUBLIC_STRIPE_*`, `RESEND_API_KEY`
 
 ## À faire plus tard (rappel)
 
@@ -43,9 +58,23 @@
 - Gating serveur réel : remplacer le `?paid=1` factice par une vraie vérification d'achat.
 - Mise en ligne : réactiver la confirmation email Supabase, vérifier Stripe (passage live), **ajouter toutes les variables d'environnement dans Vercel** (sinon connexion + paiement ne marchent pas en ligne).
 - Sortir le projet de OneDrive (règle les pop-up de suppression et les vues tronquées).
+- Emails : remplacer le **SMTP Gmail de test** par **Resend SMTP + domaine vérifié** (côté Supabase ET Resend), **supprimer la page `/apercu-mail`**, renforcer les critères de mot de passe côté Supabase (Min length 8 + requirements).
+
+## Repères pratiques & pièges (pour les futures sessions)
+
+- **Comptes des services** : Supabase, Stripe, Resend et le SMTP Gmail sont tous rattachés à l'adresse **bourguignonluca21@gmail.com**. Les secrets (clés API, mot de passe d'application) vivent UNIQUEMENT dans `.env.local` et dans les réglages Supabase, jamais dans ce doc.
+- **URL de test d'une page résultat** : `http://localhost:3000/resultat/infp-v1?s=51-62-40-58&v=11-7-5`. Ajouter `&paid=1` pour voir la version payée (défloutée), `&recovery=1` pour ouvrir la fenêtre directement sur l'écran « nouveau mot de passe ».
+- **Aperçu des mails en direct** : `http://localhost:3000/apercu-mail` (page temporaire, à supprimer avant la prod).
+- **Éditer un template d'email Supabase** : impossible tant qu'un **SMTP custom** n'est pas activé (message « Set up custom SMTP to edit the source »). C'est pour ça qu'on a branché le SMTP Gmail de test.
+- **Template OTP** = onglet « Magic Link or OTP ». Par défaut Supabase envoie un **lien**, pas un code ; pour un code à coller il faut mettre `{{ .Token }}` dans le corps. Pour le bouton « copier le code » de Gmail : mettre `{{ .Token }}` dans **l'objet** (surtout visible sur Gmail mobile).
+- **Resend en mode test** : n'envoie qu'à l'adresse du **compte Resend** (le gmail). Pour écrire à n'importe qui : vérifier un domaine.
+- **`verifyOtp`** : type `email`. Longueur du code et expiration : Authentication → Providers → Email (réglés à **6** chiffres / **600 s**).
+- **Pièges des boîtes mail** : pas de JavaScript (donc impossible de fabriquer un bouton « copier » maison), et les **SVG sont supprimés** par Gmail → pour la prod, icônes en **PNG hébergé**.
+- **Dev server & OneDrive** : un **nouveau fichier de route/page** n'est pas détecté par un `npm run dev` déjà lancé (file-watch peu fiable sur OneDrive) → **redémarrer** le dev. Les simples modifs de fichiers existants se rechargent à chaud.
+- **Liens dashboard** (projet Supabase `lxaxwsplkvplhcpfltfi`) : templates `…/auth/templates`, providers/OTP `…/auth/providers`, redirect URLs `…/auth/url-configuration`, SMTP `…/auth/smtp`. Mot de passe d'application Google : https://myaccount.google.com/apppasswords (nécessite la validation en deux étapes).
 
 ## Rappels
 
 - Les clés secrètes ne doivent JAMAIS être collées dans un fichier commité ni partagées. Uniquement dans `.env.local`.
 - Commit/push uniquement depuis Windows / Claude Code (voir `AGENTS.md`).
-- État détaillé du projet : `ETAT_DU_PROJET.md` (section 8 quinquies pour cette session).
+- État détaillé du projet : `ETAT_DU_PROJET.md` (section 8 sexies pour la dernière session).

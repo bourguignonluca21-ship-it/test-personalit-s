@@ -47,7 +47,7 @@ Fin du test → `/resultat/{code}-{variante}?s=…&v=…`
 - **Panneaux au survol (les 3 identiques)** : ancrés **sous le menu** (top = bas du menu + 16 px), hauteur adaptée au contenu, fondu entrée/sortie (le contenu reste pendant la sortie).
 
 ## 7. Décisions produit
-- Le **floutage/brouillage est monté en prototype** (cf. §8 quater : `BlocVerrouille`, contenu verrouillé brouillé côté serveur, flag `isPaid` via `?paid=1`). Le **paiement réel** (Stripe) et les **comptes** (Supabase) ne sont PAS encore montés (cf. `VISION_FUNNEL_ANGE_DEMON.md`). Carte de fin premium affichée, prix 7,90 €.
+- Le **floutage/brouillage est monté en prototype** (cf. §8 quater : `BlocVerrouille`, contenu verrouillé brouillé côté serveur, flag `isPaid` via `?paid=1`). Le **paiement réel** (Stripe) et les **comptes** (Supabase) sont désormais montés (cf. §8 quinquies/sexies) ; reste à faire le **vrai gating serveur** (le `?paid=1` est encore factice). Carte de fin premium affichée, prix 7,90 €.
 - **Recadrage « valoriser, pas pointer les failles »** : la section dév perso ne nomme plus de « pièges/faiblesses » ; on parle de « leviers forts » et de questions à se poser.
 - La **profondeur des variantes** est le différenciateur (16P ne l'a pas) : on la détaille au maximum.
 - Contenu tiré des **rapports longs de l'utilisateur** (`1_PRODUIT/test personnalités/personnalites/<TYPE>/rapport_long/…`) — c'est son contenu, on peut l'utiliser.
@@ -136,12 +136,55 @@ LEÇON MÉTHODE : OneDrive sert des vues tronquées au sandbox (`bash`/`tsc`/`gr
 
 **⚠️ Tout le travail de cette session est NON COMMITÉ.** Commit/push depuis Windows / Claude Code.
 
+## 8 sexies. POINT DE REPRISE, session 24 juin 2026 (suite : mot de passe oublié, mail de sécurité, connexion par code email, refonte visuelle de la fenêtre)
+
+Tout est dans `components/FenetrePaiement.tsx` (la modale) sauf mention contraire. **Travail commité et poussé sur `main`.**
+
+**Mot de passe oublié, parcours complet :**
+- Vue « reset » dans la fenêtre (lien « J'ai oublié mon mot de passe » sur l'écran connexion) : saisie email puis `supabase.auth.resetPasswordForEmail`. Le `redirectTo` renvoie le client sur **SA page de résultat** avec `?recovery=1` (pas une page séparée), pour ne pas lui faire perdre son test.
+- Au retour, un effet détecte `?recovery=1`, rouvre la fenêtre sur la vue « nouveau » (« Crée ton nouveau mot de passe »), `supabase.auth.updateUser`, puis enchaîne sur le paiement. Le marqueur est nettoyé de l'URL.
+- **Filet de secours** : page `src/app/nouveau-mot-de-passe/page.tsx` (cas où on n'a pas le contexte, ex. autre appareil). Encore sur l'ancienne règle « 6 caractères » (à aligner si voulu).
+- **Supabase à configurer** : Authentication → URL Configuration → Redirect URLs : `http://localhost:3000/resultat/**` et `http://localhost:3000/nouveau-mot-de-passe` (+ équivalents Vercel à la mise en ligne).
+- **Limite connue** : le reset est lié au navigateur d'origine (PKCE). Cross-appareil = filet de secours. À traiter plus tard.
+
+**Critères de mot de passe + œil :**
+- Critères « 8 caractères, une majuscule, une minuscule, un chiffre » (sans symbole), affichés en liste verte qui se coche (composant `ChecklistMdp` dans `FenetrePaiement.tsx`), sur l'inscription et le nouveau mot de passe. Le bouton reste bloqué tant que tout n'est pas validé.
+- **À renforcer côté Supabase (le vrai verrou, pas encore réglé)** : Authentication → Providers → Email, Min password length 8 + Password Requirements.
+- Œil afficher/masquer sur tous les champs mot de passe.
+
+**Mail de sécurité « mot de passe changé » (Resend) :**
+- Route `src/app/api/auth/notif-mot-de-passe/route.ts` : vérifie le **jeton Supabase** (Authorization: Bearer) pour déduire l'email du compte connecté (pas spoofable), puis envoie via l'**API Resend** (`fetch`, aucun package installé). Clé `RESEND_API_KEY` dans `.env.local`. Expéditeur de test `onboarding@resend.dev` (mode test Resend : n'envoie que vers l'adresse du compte Resend).
+- Après un changement de mot de passe réussi : petite fenêtre de confirmation (pastille verte) puis « Continuer » vers le paiement.
+
+**Connexion par CODE email (passwordless / OTP), en plus du mot de passe :**
+- Vue « code » dans la fenêtre (lien « Recevoir un code par email à la place » sur l'écran connexion) : email puis `supabase.auth.signInWithOtp({ shouldCreateUser: true })`, puis saisie d'un **code à 6 chiffres** puis `verifyOtp({ type: "email" })`. Tout reste dans la fenêtre (pas de lien magique), donc le client revient pile où il était pour payer.
+- **Supabase réglé** : Email OTP Length **6**, Email OTP Expiration **600 s**, **SMTP custom = Gmail (temporaire)** via mot de passe d'application (obligatoire pour personnaliser les templates), template « Magic Link or OTP » personnalisé avec `{{ .Token }}`, objet `{{ .Token }} est ton code de connexion` (déclenche le bouton « copier le code » de Gmail, surtout mobile).
+- ⚠️ **SMTP Gmail = TEST uniquement** (expéditeur perso, quota ~500/j, risque spam). À remplacer par Resend SMTP + domaine vérifié à la mise en ligne.
+
+**Animation de succès de connexion :** après une connexion réussie (mot de passe, inscription ou code), une coche verte apparaît en fondu par-dessus la fenêtre, puis bascule en douceur sur le paiement (`reussiteConnexion`).
+
+**Mails transactionnels, source partagée + aperçu :**
+- HTML des mails dans `src/app/lib/emails/` : `motDePasseChange.ts` (sécurité) et `codeConnexion.ts` (code). DA commune façon Apple (fond blanc, logo placeholder, vert en touches, encart vert pâle). Les SVG (bouclier) ne s'affichent pas dans les boîtes mail : versions email sans SVG.
+- **Page d'aperçu TEMPORAIRE `src/app/apercu-mail/page.tsx`** pour designer les mails en direct dans le navigateur. **À SUPPRIMER avant la mise en ligne.**
+
+**Refonte visuelle de la fenêtre :**
+- Écran de choix (logo + « Continuer vers le paiement » + « Se connecter »/« Créer un compte ») : **fond transparent** (la page floutée transparaît), fond blanc qui revient en fondu dès qu'on entre dans un formulaire ou le paiement (conditionné sur `step`/`view`).
+- « Se connecter »/« Créer un compte » : boutons **givrés** (blanc translucide, contour, ombre, flou de fond, texte blanc + ombre portée). Léger grossissement au survol (classe `.fp-pill`). « Continuer vers le paiement » reste vert plein.
+
+**Fix menus :** la carte premium de fin (`CarteFinPremium`) a été **remise dans la zone des menus** (`page.tsx`) pour que les rails (gauche `ResultatNav` + droite `ProgressionMenu`) descendent jusqu'en bas de la carte, comme sur la version payée.
+
+**Nouveaux fichiers :** `api/auth/notif-mot-de-passe/route.ts`, `lib/emails/motDePasseChange.ts`, `lib/emails/codeConnexion.ts`, `nouveau-mot-de-passe/page.tsx`, `apercu-mail/page.tsx` (temporaire). `.env.local` : ajout `RESEND_API_KEY`.
+
+**Gating toujours prototype** : le déblocage du rapport reste via `?paid=1` factice. Le vrai gating serveur (session + achat vérifié) reste à faire (cf. §9).
+
 ## 9. Prochaines étapes
+- **Mot de passe oublié (parcours complet), critères de mot de passe, mail de sécurité (Resend), connexion par code email : FAITS** (cf. §8 sexies).
 - **Fenêtre de paiement + comptes Supabase + Stripe : FAITS** (cf. §8 quinquies). Restent les vrais branchements serveur :
   - **Session Supabase côté serveur** : monter `lib/supabase/server.ts` + `middleware.ts` pour lire l'utilisateur connecté côté serveur.
   - **Webhook Stripe** (`api/paiement/webhook`) : à la confirmation du paiement, **insérer l'achat dans `achats`** (clé service_role, rattaché au user connecté + métadonnées profil).
   - **Gating serveur réel** : remplacer le `?paid=1` factice par une vérif « cet utilisateur a-t-il acheté ce rapport ? » avant de servir le contenu déflouté. Gérer aussi le cas « sans inscription » (achat anonyme : jeton signé, ou pousser la création de compte au moment de payer).
   - **Mise en ligne** : réactiver la confirmation email Supabase, vérifier le compte Stripe (statut entreprise) pour passer en live, déployer sur Vercel.
 - **Sortir le projet de OneDrive** (réglera les pop-up de suppression et les vues tronquées). À faire proprement avec Claude Code (déplacer le dossier, garder le dépôt Git, recâbler le dossier connecté).
+- **Emails & auth (mise en ligne)** : remplacer le **SMTP Gmail de test** par un vrai SMTP + domaine (Resend), **supprimer la page temporaire `/apercu-mail`**, renforcer les **critères de mot de passe côté Supabase** (Min length 8 + requirements), aligner la page `/nouveau-mot-de-passe` sur les mêmes critères, et traiter le **reset cross-appareil**.
 - **Contenu** : corriger ISTJ (ré-accentuer) et finir la passe anti-répétition intra-résumé (cf. §8 ter et `AUDIT_48_PROFILS.md`).
 - En attente / plus tard : bouton « Partager » fonctionnel (aujourd'hui inactif), capture e-mail réellement branchée (le `Quiz` collecte l'e-mail mais ne l'envoie nulle part), retour du bloc « À quel point ce portrait te ressemble » réellement enregistré, validation automatique au build (présence des 48 clés), passe responsive mobile.
