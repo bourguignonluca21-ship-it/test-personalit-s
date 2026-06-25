@@ -10,6 +10,9 @@ import ProgressionMenu from "../../components/ProgressionMenu";
 import FenetrePaiement from "../../components/FenetrePaiement";
 import FenetrePartage from "../../components/FenetrePartage";
 import ScrollHaut from "../../components/ScrollHaut";
+import { cookies } from "next/headers";
+import { createClient } from "../../lib/supabase/server";
+import { COOKIE_ACCES, decoderAcces } from "../../lib/acces";
 import {
   getProfil,
   PROFIL_SECTIONS,
@@ -442,7 +445,7 @@ function SectionDetailBlock({
 
 // Carte premium de fin (inspirée de la fin de parcours 16P, réécrite à notre voix).
 // Bloc générique du template : s'affichera à l'identique sur tous les profils.
-function CarteFinPremium({ unlockHref, produitNom }: { unlockHref: string; produitNom: string }) {
+function CarteFinPremium({ unlockHref, produitNom, profilId }: { unlockHref: string; produitNom: string; profilId: string }) {
   const strong = "font-semibold text-[rgba(0,0,0,0.8)]";
   return (
     <div id="encart-final" className="my-14 rounded-2xl p-7 md:p-10 scroll-mt-24" style={{ background: "rgba(51,164,116,0.08)" }}>
@@ -478,6 +481,7 @@ function CarteFinPremium({ unlockHref, produitNom }: { unlockHref: string; produ
         <FenetrePaiement
           unlockHref={unlockHref}
           produitNom={produitNom}
+          profilId={profilId}
           ancreRetour="encart-final"
           triggerClassName="inline-block text-white font-semibold py-4 px-10 rounded-full text-lg hover:opacity-90 transition"
           triggerStyle={{ background: GREEN }}
@@ -543,15 +547,36 @@ export default async function ResultatPage({
   searchParams: Promise<{ s?: string; v?: string; paid?: string }>;
 }) {
   const { slug } = await params;
-  const { s, v, paid } = await searchParams;
+  const { s, v } = await searchParams;
   const { code, variante } = parseSlug(slug);
   const profil = getProfil(code, variante);
 
-  // PROTOTYPE paywall (Phase 1) : flag factice via ?paid=1. À remplacer par la vérif
-  // d'achat réelle (session Supabase + table achats) une fois le backend en place.
-  const isPaid = paid === "1";
-  // Lien de déblocage qui conserve les scores s/v (plus tard : checkout Stripe).
-  const unlockHref = `?${new URLSearchParams({ ...(s ? { s } : {}), ...(v ? { v } : {}), paid: "1" }).toString()}`;
+  // VRAI VERROU (gating serveur). Le rapport est débloqué si l'une des deux preuves existe :
+  //  1. une preuve d'achat anonyme : un cookie signé (posé par /api/paiement/acces après un
+  //     paiement vérifié) qui liste les profils débloqués sur ce navigateur ;
+  //  2. un compte connecté qui a un achat « payé » pour ce profil dans la table `achats`.
+  // À défaut, tout le contenu premium reste brouillé (voir brouillerSection/brouillerVariante).
+  const jar = await cookies();
+  let isPaid = decoderAcces(jar.get(COOKIE_ACCES)?.value).includes(slug);
+  if (!isPaid) {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+      const { data } = await supabase
+        .from("achats")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("profil", slug)
+        .eq("statut", "paye")
+        .limit(1);
+      isPaid = !!data?.length;
+    }
+  }
+  // Lien propre qui conserve les scores s/v (le déblocage se fait par la fenêtre de paiement,
+  // plus par un ?paid=1 dans l'URL).
+  const unlockHref = `?${new URLSearchParams({ ...(s ? { s } : {}), ...(v ? { v } : {}) }).toString()}`;
 
   const scores = s ? s.split("-").map(Number) : [];
   const spectre = scores.length === 4 && scores.every((n) => !Number.isNaN(n)) ? spectreFromScores(scores) : null;
@@ -700,7 +725,7 @@ export default async function ResultatPage({
 
         {/* CARTE PREMIUM DE FIN — dans la zone des menus, pour que les rails descendent jusqu'en bas de la carte (comme la version payée) */}
         {!isPaid && (
-          <CarteFinPremium unlockHref={unlockHref} produitNom={`${profil.code} · ${profil.nomVariante}`} />
+          <CarteFinPremium unlockHref={unlockHref} produitNom={`${profil.code} · ${profil.nomVariante}`} profilId={slug} />
         )}
       </div>
 

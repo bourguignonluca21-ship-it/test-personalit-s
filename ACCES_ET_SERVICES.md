@@ -2,7 +2,7 @@
 
 > Mémo des services branchés sur le site et de leurs accès.
 > RÈGLE : aucune clé secrète ici. Les vraies clés vivent dans `.env.local` (non commité).
-> Mis à jour : session du 24 juin 2026 (suite : connexion par code email, mot de passe oublié, mails transactionnels).
+> Mis à jour : session du 25 juin 2026 (gating serveur réel : session Supabase serveur, preuve d'achat par cookie, route /api/paiement/acces, webhook Stripe, vérification d'achat dans la page résultat). Le ?paid=1 factice est supprimé.
 
 ## Supabase (comptes utilisateurs + base de données)
 
@@ -12,9 +12,10 @@
   - Utilisateurs : https://supabase.com/dashboard/project/lxaxwsplkvplhcpfltfi/auth/users
   - Réglages email (connexion) : https://supabase.com/dashboard/project/lxaxwsplkvplhcpfltfi/auth/providers
   - Éditeur SQL : https://supabase.com/dashboard/project/lxaxwsplkvplhcpfltfi/sql/new
-- Clés : `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publiques) sont dans `.env.local`. La clé `service_role` (secrète) n'est PAS encore utilisée (viendra pour le webhook).
+- Clés : `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publiques) sont dans `.env.local`. La clé `service_role` (secrète, `SUPABASE_SERVICE_ROLE_KEY` dans `.env.local`) est MAINTENANT utilisée côté serveur pour enregistrer les achats (route `acces` + webhook). Elle se trouve dans le dashboard : Settings → API Keys → onglet « Legacy anon, service_role API keys » (bouton « Reveal »). NE JAMAIS la commiter ni l'exposer au navigateur.
+- Session serveur : `src/app/lib/supabase/server.ts` (lit la session via cookies) + `src/proxy.ts` (ex-middleware, renommé « proxy » en Next 16 ; rafraîchit la session à chaque requête). Permet au serveur de savoir qui est connecté.
 - Auth : email + mot de passe. **Confirmation par email DÉSACTIVÉE** pour les tests (à réactiver avant la mise en ligne).
-- Table créée : `public.achats` (user_id, produit, profil, montant_cents, devise, statut, stripe_payment_intent, created_at) avec RLS (chacun ne lit que ses achats). Pas encore d'insertion (viendra via le webhook Stripe).
+- Table `public.achats` (user_id, produit, profil, montant_cents, devise, statut, stripe_payment_intent, email, created_at) avec RLS (chacun ne lit que ses achats). Ajustée le 25/06 : `user_id` rendu NULLABLE (achat sans compte), index unique sur `stripe_payment_intent` (anti-doublon), colonne `email` ajoutée. Les insertions se font via la clé `service_role` (route `acces` + webhook), `statut = "paye"`. Le `profil` stocké est le SLUG (ex. `infp-v1`).
 - **Connexion par code email (OTP)** : Email OTP Length = **6**, Email OTP Expiration = **600 s** (Authentication → Providers → Email).
 - **SMTP custom = Gmail (TEMPORAIRE, pour les tests)** : `smtp.gmail.com:465`, identifiants = adresse gmail + **mot de passe d'application** (16 caractères, généré sur https://myaccount.google.com/apppasswords). Obligatoire pour pouvoir personnaliser les templates d'email. À remplacer par Resend SMTP + domaine à la mise en ligne.
 - **Templates email personnalisés** : « Magic Link or OTP » (code à 6 chiffres avec `{{ .Token }}`, objet `{{ .Token }} est ton code de connexion`) et « Reset Password » (renvoie vers la page résultat).
@@ -30,6 +31,15 @@
 - Moyens activés (test) : carte, Klarna, Bancontact, Amazon Pay, MB WAY, etc.
 - Montant fixé côté serveur dans `src/app/api/paiement/intent/route.ts` : 790 centimes = 7,90 €.
 - Carte de test : `4242 4242 4242 4242`, date `12/34`, CVC `123`.
+- Au paiement réussi, le navigateur appelle `POST /api/paiement/acces` : la route RE-VÉRIFIE le paiement chez Stripe (`paymentIntents.retrieve`, statut `succeeded`), enregistre l'achat, et pose le cookie de preuve d'achat. C'est ce qui débloque (même sans compte). Le montant et le profil viennent des métadonnées du PaymentIntent (posées côté serveur).
+- Webhook (filet de sécurité) : `POST /api/paiement/webhook` enregistre l'achat même si le navigateur se ferme. Il a besoin de `STRIPE_WEBHOOK_SECRET` dans `.env.local`. PAS ENCORE testé : en local il faut la Stripe CLI (`stripe listen --forward-to localhost:3000/api/paiement/webhook`) qui fournit ce secret. Le déblocage principal marche déjà sans le webhook.
+
+## Preuve d'achat (gating) — comment le déblocage marche
+
+- Deux façons d'être « payé » pour un rapport : (1) un **cookie de preuve d'achat** signé (`acces_rapport`, httpOnly), posé par la route `acces` après un paiement vérifié, qui liste les profils débloqués sur ce navigateur (cas anonyme) ; (2) un **compte connecté** qui a une ligne `achats` `statut = "paye"` pour ce profil.
+- Le cookie est signé avec `ACCES_SIGNING_SECRET` (clé aléatoire dans `.env.local`) via HMAC, donc infalsifiable : on ne peut plus débloquer en bricolant l'URL (l'ancien `?paid=1` est supprimé).
+- Limite assumée : l'accès anonyme vit dans CE navigateur (cookies effacés / autre appareil = accès perdu, d'où l'incitation à créer un compte). L'acheteur connecté retrouve son rapport partout.
+- Logique de déblocage : dans `src/app/resultat/[slug]/page.tsx` (variable `isPaid`). Helpers du cookie : `src/app/lib/acces.ts`.
 
 ## Resend (envoi d'emails transactionnels)
 
@@ -41,21 +51,28 @@
 ## Où sont les choses (code)
 
 - Connecteur Supabase navigateur : `src/app/lib/supabase/client.ts`
+- Connecteur Supabase serveur (session via cookies) : `src/app/lib/supabase/server.ts`
+- Connecteur Supabase admin (service_role, serveur uniquement) : `src/app/lib/supabase/admin.ts`
+- Proxy (rafraîchit la session, ex-middleware) : `src/proxy.ts`
+- Preuve d'achat (signer/vérifier le cookie) : `src/app/lib/acces.ts`
 - Connecteur Stripe serveur : `src/app/lib/stripe.ts`
-- Route paiement : `src/app/api/paiement/intent/route.ts`
+- Route paiement (crée le PaymentIntent, estampille user_id + slug) : `src/app/api/paiement/intent/route.ts`
+- Route déblocage (vérifie le paiement, enregistre l'achat, pose le cookie) : `src/app/api/paiement/acces/route.ts`
+- Webhook Stripe (filet de sécurité) : `src/app/api/paiement/webhook/route.ts`
 - Fenêtre de paiement (modale) : `src/app/components/FenetrePaiement.tsx`
 - Fenêtre de partage : `src/app/components/FenetrePartage.tsx`
 - Route mail de sécurité (Resend) : `src/app/api/auth/notif-mot-de-passe/route.ts`
 - Visuels des mails (source partagée aperçu + envoi) : `src/app/lib/emails/motDePasseChange.ts`, `src/app/lib/emails/codeConnexion.ts`
 - Page nouveau mot de passe (filet de secours) : `src/app/nouveau-mot-de-passe/page.tsx`
 - Page d'aperçu des mails (**TEMPORAIRE, à supprimer avant la prod**) : `src/app/apercu-mail/page.tsx`
-- Variables d'environnement : `.env.local` (à la racine de `Next_js`, NON commité) — contient `NEXT_PUBLIC_SUPABASE_*`, `STRIPE_*`, `NEXT_PUBLIC_STRIPE_*`, `RESEND_API_KEY`
+- Variables d'environnement : `.env.local` (à la racine de `Next_js`, NON commité) — contient `NEXT_PUBLIC_SUPABASE_*`, `SUPABASE_SERVICE_ROLE_KEY` (NOUVEAU), `ACCES_SIGNING_SECRET` (NOUVEAU, clé aléatoire pour signer le cookie de preuve), `STRIPE_*`, `NEXT_PUBLIC_STRIPE_*`, `STRIPE_WEBHOOK_SECRET` (à ajouter pour le webhook), `RESEND_API_KEY`. ⚠️ Les NOUVELLES clés doivent aussi être ajoutées dans Vercel (Settings → Environment Variables) avant de pousser, sinon le paiement plante en ligne.
 
 ## À faire plus tard (rappel)
 
-- Session Supabase côté serveur (`lib/supabase/server.ts` + `middleware.ts`).
-- Webhook Stripe (`api/paiement/webhook`) : insérer l'achat dans `achats` à la confirmation, rattaché au compte.
-- Gating serveur réel : remplacer le `?paid=1` factice par une vraie vérification d'achat.
+- ~~Session Supabase côté serveur~~ : FAIT (`lib/supabase/server.ts` + `src/proxy.ts`).
+- ~~Gating serveur réel~~ : FAIT (le `?paid=1` factice est supprimé ; déblocage par cookie de preuve OU achat sur le compte).
+- Webhook Stripe (`api/paiement/webhook`) : créé, mais PAS ENCORE testé. À faire : installer la Stripe CLI, lancer `stripe listen --forward-to localhost:3000/api/paiement/webhook`, mettre le `STRIPE_WEBHOOK_SECRET` qu'elle donne dans `.env.local`, et tester un paiement.
+- Avant de pousser : ajouter `SUPABASE_SERVICE_ROLE_KEY` et `ACCES_SIGNING_SECRET` (+ plus tard `STRIPE_WEBHOOK_SECRET`) dans Vercel.
 - Mise en ligne : réactiver la confirmation email Supabase, vérifier Stripe (passage live), **ajouter toutes les variables d'environnement dans Vercel** (sinon connexion + paiement ne marchent pas en ligne).
 - Sortir le projet de OneDrive (règle les pop-up de suppression et les vues tronquées).
 - Emails : remplacer le **SMTP Gmail de test** par **Resend SMTP + domaine vérifié** (côté Supabase ET Resend), **supprimer la page `/apercu-mail`**, renforcer les critères de mot de passe côté Supabase (Min length 8 + requirements).

@@ -86,6 +86,17 @@ function PaiementInner({
       return;
     }
     if (paymentIntent && paymentIntent.status === "succeeded") {
+      // Échange la preuve de paiement contre le déblocage serveur : la route vérifie le
+      // paiement chez Stripe, enregistre l'achat et pose le cookie de preuve d'achat.
+      try {
+        await fetch("/api/paiement/acces", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ paymentIntentId: paymentIntent.id }),
+        });
+      } catch {
+        // En cas d'échec réseau, le webhook Stripe enregistrera l'achat en filet de sécurité.
+      }
       onSuccess();
       return;
     }
@@ -130,6 +141,7 @@ function PaiementInner({
 export default function FenetrePaiement({
   unlockHref,
   produitNom,
+  profilId,
   prix = "7,90 €",
   ancreRetour,
   triggerClassName,
@@ -138,6 +150,7 @@ export default function FenetrePaiement({
 }: {
   unlockHref: string;
   produitNom: string;
+  profilId: string;
   prix?: string;
   ancreRetour?: string;
   triggerClassName?: string;
@@ -182,6 +195,30 @@ export default function FenetrePaiement({
     return () => ro.disconnect();
   }, [open, step, view]);
 
+  // Retour des moyens de paiement qui REDIRIGENT (ex. Klarna) : Stripe renvoie sur cette
+  // page avec ?payment_intent=…&redirect_status=succeeded. On échange ça contre le déblocage
+  // (la carte, elle, ne redirige pas et est gérée directement dans pay()).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("redirect_status") !== "succeeded" || !params.get("payment_intent")) return;
+    const pi = params.get("payment_intent") as string;
+    fetch("/api/paiement/acces", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ paymentIntentId: pi }),
+    }).finally(() => {
+      // Nettoyer les paramètres Stripe de l'URL, puis rafraîchir pour déflouter.
+      params.delete("payment_intent");
+      params.delete("payment_intent_client_secret");
+      params.delete("redirect_status");
+      const clean = window.location.pathname + (params.toString() ? `?${params}` : "");
+      window.history.replaceState(null, "", clean);
+      router.refresh();
+      window.scrollTo({ top: 0 });
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   function openModal() {
     setStep(1);
     setView("choix");
@@ -207,7 +244,10 @@ export default function FenetrePaiement({
     }
   }
   function payer() {
-    router.push(unlockHref);
+    // Le cookie de preuve d'achat vient d'être posé par /api/paiement/acces. On ferme la
+    // fenêtre et on rafraîchit : le serveur relit le cookie et re-rend le rapport déflouté.
+    setOpen(false);
+    router.refresh();
     // On s'assure d'arriver en haut du rapport débloqué (pas là où on était au moment de payer).
     if (typeof window !== "undefined") window.scrollTo({ top: 0 });
   }
@@ -378,7 +418,7 @@ export default function FenetrePaiement({
     fetch("/api/paiement/intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ profil: produitNom }),
+      body: JSON.stringify({ profil: profilId }),
     })
       .then((r) => r.json())
       .then((d) => {
@@ -388,7 +428,7 @@ export default function FenetrePaiement({
     return () => {
       annule = true;
     };
-  }, [open, step, clientSecret, produitNom]);
+  }, [open, step, clientSecret, profilId]);
 
   // Curseur de scroll vert custom (comme le menu de progression) : taille et position calculées.
   function updateThumb() {
@@ -505,7 +545,9 @@ export default function FenetrePaiement({
           left: "50%",
           top: "50%",
           width: "min(408px, 92vw)",
-          background: step === 1 && view === "choix" ? "transparent" : "#fff",
+          background: step === 1 && view === "choix" ? "transparent" : "rgba(255,255,255,0.5)",
+          backdropFilter: step === 1 && view === "choix" ? "none" : "blur(16px)",
+          WebkitBackdropFilter: step === 1 && view === "choix" ? "none" : "blur(16px)",
           borderRadius: 24,
           boxShadow: step === 1 && view === "choix" ? "none" : SHADOW,
           overflow: "hidden",
@@ -514,7 +556,7 @@ export default function FenetrePaiement({
           transform: open ? "translate(-50%,-50%) scale(1)" : "translate(-50%,-50%) scale(.18)",
           opacity: open ? 1 : 0,
           visibility: open ? "visible" : "hidden",
-          transition: "transform .42s cubic-bezier(.34,1.4,.5,1), opacity .3s ease, visibility .42s, background .35s ease, box-shadow .35s ease",
+          transition: "transform .42s cubic-bezier(.34,1.4,.5,1), opacity .3s ease, visibility .42s, background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease",
         }}
       >
         <style>{".fp-noscroll{scrollbar-width:none}.fp-noscroll::-webkit-scrollbar{display:none}.fp-thumb{width:4px;background:rgba(51,164,116,0.85);transition:width .25s ease,background .25s ease}.fp-thumbwrap:hover .fp-thumb{width:7px;background:rgba(51,164,116,1)}.fp-link{color:rgba(0,0,0,0.50);transition:color .2s ease}.fp-link:hover{color:rgba(0,0,0,0.78)}.fp-pill{transition:transform .2s ease}.fp-pill:hover{transform:scale(1.04)}"}</style>
@@ -579,7 +621,9 @@ export default function FenetrePaiement({
             position: "absolute",
             inset: 0,
             zIndex: 5,
-            background: "#fff",
+            background: "rgba(255,255,255,0.5)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
             display: "grid",
             placeItems: "center",
             opacity: successAnim ? 1 : 0,
@@ -779,8 +823,27 @@ export default function FenetrePaiement({
                 <>
                   {!codeEnvoye ? (
                     <>
+                      <button
+                        type="button"
+                        onClick={() => { setView("connexion"); setAuthError(null); }}
+                        aria-label="Retour"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          alignSelf: "flex-start",
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          color: GREEN_SOLID,
+                          padding: 0,
+                        }}
+                      >
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M15 18l-6-6 6-6" />
+                        </svg>
+                      </button>
                       <p style={{ fontSize: 13, color: INK50, textAlign: "center", margin: "0 0 2px", lineHeight: 1.5 }}>
-                        Entre ton email, on t&apos;envoie un code pour te connecter, sans mot de passe.
+                        On t&apos;envoie un code pour te connecter, sans mot de passe.
                       </p>
                       <input
                         type="email"
@@ -802,14 +865,6 @@ export default function FenetrePaiement({
                         style={{ ...pillPrimary, opacity: authLoading ? 0.7 : 1 }}
                       >
                         {authLoading ? "Un instant…" : "Recevoir mon code"}
-                      </button>
-                      <button
-                        type="button"
-                        className="fp-link"
-                        onClick={() => { setView("connexion"); setAuthError(null); }}
-                        style={linkSmall}
-                      >
-                        Retour
                       </button>
                     </>
                   ) : (
@@ -862,6 +917,25 @@ export default function FenetrePaiement({
                 </>
               ) : (
                 <>
+                  <button
+                    type="button"
+                    onClick={retourChoix}
+                    aria-label="Retour"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      alignSelf: "flex-start",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      color: GREEN_SOLID,
+                      padding: 0,
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                  </button>
                   <input
                     type="email"
                     value={email}
@@ -975,22 +1049,6 @@ export default function FenetrePaiement({
                       Recevoir un code par email à la place
                     </button>
                   )}
-                  <button
-                    type="button"
-                    onClick={retourChoix}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      font: "inherit",
-                      fontSize: 13,
-                      color: INK50,
-                      padding: "2px 0",
-                      textAlign: "center",
-                    }}
-                  >
-                    Retour
-                  </button>
                 </>
               )}
             </div>
