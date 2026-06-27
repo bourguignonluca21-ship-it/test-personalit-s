@@ -166,6 +166,9 @@ export default function FenetrePaiement({
   const [password2, setPassword2] = useState("");
   const [code, setCode] = useState("");
   const [codeEnvoye, setCodeEnvoye] = useState(false);
+  const [newsletter, setNewsletter] = useState(false);
+  const [mdpConfirm, setMdpConfirm] = useState("");
+  const [prenom, setPrenom] = useState("");
   const [successAnim, setSuccessAnim] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(false);
@@ -224,6 +227,9 @@ export default function FenetrePaiement({
     setView("choix");
     setEmail("");
     setPassword("");
+    setMdpConfirm("");
+    setPrenom("");
+    setNewsletter(false);
     setAuthError(null);
     setClientSecret(null);
     setShowPassword(false);
@@ -268,10 +274,27 @@ export default function FenetrePaiement({
     }
     reussiteConnexion();
   }
+  async function handleGoogle() {
+    setAuthError(null);
+    // Google oblige un aller-retour : on revient sur CETTE page (avec les scores) + un
+    // marqueur ?oauth=1 pour rouvrir la fenêtre sur le paiement au retour.
+    const retour = new URL(window.location.href);
+    retour.searchParams.set("oauth", "1");
+    const next = retour.pathname + retour.search;
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
+    });
+    if (error) setAuthError("La connexion Google n'a pas pu démarrer.");
+  }
   async function handleSignUp() {
     setAuthError(null);
     setAuthLoading(true);
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { prenom: prenom.trim(), newsletter } },
+    });
     setAuthLoading(false);
     if (error) {
       setAuthError(error.message);
@@ -410,6 +433,20 @@ export default function FenetrePaiement({
     window.history.replaceState(null, "", window.location.pathname + (qs ? `?${qs}` : ""));
   }, []);
 
+  // Retour de la connexion Google : on revient sur la page avec ?oauth=1. La session est déjà
+  // posée par /auth/callback, donc on rouvre la fenêtre directement sur l'écran de paiement.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("oauth") !== "1") return;
+    setView("choix");
+    setStep(2);
+    setOpen(true);
+    params.delete("oauth");
+    const qs = params.toString();
+    window.history.replaceState(null, "", window.location.pathname + (qs ? `?${qs}` : ""));
+  }, []);
+
   // Sur l'écran paiement, on demande au serveur de créer l'intention de paiement (montant
   // fixé côté serveur) et on récupère le client_secret pour afficher le formulaire Stripe.
   useEffect(() => {
@@ -475,13 +512,10 @@ export default function FenetrePaiement({
   };
   const pillSmall: CSSProperties = {
     flex: 1,
-    border: "1px solid rgba(255,255,255,0.6)",
-    background: "rgba(255,255,255,0.22)",
-    backdropFilter: "blur(8px)",
-    WebkitBackdropFilter: "blur(8px)",
-    boxShadow: "0 6px 18px -8px rgba(0,0,0,0.25)",
-    color: "#fff",
-    textShadow: "0 1px 3px rgba(0,0,0,0.35)",
+    border: `1px solid ${LINE}`,
+    background: "#fff",
+    boxShadow: "0 6px 18px -10px rgba(0,0,0,0.18)",
+    color: GREEN,
     borderRadius: 999,
     padding: "11px 12px",
     cursor: "pointer",
@@ -511,6 +545,45 @@ export default function FenetrePaiement({
     padding: 0,
     textAlign: "center",
   };
+  const boutonGoogle = (
+    <button
+      type="button"
+      onClick={handleGoogle}
+      className="fp-pill"
+      style={{
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 10,
+        border: `1px solid ${LINE}`,
+        background: "#fff",
+        color: INK,
+        borderRadius: 999,
+        padding: "12px 18px",
+        cursor: "pointer",
+        font: "inherit",
+        fontSize: 14.5,
+        fontWeight: 600,
+        boxShadow: "0 6px 18px -10px rgba(0,0,0,0.18)",
+      }}
+    >
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+        <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z" />
+        <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z" />
+        <path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z" />
+        <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.9 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z" />
+      </svg>
+      Continuer avec Google
+    </button>
+  );
+  const separateurOu = (
+    <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "2px 0" }}>
+      <span style={{ flex: 1, height: 1, background: LINE }} />
+      <span style={{ fontSize: 11.5, color: INK35 }}>ou</span>
+      <span style={{ flex: 1, height: 1, background: LINE }} />
+    </div>
+  );
 
   return (
     <>
@@ -544,22 +617,20 @@ export default function FenetrePaiement({
           zIndex: 70,
           left: "50%",
           top: "50%",
-          width: "min(408px, 92vw)",
-          background: step === 1 && view === "choix" ? "transparent" : "rgba(255,255,255,0.5)",
-          backdropFilter: step === 1 && view === "choix" ? "none" : "blur(16px)",
-          WebkitBackdropFilter: step === 1 && view === "choix" ? "none" : "blur(16px)",
+          width: step === 1 && view === "inscription" ? "min(760px, 94vw)" : "min(408px, 92vw)",
+          background: "#fff",
           borderRadius: 24,
-          boxShadow: step === 1 && view === "choix" ? "none" : SHADOW,
+          boxShadow: SHADOW,
           overflow: "hidden",
           maxHeight: "92vh",
           transformOrigin: "50% 115%",
           transform: open ? "translate(-50%,-50%) scale(1)" : "translate(-50%,-50%) scale(.18)",
           opacity: open ? 1 : 0,
           visibility: open ? "visible" : "hidden",
-          transition: "transform .42s cubic-bezier(.34,1.4,.5,1), opacity .3s ease, visibility .42s, background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease",
+          transition: "transform .42s cubic-bezier(.34,1.4,.5,1), opacity .3s ease, visibility .42s, background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease, width .4s ease",
         }}
       >
-        <style>{".fp-noscroll{scrollbar-width:none}.fp-noscroll::-webkit-scrollbar{display:none}.fp-thumb{width:4px;background:rgba(51,164,116,0.85);transition:width .25s ease,background .25s ease}.fp-thumbwrap:hover .fp-thumb{width:7px;background:rgba(51,164,116,1)}.fp-link{color:rgba(0,0,0,0.50);transition:color .2s ease}.fp-link:hover{color:rgba(0,0,0,0.78)}.fp-pill{transition:transform .2s ease}.fp-pill:hover{transform:scale(1.04)}"}</style>
+        <style>{".fp-noscroll{scrollbar-width:none}.fp-noscroll::-webkit-scrollbar{display:none}.fp-thumb{width:4px;background:rgba(51,164,116,0.85);transition:width .25s ease,background .25s ease}.fp-thumbwrap:hover .fp-thumb{width:7px;background:rgba(51,164,116,1)}.fp-link{color:rgba(0,0,0,0.50);transition:color .2s ease}.fp-link:hover{color:rgba(0,0,0,0.78)}.fp-pill{transition:transform .2s ease}.fp-pill:hover{transform:scale(1.04)}.fp-signup{display:flex;gap:18px;align-items:stretch}@media(max-width:600px){.fp-signup{flex-direction:column}}"}</style>
 
         {/* Fermer */}
         <button
@@ -621,9 +692,7 @@ export default function FenetrePaiement({
             position: "absolute",
             inset: 0,
             zIndex: 5,
-            background: "rgba(255,255,255,0.5)",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
+            background: "#fff",
             display: "grid",
             placeItems: "center",
             opacity: successAnim ? 1 : 0,
@@ -686,6 +755,8 @@ export default function FenetrePaiement({
                       Créer un compte
                     </button>
                   </div>
+                  {separateurOu}
+                  {boutonGoogle}
                 </>
               ) : view === "reset" ? (
                 <>
@@ -916,7 +987,8 @@ export default function FenetrePaiement({
                   )}
                 </>
               ) : (
-                <>
+                <div className={view === "inscription" ? "fp-signup" : undefined}>
+                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 10, flex: 1, minWidth: 0 }}>
                   <button
                     type="button"
                     onClick={retourChoix}
@@ -936,6 +1008,21 @@ export default function FenetrePaiement({
                       <path d="M15 18l-6-6 6-6" />
                     </svg>
                   </button>
+                  <p style={{ margin: "2px 0 8px", fontSize: 19, fontWeight: 700, color: GREEN, textAlign: "left", letterSpacing: "-0.02em", lineHeight: 1.2 }}>
+                    {view === "inscription" ? "Je crée mon compte" : "Je me connecte"}
+                  </p>
+                  {boutonGoogle}
+                  {separateurOu}
+                  {view === "inscription" && (
+                    <input
+                      type="text"
+                      value={prenom}
+                      onChange={(e) => setPrenom(e.target.value)}
+                      placeholder="Ton prénom ou pseudonyme"
+                      autoComplete="given-name"
+                      style={inputPill}
+                    />
+                  )}
                   <input
                     type="email"
                     value={email}
@@ -987,6 +1074,41 @@ export default function FenetrePaiement({
                     </button>
                   </div>
                   {view === "inscription" && password.length > 0 && <ChecklistMdp password={password} />}
+                  {view === "inscription" && (
+                    <div style={{ position: "relative", opacity: password.length > 0 ? 1 : 0.5, transition: "opacity .3s ease" }}>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={mdpConfirm}
+                        onChange={(e) => setMdpConfirm(e.target.value)}
+                        placeholder="Confirme ton mot de passe"
+                        autoComplete="new-password"
+                        style={{ ...inputPill, paddingRight: 46 }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((v) => !v)}
+                        aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                        style={{ position: "absolute", top: "50%", right: 6, transform: "translateY(-50%)", width: 32, height: 32, border: "none", background: "none", cursor: "pointer", display: "grid", placeItems: "center", color: INK50, padding: 0 }}
+                      >
+                        {showPassword ? (
+                          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                            <path d="M1 1l22 22" />
+                          </svg>
+                        ) : (
+                          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                  {view === "inscription" && mdpConfirm.length > 0 && password !== mdpConfirm && (
+                    <p style={{ fontSize: 12, color: "#c0392b", textAlign: "center", margin: 0, lineHeight: 1.4 }}>
+                      Les mots de passe ne correspondent pas.
+                    </p>
+                  )}
                   {view === "connexion" ? (
                     <div style={{ position: "relative", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginTop: 2 }}>
                       <button
@@ -1027,18 +1149,42 @@ export default function FenetrePaiement({
                       {authError}
                     </p>
                   )}
+                  {view === "inscription" && email.length > 0 && (
+                    <label className="newsletter-fade" style={{ display: "flex", alignItems: "flex-start", gap: 8, cursor: "pointer", fontSize: 11.5, color: INK75, lineHeight: 1.4, marginTop: 2 }}>
+                      <input
+                        type="checkbox"
+                        checked={newsletter}
+                        onChange={(e) => setNewsletter(e.target.checked)}
+                        style={{ marginTop: 1, width: 15, height: 15, flexShrink: 0, accentColor: GREEN_SOLID, cursor: "pointer" }}
+                      />
+                      <span>Je veux recevoir les nouveautés et conseils par email.</span>
+                    </label>
+                  )}
                   <button
                     type="button"
-                    disabled={authLoading || (view === "inscription" && !mdpValide(password))}
+                    disabled={authLoading || (view === "inscription" && (!prenom.trim() || !mdpValide(password) || password !== mdpConfirm))}
                     onClick={view === "connexion" ? handleSignIn : handleSignUp}
                     style={{
                       ...pillPrimary,
-                      opacity: authLoading || (view === "inscription" && !mdpValide(password)) ? 0.6 : 1,
-                      cursor: authLoading || (view === "inscription" && !mdpValide(password)) ? "default" : "pointer",
+                      opacity: authLoading || (view === "inscription" && (!prenom.trim() || !mdpValide(password) || password !== mdpConfirm)) ? 0.6 : 1,
+                      cursor: authLoading || (view === "inscription" && (!prenom.trim() || !mdpValide(password) || password !== mdpConfirm)) ? "default" : "pointer",
                     }}
                   >
                     {authLoading ? "Un instant…" : view === "connexion" ? "Se connecter" : "Créer mon compte"}
                   </button>
+                  {view === "inscription" && (
+                    <>
+                      <p style={{ fontSize: 11, color: INK50, textAlign: "center", margin: "2px 0 0" }}>
+                        Tes données restent privées.
+                      </p>
+                      <p style={{ fontSize: 10.5, color: INK35, textAlign: "center", margin: 0, lineHeight: 1.45 }}>
+                        En créant ton compte, tu acceptes nos{" "}
+                        <a href="/cgu" target="_blank" rel="noopener noreferrer" style={{ color: GREEN_SOLID, textDecoration: "underline" }}>Conditions</a>{" "}
+                        et notre{" "}
+                        <a href="/confidentialite" target="_blank" rel="noopener noreferrer" style={{ color: GREEN_SOLID, textDecoration: "underline" }}>Politique de confidentialité</a>.
+                      </p>
+                    </>
+                  )}
                   {view === "connexion" && (
                     <button
                       type="button"
@@ -1049,7 +1195,45 @@ export default function FenetrePaiement({
                       Recevoir un code par email à la place
                     </button>
                   )}
-                </>
+                  </div>
+                  {view === "inscription" && (
+                    <div
+                      className="fp-benef"
+                      style={{
+                        flex: 1,
+                        minWidth: 0,
+                        background: "linear-gradient(165deg, #34a474 0%, #277e5c 100%)",
+                        borderRadius: 16,
+                        padding: "20px 20px 22px",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 14,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <p style={{ margin: 0, fontSize: 19, fontWeight: 700, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.25 }}>
+                        Ce n&apos;est que le début de ton parcours.
+                      </p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 13 }}>
+                        {[
+                          { t: "Tous tes tests réunis, gardés à vie.", soon: false },
+                          { t: "Leurs croisements révèlent ce qu'un seul test ne montre pas.", soon: true },
+                          { t: "Un parcours rien que pour toi, bâti sur l'ensemble de tes résultats.", soon: true },
+                        ].map((b, i) => (
+                          <p key={i} style={{ margin: 0, fontSize: 14.5, color: "rgba(255,255,255,0.95)", lineHeight: 1.5 }}>
+                            {b.t}
+                            {b.soon && (
+                              <span style={{ marginLeft: 7, fontSize: 10.5, fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: "#fff", background: "rgba(255,255,255,0.22)", borderRadius: 999, padding: "2px 8px", whiteSpace: "nowrap" }}>
+                                bient&ocirc;t
+                              </span>
+                            )}
+                          </p>
+                        ))}
+                      </div>
+                      <p style={{ margin: "2px 0 0", fontSize: 13, color: "rgba(255,255,255,0.8)" }}>Rien à payer, tout à découvrir.</p>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           </div>

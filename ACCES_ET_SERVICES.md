@@ -2,7 +2,7 @@
 
 > Mémo des services branchés sur le site et de leurs accès.
 > RÈGLE : aucune clé secrète ici. Les vraies clés vivent dans `.env.local` (non commité).
-> Mis à jour : session du 25 juin 2026 (gating serveur réel : session Supabase serveur, preuve d'achat par cookie, route /api/paiement/acces, webhook Stripe, vérification d'achat dans la page résultat). Le ?paid=1 factice est supprimé.
+> Mis à jour : session du 27 juin 2026 (gating serveur réel déployé sur Vercel, webhook Stripe configuré et testé en ligne, connexion Google ajoutée, refonte de la fenêtre de paiement). Le ?paid=1 factice est supprimé.
 
 ## Supabase (comptes utilisateurs + base de données)
 
@@ -32,7 +32,7 @@
 - Montant fixé côté serveur dans `src/app/api/paiement/intent/route.ts` : 790 centimes = 7,90 €.
 - Carte de test : `4242 4242 4242 4242`, date `12/34`, CVC `123`.
 - Au paiement réussi, le navigateur appelle `POST /api/paiement/acces` : la route RE-VÉRIFIE le paiement chez Stripe (`paymentIntents.retrieve`, statut `succeeded`), enregistre l'achat, et pose le cookie de preuve d'achat. C'est ce qui débloque (même sans compte). Le montant et le profil viennent des métadonnées du PaymentIntent (posées côté serveur).
-- Webhook (filet de sécurité) : `POST /api/paiement/webhook` enregistre l'achat même si le navigateur se ferme. Il a besoin de `STRIPE_WEBHOOK_SECRET` dans `.env.local`. PAS ENCORE testé : en local il faut la Stripe CLI (`stripe listen --forward-to localhost:3000/api/paiement/webhook`) qui fournit ce secret. Le déblocage principal marche déjà sans le webhook.
+- Webhook (filet de sécurité) : `POST /api/paiement/webhook` enregistre l'achat même si le navigateur se ferme. **CONFIGURÉ et testé en ligne** (réponse 200) : endpoint créé dans le dashboard Stripe (Développeurs → Webhooks), URL `https://test-personalit-s.vercel.app/api/paiement/webhook`, événement `payment_intent.succeeded`. Le secret `STRIPE_WEBHOOK_SECRET` est dans `.env.local` ET dans Vercel. Pour tester en LOCAL un jour : Stripe CLI (`stripe listen --forward-to localhost:3000/api/paiement/webhook`).
 
 ## Preuve d'achat (gating) — comment le déblocage marche
 
@@ -48,6 +48,15 @@
 - Appelée via l'API REST (`fetch`) depuis `src/app/api/auth/notif-mot-de-passe/route.ts`. Aucun package npm installé.
 - Dashboard : https://resend.com . À la mise en ligne : vérifier un domaine et envoyer depuis une adresse à ta marque (et idéalement router aussi les mails d'auth Supabase via Resend SMTP).
 
+## Google (connexion OAuth « Continuer avec Google »)
+
+- **Projet Google Cloud** : `test-personnalite-500721` (Google Auth Platform), rattaché à bourguignonluca21@gmail.com. Console : https://console.cloud.google.com/auth/overview?project=test-personnalite-500721
+- **Écran de consentement** : type **Externe**, en mode **« Test »** (donc seuls les utilisateurs de test ajoutés peuvent se connecter, c'est pour ça que ça marche pour Luca).
+- **Client OAuth** (type « Application Web ») : l'`ID client` et le `Code secret` sont collés **dans Supabase** (Authentication → Providers → Google), PAS dans `.env.local`. L'URI de redirection autorisé côté Google = le callback Supabase `https://lxaxwsplkvplhcpfltfi.supabase.co/auth/v1/callback`.
+- **Côté code** : le bouton appelle `supabase.auth.signInWithOAuth({ provider: "google" })` avec un `redirectTo` vers `/auth/callback`. La route `src/app/auth/callback/route.ts` échange le `code` contre une session (cookies), puis renvoie sur la page résultat avec `?oauth=1` ; un effet de `FenetrePaiement` rouvre alors la fenêtre sur le paiement.
+- **Redirect URLs Supabase** (URL Configuration) : `http://localhost:3000/auth/callback` et `https://test-personalit-s.vercel.app/auth/callback` ajoutés.
+- ⚠️ L'écran Google affiche l'adresse technique `…supabase.co` (« flippante »). Pour la remplacer par ton domaine, il faut le **Custom Domain Supabase** (payant, Pro + domaine possédé). Voir « À faire plus tard ».
+
 ## Où sont les choses (code)
 
 - Connecteur Supabase navigateur : `src/app/lib/supabase/client.ts`
@@ -59,28 +68,33 @@
 - Route paiement (crée le PaymentIntent, estampille user_id + slug) : `src/app/api/paiement/intent/route.ts`
 - Route déblocage (vérifie le paiement, enregistre l'achat, pose le cookie) : `src/app/api/paiement/acces/route.ts`
 - Webhook Stripe (filet de sécurité) : `src/app/api/paiement/webhook/route.ts`
-- Fenêtre de paiement (modale) : `src/app/components/FenetrePaiement.tsx`
+- Route de retour Google OAuth (échange le code, pose la session) : `src/app/auth/callback/route.ts`
+- Fenêtre de paiement (modale, contient aussi le bouton Google + l'inscription) : `src/app/components/FenetrePaiement.tsx`
 - Fenêtre de partage : `src/app/components/FenetrePartage.tsx`
 - Route mail de sécurité (Resend) : `src/app/api/auth/notif-mot-de-passe/route.ts`
 - Visuels des mails (source partagée aperçu + envoi) : `src/app/lib/emails/motDePasseChange.ts`, `src/app/lib/emails/codeConnexion.ts`
 - Page nouveau mot de passe (filet de secours) : `src/app/nouveau-mot-de-passe/page.tsx`
 - Page d'aperçu des mails (**TEMPORAIRE, à supprimer avant la prod**) : `src/app/apercu-mail/page.tsx`
-- Variables d'environnement : `.env.local` (à la racine de `Next_js`, NON commité) — contient `NEXT_PUBLIC_SUPABASE_*`, `SUPABASE_SERVICE_ROLE_KEY` (NOUVEAU), `ACCES_SIGNING_SECRET` (NOUVEAU, clé aléatoire pour signer le cookie de preuve), `STRIPE_*`, `NEXT_PUBLIC_STRIPE_*`, `STRIPE_WEBHOOK_SECRET` (à ajouter pour le webhook), `RESEND_API_KEY`. ⚠️ Les NOUVELLES clés doivent aussi être ajoutées dans Vercel (Settings → Environment Variables) avant de pousser, sinon le paiement plante en ligne.
+- Variables d'environnement : `.env.local` (à la racine de `Next_js`, NON commité) — contient `NEXT_PUBLIC_SUPABASE_*`, `SUPABASE_SERVICE_ROLE_KEY`, `ACCES_SIGNING_SECRET` (clé aléatoire pour signer le cookie de preuve), `STRIPE_*`, `NEXT_PUBLIC_STRIPE_*`, `STRIPE_WEBHOOK_SECRET`, `RESEND_API_KEY`. ✅ Toutes ces clés ont été **ajoutées dans Vercel** (Settings → Environment Variables, importées depuis `.env.local`) le 27/06. Les identifiants Google ne sont PAS ici (ils vivent dans Supabase). ⚠️ Règle pour la suite : tout NOUVEAU secret ajouté dans `.env.local` doit aussi être ajouté dans Vercel avant de pousser, sinon la version en ligne plante.
 
 ## À faire plus tard (rappel)
 
 - ~~Session Supabase côté serveur~~ : FAIT (`lib/supabase/server.ts` + `src/proxy.ts`).
 - ~~Gating serveur réel~~ : FAIT (le `?paid=1` factice est supprimé ; déblocage par cookie de preuve OU achat sur le compte).
-- Webhook Stripe (`api/paiement/webhook`) : créé, mais PAS ENCORE testé. À faire : installer la Stripe CLI, lancer `stripe listen --forward-to localhost:3000/api/paiement/webhook`, mettre le `STRIPE_WEBHOOK_SECRET` qu'elle donne dans `.env.local`, et tester un paiement.
-- Avant de pousser : ajouter `SUPABASE_SERVICE_ROLE_KEY` et `ACCES_SIGNING_SECRET` (+ plus tard `STRIPE_WEBHOOK_SECRET`) dans Vercel.
-- Mise en ligne : réactiver la confirmation email Supabase, vérifier Stripe (passage live), **ajouter toutes les variables d'environnement dans Vercel** (sinon connexion + paiement ne marchent pas en ligne).
+- ~~Webhook Stripe~~ : FAIT (configuré dans le dashboard Stripe + testé en ligne, réponse 200).
+- ~~Variables d'environnement dans Vercel~~ : FAIT (toutes importées depuis `.env.local` le 27/06).
+- ~~Connexion Google~~ : FAIT (marche en local et prêt pour Vercel).
+- **Publier l'app Google en Production** : aujourd'hui l'écran de consentement est en mode « Test », donc seuls les utilisateurs de test peuvent se connecter. Avant l'ouverture au public : Google Auth Platform → Audience → « Publier l'application ». Scopes de base (email, profil) = pas de vérification Google nécessaire.
+- **Custom Domain Supabase** (payant, plan Pro + domaine possédé) : pour remplacer l'adresse `…supabase.co` « flippante » affichée sur l'écran Google par ton propre domaine.
+- **Créer les pages `/cgu` et `/confidentialite`** : les liens du formulaire d'inscription pointent dessus (404 pour l'instant).
+- Mise en ligne : réactiver la confirmation email Supabase, vérifier Stripe (passage live).
 - Sortir le projet de OneDrive (règle les pop-up de suppression et les vues tronquées).
 - Emails : remplacer le **SMTP Gmail de test** par **Resend SMTP + domaine vérifié** (côté Supabase ET Resend), **supprimer la page `/apercu-mail`**, renforcer les critères de mot de passe côté Supabase (Min length 8 + requirements).
 
 ## Repères pratiques & pièges (pour les futures sessions)
 
 - **Comptes des services** : Supabase, Stripe, Resend et le SMTP Gmail sont tous rattachés à l'adresse **bourguignonluca21@gmail.com**. Les secrets (clés API, mot de passe d'application) vivent UNIQUEMENT dans `.env.local` et dans les réglages Supabase, jamais dans ce doc.
-- **URL de test d'une page résultat** : `http://localhost:3000/resultat/infp-v1?s=51-62-40-58&v=11-7-5`. Ajouter `&paid=1` pour voir la version payée (défloutée), `&recovery=1` pour ouvrir la fenêtre directement sur l'écran « nouveau mot de passe ».
+- **URL de test d'une page résultat** : `http://localhost:3000/resultat/infp-v1?s=51-62-40-58&v=11-7-5`. ⚠️ `&paid=1` ne débloque PLUS rien (gating réel) : pour voir la version payée il faut un vrai paiement test (carte `4242…`) ou un achat déjà fait sur ce navigateur (cookie de preuve). `&recovery=1` ouvre la fenêtre sur « nouveau mot de passe » ; `&oauth=1` simule le retour Google (rouvre la fenêtre sur le paiement).
 - **Aperçu des mails en direct** : `http://localhost:3000/apercu-mail` (page temporaire, à supprimer avant la prod).
 - **Éditer un template d'email Supabase** : impossible tant qu'un **SMTP custom** n'est pas activé (message « Set up custom SMTP to edit the source »). C'est pour ça qu'on a branché le SMTP Gmail de test.
 - **Template OTP** = onglet « Magic Link or OTP ». Par défaut Supabase envoie un **lien**, pas un code ; pour un code à coller il faut mettre `{{ .Token }}` dans le corps. Pour le bouton « copier le code » de Gmail : mettre `{{ .Token }}` dans **l'objet** (surtout visible sur Gmail mobile).
@@ -94,4 +108,4 @@
 
 - Les clés secrètes ne doivent JAMAIS être collées dans un fichier commité ni partagées. Uniquement dans `.env.local`.
 - Commit/push uniquement depuis Windows / Claude Code (voir `AGENTS.md`).
-- État détaillé du projet : `ETAT_DU_PROJET.md` (section 8 sexies pour la dernière session).
+- État détaillé du projet : `ETAT_DU_PROJET.md` (section 8 septies pour la dernière session).

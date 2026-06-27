@@ -47,7 +47,7 @@ Fin du test → `/resultat/{code}-{variante}?s=…&v=…`
 - **Panneaux au survol (les 3 identiques)** : ancrés **sous le menu** (top = bas du menu + 16 px), hauteur adaptée au contenu, fondu entrée/sortie (le contenu reste pendant la sortie).
 
 ## 7. Décisions produit
-- Le **floutage/brouillage est monté en prototype** (cf. §8 quater : `BlocVerrouille`, contenu verrouillé brouillé côté serveur, flag `isPaid` via `?paid=1`). Le **paiement réel** (Stripe) et les **comptes** (Supabase) sont désormais montés (cf. §8 quinquies/sexies) ; reste à faire le **vrai gating serveur** (le `?paid=1` est encore factice). Carte de fin premium affichée, prix 7,90 €.
+- Le **floutage/brouillage** (cf. §8 quater : `BlocVerrouille`, contenu verrouillé brouillé côté serveur). Le **paiement réel** (Stripe) et les **comptes** (Supabase) sont montés (cf. §8 quinquies/sexies). Le **vrai gating serveur est désormais FAIT** (cf. §8 septies) : le `?paid=1` factice a été **supprimé**, le déblocage se fait par cookie de preuve d'achat OU achat vérifié sur le compte. Carte de fin premium affichée, prix 7,90 €.
 - **Recadrage « valoriser, pas pointer les failles »** : la section dév perso ne nomme plus de « pièges/faiblesses » ; on parle de « leviers forts » et de questions à se poser.
 - La **profondeur des variantes** est le différenciateur (16P ne l'a pas) : on la détaille au maximum.
 - Contenu tiré des **rapports longs de l'utilisateur** (`1_PRODUIT/test personnalités/personnalites/<TYPE>/rapport_long/…`) — c'est son contenu, on peut l'utiliser.
@@ -175,15 +175,49 @@ Tout est dans `components/FenetrePaiement.tsx` (la modale) sauf mention contrair
 
 **Nouveaux fichiers :** `api/auth/notif-mot-de-passe/route.ts`, `lib/emails/motDePasseChange.ts`, `lib/emails/codeConnexion.ts`, `nouveau-mot-de-passe/page.tsx`, `apercu-mail/page.tsx` (temporaire). `.env.local` : ajout `RESEND_API_KEY`.
 
-**Gating toujours prototype** : le déblocage du rapport reste via `?paid=1` factice. Le vrai gating serveur (session + achat vérifié) reste à faire (cf. §9).
+**Gating à la fin de cette session** : c'était encore le `?paid=1` factice. **FAIT depuis** (cf. §8 septies) : le vrai gating serveur est en place et le `?paid=1` a été supprimé.
+
+## 8 septies. POINT DE REPRISE, session 27 juin 2026 (gating réel en ligne, webhook Stripe, connexion Google, refonte de la fenêtre de paiement)
+
+**Gating serveur réel — FAIT, déployé et testé en ligne.**
+- `src/app/lib/supabase/server.ts` (client serveur via cookies) + `src/proxy.ts` (l'ex-middleware, **renommé « proxy » en Next 16**) : le serveur sait qui est connecté.
+- `src/app/lib/supabase/admin.ts` (clé `service_role`, serveur uniquement) pour écrire les achats.
+- `src/app/lib/acces.ts` : **preuve d'achat anonyme** = cookie signé HMAC (`acces_rapport`, httpOnly) avec `ACCES_SIGNING_SECRET`, infalsifiable.
+- `src/app/api/paiement/acces/route.ts` : au paiement réussi, le navigateur l'appelle ; elle re-vérifie le paiement chez Stripe, enregistre l'achat (table `achats`, `service_role`), pose le cookie. C'est ce qui débloque (même sans compte).
+- `api/paiement/intent` estampille le PaymentIntent avec `user_id` (si connecté) + le **slug** du profil.
+- `page.tsx` : `isPaid` = (cookie de preuve contient ce slug) OU (compte connecté avec achat `payé`). Le `?paid=1` est supprimé.
+- Table `achats` ajustée (SQL) : `user_id` NULLABLE, index unique sur `stripe_payment_intent`, colonne `email`.
+- **Vercel** : toutes les variables d'environnement (Supabase, Stripe, Resend, + les nouvelles `SUPABASE_SERVICE_ROLE_KEY` et `ACCES_SIGNING_SECRET`) ont été **importées dans Vercel** (elles manquaient, ce qui faisait échouer le build). Build redevenu vert, **gating testé en ligne** : `?paid=1` ne débloque plus, un vrai paiement test débloque et ça tient au rechargement.
+
+**Webhook Stripe — FAIT et testé en ligne (200).** `src/app/api/paiement/webhook/route.ts` (filet de sécurité, enregistre l'achat même si le navigateur se ferme). Endpoint créé dans le dashboard Stripe (Développeurs → Webhooks) vers `https://test-personalit-s.vercel.app/api/paiement/webhook`, événement `payment_intent.succeeded`. `STRIPE_WEBHOOK_SECRET` dans `.env.local` ET Vercel.
+
+**Connexion « Continuer avec Google » — FAIT (marche en test).**
+- Bouton Google (logo officiel) sur l'écran de choix + dans les vues « Se connecter »/« Créer un compte », avec séparateur « ou ».
+- `supabase.auth.signInWithOAuth({ provider: "google" })` + route de retour `src/app/auth/callback/route.ts` (échange le `code` contre une session, renvoie sur la page résultat avec `?oauth=1` ; un effet rouvre la fenêtre sur le paiement).
+- Config : projet Google Cloud `test-personnalite-500721`, client OAuth Web, identifiants collés dans Supabase (Providers → Google), redirect URLs `/auth/callback` ajoutées dans Supabase (local + Vercel).
+- ⚠️ Écran de consentement Google en mode **« Test »** (seuls les utilisateurs de test peuvent se connecter). À **publier en Production** avant l'ouverture au public. L'écran affiche l'URL technique `…supabase.co` : pour la remplacer par ton domaine il faudra le **Custom Domain Supabase** (payant). Voir détails dans `ACCES_ET_SERVICES.md`.
+
+**Refonte visuelle de la fenêtre de paiement** (`FenetrePaiement.tsx`) :
+- Fond **blanc plein** partout (fini le verre dépoli translucide / l'effet miroir).
+- Boutons « Se connecter »/« Créer un compte » : **blanc à texte vert** (avant : givrés texte blanc, illisibles sur fond blanc).
+- Vue **« Créer un compte » en 2 colonnes** (la fenêtre s'élargit) : à gauche le formulaire, à droite un encart **vert foncé** « Ce n'est que le début de ton parcours. » (tests réunis, croisements **bientôt**, parcours **bientôt**, « Rien à payer, tout à découvrir. »). Responsive : colonnes empilées sur mobile.
+- Champ **« Ton prénom ou pseudonyme »** (requis), enregistré dans les métadonnées Supabase (avec la pref newsletter).
+- **Confirmation du mot de passe** (opacité réduite tant que le mdp est vide, œil synchronisé avec le champ mdp), bloque le bouton si les deux diffèrent.
+- **Case newsletter** (apparaît en fondu à la saisie de l'email, décochée par défaut = RGPD).
+- Titre **« Je crée mon compte »** (vert), lignes **« Tes données restent privées. »** + **CGU** (liens `/cgu` et `/confidentialite`, pages à créer).
+
+**Nouveaux fichiers :** `lib/supabase/server.ts`, `lib/supabase/admin.ts`, `lib/acces.ts`, `src/proxy.ts`, `api/paiement/acces/route.ts`, `api/paiement/webhook/route.ts`, `auth/callback/route.ts`. `.env.local` : ajout `SUPABASE_SERVICE_ROLE_KEY`, `ACCES_SIGNING_SECRET`, `STRIPE_WEBHOOK_SECRET`.
+
+**État commit/push :** le gating a été commité, poussé et déployé sur Vercel. La refonte de la fenêtre + le bouton Google sont à **commiter/pousser** (pas de nouvelle clé Vercel pour Google, les identifiants sont dans Supabase).
 
 ## 9. Prochaines étapes
 - **Mot de passe oublié (parcours complet), critères de mot de passe, mail de sécurité (Resend), connexion par code email : FAITS** (cf. §8 sexies).
-- **Fenêtre de paiement + comptes Supabase + Stripe : FAITS** (cf. §8 quinquies). Restent les vrais branchements serveur :
-  - **Session Supabase côté serveur** : monter `lib/supabase/server.ts` + `middleware.ts` pour lire l'utilisateur connecté côté serveur.
-  - **Webhook Stripe** (`api/paiement/webhook`) : à la confirmation du paiement, **insérer l'achat dans `achats`** (clé service_role, rattaché au user connecté + métadonnées profil).
-  - **Gating serveur réel** : remplacer le `?paid=1` factice par une vérif « cet utilisateur a-t-il acheté ce rapport ? » avant de servir le contenu déflouté. Gérer aussi le cas « sans inscription » (achat anonyme : jeton signé, ou pousser la création de compte au moment de payer).
-  - **Mise en ligne** : réactiver la confirmation email Supabase, vérifier le compte Stripe (statut entreprise) pour passer en live, déployer sur Vercel.
+- **Fenêtre de paiement + comptes Supabase + Stripe + gating serveur réel + webhook + connexion Google : FAITS** (cf. §8 quinquies/sexies/septies). Reste, surtout avant l'ouverture au public :
+  - **Publier l'app Google en Production** (sinon seuls les utilisateurs de test peuvent se connecter via Google ; scopes de base = pas de vérification Google).
+  - **Custom Domain Supabase** (payant, plan Pro + domaine) pour masquer l'URL `…supabase.co` affichée sur l'écran de consentement Google.
+  - **Créer les pages `/cgu` et `/confidentialite`** (les liens du formulaire d'inscription pointent dessus, 404 sinon).
+  - **Validation du format email** dans le formulaire d'inscription (proposée, pas encore faite). La vraie validation = réactiver la confirmation email Supabase.
+  - **Mise en ligne** : réactiver la confirmation email Supabase, vérifier le compte Stripe (statut entreprise) pour passer en live.
 - **Sortir le projet de OneDrive** (réglera les pop-up de suppression et les vues tronquées). À faire proprement avec Claude Code (déplacer le dossier, garder le dépôt Git, recâbler le dossier connecté).
 - **Emails & auth (mise en ligne)** : remplacer le **SMTP Gmail de test** par un vrai SMTP + domaine (Resend), **supprimer la page temporaire `/apercu-mail`**, renforcer les **critères de mot de passe côté Supabase** (Min length 8 + requirements), aligner la page `/nouveau-mot-de-passe` sur les mêmes critères, et traiter le **reset cross-appareil**.
 - **Contenu** : corriger ISTJ (ré-accentuer) et finir la passe anti-répétition intra-résumé (cf. §8 ter et `AUDIT_48_PROFILS.md`).
