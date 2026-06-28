@@ -1169,7 +1169,7 @@ const DESCRIPTIONS_VARIANTES: Record<string, string> = {
   "INFP-V1":
     "Les Poètes sont les plus tournés vers le ressenti et la beauté. Ils vivent le monde comme une expérience émotionnelle et esthétique, et cherchent avant tout à rester fidèles à ce qu'ils ressentent.",
   "INFP-V2":
-    "Les Rêveurs Créatifs sont portés par l'imagination et les possibles. Leur esprit foisonne d'idées, d'histoires et de projets ; ils transforment leur monde intérieur en création.",
+    "Les Rêveurs Créatifs sont portés par l'imagination et les possibles. Leur esprit foisonne d'idées, d'histoires et de projets : ils transforment leur monde intérieur en création.",
   "INFP-V3":
     "Les Idéalistes Engagés mettent leurs valeurs en action. Animés par une cause et un idéal de justice, ils cherchent à incarner concrètement ce en quoi ils croient.",
   "ENFP-V1":
@@ -1188,6 +1188,130 @@ export function getDescriptionVariante(code: string, variante: string, nomVarian
     DESCRIPTIONS_VARIANTES[`${c}-${v}`] ??
     `Les ${nomVariante} forment l'une des trois façons d'être de ce type. (Description à rédiger.)`
   );
+}
+
+// Description NEUTRE plus détaillée de la variante dominante, mise en avant sur la page
+// de partage /p. Remplie au fur et à mesure ; à défaut on retombe sur la description courte.
+const DETAILS_VARIANTES: Record<string, string> = {
+  // INFP — Médiateur
+  "INFP-V1":
+    "Les Poètes sont les plus tournés vers le ressenti et la beauté. Parmi les trois visages du Médiateur, c'est celui qui vit le monde comme une expérience avant tout émotionnelle et esthétique, faite d'images et de résonances que beaucoup ne perçoivent même pas. Cette sensibilité leur donne une âme d'artiste, qu'ils créent concrètement ou non, et les relie aux autres avec une profondeur rare.",
+  "INFP-V2":
+    "Les Rêveurs Créatifs sont portés par l'imagination et les possibles. Parmi les trois visages du Médiateur, c'est celui dont l'esprit foisonne le plus d'idées, d'histoires et de mondes intérieurs, toujours en train d'inventer ce qui pourrait être. Cette imagination débordante en fait un créateur né, qui transforme sa vie intérieure en récits, en projets et en beauté.",
+  "INFP-V3":
+    "Les Idéalistes Engagés mettent leurs valeurs en action. Parmi les trois visages du Médiateur, c'est celui qui ne se contente pas de ressentir l'injustice mais cherche à la réparer, animé par une cause et un idéal de justice. Cette ferveur tranquille en fait quelqu'un qui veut incarner concrètement ce en quoi il croit, et rapprocher le monde de ce qu'il devrait être.",
+  // ENFP — Inspirateur
+  "ENFP-V1":
+    "Les Explorateurs Enthousiastes sont les plus appelés par la nouveauté et l'aventure. Parmi les trois visages de l'Inspirateur, c'est celui que la curiosité pousse le plus loin : il veut tout découvrir, voit des possibles partout, et se lasse vite de la routine. Cette soif d'expériences en fait un entraîneur né, capable d'embarquer les autres dans ses élans et de rendre la vie plus grande.",
+  "ENFP-V2":
+    "Les Cœurs Authentiques sont guidés par des valeurs profondes et une quête de sens. Parmi les trois visages de l'Inspirateur, c'est celui chez qui l'enthousiasme cache la plus grande profondeur : sous la chaleur bat une vraie empathie, et un besoin que les choses soient justes et vraies. Cette sincérité en fait quelqu'un qui cherche l'authentique en tout, et que l'on sent profondément fiable derrière la légèreté.",
+  "ENFP-V3":
+    "Les Fédérateurs créent du lien partout où ils passent. Parmi les trois visages de l'Inspirateur, c'est celui qui est le plus tourné vers les autres : chaleureux et attentif, il rassemble les gens, anime les groupes et fait circuler l'énergie. Cette générosité relationnelle en fait un point de ralliement, quelqu'un auprès de qui les liens deviennent plus vivants et plus sincères.",
+  // INTJ — Architecte
+  "INTJ-V1":
+    "Les Architectes-Bâtisseurs sont les plus tournés vers la construction concrète. Parmi les trois visages de l'Architecte, c'est celui qui mesure tout à ce que ça produit réellement : une idée qui ne se concrétise pas n'a pas de valeur à ses yeux, alors il prend une vision lointaine et la transforme, étape par étape, en quelque chose de solide. Cette alliance de la vision et de l'exécution en fait un bâtisseur redoutable, capable de donner corps à ce que d'autres se contentent d'imaginer.",
+  "INTJ-V2":
+    "Les Stratèges de Conviction mettent leur intelligence au service de leurs valeurs. Parmi les trois visages de l'Architecte, c'est celui dont la puissance d'esprit est la plus arrimée à une boussole morale : une stratégie brillante au service de rien n'a aucune valeur à ses yeux, il veut que sa force laisse le monde un peu meilleur. Cette intégrité, qui ne plie pas, en fait quelqu'un qui défend ce qu'il croit juste avec une détermination que rien n'entame.",
+  "INTJ-V3":
+    "Les Visionnaires sont les plus tournés vers la compréhension pure et la profondeur de la pensée. Parmi les trois visages de l'Architecte, c'est celui dont l'esprit plonge le plus loin : comprendre est une fin en soi, il a besoin de saisir le pourquoi profond des choses avant d'agir, parfois même à la place d'agir. De cette plongée naissent des intuitions d'une acuité rare, des directions entrevues bien avant les autres.",
+  // INTP — Logicien
+  "INTP-V1":
+    "Les Architectes Logiques sont les plus tournés vers la rigueur et la profondeur de l'analyse. Parmi les trois visages du Logicien, c'est celui qui creuse le plus loin : il descend jusqu'aux fondations d'un problème, bâtit des cadres de pensée cohérents et ne supporte pas la moindre incohérence. Cette exigence en fait un esprit d'une précision rare, qui comprend les choses en profondeur là où d'autres s'arrêtent à la surface.",
+  "INTP-V2":
+    "Les Explorateurs d'Idées sont portés par la curiosité et la nouveauté. Parmi les trois visages du Logicien, c'est celui dont l'esprit bondit le plus librement d'un domaine à l'autre, reliant des mondes éloignés que personne n'aurait songé à rapprocher. Cette inventivité en fait une source intarissable d'idées neuves, qui s'ennuie du déjà-vu et s'allume au contact de l'inconnu.",
+  "INTP-V3":
+    "Les Penseurs Humanistes mettent leur puissance d'analyse au service de l'humain. Parmi les trois visages du Logicien, c'est celui qui relie le mieux la tête et le cœur : la lucidité de l'analyste s'y double d'une vraie attention aux gens. Cette alliance rare en fait quelqu'un qui comprend autant les systèmes que les personnes, et met sa clairvoyance au service de ce qui compte vraiment.",
+  // ENTJ — Commandant
+  "ENTJ-V1":
+    "Les Capitaines d'Industrie sont les plus tournés vers l'action, le commandement et le résultat concret. Parmi les trois visages du Commandant, c'est celui qui passe le plus vite à l'exécution : il prend les commandes, organise et livre des résultats mesurables. Cette efficacité naturelle en fait un meneur né, capable de transformer une ambition en machine qui avance.",
+  "ENTJ-V2":
+    "Les Stratèges Visionnaires sont les plus tournés vers le futur et la transformation. Parmi les trois visages du Commandant, c'est celui qui voit le plus loin : il sent les bascules venir des années à l'avance et a la force d'entraîner les autres vers l'horizon qu'il perçoit. Cette clairvoyance en fait un bâtisseur d'avenir, qui mène le changement plutôt que de le subir.",
+  "ENTJ-V3":
+    "Les Leaders Inspirants mettent leur puissance au service des gens et d'une mission. Parmi les trois visages du Commandant, c'est celui qui mène le plus par le sens : il fédère, élève et inspire une loyauté sincère, porté autant par le résultat que par ce qui le dépasse. Cette autorité chaleureuse en fait quelqu'un qu'on suit non par obligation mais par adhésion.",
+  // ENTP — Innovateur
+  "ENTP-V1":
+    "Les Inventeurs sont les plus tournés vers la création et le lancement d'idées neuves. Parmi les trois visages de l'Innovateur, c'est celui dont l'esprit est la plus intarissable des fontaines : il voit des opportunités partout et adore défricher les territoires que personne n'a explorés. Cette inventivité en fait un lanceur d'idées né, plus heureux à inventer ce qui n'existe pas qu'à entretenir ce qui existe.",
+  "ENTP-V2":
+    "Les Débatteurs Analytiques sont les plus tournés vers l'analyse critique et la joute intellectuelle. Parmi les trois visages de l'Innovateur, c'est celui qui teste tout : il traque les failles, démonte les raisonnements bancals et adore confronter les idées pour aller au fond des choses. Cette acuité en fait un esprit redoutable, qui affûte la pensée des autres autant que la sienne.",
+  "ENTP-V3":
+    "Les Charmeurs Visionnaires sont les plus tournés vers les gens et l'influence. Parmi les trois visages de l'Innovateur, c'est celui qui sait le mieux faire passer ses idées : il ne se contente pas d'en avoir, il les vend, rallie les foules et transforme une vision en mouvement. Ce magnétisme en fait un entraîneur d'idées, capable de mettre le monde en marche derrière lui.",
+  // INFJ — Avocat
+  "INFJ-V1":
+    "Les Mentors sont les plus tournés vers l'accompagnement et l'élévation des autres. Parmi les trois visages de l'Avocat, c'est celui qui se soucie le plus des personnes une à une : il perçoit le potentiel des gens et a à cœur de les aider à devenir le meilleur d'eux-mêmes. Cette attention en fait un guide précieux, auprès de qui on se sent vu, compris et grandi.",
+  "INFJ-V2":
+    "Les Visionnaires Mystiques sont portés par une intuition d'une profondeur rare. Parmi les trois visages de l'Avocat, c'est celui qui perçoit le mieux l'invisible : connecté au sens caché des choses, il pressent ce que les autres ne voient pas encore. Cette clairvoyance en fait une source d'inspiration, qui éclaire le monde d'une lumière venue d'ailleurs.",
+  "INFJ-V3":
+    "Les Architectes d'Idéaux allient la vision élevée à la volonté de la réaliser. Parmi les trois visages de l'Avocat, c'est celui qui passe le plus à l'action : animé par des convictions fortes, il veut transformer le monde et le rendre plus juste, pierre après pierre. Cette ténacité en fait un idéaliste qui ne se contente pas de rêver le bien, mais le bâtit.",
+  // ENFJ — Protagoniste
+  "ENFJ-V1":
+    "Les Guides sont les plus tournés vers l'accompagnement individuel. Parmi les trois visages du Protagoniste, c'est celui qui révèle le mieux les gens un à un : il voit le potentiel de chacun et sait le faire éclore avec une douceur et une justesse qui font grandir. Cette attention en fait une présence précieuse, auprès de qui on ose devenir soi.",
+  "ENFJ-V2":
+    "Les Leaders de Mission portent une cause et rassemblent les autres autour. Parmi les trois visages du Protagoniste, c'est celui qui entraîne le plus large : il transforme une conviction en mouvement collectif et donne aux gens l'envie de servir quelque chose de plus grand. Cette force d'entraînement en fait un meneur qui élève, fédère et met les autres en marche.",
+  "ENFJ-V3":
+    "Les Animateurs Charismatiques fédèrent par leur chaleur et leur énergie. Parmi les trois visages du Protagoniste, c'est celui qui crée le plus de lien et de joie : partout où il passe, il met les gens à l'aise et fait vivre le groupe. Ce rayonnement en fait un point de ralliement naturel, qui donne envie de se rassembler.",
+  // ISTJ — Logisticien
+  "ISTJ-V1":
+    "Les Gardiens sont les plus tournés vers la préservation et la continuité. Parmi les trois visages du Logisticien, c'est celui sur qui tout repose : il maintient les repères, la mémoire et l'expérience éprouvée, et reste le point fixe quand le reste vacille. Cette fiabilité en fait un socle, quelqu'un dont la constance rassure et tient l'ensemble debout.",
+  "ISTJ-V2":
+    "Les Administrateurs sont les plus tournés vers l'efficacité et la structure. Parmi les trois visages du Logisticien, c'est celui qui ordonne le mieux : il organise, rationalise et fait tourner les systèmes, transformant le désordre en procédure claire qui fonctionne. Cette rigueur en fait un pilier d'organisation, capable de faire marcher ce que d'autres laissent à l'abandon.",
+  "ISTJ-V3":
+    "Les Loyaux Discrets mettent leur fiabilité au service d'un code intérieur. Parmi les trois visages du Logisticien, c'est celui qui agit le plus par conviction : guidé par un sens du juste exigeant et une loyauté indéfectible, il sert fidèlement et sans bruit ce en quoi il croit. Cette intégrité tranquille en fait quelqu'un de profondément sûr, sur qui l'on peut compter en silence.",
+  // ISFJ — Défenseur
+  "ISFJ-V1":
+    "Les Protecteurs sont les plus tournés vers le soin actif et la défense de ceux qui comptent. Parmi les trois visages du Défenseur, c'est celui qui veille le plus : il anticipe les besoins, prend les devants et protège ses proches avec un instinct et un dévouement sans faille. Cette vigilance aimante en fait un rempart discret, auprès de qui on se sent en sécurité.",
+  "ISFJ-V2":
+    "Les Gardiens du Foyer ont le don rare de créer de la chaleur et de l'harmonie. Parmi les trois visages du Défenseur, c'est celui qui apaise le mieux : il fait des lieux et des liens autour de lui des refuges où chacun se sent accueilli et chez soi. Ce talent pour le cocon en fait quelqu'un dont la présence réchauffe et adoucit tout ce qu'elle touche.",
+  "ISFJ-V3":
+    "Les Soutiens Réfléchis allient l'attention chaleureuse à une finesse d'observation rare. Parmi les trois visages du Défenseur, c'est celui qui comprend le plus en profondeur : il lit les besoins entre les lignes et offre le bon soutien, au bon moment, de la bonne façon. Cette justesse en fait une aide précieuse, à la fois douce et étonnamment perspicace.",
+  // ESTJ — Directeur
+  "ESTJ-V1":
+    "Les Dirigeants sont les plus tournés vers la prise de commandes et l'action. Parmi les trois visages du Directeur, c'est celui qui décide le plus vite : il organise, tranche et fait avancer, et voir les choses se concrétiser lui donne son élan. Cette énergie de meneur en fait quelqu'un qui met de l'ordre et du mouvement là où d'autres tergiversent.",
+  "ESTJ-V2":
+    "Les Garants de l'Ordre sont les plus attachés à la règle et au devoir. Parmi les trois visages du Directeur, c'est celui qui tient le plus les structures : il fait respecter les standards et veille à ce que tout soit fait correctement, sans compromis sur le sérieux. Cette droiture en fait un pilier sur lequel une organisation peut s'appuyer les yeux fermés.",
+  "ESTJ-V3":
+    "Les Leaders Loyaux mettent leur autorité au service des leurs. Parmi les trois visages du Directeur, c'est celui qui protège le plus : il prend les commandes pour faire avancer et défendre ceux dont il se sent responsable. Cette loyauté en fait un chef que l'on suit volontiers, parce qu'on sait qu'il veille.",
+  // ESFJ — Consul
+  "ESFJ-V1":
+    "Les Hôtes sont les plus tournés vers le lien social et l'animation du groupe. Parmi les trois visages du Consul, c'est celui qui rassemble le mieux : il met à l'aise, veille au climat et fait que chacun se sente accueilli et inclus. Ce talent pour le collectif en fait le cœur d'un groupe, celui autour de qui les gens se retrouvent.",
+  "ESFJ-V2":
+    "Les Gardiens Bienveillants veillent à la stabilité et au soin concret du cercle. Parmi les trois visages du Consul, c'est celui qui prend le plus soin du quotidien : il maintient les repères et offre aux siens un cadre sûr et chaleureux. Cette constance attentionnée en fait un pilier rassurant, sur qui les proches savent pouvoir compter.",
+  "ESFJ-V3":
+    "Les Dévoués Réfléchis allient la chaleur au discernement. Parmi les trois visages du Consul, c'est celui qui aide avec le plus de recul : il sait poser un cadre et prendre de la hauteur pour offrir un soutien à la fois généreux et juste. Cet équilibre en fait quelqu'un dont la bienveillance ne s'oublie jamais elle-même.",
+  // ISTP — Virtuose
+  "ISTP-V1":
+    "Les Artisans sont les plus tournés vers la maîtrise technique et la compréhension des mécanismes. Parmi les trois visages du Virtuose, c'est celui qui aime le plus mettre les mains dans le concret : démonter, comprendre, réparer, perfectionner, voilà ce qui le comble. Cette habileté en fait quelqu'un qui résout par le geste ce que d'autres n'arrivent même pas à formuler.",
+  "ISTP-V2":
+    "Les Aventuriers sont les plus tournés vers l'action, la sensation et le défi vécu dans l'instant. Parmi les trois visages du Virtuose, c'est celui qui ose le plus : son audace s'appuie sur un vrai sang-froid, il vit fort sans jamais perdre le contrôle. Ce mélange de feu et de calme en fait quelqu'un qui va là où d'autres reculent, et en revient lucide.",
+  "ISTP-V3":
+    "Les Stratèges Silencieux sont les plus tournés vers l'observation et l'action anticipée. Parmi les trois visages du Virtuose, c'est celui qui lit le mieux les situations : il observe en silence, sent où vont les choses et frappe juste au moment le plus opportun. Cette lucidité tranquille en fait quelqu'un de discret mais redoutablement efficace.",
+  // ISFP — Aventurier
+  "ISFP-V1":
+    "Les Artistes Sensibles sont les plus tournés vers la vie intérieure et l'expression. Parmi les trois visages de l'Aventurier, c'est celui qui ressent le plus fort : il donne forme à ce qu'il éprouve et met du vrai et de la beauté dans tout ce qu'il touche. Cette sensibilité en fait une âme d'artiste, qui s'exprime autant par ce qu'il crée que par sa façon d'être.",
+  "ISFP-V2":
+    "Les Aventuriers des Sens sont les plus tournés vers l'expérience directe et la beauté du concret. Parmi les trois visages de l'Aventurier, c'est celui qui habite le plus l'instant : il vit à pleins sens et savoure ce qui passe inaperçu pour les autres. Cette présence au monde en fait quelqu'un qui sait goûter la vie là où elle se trouve, simplement.",
+  "ISFP-V3":
+    "Les Doux Idéalistes sont les plus tournés vers la défense de leurs valeurs dans le monde. Parmi les trois visages de l'Aventurier, c'est celui qui s'engage le plus : derrière la douceur, il agit pour ce qui est juste avec une fermeté tranquille. Cette force discrète en fait quelqu'un qu'on sous-estime, jusqu'à voir à quel point ses convictions tiennent.",
+  // ESTP — Entrepreneur
+  "ESTP-V1":
+    "Les Fonceurs sont les plus tournés vers l'action immédiate et le défi. Parmi les trois visages de l'Entrepreneur, c'est celui qui saisit le plus vite l'instant : il fonce là où d'autres hésitent, porté par l'audace, l'énergie physique et le goût de l'adrénaline. Cet élan en fait quelqu'un qui fait bouger les choses pendant que les autres réfléchissent encore.",
+  "ESTP-V2":
+    "Les Tacticiens lisent et retournent les situations à leur avantage. Parmi les trois visages de l'Entrepreneur, c'est celui qui calcule le mieux son coup : pragmatique et malin, il repère l'opportunité que les autres ne voient pas et agit juste. Ce flair en fait un stratège de terrain, redoutable quand il s'agit de transformer une situation en avantage.",
+  "ESTP-V3":
+    "Les Charmeurs entraînent par leur magnétisme. Parmi les trois visages de l'Entrepreneur, c'est celui qui rallie le mieux : à l'aise avec tout le monde, il lit les gens, crée le contact et embarque une salle par sa seule énergie. Ce charisme en fait quelqu'un qu'on suit avec plaisir, qui rend chaque moment plus vivant.",
+  // ESFP — Amuseur
+  "ESFP-V1":
+    "Les Animateurs sont les plus tournés vers l'ambiance et l'énergie de groupe. Parmi les trois visages de l'Amuseur, c'est celui qui fait le plus vivre l'instant : il met de la joie partout où il passe et transforme un moment ordinaire en souvenir. Cette énergie communicative en fait l'étincelle d'un groupe, celui qui réveille la fête.",
+  "ESFP-V2":
+    "Les Cœurs Généreux sont les plus tournés vers le soin et la fidélité aux gens. Parmi les trois visages de l'Amuseur, c'est celui dont la joie cache la plus grande profondeur : sous l'entrain battent un cœur immense, des valeurs solides et une générosité qui se voit dans les actes. Cette fidélité en fait quelqu'un sur qui on peut vraiment compter, bien au-delà de la bonne humeur.",
+  "ESFP-V3":
+    "Les Esthètes Vivants sont les plus sensibles au beau et à l'art de vivre. Parmi les trois visages de l'Amuseur, c'est celui qui a le plus l'œil pour le style : il sait sublimer le présent et transforme l'ordinaire en quelque chose de précieux. Ce goût du beau en fait quelqu'un qui met de la grâce dans la vie quotidienne, et la rend plus belle pour les autres.",
+};
+
+// Description détaillée de la variante (retombe sur la description courte si pas rédigée).
+export function getDetailVariante(code: string, variante: string, nomVariante: string): string {
+  const c = (code || "").toUpperCase();
+  const v = (variante || "V1").toUpperCase();
+  return DETAILS_VARIANTES[`${c}-${v}`] ?? getDescriptionVariante(c, v, nomVariante);
 }
 
 // Contenu placeholder ORIGINAL (à remplacer). Marqué clairement « démonstration ».

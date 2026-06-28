@@ -132,23 +132,38 @@ export default function CompatibiliteBlocs({
               key={b.titre}
               onMouseEnter={() => setHovered(b.titre)}
               onMouseLeave={() => setHovered(null)}
-              className="rounded-2xl border border-gray-100 p-5 transition-shadow hover:shadow-md cursor-default"
+              className={`group rounded-2xl border border-gray-100 p-5 transition-shadow hover:shadow-sm cursor-default${locked ? " relative" : ""}`}
               style={{ background: fond }}
             >
-              <h4
-                className="inline-block text-sm font-bold mb-3 rounded-full px-4 py-1.5 text-white"
-                style={{ background: couleur }}
-              >
-                {b.titre}
-              </h4>
-              <ul className="space-y-2">
-                {b.items.map((it) => (
-                  <li key={it} className="text-sm text-[rgba(0,0,0,0.7)] leading-relaxed flex gap-2">
-                    <span style={{ color: couleur }}>{positif ? "+" : "–"}</span>
-                    <span>{it}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className={locked ? "select-none blur-[5px]" : undefined} aria-hidden={locked || undefined}>
+                <h4
+                  className="inline-block text-sm font-bold mb-3 rounded-full px-4 py-1.5 text-white"
+                  style={{ background: couleur }}
+                >
+                  {b.titre}
+                </h4>
+                <ul className="space-y-2">
+                  {b.items.map((it) => (
+                    <li key={it} className="text-sm text-[rgba(0,0,0,0.7)] leading-relaxed flex gap-2">
+                      <span style={{ color: couleur }}>{positif ? "+" : "–"}</span>
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {locked && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <span
+                    className="flex items-center justify-center w-7 h-7 rounded-full transition-transform duration-200 ease-out group-hover:scale-125"
+                    style={{ background: "rgba(51,164,116,0.12)" }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <rect x="5" y="11" width="14" height="9" rx="2" fill={GREEN} />
+                      <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke={GREEN} strokeWidth="2" />
+                    </svg>
+                  </span>
+                </div>
+              )}
             </div>
           );
         })}

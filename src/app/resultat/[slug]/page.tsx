@@ -9,6 +9,7 @@ import BlocVerrouille from "../../components/BlocVerrouille";
 import ProgressionMenu from "../../components/ProgressionMenu";
 import FenetrePaiement from "../../components/FenetrePaiement";
 import FenetrePartage from "../../components/FenetrePartage";
+import PartageInline from "../../components/PartageInline";
 import ScrollHaut from "../../components/ScrollHaut";
 import { cookies } from "next/headers";
 import { createClient } from "../../lib/supabase/server";
@@ -25,6 +26,10 @@ import type { SectionDetail, VarianteDetail } from "../../data/profils";
 import { spectreFromScores, NOMS_VARIANTES } from "../../data/moteur";
 
 const GREEN = "rgba(51,164,116,0.85)";
+
+// Nombre de points forts / faibles laissés GRATUITS par bloc (les suivants sont
+// brouillés côté serveur et affichés floutés + cadenas). Voir GroupePoints + brouillerPoints.
+const POINTS_GRATUITS = 3;
 
 // ===== SQUELETTE FIGÉ — labels fixes communs à TOUS les profils =====
 // Ces libellés ne vivent qu'ici : on les change une fois, ils changent partout.
@@ -85,13 +90,34 @@ function titreAccentue(texte: string, accent?: string) {
   );
 }
 
+// Petit cadenas vert posé au centre d'un item verrouillé (même style que le menu de progression).
+function CadenasItem() {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <span
+        className="flex items-center justify-center w-7 h-7 rounded-full transition-transform duration-200 ease-out group-hover:scale-125"
+        style={{ background: "rgba(51,164,116,0.12)" }}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="5" y="11" width="14" height="9" rx="2" fill={GREEN} />
+          <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke={GREEN} strokeWidth="2" />
+        </svg>
+      </span>
+    </div>
+  );
+}
+
 // Groupe « points forts / faibles » : pastille verte + items sur 2 colonnes + mots-clés verts.
+// Si non payé, les items au-delà de POINTS_GRATUITS sont affichés floutés + cadenas (leur texte
+// est déjà brouillé côté serveur, voir brouillerPoints, donc le vrai texte n'est jamais envoyé).
 function GroupePoints({
   titre,
   items,
+  isPaid = true,
 }: {
   titre: string;
   items: { titre: string; texte: string; accent?: string }[];
+  isPaid?: boolean;
 }) {
   return (
     <div>
@@ -102,12 +128,18 @@ function GroupePoints({
         {titre}
       </h3>
       <ul className="grid md:grid-cols-2 gap-x-10 gap-y-5">
-        {items.map((it) => (
-          <li key={it.titre}>
-            <p className="font-semibold text-[rgba(0,0,0,0.8)]">{titreAccentue(it.titre, it.accent)}</p>
-            <p className="text-sm text-gray-600 leading-relaxed mt-0.5">{it.texte}</p>
-          </li>
-        ))}
+        {items.map((it, idx) => {
+          const locked = !isPaid && idx >= POINTS_GRATUITS;
+          return (
+            <li key={idx} className={locked ? "group relative" : undefined}>
+              <div className={locked ? "select-none blur-[5px]" : undefined} aria-hidden={locked || undefined}>
+                <p className="font-semibold text-[rgba(0,0,0,0.8)]">{titreAccentue(it.titre, it.accent)}</p>
+                <p className="text-sm text-gray-600 leading-relaxed mt-0.5">{it.texte}</p>
+              </div>
+              {locked && <CadenasItem />}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -122,7 +154,7 @@ function ParadoxeBlock({
   titre?: string;
 }) {
   return (
-    <div className="rounded-2xl p-6 md:p-8" style={{ background: "rgba(51,164,116,0.08)" }}>
+    <div className="rounded-2xl p-6 md:p-8 transition-shadow hover:shadow-sm" style={{ background: "rgba(51,164,116,0.08)" }}>
       <h3
         className="inline-block text-base font-bold mb-5 rounded-full px-6 py-2 text-white"
         style={{ background: GREEN }}
@@ -156,7 +188,15 @@ function ParadoxeBlock({
 }
 
 // Paire de blocs côte à côte (ex. « toxique » / « te réussit », « Les + » / « Les - »).
-function BlocsPaires({ blocs }: { blocs: { titre: string; ton: "positif" | "negatif"; items: string[] }[] }) {
+// Si verrouillé (locked), chaque carte est floutée (texte déjà brouillé côté serveur) et reçoit
+// un cadenas vert centré, qui grossit doucement au survol (même style que les points).
+function BlocsPaires({
+  blocs,
+  locked = false,
+}: {
+  blocs: { titre: string; ton: "positif" | "negatif"; items: string[] }[];
+  locked?: boolean;
+}) {
   return (
     <div className="grid sm:grid-cols-2 gap-5">
       {blocs.map((b) => {
@@ -164,23 +204,30 @@ function BlocsPaires({ blocs }: { blocs: { titre: string; ton: "positif" | "nega
         const couleur = positif ? GREEN : "rgba(214,69,69,0.7)";
         const fond = positif ? "rgba(51,164,116,0.08)" : "rgba(214,69,69,0.035)";
         return (
-          <div key={b.titre} className="rounded-2xl border border-gray-100 p-5" style={{ background: fond }}>
-            <h4
-              className="inline-block text-sm font-bold mb-3 rounded-full px-4 py-1.5 text-white"
-              style={{ background: couleur }}
-            >
-              {b.titre}
-            </h4>
-            <ul className="space-y-2">
-              {b.items.map((it) => (
-                <li key={it} className="text-sm text-[rgba(0,0,0,0.7)] leading-relaxed flex gap-2">
-                  <span style={{ color: positif ? GREEN : "rgba(214,69,69,0.7)" }}>
-                    {positif ? "+" : "–"}
-                  </span>
-                  <span>{it}</span>
-                </li>
-              ))}
-            </ul>
+          <div
+            key={b.titre}
+            className={`rounded-2xl border border-gray-100 p-5 transition-shadow hover:shadow-sm${locked ? " group relative" : ""}`}
+            style={{ background: fond }}
+          >
+            <div className={locked ? "select-none blur-[5px]" : undefined} aria-hidden={locked || undefined}>
+              <h4
+                className="inline-block text-sm font-bold mb-3 rounded-full px-4 py-1.5 text-white"
+                style={{ background: couleur }}
+              >
+                {b.titre}
+              </h4>
+              <ul className="space-y-2">
+                {b.items.map((it) => (
+                  <li key={it} className="text-sm text-[rgba(0,0,0,0.7)] leading-relaxed flex gap-2">
+                    <span style={{ color: positif ? GREEN : "rgba(214,69,69,0.7)" }}>
+                      {positif ? "+" : "–"}
+                    </span>
+                    <span>{it}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {locked && <CadenasItem />}
           </div>
         );
       })}
@@ -201,8 +248,8 @@ function VarianteDetailBlock({
   return (
     <div className="mt-12 space-y-10">
       <div data-prog="var-points" aria-hidden="true" />
-      <GroupePoints titre="Tes points faibles" items={detail.ombres} />
-      <GroupePoints titre="Tes points forts" items={detail.forces} />
+      <GroupePoints titre="Tes points faibles" items={detail.ombres} isPaid={isPaid} />
+      <GroupePoints titre="Tes points forts" items={detail.forces} isPaid={isPaid} />
       <BlocVerrouille isPaid={isPaid} unlockHref={unlockHref}>
         <div data-prog="var-paradoxe" aria-hidden="true" />
         <ParadoxeBlock paradoxe={detail.paradoxe} />
@@ -213,25 +260,30 @@ function VarianteDetailBlock({
 
 // « Tes leviers forts » : une colonne de forces à activer, formulées 100 % positif
 // (la faiblesse n'est jamais nommée). Cartes vertes, pas de paire ni de rouge.
-function LeviersBlock({ items }: { items: { titre: string; texte: string }[] }) {
+function LeviersBlock({ items, locked = false }: { items: { titre: string; texte: string }[]; locked?: boolean }) {
   return (
     <div className="mt-12">
-      <h3 className="inline-block text-base font-bold mb-4 rounded-full px-6 py-2 text-white" style={{ background: GREEN }}>
-        Tes leviers forts
-      </h3>
-      <p className="text-gray-600 leading-relaxed mb-8">
-        Apprendre à se connaître est le chemin d&apos;une vie. Voici des clés qui sont déjà en toi, des forces à activer
-        pour devenir, jour après jour, la plus belle version de toi.
-      </p>
+      <div className={locked ? "select-none blur-[5px]" : undefined} aria-hidden={locked || undefined}>
+        <h3 className="inline-block text-base font-bold mb-4 rounded-full px-6 py-2 text-white" style={{ background: GREEN }}>
+          Tes leviers forts
+        </h3>
+        <p className="text-gray-600 leading-relaxed mb-8">
+          Apprendre à se connaître est le chemin d&apos;une vie. Voici des clés qui sont déjà en toi, des forces à activer
+          pour devenir, jour après jour, la plus belle version de toi.
+        </p>
+      </div>
       <div className="grid md:grid-cols-2 gap-4">
         {items.map((l) => (
           <div
             key={l.titre}
-            className="rounded-2xl border border-gray-100 p-5 md:p-6"
+            className={`rounded-2xl border border-gray-100 p-5 md:p-6 transition-shadow hover:shadow-sm${locked ? " group relative" : ""}`}
             style={{ background: "rgba(51,164,116,0.08)" }}
           >
-            <p className="font-semibold text-[rgba(0,0,0,0.8)] mb-1">{l.titre}</p>
-            <p className="text-sm text-gray-600 leading-relaxed">{l.texte}</p>
+            <div className={locked ? "select-none blur-[5px]" : undefined} aria-hidden={locked || undefined}>
+              <p className="font-semibold text-[rgba(0,0,0,0.8)] mb-1">{l.titre}</p>
+              <p className="text-sm text-gray-600 leading-relaxed">{l.texte}</p>
+            </div>
+            {locked && <CadenasItem />}
           </div>
         ))}
       </div>
@@ -288,11 +340,11 @@ function SectionDetailBlock({
 }) {
   return (
     <div className="mt-10">
-      {/* « Comment tu évolues » — verrouillé */}
+      {/* « Comment tu évolues » — titre + texte verrouillés sous le CTA (calé en haut). */}
       {detail.evolution && (
-        <BlocVerrouille isPaid={isPaid} unlockHref={unlockHref}>
+        <BlocVerrouille isPaid={isPaid} unlockHref={unlockHref} ctaPosition="top">
         <div data-prog={`${section}-evolution`} aria-hidden="true" />
-        <div className="mb-12">
+        <div className={detail.etapes ? "mb-8" : "mb-12"}>
           <h3
             className="inline-block text-base font-bold mb-5 rounded-full px-6 py-2 text-white"
             style={{ background: GREEN }}
@@ -300,17 +352,23 @@ function SectionDetailBlock({
             Comment tu évolues
           </h3>
           <p className="text-gray-600 leading-relaxed whitespace-pre-line">{detail.evolution}</p>
+        </div>
+        </BlocVerrouille>
+      )}
 
-          {detail.etapes && (
-            <>
-              <div data-prog={`${section}-ages`} aria-hidden="true" />
-              <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {detail.etapes.map((texte, i) => (
-                <div
-                  key={AGES[i] ?? i}
-                  className="rounded-2xl border border-gray-100 p-5"
-                  style={{ background: "rgba(51,164,116,0.08)" }}
-                >
+      {/* Parcours de vie (Enfance → Ancien) — verrouillé carte par carte (cadenas vert),
+          texte brouillé côté serveur. */}
+      {detail.etapes && (
+        <div className="mb-12">
+          <div data-prog={`${section}-ages`} aria-hidden="true" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {detail.etapes.map((texte, i) => (
+              <div
+                key={AGES[i] ?? i}
+                className={`rounded-2xl border border-gray-100 p-5 transition-shadow hover:shadow-sm${!isPaid ? " group relative" : ""}`}
+                style={{ background: "rgba(51,164,116,0.08)" }}
+              >
+                <div className={!isPaid ? "select-none blur-[5px]" : undefined} aria-hidden={!isPaid || undefined}>
                   <h4
                     className="inline-block text-sm font-bold mb-3 rounded-full px-4 py-1.5 text-white"
                     style={{ background: GREEN }}
@@ -319,12 +377,11 @@ function SectionDetailBlock({
                   </h4>
                   <p className="text-sm text-gray-600 leading-relaxed">{texte}</p>
                 </div>
-              ))}
+                {!isPaid && <CadenasItem />}
               </div>
-            </>
-          )}
+            ))}
+          </div>
         </div>
-        </BlocVerrouille>
       )}
 
       {/* Encart « Traits influents » — teaser verrouillé (noms + descriptions, scores cachés) */}
@@ -358,25 +415,25 @@ function SectionDetailBlock({
       {(detail.forces || detail.ombres) && (
         <div className="space-y-10">
           <div data-prog={`${section}-points`} aria-hidden="true" />
-          {detail.ombres && <GroupePoints titre="Tes points faibles" items={detail.ombres} />}
-          {detail.forces && <GroupePoints titre="Tes points forts" items={detail.forces} />}
+          {detail.ombres && <GroupePoints titre="Tes points faibles" items={detail.ombres} isPaid={isPaid} />}
+          {detail.forces && <GroupePoints titre="Tes points forts" items={detail.forces} isPaid={isPaid} />}
         </div>
       )}
 
-      {/* À PARTIR D'ICI : contenu verrouillé (les points forts/faibles au-dessus restent gratuits) */}
-      {(detail.blocs || detail.compatibilites || detail.premiums || detail.leviersForts || detail.questions || detail.paradoxe) && (
-      <BlocVerrouille isPaid={isPaid} unlockHref={unlockHref}>
-      {/* Paires de blocs (toxique / te réussit) — titres injectés depuis le squelette */}
+      {/* Paires de blocs (toxique / te réussit) — verrouillées carte par carte (cadenas vert),
+          comme les points. Titres injectés depuis le squelette ; texte brouillé côté serveur. */}
       {detail.blocs && (
         <div className="mt-12">
           <div data-prog={`${section}-blocs`} aria-hidden="true" />
           <BlocsPaires
+            locked={!isPaid}
             blocs={detail.blocs.map((b) => ({ ...b, titre: b.titre ?? LABELS_BLOCS[section]?.[b.ton] ?? "" }))}
           />
         </div>
       )}
 
-      {/* Compatibilités (Les + / Les –) — titres + panneau injectés depuis le squelette */}
+      {/* Compatibilités (Les + / Les –) — verrouillées carte par carte (cadenas vert), comme les
+          paires ; texte brouillé côté serveur. Le panneau au survol reste flouté + cadenas. */}
       {detail.compatibilites && (
         <div className="mt-5">
           <div data-prog={`${section}-compat`} aria-hidden="true" />
@@ -392,6 +449,19 @@ function SectionDetailBlock({
           />
         </div>
       )}
+
+      {/* Tes leviers forts — verrouillés carte par carte (cadenas vert), comme le parcours de vie. */}
+      {detail.leviersForts && (
+        <>
+          <div data-prog={`${section}-leviers`} aria-hidden="true" />
+          <LeviersBlock items={detail.leviersForts} locked={!isPaid} />
+        </>
+      )}
+
+      {/* Contenu verrouillé restant (premiums, questions) : flouté SANS CTA
+          (le CTA est porté par le paradoxe en dessous). */}
+      {(detail.premiums || detail.questions) && (
+      <BlocVerrouille isPaid={isPaid} unlockHref={unlockHref} showCta={false}>
 
       {/* Encarts premium verrouillés (super-pouvoirs, risques…) */}
       {detail.premiums && (
@@ -412,14 +482,6 @@ function SectionDetailBlock({
         </div>
       )}
 
-      {/* Tes leviers forts — colonne positive */}
-      {detail.leviersForts && (
-        <>
-          <div data-prog={`${section}-leviers`} aria-hidden="true" />
-          <LeviersBlock items={detail.leviersForts} />
-        </>
-      )}
-
       {/* Bloc C — Les questions à te poser */}
       {detail.questions && (
         <>
@@ -428,14 +490,18 @@ function SectionDetailBlock({
         </>
       )}
 
-      {/* Encart « Ton paradoxe » — tout en bas */}
-      {detail.paradoxe && (
-        <div className="mt-12">
-          <div data-prog={`${section}-paradoxe`} aria-hidden="true" />
-          <ParadoxeBlock paradoxe={detail.paradoxe} />
-        </div>
-      )}
       </BlocVerrouille>
+      )}
+
+      {/* Encart « Ton paradoxe » : c'est LUI qui porte le CTA, calé en haut du bloc, donc à la
+          même place dans chaque section (relations, pro, mindset), quelle que soit la hauteur au-dessus. */}
+      {detail.paradoxe && (
+        <BlocVerrouille isPaid={isPaid} unlockHref={unlockHref}>
+          <div className="mt-12">
+            <div data-prog={`${section}-paradoxe`} aria-hidden="true" />
+            <ParadoxeBlock paradoxe={detail.paradoxe} />
+          </div>
+        </BlocVerrouille>
       )}
 
       {/* Le « mot pour la route » a été remplacé par la carte premium de fin (voir CarteFinPremium). */}
@@ -445,10 +511,26 @@ function SectionDetailBlock({
 
 // Carte premium de fin (inspirée de la fin de parcours 16P, réécrite à notre voix).
 // Bloc générique du template : s'affichera à l'identique sur tous les profils.
+// Bloc de partage en fin de rapport (version payée), à la place de la carte premium.
+function BlocPartageFin() {
+  return (
+    <div id="partage-fin" className="my-14 rounded-2xl p-7 md:p-10 scroll-mt-24 transition-shadow hover:shadow-sm" style={{ background: "rgba(51,164,116,0.08)" }}>
+      <h2 className="text-2xl md:text-3xl font-bold text-[rgba(0,0,0,0.8)] mb-4">
+        Et tes proches, qui sont-ils vraiment ?
+      </h2>
+      <p className="text-gray-600 leading-relaxed mb-6">
+        Partage les grandes lignes de ton profil. Tes proches n&apos;en verront que l&apos;essentiel, jamais ton analyse
+        intime, et ça leur donnera sûrement envie de découvrir le leur.
+      </p>
+      <PartageInline />
+    </div>
+  );
+}
+
 function CarteFinPremium({ unlockHref, produitNom, profilId }: { unlockHref: string; produitNom: string; profilId: string }) {
   const strong = "font-semibold text-[rgba(0,0,0,0.8)]";
   return (
-    <div id="encart-final" className="my-14 rounded-2xl p-7 md:p-10 scroll-mt-24" style={{ background: "rgba(51,164,116,0.08)" }}>
+    <div id="encart-final" className="my-14 rounded-2xl p-7 md:p-10 scroll-mt-24 transition-shadow hover:shadow-sm" style={{ background: "rgba(51,164,116,0.08)" }}>
       <span
         className="inline-block text-xs font-bold uppercase tracking-wide rounded-full px-4 py-1.5 text-white mb-5"
         style={{ background: GREEN }}
@@ -524,19 +606,32 @@ function scrambleDeep<T>(v: T): T {
   }
   return v;
 }
-// Champs verrouillés (floutés) à brouiller quand non payé. On garde forces/ombres (gratuits) réels.
+// Champs verrouillés (floutés) à brouiller quand non payé.
 const CHAMPS_VERROUILLES = ["evolution", "etapes", "blocs", "compatibilites", "premiums", "leviersForts", "questions", "paradoxe"];
+// Forts/faibles : on garde les POINTS_GRATUITS premiers réels (gratuits) et on brouille les
+// suivants (le vrai texte des items verrouillés n'est donc jamais envoyé au navigateur).
+function brouillerPoints<T>(items: T[] | undefined, isPaid: boolean): T[] | undefined {
+  if (isPaid || !items) return items;
+  return items.map((it, idx) => (idx < POINTS_GRATUITS ? it : scrambleDeep(it)));
+}
 function brouillerSection(d: SectionDetail, isPaid: boolean): SectionDetail {
   if (isPaid) return d;
   const out = { ...d } as Record<string, unknown>;
   for (const k of CHAMPS_VERROUILLES) {
     if (out[k] !== undefined) out[k] = scrambleDeep(out[k]);
   }
+  if (out.forces !== undefined) out.forces = brouillerPoints(d.forces, isPaid);
+  if (out.ombres !== undefined) out.ombres = brouillerPoints(d.ombres, isPaid);
   return out as SectionDetail;
 }
 function brouillerVariante(d: VarianteDetail, isPaid: boolean): VarianteDetail {
   if (isPaid) return d;
-  return { ...d, paradoxe: scrambleDeep(d.paradoxe) };
+  return {
+    ...d,
+    forces: brouillerPoints(d.forces, isPaid)!,
+    ombres: brouillerPoints(d.ombres, isPaid)!,
+    paradoxe: scrambleDeep(d.paradoxe),
+  };
 }
 
 export default async function ResultatPage({
@@ -727,6 +822,7 @@ export default async function ResultatPage({
         {!isPaid && (
           <CarteFinPremium unlockHref={unlockHref} produitNom={`${profil.code} · ${profil.nomVariante}`} profilId={slug} />
         )}
+        <BlocPartageFin />
       </div>
 
       {/* RETOUR DE PRÉCISION — hors de la zone des menus collants */}

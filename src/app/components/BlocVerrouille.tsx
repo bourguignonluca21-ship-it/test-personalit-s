@@ -11,12 +11,19 @@ const GREEN = "rgba(51,164,116,0.85)";
 export default function BlocVerrouille({
   isPaid,
   children,
+  ctaPosition = "center",
+  showCta = true,
 }: {
   isPaid: boolean;
   unlockHref: string;
   children: ReactNode;
+  ctaPosition?: "center" | "top" | "bottom";
+  showCta?: boolean;
 }) {
   if (isPaid) return <Reveal threshold={0} distance={18}>{children}</Reveal>;
+
+  const posClass =
+    ctaPosition === "top" ? "items-start pt-16" : ctaPosition === "bottom" ? "items-end pb-10" : "items-center";
 
   return (
     <div className="relative mt-8">
@@ -28,26 +35,29 @@ export default function BlocVerrouille({
         {children}
       </div>
 
-      {/* CTA posé par-dessus, centré. L'overlay laisse passer le survol (pour les panneaux
-          des blocs en dessous) ; seul le bouton reste cliquable. */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="pointer-events-auto bg-white/95 backdrop-blur-sm rounded-2xl shadow-[0_12px_45px_-12px_rgba(0,0,0,0.3)] px-8 py-7 text-center max-w-sm mx-4">
-          <p className="text-lg font-bold text-[rgba(0,0,0,0.8)] mb-2 leading-snug">
-            Le plus intéressant sur toi commence ici.
-          </p>
-          <p className="text-sm text-gray-500 mb-5 leading-relaxed">
-            Tes forces cachées, tes angles morts et comment t&apos;en servir t&apos;attendent dans ton rapport complet.
-          </p>
-          <a
-            href="#encart-final"
-            className="inline-block text-white font-semibold py-3.5 px-9 rounded-full text-base hover:opacity-90 transition"
-            style={{ background: GREEN }}
-          >
-            Je débloque mon rapport
-          </a>
-          <p className="text-xs text-gray-400 mt-3">Paiement unique, accès immédiat à vie.</p>
+      {/* CTA posé par-dessus. L'overlay laisse passer le survol (pour les panneaux
+          des blocs en dessous) ; seul le bouton reste cliquable. showCta=false = flou seul,
+          quand un autre bloc de la même section porte déjà le CTA. */}
+      {showCta && (
+        <div className={`absolute inset-0 flex justify-center pointer-events-none ${posClass}`}>
+          <div className="pointer-events-auto bg-white/95 backdrop-blur-sm rounded-2xl shadow-[0_12px_45px_-12px_rgba(0,0,0,0.3)] px-8 py-7 text-center max-w-sm mx-4">
+            <p className="text-lg font-bold text-[rgba(0,0,0,0.8)] mb-2 leading-snug">
+              Le plus intéressant sur toi commence ici.
+            </p>
+            <p className="text-sm text-gray-500 mb-5 leading-relaxed">
+              Tes forces cachées, tes angles morts et comment t&apos;en servir t&apos;attendent dans ton rapport complet.
+            </p>
+            <a
+              href="#encart-final"
+              className="inline-block text-white font-semibold py-3.5 px-9 rounded-full text-base hover:opacity-90 transition"
+              style={{ background: GREEN }}
+            >
+              Je débloque mon rapport
+            </a>
+            <p className="text-xs text-gray-400 mt-3">Paiement unique, accès immédiat à vie.</p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

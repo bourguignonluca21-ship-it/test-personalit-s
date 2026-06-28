@@ -210,7 +210,47 @@ Tout est dans `components/FenetrePaiement.tsx` (la modale) sauf mention contrair
 
 **État commit/push :** le gating a été commité, poussé et déployé sur Vercel. La refonte de la fenêtre + le bouton Google sont à **commiter/pousser** (pas de nouvelle clé Vercel pour Google, les identifiants sont dans Supabase).
 
+## 8 octies. POINT DE REPRISE, session 28 juin 2026 (page de profil partageable `/p/[slug]` + affinage du paywall) — ⚠️ TOUT NON COMMITÉ
+
+**⚠️ Toute cette session est NON COMMITÉE.** Commit/push depuis Windows / Claude Code quand validé (procédure dans `AGENTS.md`).
+
+**A. Page résultat (`/resultat/[slug]`) — paywall plus fin + finitions.**
+- **Forts/faibles : 3 gratuits + 3 floutés.** Dans les 3 sections (variantes, relations, pro), chaque liste de points forts ET de points faibles montre les `POINTS_GRATUITS = 3` premiers en clair, floute les 3 suivants (brouillés côté serveur via `brouillerPoints`, comme le reste du payant) avec un **petit cadenas vert** par item. Une fois payé, les 6 s'affichent.
+- **Cadenas verts par carte** ajoutés sur les blocs rouge/vert verrouillés : les **paires** (`BlocsPaires` : toxique/réussit, éteint/booste), les **compatibilités** (`CompatibiliteBlocs` : Les +/Les −), les **4 cartes du parcours de vie** et les **4 leviers forts** (`LeviersBlock`). Pour que le cadenas soit NET (pas flouté par le parent), ces blocs ont été **sortis du grand `BlocVerrouille`** et floutés carte par carte ; le texte reste brouillé côté serveur (sécurité intacte).
+- **Ombre douce au survol** (`transition-shadow hover:shadow-sm`) sur **tous les blocs de couleur** (verts ET rouges).
+- **Position du CTA « Le plus intéressant sur toi commence ici. »** : `BlocVerrouille` a deux nouvelles props, **`ctaPosition` ("center"|"top"|"bottom")** et **`showCta` (bool)**. Le **paradoxe** de chaque section porte le CTA, **centré** (donc à la même place partout) ; « Comment tu évolues » porte un CTA **en haut** ; le reste verrouillé est flouté **sans** CTA. `SectionDetailBlock` a été restructuré pour ça.
+
+**B. NOUVELLE page publique de profil partageable : `/p/[slug]`** (`src/app/p/[slug]/page.tsx`).
+- Page d'atterrissage quand on ouvre un profil partagé. **noindex**, ne montre PAS le contenu payant, lit le type+variante du slug + les scores `s`/`v` de l'URL. Voix neutre (« Son spectre », « Ses variantes »), sauf l'eyebrow « Ma personnalité : » (à harmoniser, voir plus bas).
+- **Héros = bloc vert** (DA de la page résultat) : « Ma personnalité : », nom du type, `CODE · variante`, **emblème carré blanc translucide** à droite (du haut de « Médiateur » au bas de « CODE · variante »), description neutre (de la variante) justifiée. L'emblème et le bord droit du paragraphe sont alignés au pixel sur le « Introverti » du spectre en dessous (vérifié dans le navigateur).
+- **Emblème carré** : `components/EmblemeCarre.tsx` (client) mesure sa hauteur (donnée par `self-stretch`) et fixe la largeur égale. RAISON : `aspect-square` sur un item flex se dimensionne sur la largeur du texte « INFP », pas sur le carré (il débordait de 46 px). Piège à retenir.
+- **Spectre : `components/SpectrePublic.tsx`** — les 4 axes en **barres** (même langage que la page résultat). DÉCISION : le **camembert a été rejeté** (hors DA, et il enterrait le différenciateur « spectre détaillé en % », cf. document fondateur). Au **scroll** (plus au survol), un panneau explicatif par dimension apparaît en douceur dans la marge : Esprit haut-gauche, Énergie haut-droite, Nature bas-gauche, Tactique bas-droite, chacun = **moitié de la hauteur de la carte** (28 px d'écart au centre). Paire du **haut** dès ~1 cm de scroll, paire du **bas** dès ~3 cm, réversible. Sur **mobile** : « ? » cliquable → accordéon sous la ligne.
+- **Variantes** : barre segmentée (`VarianteBarre`) + légende. **CTA bas** « Et toi, qui es-tu vraiment ? » → `/test`. Fond `MeshGradient`.
+- Lien de test : `http://localhost:3000/p/infp-v1?s=51-62-40-58&v=11-7-5` (fenêtre large ≥ 1280 px pour les panneaux de marge).
+
+**C. Stratégie de partage (décidée, à construire).** Le bouton « Partager » du résumé ouvrira une fenêtre avec **des boutons réseaux** (pas des liens nus). Réalité technique tranchée :
+- WhatsApp, Messenger, Facebook, X, Telegram, mail, SMS : **liens d'intention** (message pré-rempli + le lien `/p/...`).
+- Instagram, TikTok, Snap : **pas de partage de lien** → on partage une **image** (story 9:16). Sur mobile, le bouton « Partager » natif (**API Web Share**, avec l'image) couvre ces apps (façon Strava) ; sur ordi : boutons à liens + « télécharger l'image ».
+- → **L'image de partage est la pièce maîtresse.** Maquette de direction faite (hors projet) ; la **génération d'image par profil** (Next `ImageResponse`) reste à faire.
+
+**Nouveaux fichiers (NON commités) :** `src/app/p/[slug]/page.tsx`, `src/app/components/SpectrePublic.tsx`, `src/app/components/EmblemeCarre.tsx`. Ajout d'un keyframe `trembler` dans `globals.css` (**devenu inutilisé** depuis le passage au scroll → candidat à suppression).
+
+**À RETRAVAILLER (signalé par l'utilisateur), avant tout le reste du chantier partage :**
+- Le **contenu des panneaux du spectre** est trop « fiche encyclopédique » (« Les personnes Introverties… »), c'est jugé morose. À réécrire en **mini-portraits courts, vivants, personnalisés** sur le pôle dominant (accroche qui claque + image concrète), éventuellement + une petite icône originale par dimension (DA épurée, pas un personnage façon 16P). Direction validée, pas écrite.
+- **Harmoniser la voix** de `/p` : héros au « je » (« Ma personnalité ») vs reste au « il/elle » (« Son spectre »). Trancher.
+
 ## 9. Prochaines étapes
+
+**Chantier PARTAGE & page publique (en cours, cf. §8 octies) — prioritaire :**
+- **Réécrire le contenu des panneaux du spectre** (`/p`) en mini-portraits vivants (cf. §8 octies, « À retravailler »). C'est la prochaine étape concrète demandée.
+- **Générer l'image de partage par profil** (story 9:16) via Next `ImageResponse`, en barres (pas camembert), DA verte. C'est elle qui débloque Insta/TikTok/Snap.
+- **Construire la fenêtre de partage** (boutons réseaux : liens d'intention WhatsApp/Messenger/X/Telegram/mail + bouton « Partager » natif `navigator.share` avec l'image sur mobile + « télécharger l'image » sur ordi).
+- **Brancher le bouton « Partager » du résumé** (et de `FenetrePartage.tsx`, aujourd'hui inactif) pour qu'il produise le lien `/p/{slug}?s=…&v=…` et ouvre la fenêtre.
+- **Vignette OG** (`og:image`) pour que le lien `/p` soit beau quand on le poste.
+- **Harmoniser la voix** de `/p` (je vs il/elle).
+- Plus tard : page publique liée au **compte** (profils stockés, stats, comparaison/« site de rencontre »), cf. `VISION_FUNNEL_ANGE_DEMON.md`.
+
+**Reste (cf. sessions précédentes) :**
 - **Mot de passe oublié (parcours complet), critères de mot de passe, mail de sécurité (Resend), connexion par code email : FAITS** (cf. §8 sexies).
 - **Fenêtre de paiement + comptes Supabase + Stripe + gating serveur réel + webhook + connexion Google : FAITS** (cf. §8 quinquies/sexies/septies). Reste, surtout avant l'ouverture au public :
   - **Publier l'app Google en Production** (sinon seuls les utilisateurs de test peuvent se connecter via Google ; scopes de base = pas de vérification Google).

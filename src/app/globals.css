@@ -151,3 +151,13 @@ html {
   .title-drop, .badge-pop { animation: none !important; transform: none !important; opacity: 1 !important; }
 }
 
+@keyframes trembler {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-11deg); }
+  60% { transform: rotate(11deg); }
+}
+.trembler { animation: trembler 0.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .trembler { animation: none !important; }
+}
+
