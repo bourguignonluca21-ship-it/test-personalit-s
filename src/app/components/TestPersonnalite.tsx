@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Quiz from "./Quiz";
+import ScrollHaut from "./ScrollHaut";
 import TestPageTitle from "./TestPageTitle";
 import { PHASE1_QUESTIONS, getPhase2Questions } from "../data/questions";
 import { calculerType, calculerVariante, encoderScores } from "../data/moteur";
@@ -12,23 +13,23 @@ const STEPS = [
   {
     step: "Étape 1",
     title: "Réponds au test",
-    description: "Sois toi-même et réponds en toute sincérité pour découvrir ton type.",
-    color: "#7cc9a6",
-    bg: "rgba(239,249,244,0.72)",
+    description: "Sois toi-même et réponds en toute sincérité.",
+    color: "rgba(51,164,116,0.85)",
+    bg: "#f3fbf7",
   },
   {
     step: "Étape 2",
     title: "Découvre ton profil",
     description: "Vois comment ton type influence ta vie, tes relations et ta carrière.",
-    color: "#33a474",
-    bg: "rgba(221,241,232,0.72)",
+    color: "rgba(51,164,116,0.85)",
+    bg: "#e7f5ee",
   },
   {
     step: "Étape 3",
     title: "Va plus loin",
-    description: "Libère ton plein potentiel grâce à une analyse approfondie, propulsée par l'IA.",
-    color: "#25855f",
-    bg: "rgba(201,235,218,0.72)",
+    description: "Explore ton profil en profondeur et trouve les réponses qu'il te faut.",
+    color: "rgba(51,164,116,0.85)",
+    bg: "#d8f1e4",
   },
 ];
 
@@ -94,7 +95,9 @@ export default function TestPersonnalite() {
   ) : null;
 
   return (
-    <Quiz
+    <>
+      <ScrollHaut />
+      <Quiz
       title="Test de personnalité 2.0"
       titleNode={<TestPageTitle accent="rgba(51,164,116,0.75)" />}
       subtitle="60 questions · 48 portraits possibles · Un seul te ressemble"
@@ -115,5 +118,6 @@ export default function TestPersonnalite() {
         router.push(`/resultat/${code.toLowerCase()}-${v.variante.toLowerCase()}?s=${scores}&v=${vs}`);
       }}
     />
+    </>
   );
 }

@@ -5,7 +5,7 @@ export default function MeshGradient() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 -z-10"
+      className="pointer-events-none absolute inset-y-0 left-[10px] right-[10px] md:left-[15px] md:right-[15px] -z-10 rounded-3xl"
       style={{
         background:
           "linear-gradient(to top, rgba(51,164,116,0.12) 0%, rgba(51,164,116,0.05) 35%, transparent 65%)",

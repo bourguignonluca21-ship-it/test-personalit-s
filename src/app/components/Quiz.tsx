@@ -85,15 +85,19 @@ export default function Quiz({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answers]);
 
-  // Remplissage léger des blocs (invisible en haut, apparaît en descendant)
-  // + fondu de sortie quand les blocs remontent et quittent l'écran.
-  const [fillP, setFillP] = useState(0);
+  // Fondu de sortie quand les blocs remontent et quittent l'écran.
   const [exitP, setExitP] = useState(0);
+  // Opacité de la flèche « descendre », pilotée par le scroll : pleine en haut, elle s'efface en
+  // douceur sur les ~150px (≈4cm) de scroll après les blocs étape, et réapparaît en remontant.
+  // Monotone, donc pas de réapparition parasite plus bas.
+  const FLECHE_DEBUT = 110; // px de scroll où la flèche commence à disparaître
+  const FLECHE_FIN = 260; // px de scroll où elle est totalement invisible
+  const [flecheOpacity, setFlecheOpacity] = useState(1);
   useEffect(() => {
     function onScroll() {
       const y = window.scrollY;
-      setFillP(Math.max(0, Math.min(1, y / 520)));
       setExitP(Math.max(0, Math.min(1, (y - 470) / 170)));
+      setFlecheOpacity(Math.max(0, Math.min(1, 1 - (y - FLECHE_DEBUT) / (FLECHE_FIN - FLECHE_DEBUT))));
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -164,10 +168,10 @@ export default function Quiz({
 
       {/* Barre + compteur FIXÉS sous la navbar */}
       <div
-        className="fixed left-0 right-0 z-30 bg-white/90 backdrop-blur border-b border-gray-200 py-3"
-        style={{ top: "56px" }}
+        className="fixed left-0 right-0 z-30 bg-white/90 backdrop-blur py-3"
+        style={{ top: "53px" }}
       >
-        <div className="max-w-3xl mx-auto px-6 flex items-center gap-4">
+        <div className="max-w-3xl mx-auto px-4 md:px-0 flex items-center gap-4">
           <div className="h-2 rounded-full bg-gray-100 overflow-hidden flex-1">
             <div className="h-full transition-all" style={{ width: `${progress}%`, background: agreeColor }} />
           </div>
@@ -199,25 +203,44 @@ export default function Quiz({
       {/* Les 3 étapes — cartes arrondies, fondu au scroll */}
       {steps && steps.length > 0 && (
         <section
-          className="relative z-10 max-w-3xl mx-auto px-6 mb-16 -mt-[68px]"
+          className="relative z-10 max-w-3xl mx-auto px-4 md:px-0 mb-16 -mt-[68px]"
           style={{ opacity: 1 - exitP, transform: `translateY(${-exitP * 36}px)` }}
         >
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {steps.map((s, idx) => (
               <Reveal key={s.step} delay={idx * 90}>
                 <div
-                  className="relative overflow-hidden rounded-3xl p-6 h-full border border-white/50 backdrop-blur-md"
+                  className={`relative rounded-3xl p-6 h-full border border-white/50 backdrop-blur-md${
+                    idx === 0 ? " cursor-pointer transition-transform hover:scale-[1.02]" : ""
+                  }`}
                   style={{ background: s.bg }}
+                  onClick={
+                    idx === 0
+                      ? () => refs.current[0]?.scrollIntoView({ behavior: "smooth", block: "center" })
+                      : undefined
+                  }
                 >
-                  {/* Remplissage vert très léger, de haut en bas, calé sur le passage à l'écran */}
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-x-0 top-0"
-                    style={{
-                      height: `${fillP * 100}%`,
-                      background: "linear-gradient(to bottom, rgba(51,164,116,0.16), rgba(51,164,116,0.02))",
-                    }}
-                  />
+                  {idx === 0 && (
+                    <div
+                      className="pointer-events-none absolute bottom-1 left-1/2 -translate-x-1/2 z-20 animate-bounce"
+                      style={{ opacity: flecheOpacity }}
+                      aria-hidden
+                    >
+                      <svg
+                        width="26"
+                        height="26"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="rgb(51,164,116)"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M8 10.5l4 4 4-4" />
+                      </svg>
+                    </div>
+                  )}
                   <div className="relative z-10">
                     <span
                       className="inline-block text-[10px] font-bold text-white px-2.5 py-1 rounded-full mb-3 uppercase tracking-wider"
@@ -236,7 +259,7 @@ export default function Quiz({
       )}
 
       {/* Questions — plus d'air entre chaque */}
-      <section className="max-w-3xl mx-auto px-6 mb-10 w-full">
+      <section className="max-w-3xl mx-auto px-4 md:px-0 mb-10 w-full">
         {questions.map((q, i) => (
           <Fragment key={i}>
             {phase1Count != null && i === phase1Count && phase2Intro && (

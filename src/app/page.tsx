@@ -27,7 +27,7 @@ export default function Home() {
           <div className="mt-10">
             <Link
               href="/test"
-              className="inline-block bg-white font-semibold py-4 px-10 rounded-full text-lg hover:opacity-90 transition"
+              className="inline-block bg-white font-semibold py-4 px-10 rounded-full text-lg transition-transform duration-300 hover:scale-105"
               style={{ color: "rgba(51,164,116,0.95)" }}
             >
               Faire le test

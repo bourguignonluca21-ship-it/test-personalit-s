@@ -32,20 +32,14 @@ export default function Navbar() {
       <Link
         href="/"
         onClick={reloadIfSame("/")}
-        className="flex items-center gap-2 font-semibold text-[17px] tracking-tight text-gray-800"
+        className="font-semibold text-[17px] tracking-tight text-gray-800"
       >
-        <span className="grid grid-cols-4 gap-[3px]" aria-hidden>
-          {["rgba(136,97,154,0.75)", "rgba(51,164,116,0.75)", "rgba(228,174,58,0.75)", "rgba(66,152,180,0.75)", "rgba(51,164,116,0.75)", "rgba(136,97,154,0.75)", "rgba(66,152,180,0.75)", "rgba(228,174,58,0.75)"].map(
-            (c, i) => (
-              <span key={i} className="w-[6px] h-[6px] rounded-full" style={{ background: c }} />
-            ),
-          )}
-        </span>
-        Projet&nbsp;Tests
+        LOGO
       </Link>
 
-      {/* Liens (desktop) */}
-      <div className="hidden md:flex items-center gap-8 text-[13px] font-normal text-gray-500">
+      {/* Liens (desktop) : sur xl, répartis sur la largeur du bandeau vert (max-w-3xl centré),
+          logo à gauche et « Se connecter » à droite restant aux extrémités. */}
+      <div className="hidden md:flex items-center gap-8 text-[13px] font-normal text-gray-500 xl:absolute xl:left-1/2 xl:top-1/2 xl:w-full xl:max-w-3xl xl:-translate-x-1/2 xl:-translate-y-1/2 xl:gap-0 xl:justify-between">
         {NAV_LINKS.map((link) =>
           link.hasMenu ? (
             <div
@@ -118,9 +112,9 @@ export default function Navbar() {
         <Link
           href="/connexion"
           onClick={reloadIfSame("/connexion")}
-          className="font-medium text-gray-800 hover:text-gray-900 transition-colors"
+          className="hover:text-gray-900 transition-colors"
         >
-          Se connecter
+          Se connecter / Crée un compte
         </Link>
         <span
           className="w-6 h-6 rounded-full border border-gray-200"
@@ -166,7 +160,7 @@ export default function Navbar() {
             }}
             className="py-1 font-semibold"
           >
-            Se connecter
+            Se connecter / Crée un compte
           </Link>
         </div>
       )}

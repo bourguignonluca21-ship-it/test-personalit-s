@@ -1,7 +1,7 @@
 const stats = [
-  { value: "16", label: "types de personnalité", color: "rgba(51,164,116,0.75)" },
-  { value: "48", label: "profils détaillés", color: "rgba(51,164,116,0.75)" },
-  { value: "~10 min", label: "pour faire le test", color: "rgba(51,164,116,0.75)" },
+  { value: "96%", label: "De précision", color: "rgba(51,164,116,0.75)" },
+  { value: "48", label: "Profils détaillés", color: "rgba(51,164,116,0.75)" },
+  { value: "10 min", label: "Pour faire le test", color: "rgba(51,164,116,0.75)" },
 ];
 
 export default function Stats() {

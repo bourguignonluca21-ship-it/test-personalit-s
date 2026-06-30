@@ -8,7 +8,6 @@ import PrecisionRating from "../../components/PrecisionRating";
 import BlocVerrouille from "../../components/BlocVerrouille";
 import ProgressionMenu from "../../components/ProgressionMenu";
 import FenetrePaiement from "../../components/FenetrePaiement";
-import FenetrePartage from "../../components/FenetrePartage";
 import PartageInline from "../../components/PartageInline";
 import ScrollHaut from "../../components/ScrollHaut";
 import { cookies } from "next/headers";
@@ -512,7 +511,7 @@ function SectionDetailBlock({
 // Carte premium de fin (inspirée de la fin de parcours 16P, réécrite à notre voix).
 // Bloc générique du template : s'affichera à l'identique sur tous les profils.
 // Bloc de partage en fin de rapport (version payée), à la place de la carte premium.
-function BlocPartageFin() {
+function BlocPartageFin({ code, nomVariante }: { code: string; nomVariante: string }) {
   return (
     <div id="partage-fin" className="my-14 rounded-2xl p-7 md:p-10 scroll-mt-24 transition-shadow hover:shadow-sm" style={{ background: "rgba(51,164,116,0.08)" }}>
       <h2 className="text-2xl md:text-3xl font-bold text-[rgba(0,0,0,0.8)] mb-4">
@@ -522,7 +521,7 @@ function BlocPartageFin() {
         Partage les grandes lignes de ton profil. Tes proches n&apos;en verront que l&apos;essentiel, jamais ton analyse
         intime, et ça leur donnera sûrement envie de découvrir le leur.
       </p>
-      <PartageInline />
+      <PartageInline code={code} nomVariante={nomVariante} />
     </div>
   );
 }
@@ -570,13 +569,13 @@ function CarteFinPremium({ unlockHref, produitNom, profilId }: { unlockHref: str
         >
           Débloquer mon rapport complet →
         </FenetrePaiement>
-        <FenetrePartage
-          ancreRetour="encart-final"
-          triggerClassName="inline-block font-semibold py-4 px-9 rounded-full text-lg transition hover:opacity-90"
-          triggerStyle={{ color: GREEN, background: "#fff" }}
+        <a
+          href="#partage-fin"
+          className="inline-block font-semibold py-4 px-9 rounded-full text-lg transition hover:opacity-90"
+          style={{ color: GREEN, background: "#fff" }}
         >
           Partager mon profil
-        </FenetrePartage>
+        </a>
       </div>
       <p className="text-sm text-gray-400 mt-4">
         Ton test de personnalité s&apos;enregistre sur ton compte et pourra être confronté à ta dark personnalité, pour
@@ -728,13 +727,13 @@ export default async function ResultatPage({
           </div>
           {/* Boutons sous le bloc héros */}
           <div className="mt-8 flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-3">
-            <button
-              type="button"
-              className="bg-white font-semibold py-3.5 px-9 rounded-full text-base hover:opacity-90 transition"
+            <a
+              href="#partage-fin"
+              className="inline-block bg-white font-semibold py-3.5 px-9 rounded-full text-base hover:opacity-90 transition"
               style={{ color: GREEN }}
             >
               Partager mon profil
-            </button>
+            </a>
           </div>
         </section>
       </div>
@@ -822,7 +821,7 @@ export default async function ResultatPage({
         {!isPaid && (
           <CarteFinPremium unlockHref={unlockHref} produitNom={`${profil.code} · ${profil.nomVariante}`} profilId={slug} />
         )}
-        <BlocPartageFin />
+        <BlocPartageFin code={profil.code} nomVariante={profil.nomVariante} />
       </div>
 
       {/* RETOUR DE PRÉCISION — hors de la zone des menus collants */}

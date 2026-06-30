@@ -239,6 +239,42 @@ Tout est dans `components/FenetrePaiement.tsx` (la modale) sauf mention contrair
 - Le **contenu des panneaux du spectre** est trop « fiche encyclopédique » (« Les personnes Introverties… »), c'est jugé morose. À réécrire en **mini-portraits courts, vivants, personnalisés** sur le pôle dominant (accroche qui claque + image concrète), éventuellement + une petite icône originale par dimension (DA épurée, pas un personnage façon 16P). Direction validée, pas écrite.
 - **Harmoniser la voix** de `/p` : héros au « je » (« Ma personnalité ») vs reste au « il/elle » (« Son spectre »). Trancher.
 
+## 8 nonies. POINT DE REPRISE, session 30 juin 2026 (partage finalisé + QR + refonte accueil / navbar / page test)
+
+**⚠️ Tout est NON COMMITÉ sauf le 1er lot** (logos Snapchat/Reddit, carrousel une ligne, flèches, largeur navbar) commité/poussé en début de session. Le reste est à commiter depuis Windows (procédure `AGENTS.md`).
+
+**A. Bloc de partage en bas du résumé (`PartageInline.tsx`, affiché sur résumé payé ET non payé).**
+- Logos **Snapchat** (tuile jaune pleine) et **Reddit** (tracé SVG `IC.reddit` sur tuile orange) corrigés (avant trop petits). **TikTok ajouté** (tuile noire, logo blanc ; partage natif comme Insta/Snap).
+- Carrousel **sur une seule ligne** défilable, icônes plus grosses, deux **flèches rondes vertes** (vert de marque, chevron blanc) qui défilent petit à petit ; scroll manuel OK. Flèches + rangée de logos **alignées au pixel sur la largeur du texte** du bloc (mesuré dans Chrome).
+- **Message pré-rempli dynamique** : `Hey, j'ai fait ce test de personnalité, je suis {code} : {variante}. Regarde mon profil :` + lien `/p/{slug}?s&v`. S'adapte à chaque profil.
+- `BlocPartageFin` (« Et tes proches, qui sont-ils vraiment ? ») affiché en bas du résumé payé ET **sous la carte premium** sur la version non payée.
+- Les boutons **« Partager mon profil »** (héros + carte premium) n'ouvrent plus `FenetrePartage` : ils **défilent** (ancre `#partage-fin`) vers l'encart. `FenetrePartage` n'est plus appelé dans `page.tsx` (fichier conservé). → supersede le « construire la fenêtre de partage » du §9.
+
+**B. QR code → page `/partager` (pont ordi → téléphone).**
+- Icône **QR** au bout du carrousel (pastille verte). Clic → fenêtre avec un **QR généré en local** (`qrcode.react`, à installer : `npm install qrcode.react`) encodant `/partager/{slug}?s&v`.
+- Nouvelle page **`src/app/partager/[slug]/page.tsx`** (minimale, `noindex`), ouverte sur le téléphone après scan : un bouton vert « Partager mon profil » (`components/BoutonPartageNatif.tsx`) qui ouvre la **feuille de partage native du téléphone** (`navigator.share`, repli copie du lien sur ordi). Le lien partagé mène toujours à `/p`. ⚠️ Le scan ne marche qu'avec un **vrai domaine** (localhost/IP locale non joignables).
+
+**C. Vignette OG (og:image) — DESIGN VALIDÉ, pas encore codée.** Image 1200×630 : bloc vert arrondi avec la **pastille du code** (« INFP ») à gauche + le **logo blanc** à droite (même taille, logo pas encore fourni), et `{code} · {variante}` en **vert centré** sous le bloc (doit être DANS l'image, le titre de la carte d'aperçu étant stylé par l'appli qui reçoit). À coder via Next `ImageResponse` quand le domaine sera en ligne. Détail dans la mémoire de projet.
+
+**D. Page d'accueil (`Hero.tsx`, `Stats.tsx`, `MeshGradient.tsx`, `page.tsx`).**
+- Héros : un seul CTA **« Découvrir ma personnalité »** (vert, texte blanc, centré), « Explorer les types » retiré, bouton qui **grossit au survol** (`hover:scale-105`). « Toi » de l'accroche en semi-gras.
+- Stats : **96% de précision · 48 profils détaillés · 10 min** (le 96% est un **placeholder** du futur taux de reconnaissance, à brancher sur le vote « À quel point ce portrait te ressemble ? »). Majuscule en tête de libellé.
+- Le **dégradé du héros** (`MeshGradient`, partagé) inséré dans la **même marge** que le bloc vert du bas (`mx 10/15px`, coins arrondis). Bouton « Faire le test » du bandeau vert : grossit aussi au survol.
+
+**E. Navbar (`Navbar.tsx`).**
+- Logo remplacé par **« LOGO »** (placeholder). Les **5 liens** répartis (`justify-between`) sur la **largeur du bandeau vert** (colonne `max-w-3xl`, du « T » de « Test de personnalité » au « s » de « Articles »), logo à gauche / compte à droite aux extrémités (actif en `xl`). « Se connecter » → **« Se connecter / Crée un compte »**, même typo/couleur que les autres liens.
+
+**F. Page du test (`Quiz.tsx`, `TestPersonnalite.tsx`).**
+- **Barre de progression** : élargie et alignée pile sur les liens de la navbar (du « T » au « s », `px-4 md:px-0`), **remontée** à `top:53px` (1px de chevauchement, plus d'espace où le contenu passait), **trait du bas retiré**.
+- **Blocs étape + section des questions** alignés pareil (`px-4 md:px-0`, 342→1110).
+- Dégradés retirés : le **remplissage vert au scroll** des cartes étape, et le **`MeshGradient`** de la section titre (le contenu passait au travers). Les **3 cartes étape** passées en **couleur pleine opaque** (équivalent de leur translucide sur blanc). **Pastilles « Étape 1/2/3 »** toutes au **vert standard** `rgba(51,164,116,0.85)`.
+- Textes : Étape 1 « Sois toi-même et réponds en toute sincérité. » ; Étape 3 « Explore ton profil en profondeur et trouve les réponses qu'il te faut. ».
+- **Carte Étape 1 cliquable** → défile (smooth) jusqu'à la première question.
+- **Flèche « descendre »** (chevron cerclé vert, `animate-bounce`) en bas de la carte Étape 1 : **opacité pilotée par le scroll** (pleine en haut, s'efface en douceur quand on passe les blocs étape, reste invisible plus bas, revient en remontant ; monotone → pas de réapparition). Seuils réglables `FLECHE_DEBUT` / `FLECHE_FIN` (px de scroll). PIÈGE : un `<svg>` sans `width/height` fait **300×150** par défaut (utiliser `w-full h-full` pour qu'il épouse la carte).
+- **`ScrollHaut`** ajouté au test : la page revient en haut au rechargement (comme la page résultat).
+
+**Note CSS / OneDrive :** le file-watch OneDrive ne recompile pas toujours `globals.css` (faux négatif). Pour les petites animations, préférer une approche **autonome au composant** (SMIL `<animate>` dans le SVG, ou `animate-bounce` natif Tailwind) plutôt qu'un keyframe dans `globals.css`.
+
 ## 9. Prochaines étapes
 
 **Chantier PARTAGE & page publique (en cours, cf. §8 octies) — prioritaire :**

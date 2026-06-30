@@ -10,20 +10,14 @@ export default function Hero() {
         <TypedTitle />
       </h1>
       <p className="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto mt-7 leading-relaxed">
-        Quelques minutes suffisent pour révéler, avec une précision déroutante, ce qui fait de toi… <span style={{ color: "rgba(51,164,116,0.75)" }}>Toi</span>.
+        Quelques minutes suffisent pour révéler, avec une précision déroutante, ce qui fait de toi… <span className="font-semibold" style={{ color: "rgba(51,164,116,0.75)" }}>Toi</span>.
       </p>
-      <div className="mt-10 flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
+      <div className="mt-10 flex items-center justify-center">
         <Link
           href="/test"
-          className="bg-[rgba(51,164,116,0.75)] text-white font-semibold py-3.5 px-9 rounded-full text-lg hover:opacity-90 transition"
+          className="inline-block bg-[rgba(51,164,116,0.75)] text-white font-semibold py-3.5 px-9 rounded-full text-lg transition-transform duration-300 hover:scale-105"
         >
-          Faire le test
-        </Link>
-        <Link
-          href="/types-de-personnalite"
-          className="text-gray-800 font-semibold py-3.5 px-9 rounded-full text-lg bg-transparent hover:bg-[rgba(0,0,0,0.02)] transition-colors duration-300"
-        >
-          Explorer les types ›
+          Découvrir ma personnalité
         </Link>
       </div>
     </section>
