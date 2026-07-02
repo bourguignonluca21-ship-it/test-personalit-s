@@ -32,14 +32,38 @@ export interface QuizProps {
   disagreeColor?: string;
   resultLabel?: string;
   note?: string;
-  onSubmit?: (answers: Record<string, number>) => void;
+  onSubmit?: (answers: Record<string, number>, info: { email: string; newsletter: boolean }) => void;
   onAnswersChange?: (answers: Record<string, number>) => void;
 }
 
 const VALUES = [1, 2, 3, 4, 5];
 const SIZE = 46;
-// Rampe monochrome verte : Pas d'accord (pâle, gauche) → D'accord (foncé, droite)
-const RAMP = ["#c4e7d4", "#93d3b6", "#5cba8f", "#33a474", "#1f7d56"];
+// Libellés d'aide pour les 3 cercles du milieu (affichés seulement sur la 1re question).
+const INDIC_MILIEU = ["Plutôt pas d'accord", "Neutre / un peu des deux", "Plutôt d'accord"];
+
+// Défilement fluide maison : le scroll-behavior natif est capricieux sur cette page (il téléporte
+// ou ne bouge pas selon le navigateur), donc on anime nous-mêmes le scroll, ce qui marche partout.
+function smoothCenter(el: HTMLElement | null) {
+  if (!el) return;
+  const root = document.documentElement;
+  const start = window.scrollY;
+  const target = start + el.getBoundingClientRect().top + el.offsetHeight / 2 - window.innerHeight / 2;
+  const dist = target - start;
+  if (Math.abs(dist) < 2) return;
+  const dur = 480;
+  const prevBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto"; // on évite que le smooth CSS interfère avec notre animation
+  let t0: number | null = null;
+  function step(ts: number) {
+    if (t0 === null) t0 = ts;
+    const p = Math.min(1, (ts - t0) / dur);
+    const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; // easeInOutQuad
+    window.scrollTo(0, start + dist * e);
+    if (p < 1) requestAnimationFrame(step);
+    else root.style.scrollBehavior = prevBehavior;
+  }
+  requestAnimationFrame(step);
+}
 
 export default function Quiz({
   title,
@@ -67,6 +91,7 @@ export default function Quiz({
   const [showEnd, setShowEnd] = useState(false);
   const [endLeaving, setEndLeaving] = useState(false);
   const refs = useRef<(HTMLDivElement | null)[]>([]);
+  const q1Ref = useRef<HTMLDivElement | null>(null);
   const endRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const prevLenRef = useRef(questions.length);
@@ -93,11 +118,45 @@ export default function Quiz({
   const FLECHE_DEBUT = 110; // px de scroll où la flèche commence à disparaître
   const FLECHE_FIN = 260; // px de scroll où elle est totalement invisible
   const [flecheOpacity, setFlecheOpacity] = useState(1);
+  // La flèche « sort du sol » (émerge du bas de la carte) quand elle apparaît,
+  // et « rentre dans le sol » avec le même rebond quand on scrolle vers les questions.
+  const [flecheSortie, setFlecheSortie] = useState(false); // porte d'entrée (après un court délai)
+  const [flecheBas, setFlecheBas] = useState(false); // true = repoussée dans le sol par le scroll
+  useEffect(() => {
+    const t = setTimeout(() => setFlecheSortie(true), 480);
+    return () => clearTimeout(t);
+  }, []);
+  // Indications de la 1re question : visibles quand elle entre à l'écran, masquées sinon.
+  // Indications de Q1 : opacité pilotée directement par le scroll (fondu fluide à l'aller comme au
+  // retour). Montées tant que Q1 n'a pas de réponse, et elles réservent leur place (aucun saut).
+  const [indicOpacity, setIndicOpacity] = useState(0);
+  // Délai d'apparition : les indications ne se montrent qu'1 s après l'arrivée sur la question.
+  const inZone = indicOpacity > 0.05;
+  const [delayPassed, setDelayPassed] = useState(false);
+  useEffect(() => {
+    if (!inZone) {
+      setDelayPassed(false);
+      return;
+    }
+    const t = setTimeout(() => setDelayPassed(true), 500);
+    return () => clearTimeout(t);
+  }, [inZone]);
   useEffect(() => {
     function onScroll() {
       const y = window.scrollY;
       setExitP(Math.max(0, Math.min(1, (y - 470) / 170)));
       setFlecheOpacity(Math.max(0, Math.min(1, 1 - (y - FLECHE_DEBUT) / (FLECHE_FIN - FLECHE_DEBUT))));
+      setFlecheBas(y > (FLECHE_DEBUT + FLECHE_FIN) / 2); // rentre dans le sol au milieu de la zone de fondu
+      // Indications de Q1 : fondu fluide des DEUX côtés selon la position du texte de Q1.
+      // Pleines dans la zone de lecture, elles se fondent en remontant (par le bas) ET en
+      // descendant au-delà de Q1 (par le haut). t = position du texte en fraction d'écran.
+      const q1 = q1Ref.current;
+      if (q1) {
+        const t = q1.getBoundingClientRect().top / window.innerHeight;
+        const opBas = (0.7 - t) / 0.3; // fondu d'arrivée (Q1 monte par le bas)
+        const opHaut = (t + 0.2) / 0.25; // fondu de sortie (Q1 part par le haut quand on descend)
+        setIndicOpacity(Math.max(0, Math.min(1, Math.min(opBas, opHaut))));
+      }
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -115,7 +174,7 @@ export default function Quiz({
       });
       const prev = refs.current[i - 1];
       if (prev) {
-        setTimeout(() => prev.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
+        setTimeout(() => smoothCenter(prev), 150);
       }
       return;
     }
@@ -124,7 +183,7 @@ export default function Quiz({
     if (phase1Count != null && i === phase1Count - 1) return;
     const next = refs.current[i + 1];
     if (next) {
-      setTimeout(() => next.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
+      setTimeout(() => smoothCenter(next), 150);
     }
   }
 
@@ -169,7 +228,11 @@ export default function Quiz({
       {/* Barre + compteur FIXÉS sous la navbar */}
       <div
         className="fixed left-0 right-0 z-30 bg-white/90 backdrop-blur py-3"
-        style={{ top: "53px" }}
+        style={{
+          top: "53px",
+          opacity: 1 - flecheOpacity,
+          pointerEvents: flecheOpacity > 0.99 ? "none" : "auto",
+        }}
       >
         <div className="max-w-3xl mx-auto px-4 md:px-0 flex items-center gap-4">
           <div className="h-2 rounded-full bg-gray-100 overflow-hidden flex-1">
@@ -211,7 +274,7 @@ export default function Quiz({
               <Reveal key={s.step} delay={idx * 90}>
                 <div
                   className={`relative rounded-3xl p-6 h-full border border-white/50 backdrop-blur-md${
-                    idx === 0 ? " cursor-pointer transition-transform hover:scale-[1.02]" : ""
+                    idx === 0 ? " overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]" : ""
                   }`}
                   style={{ background: s.bg }}
                   onClick={
@@ -222,23 +285,32 @@ export default function Quiz({
                 >
                   {idx === 0 && (
                     <div
-                      className="pointer-events-none absolute bottom-1 left-1/2 -translate-x-1/2 z-20 animate-bounce"
-                      style={{ opacity: flecheOpacity }}
+                      className="pointer-events-none absolute bottom-1 left-1/2 -translate-x-1/2 z-20"
                       aria-hidden
                     >
-                      <svg
-                        width="26"
-                        height="26"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="rgb(51,164,116)"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                      <div
+                        style={{
+                          transform:
+                            flecheSortie && !flecheBas ? "translateY(0)" : "translateY(170%)",
+                          transition: "transform 720ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+                        }}
                       >
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M8 10.5l4 4 4-4" />
-                      </svg>
+                        <div className="animate-bounce">
+                          <svg
+                            width="26"
+                            height="26"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="rgb(51,164,116)"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M8 10.5l4 4 4-4" />
+                          </svg>
+                        </div>
+                      </div>
                     </div>
                   )}
                   <div className="relative z-10">
@@ -260,7 +332,10 @@ export default function Quiz({
 
       {/* Questions — plus d'air entre chaque */}
       <section className="max-w-3xl mx-auto px-4 md:px-0 mb-10 w-full">
-        {questions.map((q, i) => (
+        {questions.map((q, i) => {
+          const montrerIndic = i === 0; // montées en permanence sur Q1 (place réservée stable, pas de saut)
+          const indicOp = answers[keyOf(0)] == null && delayPassed ? indicOpacity : 0; // nulle avant le délai d'1 s et dès que Q1 est répondue
+          return (
           <Fragment key={i}>
             {phase1Count != null && i === phase1Count && phase2Intro && (
               <div ref={introRef} className="scroll-mt-28">
@@ -270,43 +345,86 @@ export default function Quiz({
           <div
             ref={(el) => {
               refs.current[i] = el;
+              if (i === 0) q1Ref.current = el;
             }}
             className={`py-11 scroll-mt-32 ${i > 0 ? "border-t border-gray-100" : ""}`}
           >
+            {montrerIndic && (
+              <div className="text-left mb-7" style={{ opacity: indicOp, transition: "opacity 0.45s ease" }}>
+                <span
+                  className="inline-block italic text-[15px] font-medium"
+                  style={{ color: "rgba(51,164,116,0.85)" }}
+                >
+                  Clic sur la pastille pour faire ton choix
+                </span>
+              </div>
+            )}
             <p className="text-xl mb-8 leading-relaxed text-gray-800 text-left" style={{ fontWeight: 450 }}>
               {q}
             </p>
-            <div className="flex items-center justify-between">
-              <span className="text-[18px] whitespace-nowrap" style={{ color: "#7cc9a6", fontWeight: 450 }}>
+            <div className="relative flex items-center justify-between">
+              <span className="text-[18px] whitespace-nowrap" style={{ color: "rgba(51,164,116,0.85)", fontWeight: 450 }}>
                 Pas d&apos;accord
               </span>
               {VALUES.map((v, idx) => {
                 const active = answers[keyOf(i)] === v;
-                const c = RAMP[idx];
+                const c = "rgba(51,164,116,0.85)"; // tous les cercles au vert de marque
+                const indic = idx >= 1 && idx <= 3 ? INDIC_MILIEU[idx - 1] : null;
+                const above = idx === 2; // « Neutre » se place au-dessus de son cercle
+                const label = (
+                  <span
+                    className="italic whitespace-nowrap leading-tight"
+                    style={{ padding: "4px 6px", color: "rgba(51,164,116,0.85)", fontSize: "15px", fontWeight: 400 }}
+                  >
+                    {indic}
+                  </span>
+                );
+                const trait = <div style={{ width: "1.5px", height: 8, background: "rgba(51,164,116,0.55)" }} />;
                 return (
-                  <button
-                    key={v}
-                    aria-label={`Niveau ${v}`}
-                    onClick={() => handleAnswer(i, v)}
-                    className="rounded-full flex-shrink-0 transition-all hover:scale-105"
-                    style={{
-                      width: SIZE,
-                      height: SIZE,
-                      borderWidth: active ? 0 : "2px",
-                      borderStyle: "solid",
-                      borderColor: c,
-                      background: active ? c : "transparent",
-                    }}
-                  />
+                  <div key={v} className="relative flex-shrink-0" style={{ width: SIZE, height: SIZE }}>
+                    <button
+                      aria-label={`Niveau ${v}`}
+                      onClick={() => handleAnswer(i, v)}
+                      className="rounded-full cursor-pointer transition-all hover:scale-105"
+                      style={{
+                        width: SIZE,
+                        height: SIZE,
+                        borderWidth: active ? 0 : "2px",
+                        borderStyle: "solid",
+                        borderColor: c,
+                        background: active ? c : "transparent",
+                      }}
+                    />
+                    {montrerIndic && indic && (
+                      <div
+                        className="pointer-events-none absolute left-1/2 -translate-x-1/2 flex flex-col items-center"
+                        style={{ opacity: indicOp, transition: "opacity 0.45s ease", ...(above ? { bottom: "100%" } : { top: "100%" }) }}
+                        aria-hidden
+                      >
+                        {above ? (
+                          <>
+                            {label}
+                            {trait}
+                          </>
+                        ) : (
+                          <>
+                            {trait}
+                            {label}
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
-              <span className="text-[18px] whitespace-nowrap" style={{ color: "#1f7d56", fontWeight: 450 }}>
+              <span className="text-[18px] whitespace-nowrap" style={{ color: "rgba(51,164,116,0.85)", fontWeight: 450 }}>
                 D&apos;accord
               </span>
             </div>
           </div>
           </Fragment>
-        ))}
+          );
+        })}
       </section>
 
       <section ref={endRef} className="max-w-md mx-auto px-6 pt-12 pb-24 text-center scroll-mt-28">
@@ -360,7 +478,7 @@ export default function Quiz({
                 </label>
               )}
               <button
-                onClick={() => onSubmit?.(answers)}
+                onClick={() => onSubmit?.(answers, { email: email.trim(), newsletter })}
                 className="w-full text-white font-semibold py-4 rounded-full text-base transition hover:opacity-90"
                 style={{ background: accent }}
               >

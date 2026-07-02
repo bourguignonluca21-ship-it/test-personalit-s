@@ -9,8 +9,7 @@ const NAV_LINKS = [
   { href: "/test", label: "Test de personnalité" },
   { href: "/dark-personnalite", label: "Dark personnalité" },
   { href: "/types-de-personnalite", label: "Types de personnalité", hasMenu: true },
-  { href: "/equipes", label: "Services" },
-  { href: "/articles", label: "Articles" },
+  { href: "/profil", label: "Mon profil" },
 ];
 
 export default function Navbar() {

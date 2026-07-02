@@ -75,19 +75,19 @@ export default function TestPersonnalite() {
   const phase2Intro = shownType ? (
     <div className={`my-12 ${leaving ? "variante-leave" : "variante-enter"}`}>
       <div
-        className="text-white text-center py-16 px-6 rounded-3xl"
+        className="text-white text-center py-16 px-6 rounded-3xl flex flex-col items-center gap-4"
         style={{ background: "rgba(51,164,116,0.75)" }}
       >
-        <div className="flex items-baseline justify-center gap-3 flex-wrap mb-5">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">{shownType}</h2>
-          {typeInfo && <span className="text-xl text-white/80">{typeInfo.name}</span>}
+        <div className="flex items-baseline justify-center gap-3 flex-wrap leading-none">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight leading-none">{shownType}</h2>
+          {typeInfo && <span className="text-xl text-white/80 leading-none">{typeInfo.name}</span>}
         </div>
-        <p className="text-2xl md:text-3xl font-bold tracking-tight">Trouve ta variante</p>
-        <p className="text-base md:text-lg text-white/85 max-w-md mx-auto mt-4 leading-relaxed text-balance">
+        <p className="text-2xl md:text-3xl font-bold tracking-tight leading-none">Trouve ta variante</p>
+        <p className="text-base md:text-lg text-white/85 max-w-md mx-auto leading-[1.9] text-balance">
           Les personnalités donnent les grandes lignes ; entre elles, 3 variantes te rendent presque
           unique.
         </p>
-        <p className="text-sm text-white/60 mt-3 leading-relaxed whitespace-nowrap">
+        <p className="text-sm italic text-white leading-tight whitespace-nowrap">
           Si une réponse précédente est modifiée, les questions de la variante s&apos;adapteront.
         </p>
       </div>
@@ -98,9 +98,9 @@ export default function TestPersonnalite() {
     <>
       <ScrollHaut />
       <Quiz
-      title="Test de personnalité 2.0"
-      titleNode={<TestPageTitle accent="rgba(51,164,116,0.75)" />}
-      subtitle="60 questions · 48 portraits possibles · Un seul te ressemble"
+      title="Test de personnalité"
+      titleNode={<TestPageTitle />}
+      subtitle="48 portraits possibles · Un seul te ressemble"
       questions={allQuestions.map((q) => q.texte)}
       questionIds={allQuestions.map((q) => q.id)}
       total={TOTAL}
@@ -110,12 +110,30 @@ export default function TestPersonnalite() {
       accent="rgba(51,164,116,0.75)"
       note="Réponds à toutes les questions pour découvrir ton profil."
       onAnswersChange={setAnswers}
-      onSubmit={(ans) => {
+      onSubmit={(ans, info) => {
         const code = calculerType(PHASE1_QUESTIONS, ans);
         const v = calculerVariante(code, getPhase2Questions(code), ans);
         const scores = encoderScores(PHASE1_QUESTIONS, ans);
         const vs = `${v.scores.V1}-${v.scores.V2}-${v.scores.V3}`;
-        router.push(`/resultat/${code.toLowerCase()}-${v.variante.toLowerCase()}?s=${scores}&v=${vs}`);
+        const slug = `${code.toLowerCase()}-${v.variante.toLowerCase()}`;
+        // Envoi du mail « ton profil » + inscription newsletter (best-effort).
+        // keepalive : la requête survit à la navigation vers la page résultat.
+        if (info.email || info.newsletter) {
+          fetch("/api/rapport", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            keepalive: true,
+            body: JSON.stringify({
+              email: info.email,
+              newsletter: info.newsletter,
+              slug,
+              s: scores,
+              v: vs,
+              origin: window.location.origin,
+            }),
+          }).catch(() => {});
+        }
+        router.push(`/resultat/${slug}?s=${scores}&v=${vs}`);
       }}
     />
     </>

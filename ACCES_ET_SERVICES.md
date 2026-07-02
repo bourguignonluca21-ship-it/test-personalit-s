@@ -16,6 +16,15 @@
 - Session serveur : `src/app/lib/supabase/server.ts` (lit la session via cookies) + `src/proxy.ts` (ex-middleware, renommé « proxy » en Next 16 ; rafraîchit la session à chaque requête). Permet au serveur de savoir qui est connecté.
 - Auth : email + mot de passe. **Confirmation par email DÉSACTIVÉE** pour les tests (à réactiver avant la mise en ligne).
 - Table `public.achats` (user_id, produit, profil, montant_cents, devise, statut, stripe_payment_intent, email, created_at) avec RLS (chacun ne lit que ses achats). Ajustée le 25/06 : `user_id` rendu NULLABLE (achat sans compte), index unique sur `stripe_payment_intent` (anti-doublon), colonne `email` ajoutée. Les insertions se font via la clé `service_role` (route `acces` + webhook), `statut = "paye"`. Le `profil` stocké est le SLUG (ex. `infp-v1`).
+- Table `public.newsletter` (email PRIMARY KEY, source, created_at) avec RLS activée et AUCUNE policy publique (seul le `service_role` serveur écrit). Alimentée par la route `POST /api/rapport` quand l'utilisateur coche « Recevoir la newsletter » en fin de test. SQL de création (à lancer dans l'éditeur SQL Supabase) :
+  ```sql
+  create table if not exists public.newsletter (
+    email text primary key,
+    source text,
+    created_at timestamptz not null default now()
+  );
+  alter table public.newsletter enable row level security;
+  ```
 - **Connexion par code email (OTP)** : Email OTP Length = **6**, Email OTP Expiration = **600 s** (Authentication → Providers → Email).
 - **SMTP custom = Gmail (TEMPORAIRE, pour les tests)** : `smtp.gmail.com:465`, identifiants = adresse gmail + **mot de passe d'application** (16 caractères, généré sur https://myaccount.google.com/apppasswords). Obligatoire pour pouvoir personnaliser les templates d'email. À remplacer par Resend SMTP + domaine à la mise en ligne.
 - **Templates email personnalisés** : « Magic Link or OTP » (code à 6 chiffres avec `{{ .Token }}`, objet `{{ .Token }} est ton code de connexion`) et « Reset Password » (renvoie vers la page résultat).
@@ -72,6 +81,7 @@
 - Fenêtre de paiement (modale, contient aussi le bouton Google + l'inscription) : `src/app/components/FenetrePaiement.tsx`
 - Fenêtre de partage : `src/app/components/FenetrePartage.tsx`
 - Route mail de sécurité (Resend) : `src/app/api/auth/notif-mot-de-passe/route.ts`
+- Route « mail de profil + newsletter » (Resend + Supabase) : `src/app/api/rapport/route.ts` (appelée en fin de test ; envoie le lien /p par mail et stocke l'adresse si newsletter cochée). Gabarit : `src/app/lib/emails/rapportPartage.ts`.
 - Visuels des mails (source partagée aperçu + envoi) : `src/app/lib/emails/motDePasseChange.ts`, `src/app/lib/emails/codeConnexion.ts`
 - Page nouveau mot de passe (filet de secours) : `src/app/nouveau-mot-de-passe/page.tsx`
 - Page d'aperçu des mails (**TEMPORAIRE, à supprimer avant la prod**) : `src/app/apercu-mail/page.tsx`
