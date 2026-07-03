@@ -218,10 +218,18 @@ export default function PartageInline({
   code,
   nomVariante,
   montrerQR = true,
+  slug: slugProp,
+  s: sProp,
+  v: vProp,
 }: {
   code: string;
   nomVariante: string;
   montrerQR?: boolean;
+  /* Hors de la page rapport (ex. /profil), l'URL ne porte ni slug ni scores :
+     on peut les passer directement en props, qui priment sur l'URL. */
+  slug?: string;
+  s?: string;
+  v?: string;
 }) {
   const [url, setUrl] = useState("");
   const [urlPartage, setUrlPartage] = useState("");
@@ -251,20 +259,21 @@ export default function PartageInline({
     scrollRef.current?.scrollBy({ left: sens * 150, behavior: "smooth" });
   }
 
-  // Construit le lien public /p à partir de l'URL du rapport (slug + scores s & v).
+  // Construit le lien public /p : depuis les props si fournies (ex. /profil),
+  // sinon à partir de l'URL du rapport (slug + scores s & v).
   useEffect(() => {
     const seg = window.location.pathname.split("/").filter(Boolean);
-    const slug = seg[seg.length - 1] ?? "";
+    const slug = slugProp ?? seg[seg.length - 1] ?? "";
     const params = new URLSearchParams(window.location.search);
     const propres = new URLSearchParams();
-    const s = params.get("s");
-    const v = params.get("v");
+    const s = sProp ?? params.get("s");
+    const v = vProp ?? params.get("v");
     if (s) propres.set("s", s);
     if (v) propres.set("v", v);
     const q = propres.toString();
     setUrl(`${window.location.origin}/p/${slug}${q ? `?${q}` : ""}`);
     setUrlPartage(`${window.location.origin}/partager/${slug}${q ? `?${q}` : ""}`);
-  }, []);
+  }, [slugProp, sProp, vProp]);
 
   const enc = encodeURIComponent;
   const msg = `Hey, j'ai fait ce test de personnalité, je suis ${code} : ${nomVariante}. Regarde mon profil :`;

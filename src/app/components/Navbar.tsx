@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ROLE_ORDER, ROLES, typesByRole } from "../data/types";
+import FenetreConnexion from "./FenetreConnexion";
 
 const NAV_LINKS = [
   { href: "/test", label: "Test de personnalité" },
@@ -15,6 +16,8 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [mobile, setMobile] = useState(false);
+  // Fenêtre de connexion (email → code), LE parcours principal de connexion.
+  const [connexionOuverte, setConnexionOuverte] = useState(false);
   const pathname = usePathname();
 
   // Cliquer un lien vers la page déjà ouverte → on recharge (rejoue les animations).
@@ -108,13 +111,13 @@ export default function Navbar() {
 
       {/* Droite */}
       <div className="hidden md:flex items-center gap-5 text-[13px] text-gray-500">
-        <Link
-          href="/connexion"
-          onClick={reloadIfSame("/connexion")}
-          className="hover:text-gray-900 transition-colors"
+        <button
+          type="button"
+          onClick={() => setConnexionOuverte(true)}
+          className="hover:text-gray-900 transition-colors cursor-pointer"
         >
           Se connecter / Crée un compte
-        </Link>
+        </button>
         <span
           className="w-6 h-6 rounded-full border border-gray-200"
           aria-label="Français"
@@ -151,18 +154,21 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/connexion"
-            onClick={(e) => {
+          <button
+            type="button"
+            onClick={() => {
               setMobile(false);
-              reloadIfSame("/connexion")(e);
+              setConnexionOuverte(true);
             }}
-            className="py-1 font-semibold"
+            className="py-1 font-semibold text-left"
           >
             Se connecter / Crée un compte
-          </Link>
+          </button>
         </div>
       )}
+
+      {/* La fenêtre de connexion (email → code) */}
+      <FenetreConnexion open={connexionOuverte} onClose={() => setConnexionOuverte(false)} />
     </nav>
   );
 }

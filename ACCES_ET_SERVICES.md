@@ -2,7 +2,7 @@
 
 > Mémo des services branchés sur le site et de leurs accès.
 > RÈGLE : aucune clé secrète ici. Les vraies clés vivent dans `.env.local` (non commité).
-> Mis à jour : session du 27 juin 2026 (gating serveur réel déployé sur Vercel, webhook Stripe configuré et testé en ligne, connexion Google ajoutée, refonte de la fenêtre de paiement). Le ?paid=1 factice est supprimé.
+> Mis à jour : session du 3 juillet 2026 (connexion par code = parcours principal, table `resultats`, page profil). Voir `ETAT_DU_PROJET.md` §8 undecies.
 
 ## Supabase (comptes utilisateurs + base de données)
 
@@ -25,7 +25,24 @@
   );
   alter table public.newsletter enable row level security;
   ```
-- **Connexion par code email (OTP)** : Email OTP Length = **6**, Email OTP Expiration = **600 s** (Authentication → Providers → Email).
+- Table `public.resultats` (id, user_id → auth.users ON DELETE CASCADE, test, slug, scores_s, scores_v, created_at) : les résultats de test rattachés aux comptes (historique conservé, une ligne par passage). RLS : chacun ne LIT que ses lignes, écriture via `service_role` uniquement (`lib/resultats.ts`, appelé par la page résultat quand un connecté l'ouvre). Index `resultats_user_test_date`. SQL de création :
+  ```sql
+  create table if not exists public.resultats (
+    id uuid primary key default gen_random_uuid(),
+    user_id uuid not null references auth.users(id) on delete cascade,
+    test text not null default 'personnalite',
+    slug text not null,
+    scores_s text not null,
+    scores_v text not null,
+    created_at timestamptz not null default now()
+  );
+  create index if not exists resultats_user_test_date
+    on public.resultats (user_id, test, created_at desc);
+  alter table public.resultats enable row level security;
+  create policy "lire ses propres resultats"
+    on public.resultats for select using (auth.uid() = user_id);
+  ```
+- **Connexion par code email (OTP)** : Email OTP Length = **6**, Email OTP Expiration = **600 s** (Authentication → Providers → Email). C'est désormais LE parcours de connexion principal du site (`components/FenetreConnexion.tsx`, ouvert par la navbar) : email → code → (si compte neuf) configuration du profil dans la fenêtre → `/profil`.
 - **SMTP custom = Gmail (TEMPORAIRE, pour les tests)** : `smtp.gmail.com:465`, identifiants = adresse gmail + **mot de passe d'application** (16 caractères, généré sur https://myaccount.google.com/apppasswords). Obligatoire pour pouvoir personnaliser les templates d'email. À remplacer par Resend SMTP + domaine à la mise en ligne.
 - **Templates email personnalisés** : « Magic Link or OTP » (code à 6 chiffres avec `{{ .Token }}`, objet `{{ .Token }} est ton code de connexion`) et « Reset Password » (renvoie vers la page résultat).
 - **Redirect URLs à autoriser** (URL Configuration) : `http://localhost:3000/resultat/**` et `http://localhost:3000/nouveau-mot-de-passe` (+ équivalents Vercel plus tard).
@@ -118,4 +135,4 @@
 
 - Les clés secrètes ne doivent JAMAIS être collées dans un fichier commité ni partagées. Uniquement dans `.env.local`.
 - Commit/push uniquement depuis Windows / Claude Code (voir `AGENTS.md`).
-- État détaillé du projet : `ETAT_DU_PROJET.md` (section 8 septies pour la dernière session).
+- État détaillé du projet : `ETAT_DU_PROJET.md` (section 8 decies pour la dernière session, 2 juillet 2026).

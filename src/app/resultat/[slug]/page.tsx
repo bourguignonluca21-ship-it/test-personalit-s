@@ -12,6 +12,7 @@ import PartageInline from "../../components/PartageInline";
 import ScrollHaut from "../../components/ScrollHaut";
 import { cookies } from "next/headers";
 import { createClient } from "../../lib/supabase/server";
+import { enregistrerResultat } from "../../lib/resultats";
 import { COOKIE_ACCES, decoderAcces } from "../../lib/acces";
 import {
   getProfil,
@@ -651,22 +652,35 @@ export default async function ResultatPage({
   //  2. un compte connecté qui a un achat « payé » pour ce profil dans la table `achats`.
   // À défaut, tout le contenu premium reste brouillé (voir brouillerSection/brouillerVariante).
   const jar = await cookies();
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   let isPaid = decoderAcces(jar.get(COOKIE_ACCES)?.value).includes(slug);
-  if (!isPaid) {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      const { data } = await supabase
-        .from("achats")
-        .select("id")
-        .eq("user_id", user.id)
-        .eq("profil", slug)
-        .eq("statut", "paye")
-        .limit(1);
-      isPaid = !!data?.length;
-    }
+  if (!isPaid && user) {
+    const { data } = await supabase
+      .from("achats")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("profil", slug)
+      .eq("statut", "paye")
+      .limit(1);
+    isPaid = !!data?.length;
+  }
+
+  // Résultat rattaché au compte : si un utilisateur CONNECTÉ ouvre une page
+  // résultat valide (profil connu + scores complets), on enregistre ce
+  // résultat sur son compte (table `resultats`, sans doublon de re-visite).
+  // C'est ce qui alimente la galerie « Mes profils » de la page /profil.
+  if (
+    user &&
+    profil &&
+    s &&
+    v &&
+    s.split("-").length === 4 &&
+    v.split("-").length === 3
+  ) {
+    await enregistrerResultat(user.id, slug, s, v);
   }
   // Lien propre qui conserve les scores s/v (le déblocage se fait par la fenêtre de paiement,
   // plus par un ?paid=1 dans l'URL).
