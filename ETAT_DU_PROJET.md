@@ -338,9 +338,67 @@ Tout est dans `components/FenetrePaiement.tsx` (la modale) sauf mention contrair
 
 **Reste à faire sur ce chantier (repris en §9)** : navbar qui ne reflète pas la session (affiche « Se connecter » même connecté — à remplacer par prénom/« Mon profil ») ; sort de la page `/connexion` ; corriger les liens `/cgu` de FenetrePaiement → `/conditions` ; bloc « Compare tes proches » (invitation virale, bloc 3 du plan Relations) ; habiller Développement / L'IA / Paramètres ; mise en page du parcours à reprendre ; brancher le vrai calcul de rareté ; passe responsive mobile de /profil.
 
+## 8 duodecies. POINT DE REPRISE, session 4 juillet 2026 (onglet Relations refondu : carrousel des 2 parcours, fenêtre du parcours solo, fenêtre « Décrire mon ou ma partenaire », analyse 16P Partenaire) — ⚠️ TOUT NON COMMITÉ
+
+**A. Onglet Relations du profil — REFONDU en carrousel de 2 sections immersives** (`ProfilOnglets.tsx`).
+- Bloc-partie Relations : sous-ligne « Comprends ce qui se joue entre toi et les autres. Seul, ou à deux. » ; la ligne d'orientation sous le titre a été SUPPRIMÉE (doublon).
+- **Carrousel** (patron PartageInline : flèches rondes vertes, 2 points indicateurs cliquables, écart 40 px entre sections pris en compte dans le calcul du scroll). **Le parcours À DEUX s'affiche EN PREMIER** (ordre via classes CSS `order-1`/`order-2`).
+- **Section Parcours seul** (« Comprends tes schémas ») : eyebrow vert, accroche, **3 étapes en cartes vert clair** `rgba(51,164,116,0.12)` (SANS numéros), CLIQUABLES (elles ouvrent la fenêtre du parcours ; leur survol fait AUSSI grossir le bouton), teasing italique collé (mt-2), bouton « Commencer mon parcours ». Contenu aligné en haut (plus de centrage vertical).
+- **Actes RENOMMÉS** (validés) : 1. **Ta façon d'aimer** / 2. **Ce qui se répète** / 3. **Reprendre la main** (partout : carrousel + chemin).
+- **Section Parcours à deux** (« Avancez ensemble ») : eyebrow vert, accroche, puis **2 encarts d'action** (plus de bouton « Commencer à deux ») :
+  - **« L'inviter »** : bloc réseaux PartageInline avec **lien et message d'invitation DÉDIÉS** (props `lien`/`message` ajoutées à PartageInline ; lien placeholder `/test`, message « Hey, j'aimerais qu'on fasse notre parcours à deux… » ; le VRAI lien signé + sa page d'accueil invité viendront avec la table `liens`).
+  - **« Répondre pour lui ou elle »** : ouvre la fenêtre « Décrire mon ou ma partenaire » (cf. E).
+- **Anneaux de progression** (`CercleProgression` 44 px) en haut à droite des 2 sections, calés sur la marge du contenu (top-7/md:top-10). 0 % pour l'instant ; **chaque parcours vaudra 50 % de la partie Relations**.
+- `FlecheRemonter` ajoutée sous le carrousel Relations ; réglée pour les 2 onglets : mt-12 (au lieu de mt-20), déclenchement 150 px AVANT l'entrée du footer.
+
+**B. FENÊTRE DU PARCOURS SOLO (`profil/FenetreParcours.tsx`, NOUVEAU).**
+- « Commencer mon parcours » (bouton ET les 3 étapes) ouvre une FENÊTRE par-dessus /profil (pas de navigation) : 920 px, **hauteur FIXE** `calc(92vh + 12px)` (identique vue chemin et vue module), fond flouté, croix / clic fond / Échap, patron FenetrePaiement, **createPortal(document.body)** (piège navbar).
+- **Mode PILOTÉ** (`ouvert`/`onFermer`) : UNE seule fenêtre partagée entre le bouton et les 3 étapes (même progression).
+- **Vue chemin ↔ vue module SUR PLACE** : clic sur un module → son contenu s'affiche dans la fenêtre ; retour par une **flèche ronde verte dans la marge gauche à mi-hauteur** (plus de « ‹ Ton parcours » ni d'eyebrow) ; titre du module aligné sur l'axe du texte ; scroll remis en haut à chaque changement de vue (`key={vue}`).
+- **Cercle de progression** dans l'en-tête (`progressionModules` : **seuls les modules FINIS comptent**, 1/12 = 8 %).
+- **« J'ai terminé ce module »** : voile BLANC OPAQUE + coche verte qui se dessine (stroke-dashoffset) → retour au chemin, **la progression avance** (module → petite carte cochée, suivant débloqué). Progression **EN MÉMOIRE seulement** (reset au rechargement, table `parcours_progression` à venir). Le TITRE de la vue module suit le module ouvert (`infosModule`), le CONTENU reste l'échantillon du module 1 pour tous.
+
+**C. CHEMIN DE PROGRESSION (`relations/seul/CheminParcours.tsx`, NOUVEAU, partagé page /relations/seul + fenêtre).**
+- État des modules **CALCULÉ** (`etatDe(n, faits)` : fait / en-cours / verrouillé), props `faits` et `onOuvrirModule` (dans la fenêtre les cartes deviennent des boutons, sur la page elles restent des liens).
+- Visuel affiné : **trait vertical MASQUÉ** (tronçons transparents gardés comme espaceurs), pastilles réduites (24 px), **jalons d'acte supprimés** → titres « 1.Ta façon d'aimer » (numéro + point VERTS collés au titre, pas d'espace), cartes verrouillées = vraies cartes blanches avec teaser italique + cadenas vert pâle + durée verte, `marginLeft: -56` (la colonne du chemin vit dans la marge, cartes et titres d'acte sur l'axe du texte).
+- Les 12 titres de modules + teasers RÉÉCRITS et validés (« Ce qui te fait fuir, et ce que ça protège », « Ton style d'attachement »…).
+
+**D. MODULE 1 (`relations/seul/module-1/ContenuModule1.tsx`, NOUVEAU, partagé page module-1 + fenêtre).**
+- Titre renommé « **Ce que tu cherches vraiment dans un lien** ». Lecture **justifiée** (collée aux 2 marges, mêmes marges que le bloc exercice), question de l'exercice sur 2 lignes (`<br/>`), placeholder du textarea en italique, étiquette « Ton exercice » SUPPRIMÉE, bouton « J'ai terminé ce module » à la taille du texte centré (note « le module 2 s'ouvrira » supprimée), prop `onTerminer`.
+
+**E. FENÊTRE « DÉCRIRE MON OU MA PARTENAIRE » (`profil/FenetreParcoursDuo.tsx`, refondu — n'est PLUS la fenêtre du parcours à deux).**
+- Ouverte par la carte « Répondre pour lui ou elle » (prop `triggerClassName` : la carte entière est le déclencheur). Même taille que la fenêtre du parcours, titre à 30 px du haut, question « Connais-tu déjà son type de personnalité ? » collée sous la sous-ligne (8 px, même écart que titre/sous-ligne).
+- 2 cartes blanches (même DA que les encarts) : « **Oui, je le connais** » / « **Non, devinons-le** ».
+- **« Choisir son profil »** → la pastille (chevron animé) déploie le **menu déroulant des 48 profils par famille** (ROLE_ORDER × NOMS_VARIANTES, nom à gauche + `CODE · Vx` vert à droite, survol vert pâle) ; **la carte « Oui » S'AGRANDIT jusqu'en bas de la fenêtre** (flex-grow ANIMÉ 0,75 s — flex-grow est animable en CSS), **« Non, devinons-le » garde SA taille** (`sm:self-start` PERMANENT, sinon il « se referme » visuellement pendant l'animation) ; le choix s'affiche dans la pastille. **Le branchement du profil choisi reste à faire.**
+- « Commencer à deviner » : visuel seul (le mini-quiz de devinette reste à construire, modèle 16P dans la fiche Écran 6).
+
+**F. Page /profil (`page.tsx`).**
+- **Barème par test VALIDÉ : rapport acheté = 100 %, test fait sans rapport = 5 %, pas fait = 0 %.**
+- La coche/cadenas de la carte Personnalité est REMPLACÉE par un **anneau de progression 32 px** ; anneau ajouté aussi sur la **carte Dark** (2 états).
+- **`CarteCercleSurvol` RETIRÉ** (plus de cercle surgissant au survol des cartes de test) — le fichier orphelin est conservé, suppression à valider avec Luca.
+- Nouvelle prop `partage` (code/nomVariante/slug/s/v) descendue jusqu'au carrousel Relations.
+
+**G. `PartageInline.tsx`** : props `lien` + `message` (surcharges pour l'invitation duo) ; **ResizeObserver** sur le rail (les flèches se recalculent quand le conteneur change de taille — avant elles restaient invisibles dans une modale) ; ⚠️ toujours mettre **`min-w-0`** sur une carte flex qui le contient, sinon elle s'élargit au contenu et tout déborde.
+
+**H. ⚠️ IMPORT CIRCULAIRE (leçon chère) :** `ProfilOnglets` → `FenetreParcours` → `ProfilOnglets` (pour CercleProgression) a fait tomber **TOUT le site** (crash du dev, toutes les pages). Résolu : **`CercleProgression` extrait dans `profil/CercleProgression.tsx`**, ré-exporté par ProfilOnglets. Attention : `export {X} from "./y"` ne rend PAS X utilisable dans le fichier lui-même, il faut importer PUIS ré-exporter.
+
+**I. Analyse 16P — fiche « Écran 6 » COMPLÈTE** dans `ANALYSE_PARCOURS_16P.md` : parcours Partenaire décortiqué en live avec Luca (état vide → 2 branches inviter/saisir → Oui (menu 16 types) / Non (mini-quiz ~12 questions en scènes de vie + révélation du type deviné) → analyse : disclaimer d'honnêteté, 6 forces + 6 frictions GRATUITES, 3 sections premium verrouillées, CTA 9 €, formulaire de feedback). Leur limite = notre opportunité : chez eux tout s'arrête à l'analyse, aucun parcours derrière. Luca valide : les 2 branches, la question Oui/Non, et le formulaire de feedback (« très cool pour le lancement »).
+
+**Pièges nouveaux de la session** : import circulaire = site entier tombe ; un `<button>` **centre son contenu verticalement** par défaut (`flex flex-col items-start` pour l'éviter) ; `flex-grow` est animable en CSS (transitions douces d'agrandissement) ; `min-w-0` indispensable autour des carrousels internes ; ResizeObserver pour les états calculés au montage dans les modales ; les clics automatisés pendant les animations rAF donnent des faux résultats (se fier au navigateur réel).
+
+**Nouveaux fichiers** : `profil/FenetreParcours.tsx`, `profil/FenetreParcoursDuo.tsx`, `profil/CercleProgression.tsx`, `relations/seul/CheminParcours.tsx`, `relations/seul/module-1/ContenuModule1.tsx`.
+
 ## 9. Prochaines étapes
 
-**Chantier PARTAGE & page publique (en cours, cf. §8 octies) — prioritaire :**
+**Chantier RELATIONS / parcours (en cours, cf. §8 duodecies) — c'est le chantier actif :**
+- **Brancher « Oui, je le connais »** : construire la suite une fois le profil du partenaire choisi dans le menu des 48.
+- **Construire le mini-quiz « Non, devinons-le »** (modèle 16P : questions en scènes de vie, 2 choix, révélation du type deviné — fiche Écran 6).
+- **Vrai lien d'invitation signé** + page d'accueil pensée pour l'invité (+ table `liens`) — remplace le placeholder `/test` du bloc réseaux.
+- **Table `parcours_progression`** : la progression des modules est EN MÉMOIRE (reset au rechargement).
+- **Contenu réel des 12 modules** (briques personnalisées par profil — chantier d'écriture, cf. VISION_RELATIONS_PARCOURS.md).
+- À trancher : sort de la page `/relations/duo` (placeholder devenu obsolète), suppression de `CarteCercleSurvol.tsx` (orphelin), anneau à 0 % sur la carte Personnalité quand le test n'est pas fait.
+
+**Chantier PARTAGE & page publique (en cours, cf. §8 octies) :**
 - **Réécrire le contenu des panneaux du spectre** (`/p`) en mini-portraits vivants (cf. §8 octies, « À retravailler »). C'est la prochaine étape concrète demandée.
 - **Générer l'image de partage par profil** (story 9:16) via Next `ImageResponse`, en barres (pas camembert), DA verte. C'est elle qui débloque Insta/TikTok/Snap.
 - **Construire la fenêtre de partage** (boutons réseaux : liens d'intention WhatsApp/Messenger/X/Telegram/mail + bouton « Partager » natif `navigator.share` avec l'image sur mobile + « télécharger l'image » sur ordi).

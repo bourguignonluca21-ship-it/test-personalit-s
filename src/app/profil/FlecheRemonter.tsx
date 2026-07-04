@@ -20,7 +20,9 @@ export default function FlecheRemonter() {
     function maj() {
       const footer = document.querySelector("footer");
       if (!footer) return;
-      setVisible(footer.getBoundingClientRect().top < window.innerHeight);
+      // +150 : la flèche se déclenche un peu AVANT que le footer entre à
+      // l'écran (demande Luca, réglable).
+      setVisible(footer.getBoundingClientRect().top < window.innerHeight + 150);
     }
     maj();
     window.addEventListener("scroll", maj, { passive: true });
@@ -50,11 +52,10 @@ export default function FlecheRemonter() {
   }
 
   return (
-    /* mt-20 = 80 px au-dessus, et la section se termine par pb-20 = 80 px
-       en dessous → la flèche est pile au centre entre le bloc de partage
-       et le footer (conditions). */
+    /* mt-12 = 48 px au-dessus (remontée de 32 px, demande Luca), pb-20 de la
+       section en dessous. */
     <div
-      className="mt-20 flex justify-center"
+      className="mt-12 flex justify-center"
       style={{
         opacity: visible ? 1 : 0,
         transition: "opacity .45s ease",

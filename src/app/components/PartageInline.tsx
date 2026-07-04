@@ -221,6 +221,8 @@ export default function PartageInline({
   slug: slugProp,
   s: sProp,
   v: vProp,
+  lien,
+  message,
 }: {
   code: string;
   nomVariante: string;
@@ -230,6 +232,10 @@ export default function PartageInline({
   slug?: string;
   s?: string;
   v?: string;
+  /* SURCHARGES (ex. invitation du parcours à deux) : même bloc visuel,
+     mais un lien et un message dédiés à la place du /p du profil. */
+  lien?: string; // chemin relatif (ex. "/test"), l'origin est ajouté
+  message?: string;
 }) {
   const [url, setUrl] = useState("");
   const [urlPartage, setUrlPartage] = useState("");
@@ -248,10 +254,19 @@ export default function PartageInline({
   }
 
   // À monter + au redimensionnement : recalculer les flèches.
+  // ResizeObserver : recalcule aussi quand le CONTENEUR change de taille
+  // sans que la fenêtre navigateur bouge (ex. bloc dans une modale qui
+  // s'ouvre, carte qui se recompose). Sinon les flèches restent figées.
   useEffect(() => {
     majFleches();
     window.addEventListener("resize", majFleches);
-    return () => window.removeEventListener("resize", majFleches);
+    const el = scrollRef.current;
+    const ro = el ? new ResizeObserver(majFleches) : null;
+    if (el && ro) ro.observe(el);
+    return () => {
+      window.removeEventListener("resize", majFleches);
+      ro?.disconnect();
+    };
   }, []);
 
   // Défilement petit à petit (environ 2 icônes par clic).
@@ -261,7 +276,14 @@ export default function PartageInline({
 
   // Construit le lien public /p : depuis les props si fournies (ex. /profil),
   // sinon à partir de l'URL du rapport (slug + scores s & v).
+  // Si `lien` est fourni (surcharge), c'est LUI qui est partagé.
   useEffect(() => {
+    if (lien) {
+      const complet = lien.startsWith("http") ? lien : `${window.location.origin}${lien}`;
+      setUrl(complet);
+      setUrlPartage(complet);
+      return;
+    }
     const seg = window.location.pathname.split("/").filter(Boolean);
     const slug = slugProp ?? seg[seg.length - 1] ?? "";
     const params = new URLSearchParams(window.location.search);
@@ -273,10 +295,12 @@ export default function PartageInline({
     const q = propres.toString();
     setUrl(`${window.location.origin}/p/${slug}${q ? `?${q}` : ""}`);
     setUrlPartage(`${window.location.origin}/partager/${slug}${q ? `?${q}` : ""}`);
-  }, [slugProp, sProp, vProp]);
+  }, [slugProp, sProp, vProp, lien]);
 
   const enc = encodeURIComponent;
-  const msg = `Hey, j'ai fait ce test de personnalité, je suis ${code} : ${nomVariante}. Regarde mon profil :`;
+  const msg =
+    message ??
+    `Hey, j'ai fait ce test de personnalité, je suis ${code} : ${nomVariante}. Regarde mon profil :`;
 
   async function copier() {
     try {

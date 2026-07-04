@@ -1,6 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import FenetreParcours from "./FenetreParcours";
+import FenetreParcoursDuo from "./FenetreParcoursDuo";
+import PartageInline from "../components/PartageInline";
+import FlecheRemonter from "./FlecheRemonter";
+import { CercleProgression } from "./CercleProgression";
 
 /*
  * Les onglets de la page profil (structure validée : Mes profils / Relations /
@@ -17,7 +22,7 @@ const INK = "rgba(0,0,0,0.75)";
 
 const ONGLETS = [
   { id: "profils", titre: "Mes profils", sousLigne: "Tes résultats de tests" },
-  { id: "relations", titre: "Relations", sousLigne: "Compare-toi à tes proches" },
+  { id: "relations", titre: "Relations", sousLigne: "Comprends ce qui se joue entre toi et les autres. Seul, ou à deux." },
   { id: "developpement", titre: "Développement", sousLigne: "Ton parcours sur mesure" },
   { id: "ia", titre: "L'IA", sousLigne: "Discute avec ton profil" },
   { id: "parametres", titre: "Paramètres", sousLigne: "Ton compte, tes choix" },
@@ -42,7 +47,19 @@ function EnConstruction({ titre, texte }: { titre: string; texte: string }) {
 
 /* Flèche ronde de défilement (même patron que le carrousel des réseaux
    sociaux du résumé) : verte, s'estompe quand on est au bout. */
-function Fleche({ cote, actif, onClick }: { cote: "g" | "d"; actif: boolean; onClick: () => void }) {
+function Fleche({
+  cote,
+  actif,
+  onClick,
+  top = 92,
+}: {
+  cote: "g" | "d";
+  actif: boolean;
+  onClick: () => void;
+  /* Position verticale du centre de la flèche (px ou "50%").
+     Défaut 92 = milieu des blocs-onglets (184/2). */
+  top?: number | string;
+}) {
   const gauche = cote === "g";
   return (
     <button
@@ -52,7 +69,7 @@ function Fleche({ cote, actif, onClick }: { cote: "g" | "d"; actif: boolean; onC
       disabled={!actif}
       style={{
         position: "absolute",
-        top: 92, // milieu de la HAUTEUR DES BLOCS (184/2), pas du conteneur (qui inclut les cercles)
+        top,
         transform: "translateY(-50%)",
         left: gauche ? -17 : undefined,
         right: gauche ? undefined : -17,
@@ -78,85 +95,311 @@ function Fleche({ cote, actif, onClick }: { cote: "g" | "d"; actif: boolean; onC
   );
 }
 
-/* Cercle de progression : anneau vert qui se remplit + % au centre.
-   Incite à compléter son profil (effet « profil complété à X % »).
-   Exporté : sert aussi au % global du héros (page.tsx). */
-export function CercleProgression({ pct, taille = 48 }: { pct: number; taille?: number }) {
-  const R = 20;
-  const C = 2 * Math.PI * R; // circonférence
+/* ————— Partie RELATIONS : carrousel des deux parcours —————
+   Une seule section immersive visible à la fois (pleine largeur), on passe
+   de « Parcours seul » à « Parcours à deux » avec les flèches rondes vertes
+   (même patron que le carrousel des réseaux) + 2 points indicateurs.
+   Chaque section VEND le parcours : accroche éditoriale, ligne « construit
+   sur ton profil », les 3 actes / 3 temps, teasing chiffré, CTA.
+   (cf. VISION_RELATIONS_PARCOURS.md — règle : on vend le service, on ne
+   pointe jamais les faiblesses du client.) */
+function CarrouselRelations({
+  profil,
+  partage,
+}: {
+  profil?: { sousTitre: string } | null;
+  partage?: { code: string; nomVariante: string; slug: string; s: string; v: string } | null;
+}) {
+  void profil; // plus affiché (ligne « Construit sur ton profil » retirée), la tuyauterie reste pour plus tard
+  const railRef = useRef<HTMLDivElement>(null);
+  const [idx, setIdx] = useState(0);
+  /* UNE seule fenêtre de parcours, ouverte par le bouton OU par les 3 étapes
+     (même progression partout). */
+  const [parcoursOuvert, setParcoursOuvert] = useState(false);
+  /* Survoler une étape fait AUSSI grossir « Commencer mon parcours »
+     (comme si on le survolait). */
+  const [etapeSurvolee, setEtapeSurvolee] = useState(false);
+  /* Écart entre les deux sections : pendant le glissement elles ne sont
+     plus collées (demande Luca). Pris en compte dans le calcul du scroll. */
+  const ECART = 40;
 
-  // Animation de chargement : l'anneau ET le nombre montent de 0 jusqu'au
-  // % réel (900 ms, décélération douce), via rAF. Rejouée au survol.
-  const [affiche, setAffiche] = useState(0);
-  const [survol, setSurvol] = useState(false);
-  const rafRef = useRef(0);
-  function lancerAnimation() {
-    cancelAnimationFrame(rafRef.current);
-    const debut = performance.now();
-    const DUREE = 900;
-    const tick = (t: number) => {
-      const avancee = Math.min(1, (t - debut) / DUREE);
-      const ease = 1 - Math.pow(1 - avancee, 3); // ease-out cubic
-      setAffiche(pct * ease);
-      if (avancee < 1) rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
+  // L'index courant suit le scroll (flèches OU glissement manuel).
+  function majIdx() {
+    const el = railRef.current;
+    if (!el) return;
+    setIdx(Math.round(el.scrollLeft / (el.clientWidth + ECART)));
   }
-  useEffect(() => {
-    lancerAnimation();
-    return () => cancelAnimationFrame(rafRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pct]);
+
+  function aller(i: number) {
+    const el = railRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * (el.clientWidth + ECART), behavior: "smooth" });
+  }
+
+  // Étape de la frise d'un parcours (acte ou temps) : même patron que les
+  // titres d'acte du chemin, numéro + point collés au titre (plus de
+  // pastille). `centre` : tout est centré (option gardée). `surVert` :
+  // textes en blanc (cartes vertes du parcours seul).
+  function Etape({
+    n,
+    titre,
+    texte,
+    centre,
+    surVert,
+  }: {
+    n: number;
+    titre: string;
+    texte: string;
+    centre?: boolean;
+    surVert?: boolean;
+  }) {
+    void n; // numéro plus affiché (demande Luca), gardé dans la signature
+    return (
+      <div className={centre ? "flex-1 min-w-0 text-center" : "flex-1 min-w-0"}>
+        <p className="text-sm font-bold" style={{ color: surVert ? "#fff" : INK }}>
+          {titre}
+        </p>
+        <p
+          className={surVert ? "mt-2 text-sm leading-relaxed" : "mt-2 text-sm leading-relaxed text-gray-500"}
+          style={surVert ? { color: "rgba(255,255,255,0.88)" } : undefined}
+        >
+          {texte}
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <svg
-      width={taille}
-      height={taille}
-      viewBox="0 0 48 48"
-      aria-label={`Complété à ${pct} %`}
-      onMouseEnter={() => {
-        setSurvol(true);
-        lancerAnimation(); // la progression se recharge comme à l'arrivée
-      }}
-      onMouseLeave={() => setSurvol(false)}
-      style={{
-        transform: survol ? "scale(1.18)" : "scale(1)",
-        transition: "transform .6s ease",
-      }}
-    >
-      <circle cx="24" cy="24" r={R} fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="4" />
-      <circle
-        cx="24"
-        cy="24"
-        r={R}
-        fill="none"
-        stroke={VERT}
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeDasharray={C}
-        strokeDashoffset={C * (1 - affiche / 100)}
-        transform="rotate(-90 24 24)"
-      />
-      <text
-        x="24"
-        y="25"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fontSize="11"
-        fontWeight="700"
-        fill={INK}
+    <div className="relative mt-8">
+      <style>{`.rel-scroll::-webkit-scrollbar{display:none}`}</style>
+      <Fleche cote="g" actif={idx > 0} onClick={() => aller(0)} top="50%" />
+      <Fleche cote="d" actif={idx < 1} onClick={() => aller(1)} top="50%" />
+      <div
+        ref={railRef}
+        onScroll={majIdx}
+        className="rel-scroll flex snap-x snap-mandatory overflow-x-auto"
+        style={{ scrollbarWidth: "none", gap: ECART }}
       >
-        {Math.round(affiche)}%
-      </text>
-    </svg>
+        {/* ————— Parcours seul (aligné à gauche, validé) —————
+            order-2 : affiché en DEUXIÈME (décision Luca : on arrive sur le
+            parcours à deux en premier). */}
+        {/* pb +12 px (40/52) : blocs agrandis vers le bas, demande Luca */}
+        <section className="order-2 w-full flex-shrink-0 snap-center">
+          <div className="relative flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-7 pb-[36px] text-left shadow-sm md:p-10 md:pb-[48px]">
+            {/* Anneau de progression du parcours (50 % de la partie
+                Relations lui aussi). */}
+            {/* Calé sur la marge du contenu : le haut de l'anneau tombe à la
+                hauteur de la ligne « Parcours … » (p-7 / md:p-10). */}
+            <div className="absolute top-7 right-7 md:top-10 md:right-10">
+              <CercleProgression pct={0} taille={44} />
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: VERT }}>
+              Parcours seul
+            </p>
+            {/* Contenu aligné EN HAUT comme le bloc Parcours à deux
+                (demande Luca, fini le centrage vertical). */}
+            <h3 className="mt-3 text-2xl font-bold md:text-3xl" style={{ color: INK }}>
+              Comprends tes schémas
+            </h3>
+            <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-gray-600">
+              Pourquoi tes relations prennent souvent le même chemin ? Ce qui
+              se répète n&apos;est pas un hasard. Ça se comprend, et ça
+              s&apos;apprend. Un parcours guidé, étape par étape, pour voir
+              clair dans ta façon d&apos;aimer et de t&apos;attacher.
+            </p>
+            {/* Les 3 actes du parcours : CLIQUABLES (ouvrent la fenêtre du
+                parcours), grossissement au survol comme le bouton. */}
+            <div className="mt-9 flex flex-col gap-6 sm:flex-row sm:gap-8">
+              <button
+                type="button"
+                onClick={() => setParcoursOuvert(true)}
+                onMouseEnter={() => setEtapeSurvolee(true)}
+                onMouseLeave={() => setEtapeSurvolee(false)}
+                className="flex flex-1 min-w-0 flex-col items-start rounded-2xl p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
+                /* Notre VERT CLAIR (le même que les pastilles cadenas et
+                   l'emblème de la galerie). */
+                style={{ background: "rgba(51,164,116,0.12)", border: "none" }}
+              >
+                <Etape
+                  n={1}
+                  titre="Ta façon d'aimer"
+                  texte="Ce que ton profil dit de ta façon d'être en relation."
+                />
+              </button>
+              <button
+                type="button"
+                onClick={() => setParcoursOuvert(true)}
+                onMouseEnter={() => setEtapeSurvolee(true)}
+                onMouseLeave={() => setEtapeSurvolee(false)}
+                className="flex flex-1 min-w-0 flex-col items-start rounded-2xl p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
+                /* Notre VERT CLAIR (le même que les pastilles cadenas et
+                   l'emblème de la galerie). */
+                style={{ background: "rgba(51,164,116,0.12)", border: "none" }}
+              >
+                <Etape
+                  n={2}
+                  titre="Ce qui se répète"
+                  texte="Ce qui se rejoue d'une relation à l'autre, et pourquoi."
+                />
+              </button>
+              <button
+                type="button"
+                onClick={() => setParcoursOuvert(true)}
+                onMouseEnter={() => setEtapeSurvolee(true)}
+                onMouseLeave={() => setEtapeSurvolee(false)}
+                className="flex flex-1 min-w-0 flex-col items-start rounded-2xl p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
+                /* Notre VERT CLAIR (le même que les pastilles cadenas et
+                   l'emblème de la galerie). */
+                style={{ background: "rgba(51,164,116,0.12)", border: "none" }}
+              >
+                <Etape
+                  n={3}
+                  titre="Reprendre la main"
+                  texte="Des leviers concrets pour avancer, à ton rythme."
+                />
+              </button>
+            </div>
+            <p className="mt-2 text-sm italic text-gray-400">
+              12 modules personnalisés · exercices d&apos;introspection ·
+              micro-actions concrètes
+            </p>
+            {/* Le bouton ouvre la FENÊTRE du parcours par-dessus la page
+                (décision Luca), pas une navigation. Fenêtre PILOTÉE :
+                partagée avec les 3 étapes cliquables. */}
+            <div className="mt-auto pt-8">
+              <button
+                type="button"
+                onClick={() => setParcoursOuvert(true)}
+                className="inline-block rounded-full px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-105 cursor-pointer"
+                /* transform inline : prioritaire sur la classe → le bouton
+                   grossit aussi quand une ÉTAPE est survolée */
+                style={{ background: VERT, transform: etapeSurvolee ? "scale(1.05)" : undefined }}
+              >
+                Commencer mon parcours
+              </button>
+              <FenetreParcours ouvert={parcoursOuvert} onFermer={() => setParcoursOuvert(false)} />
+            </div>
+          </div>
+        </section>
+
+        {/* ————— Parcours à deux (aligné à gauche, validé) —————
+            order-1 : affiché en PREMIER (décision Luca). */}
+        <section className="order-1 w-full flex-shrink-0 snap-center">
+          <div className="relative flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-7 pb-[36px] text-left shadow-sm md:p-10 md:pb-[48px]">
+            {/* Anneau de progression du parcours (chaque parcours vaut 50 %
+                de la partie Relations ; branché sur la vraie progression
+                plus tard). */}
+            {/* Calé sur la marge du contenu : le haut de l'anneau tombe à la
+                hauteur de la ligne « Parcours … » (p-7 / md:p-10). */}
+            <div className="absolute top-7 right-7 md:top-10 md:right-10">
+              <CercleProgression pct={0} taille={44} />
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: VERT }}>
+              Parcours à deux
+            </p>
+            <h3 className="mt-3 text-2xl font-bold md:text-3xl" style={{ color: INK }}>
+              Avancez ensemble
+            </h3>
+            <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-gray-600">
+              Un parcours construit sur vos deux profils. Pas des conseils
+              tout faits : ce qui vous lie, ce qui vous heurte, et comment
+              mieux vous comprendre, à partir de qui vous êtes vraiment,
+              l&apos;un et l&apos;autre.
+            </p>
+            {/* Les DEUX encarts d'action directement dans le bloc (décision
+                Luca) : inviter son ou sa partenaire (bloc réseaux) OU
+                répondre pour lui/elle. Plus de bouton « Commencer à deux »,
+                les encarts sont les actions. */}
+            <div className="mt-8 flex flex-col gap-5 sm:flex-row">
+              {/* min-w-0 : indispensable pour que le bloc réseaux DÉFILE
+                  (sinon la carte s'élargit au contenu et déborde). */}
+              <div className="flex-1 min-w-0 rounded-2xl border border-gray-100 bg-white p-6 text-left shadow-sm transition-shadow hover:shadow-md">
+                <p className="text-base font-bold" style={{ color: INK }}>
+                  L&apos;inviter
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                  Le plus juste : ton ou ta partenaire passe le test, et votre
+                  parcours se construit sur vos deux vrais profils.
+                </p>
+                {/* Même système de partage que le rapport, mais LIEN et
+                    MESSAGE d'invitation dédiés. ⚠️ Lien placeholder /test en
+                    attendant le vrai lien d'invitation signé (table liens). */}
+                {partage && (
+                  <div className="mt-4">
+                    <PartageInline
+                      code={partage.code}
+                      nomVariante={partage.nomVariante}
+                      lien="/test"
+                      message="Hey, j'aimerais qu'on fasse notre parcours à deux. Passe le test de ton côté et rejoins-moi :"
+                      montrerQR={false}
+                    />
+                  </div>
+                )}
+              </div>
+              {/* La carte OUVRE la fenêtre « Décrire mon ou ma partenaire »
+                  (même patron que le parcours solo). flex-col items-start :
+                  un <button> centre son contenu verticalement par défaut. */}
+              <FenetreParcoursDuo triggerClassName="flex flex-1 min-w-0 flex-col items-start rounded-2xl border border-gray-100 bg-white p-6 text-left shadow-sm transition-all hover:shadow-md hover:scale-[1.01] cursor-pointer">
+                <p className="text-base font-bold" style={{ color: INK }}>
+                  Répondre pour lui ou elle
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                  Plus rapide : tu décris ton ou ta partenaire, et on devine
+                  son profil ensemble. Moins précis, mais immédiat.
+                </p>
+                {/* mt-8 : cale l'axe de la pastille sur l'axe des icônes
+                    réseaux de la carte voisine (rangée d'icônes centrée à
+                    ~51 px sous sa description, pastille de 40 px). */}
+                <span
+                  className="mt-8 inline-block rounded-full px-5 py-2.5 text-sm font-semibold text-white"
+                  style={{ background: VERT }}
+                >
+                  Décrire mon ou ma partenaire
+                </span>
+              </FenetreParcoursDuo>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Les 2 points indicateurs (cliquables) */}
+      <div className="mt-4 flex justify-center gap-2">
+        {[0, 1].map((i) => (
+          <button
+            key={i}
+            type="button"
+            aria-label={i === 0 ? "Voir le parcours à deux" : "Voir le parcours seul"}
+            onClick={() => aller(i)}
+            className="h-2 w-2 rounded-full transition-colors"
+            style={{ background: idx === i ? VERT : "rgba(0,0,0,0.12)" }}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
+/* Cercle de progression : déplacé dans CercleProgression.tsx (import
+   circulaire cassé). Importé PUIS ré-exporté (un simple `export ... from`
+   ne rend pas le nom utilisable ici même) pour les imports existants
+   (page.tsx, CarteCercleSurvol) et l'usage interne (blocs du carrousel). */
+export { CercleProgression };
+
+type InfosPartage = { code: string; nomVariante: string; slug: string; s: string; v: string };
+
 export default function ProfilOnglets({
   progression,
+  profil,
+  partage,
   children,
 }: {
   progression: Record<string, number>;
+  /* Le profil du client (ex. « INFP · le Poète ») pour personnaliser la
+     partie Relations ; null si aucun test passé. */
+  profil?: { sousTitre: string } | null;
+  /* Les infos de partage du profil (bloc réseaux de l'invitation du
+     parcours à deux) ; null si aucun test passé. */
+  partage?: InfosPartage | null;
   children: ReactNode;
 }) {
   const [actif, setActif] = useState<OngletId>("profils");
@@ -345,67 +588,13 @@ export default function ProfilOnglets({
             à explorer.
           </p>
         )}
-        {actif === "relations" && (
-          <p className="text-left text-sm leading-relaxed text-gray-500">
-            Comprends ce qui se joue entre toi et les autres. Seul, ou à deux.
-          </p>
-        )}
-
         {actif === "profils" && children}
         {actif === "relations" && (
-          /* Les deux services de la partie Relations (cf.
-             VISION_RELATIONS_PARCOURS.md) : parcours seul et parcours à
-             deux. Le client choisit, il est redirigé sur son parcours. */
-          <div className="mt-8 grid gap-5 sm:grid-cols-2">
-            <a
-              href="/relations/seul"
-              className="group flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 text-left shadow-sm transition-shadow hover:shadow-md"
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Parcours seul
-              </p>
-              <p className="mt-2 text-2xl font-bold" style={{ color: INK }}>
-                Comprends tes schémas
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                Un parcours personnalisé, construit sur ton profil : comprendre
-                comment tu fonctionnes en relation, ce qui se répète, et
-                comment le faire évoluer, étape par étape.
-              </p>
-              <div className="mt-auto pt-5">
-                <span
-                  className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white transition-transform group-hover:scale-105"
-                  style={{ background: VERT }}
-                >
-                  Commencer
-                </span>
-              </div>
-            </a>
-            <a
-              href="/relations/duo"
-              className="group flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 text-left shadow-sm transition-shadow hover:shadow-md"
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Parcours à deux
-              </p>
-              <p className="mt-2 text-2xl font-bold" style={{ color: INK }}>
-                Avancez ensemble
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                Invite ton ou ta partenaire, et suivez un parcours construit
-                sur vos deux profils : ce qui vous lie, ce qui vous heurte, et
-                comment mieux vous comprendre.
-              </p>
-              <div className="mt-auto pt-5">
-                <span
-                  className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white transition-transform group-hover:scale-105"
-                  style={{ background: VERT }}
-                >
-                  Commencer à deux
-                </span>
-              </div>
-            </a>
-          </div>
+          <>
+            <CarrouselRelations profil={profil} partage={partage} />
+            {/* Flèche « remonter » sous le carrousel, comme sur Mes profils */}
+            <FlecheRemonter />
+          </>
         )}
         {actif === "developpement" && (
           <EnConstruction

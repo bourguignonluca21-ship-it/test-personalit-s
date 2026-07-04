@@ -3,7 +3,6 @@ import Link from "next/link";
 import MeshGradient from "../components/MeshGradient";
 import ProfilOnglets, { CercleProgression } from "./ProfilOnglets";
 import PartageInline from "../components/PartageInline";
-import CarteCercleSurvol from "./CarteCercleSurvol";
 import FlecheRemonter from "./FlecheRemonter";
 import { createClient } from "../lib/supabase/server";
 import { getTypeByCode } from "../data/types";
@@ -136,10 +135,11 @@ export default async function ProfilPage() {
   // payé = 7, test pas fait = 0. Le rapport acheté est ce qui compte.
   const pointsPersonnalite = resultat ? (rapportAchete ? 50 : 7) : 0;
   const pointsDark = resultatDark ? 7 : 0; // passera à 50 quand son rapport sera acheté (même logique)
-  // Progression PAR TEST (cercles au survol des cartes) : sur 100, même
-  // barème ramené à l'échelle du test (payé = 100, fait sans achat = 14).
-  const pctPersonnalite = pointsPersonnalite * 2;
-  const pctDark = pointsDark * 2;
+  // Progression PAR TEST (anneaux des cartes + cercles au survol), barème
+  // validé par Luca : rapport complet acheté = 100 %, test fait sans
+  // rapport = 5 %, test pas fait = 0 %.
+  const pctPersonnalite = resultat ? (rapportAchete ? 100 : 5) : 0;
+  const pctDark = resultatDark ? 5 : 0; // passera à 100 quand son rapport sera acheté
   const progression = {
     profils: pointsPersonnalite + pointsDark,
     relations: 0, // partenaire + amis ajoutés (données à venir avec la partie Relations)
@@ -196,11 +196,24 @@ export default async function ProfilPage() {
           cartes « Étape » de la page test (positions vérifiées au navigateur). */}
       <section className="relative z-10 px-6 pb-20 -mt-[68px]">
         <div className="mx-auto max-w-3xl">
-          <ProfilOnglets progression={progression}>
+          <ProfilOnglets
+            progression={progression}
+            profil={carte ? { sousTitre: carte.sousTitre } : null}
+            partage={
+              carte && resultat
+                ? {
+                    code: carte.code,
+                    nomVariante: carte.nomVariante,
+                    slug: resultat.slug,
+                    s: resultat.scores_s,
+                    v: resultat.scores_v,
+                  }
+                : null
+            }
+          >
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             {/* Carte Personnalité (cercle de progression à sa GAUCHE au survol) */}
             {carte ? (
-              <CarteCercleSurvol pct={pctPersonnalite} cote="g">
               <Link
                 href={carte.href}
                 className="group flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 text-left shadow-sm transition-shadow hover:shadow-md"
@@ -243,39 +256,14 @@ export default async function ProfilPage() {
                   >
                     Voir mon profil
                   </span>
-                  {/* Statut du rapport : coche verte cerclée = payé,
-                      cadenas cerclé = pas encore débloqué. */}
-                  {rapportAchete ? (
-                    <span
-                      aria-label="Rapport complet débloqué"
-                      title="Rapport complet débloqué"
-                      className="flex h-8 w-8 items-center justify-center rounded-full"
-                      style={{ background: VERT }}
-                    >
-                      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#fff" strokeWidth="2.5">
-                        <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </span>
-                  ) : (
-                    <span
-                      aria-label="Rapport complet à débloquer"
-                      title="Rapport complet à débloquer"
-                      className="flex h-8 w-8 items-center justify-center rounded-full"
-                      style={{ background: "rgba(51,164,116,0.12)" }}
-                    >
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke={VERT} strokeWidth="2.2">
-                        <rect x="5" y="11" width="14" height="9" rx="2" />
-                        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-                      </svg>
-                    </span>
-                  )}
+                  {/* Progression du test (remplace l'ancienne coche/cadenas,
+                      demande Luca) : même barème que le cercle au survol
+                      (payé = 100 %, fait sans achat = 14 %). */}
+                  <CercleProgression pct={pctPersonnalite} taille={32} />
                 </div>
-              </Link>
-              </CarteCercleSurvol>
-            ) : (
+              </Link>            ) : (
               /* État vide qui vend (leçon 16P). Test pas fait → TOUTE la
                  carte est cliquable et mène au test. */
-              <CarteCercleSurvol pct={pctPersonnalite} cote="g">
               <Link
                 href="/test"
                 className="group flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 text-left shadow-sm transition-shadow hover:shadow-md"
@@ -297,15 +285,12 @@ export default async function ProfilPage() {
                     Faire le test
                   </span>
                 </div>
-              </Link>
-              </CarteCercleSurvol>
-            )}
+              </Link>            )}
 
             {/* Carte Dark personnalité (cercle de progression à sa DROITE au
                 survol) : statut « à faire » tant qu'aucun résultat `dark`
                 n'existe. Test pas fait → TOUTE la carte est cliquable et mène
                 au test ; test fait → carte allumée. */}
-            <CarteCercleSurvol pct={pctDark} cote="d">
             {resultatDark ? (
               <div className="flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 text-left shadow-sm">
                 <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
@@ -320,14 +305,16 @@ export default async function ProfilPage() {
                   apprends à l&apos;apprivoiser.
                 </p>
                 {/* mt-auto : la pastille est calée en bas, à la même hauteur
-                    que « Voir mon profil » (cartes de même hauteur). */}
-                <div className="mt-auto pt-5">
+                    que « Voir mon profil » (cartes de même hauteur).
+                    + anneau de progression du test (même barème). */}
+                <div className="mt-auto flex items-center justify-between pt-5">
                   <span
                     className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white"
                     style={{ background: VERT }}
                   >
                     Test effectué
                   </span>
+                  <CercleProgression pct={pctDark} taille={32} />
                 </div>
               </div>
             ) : (
@@ -346,17 +333,18 @@ export default async function ProfilPage() {
                   pourtant compte dans ce que nous sommes. Ose la mesurer,
                   apprends à l&apos;apprivoiser.
                 </p>
-                <div className="mt-auto pt-5">
+                {/* + anneau de progression du test (0 % tant que pas fait) */}
+                <div className="mt-auto flex items-center justify-between pt-5">
                   <span
                     className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white transition-transform group-hover:scale-105"
                     style={{ background: VERT }}
                   >
                     Faire le test
                   </span>
+                  <CercleProgression pct={pctDark} taille={32} />
                 </div>
               </Link>
             )}
-            </CarteCercleSurvol>
           </div>
 
           {/* Le bloc de partage (le même qu'en fin de rapport), sous les
