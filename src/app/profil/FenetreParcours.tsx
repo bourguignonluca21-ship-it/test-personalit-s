@@ -60,11 +60,39 @@ export default function FenetreParcours({
   const [faits, setFaits] = useState(0);
   const [moduleOuvert, setModuleOuvert] = useState(1);
 
+  /* SAUVEGARDE SUR LE COMPTE (table parcours_progression, via
+     /api/parcours/progression) : à l'ouverture de la fenêtre on relit les
+     modules faits ; chaque module terminé est enregistré. Non connecté ou
+     hors ligne → échec silencieux, la progression en mémoire continue. */
+  useEffect(() => {
+    if (!open) return;
+    fetch("/api/parcours/progression?parcours=relations-seul")
+      .then((r) => r.json())
+      .then((d) => {
+        if (typeof d?.faits === "number" && d.faits > 0) {
+          setFaits((f) => Math.max(f, d.faits));
+        }
+      })
+      .catch(() => {});
+  }, [open]);
+
+  /* Indice de défilement : flèche verte qui sautille en bas au MILIEU de la
+     fenêtre, tant qu'il reste du contenu en dessous. */
+  const [contenuEnBas, setContenuEnBas] = useState(false);
+  useEffect(() => setContenuEnBas(false), [vue, open]);
+
   /* « J'ai terminé ce module » : la coche verte se dessine par-dessus la
      fenêtre, la progression avance (le module devient fait, le suivant se
      débloque, la ligne verte descend), puis retour en douceur sur le chemin. */
   const [valide, setValide] = useState(false);
   function terminerModule() {
+    // Enregistre tout de suite (keepalive : survit à une fermeture rapide).
+    fetch("/api/parcours/progression", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ parcours: "relations-seul", module: moduleOuvert }),
+      keepalive: true,
+    }).catch(() => {});
     setValide(true);
     window.setTimeout(() => {
       setFaits((f) => Math.max(f, moduleOuvert)); // revisiter un module fait ne recule pas
@@ -94,7 +122,7 @@ export default function FenetreParcours({
           position: "fixed",
           inset: 0,
           zIndex: 60,
-          background: "rgba(20,22,21,0.16)",
+          background: "rgba(255,255,255,0.45)",
           backdropFilter: "blur(4px)",
           WebkitBackdropFilter: "blur(4px)",
           opacity: open ? 1 : 0,
@@ -165,7 +193,7 @@ export default function FenetreParcours({
           <div style={{ padding: "30px 34px 18px", maxWidth: 692 + 68, margin: "0 auto", width: "100%" }}>
             <div className="flex items-center justify-between gap-6">
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold tracking-tight" style={{ color: INK }}>
+                <h2 className="text-2xl md:text-3xl font-bold tracking-tight" style={{ color: VERT }}>
                   Comprends tes schémas
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-gray-500">
@@ -192,7 +220,7 @@ export default function FenetreParcours({
           >
             <h2
               className="text-2xl md:text-3xl font-bold tracking-tight leading-tight text-left"
-              style={{ color: INK }}
+              style={{ color: VERT }}
             >
               {infosModule(moduleOuvert)?.titre}
             </h2>
@@ -235,6 +263,10 @@ export default function FenetreParcours({
         <div
           key={vue}
           className="frp-noscroll"
+          onScroll={(e) => {
+            const el = e.currentTarget;
+            setContenuEnBas(el.scrollTop + el.clientHeight >= el.scrollHeight - 4);
+          }}
           style={{
             padding: "6px 34px 30px",
             flex: 1,
@@ -258,6 +290,42 @@ export default function FenetreParcours({
               <ContenuModule1 onTerminer={terminerModule} />
             )}
           </div>
+        </div>
+
+        {/* Flèche « il y a du contenu en bas » : pastille verte qui sautille,
+            en bas au MILIEU de la fenêtre, s'efface une fois le fond atteint. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none"
+          style={{
+            position: "absolute",
+            bottom: 10,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 3,
+            opacity: contenuEnBas ? 0 : 1,
+            transition: "opacity .3s ease",
+          }}
+        >
+          <span
+            className="grid h-7 w-7 animate-bounce place-items-center rounded-full shadow-sm"
+            /* Vert de marque translucide POSÉ SUR BLANC (piège connu) :
+               la pastille flotte au-dessus du contenu qui défile. */
+            style={{ background: `linear-gradient(${VERT}, ${VERT}), #fff` }}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="14"
+              height="14"
+              fill="none"
+              stroke="#fff"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </span>
         </div>
 
         {/* VALIDATION DU MODULE : voile blanc + coche verte qui se dessine,

@@ -178,7 +178,18 @@ function Rond({
 }
 
 // Flèche ronde de défilement (gauche / droite). Grisée et inactive quand on est au bout.
-function Fleche({ cote, actif, onClick }: { cote: "g" | "d"; actif: boolean; onClick: () => void }) {
+function Fleche({
+  cote,
+  actif,
+  onClick,
+  ecart = 0,
+}: {
+  cote: "g" | "d";
+  actif: boolean;
+  onClick: () => void;
+  /* Décalage vers l'extérieur (px) : rapproche la flèche du bord du bloc. */
+  ecart?: number;
+}) {
   const gauche = cote === "g";
   return (
     <button
@@ -190,8 +201,8 @@ function Fleche({ cote, actif, onClick }: { cote: "g" | "d"; actif: boolean; onC
         position: "absolute",
         top: 31,
         transform: "translateY(-50%)",
-        left: gauche ? 0 : undefined,
-        right: gauche ? undefined : 0,
+        left: gauche ? -ecart : undefined,
+        right: gauche ? undefined : -ecart,
         width: 34,
         height: 34,
         borderRadius: "50%",
@@ -223,6 +234,8 @@ export default function PartageInline({
   v: vProp,
   lien,
   message,
+  defileAuto = false,
+  ecartFleches = 0,
 }: {
   code: string;
   nomVariante: string;
@@ -236,6 +249,13 @@ export default function PartageInline({
      mais un lien et un message dédiés à la place du /p du profil. */
   lien?: string; // chemin relatif (ex. "/test"), l'origin est ajouté
   message?: string;
+  /* DÉFILEMENT AUTOMATIQUE (ex. bloc « L'inviter » du parcours à deux) :
+     boucle infinie lente de droite à gauche, en pause au survol ; les
+     flèches et le scroll manuel continuent de marcher. */
+  defileAuto?: boolean;
+  /* Écarte les flèches vers l'extérieur (px), vers le bord du bloc.
+     0 par défaut : les blocs alignés au pixel (fin de rapport) ne bougent pas. */
+  ecartFleches?: number;
 }) {
   const [url, setUrl] = useState("");
   const [urlPartage, setUrlPartage] = useState("");
@@ -244,6 +264,35 @@ export default function PartageInline({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [peutG, setPeutG] = useState(false);
   const [peutD, setPeutD] = useState(false);
+
+  /* Défilement automatique : avance lente au rAF, pause au survol / au
+     doigt (pauseRef). La rangée étant rendue DEUX fois, on recale le scroll
+     d'une période (largeur d'une copie + un écart) quand on la dépasse :
+     le contenu étant identique, le saut est invisible → boucle infinie. */
+  const pauseRef = useRef(false);
+  const posRef = useRef(0); // position en FLOTTANT (piège : scrollLeft est arrondi
+  // à l'entier par le navigateur → += 0.4 directement n'avancerait jamais)
+  useEffect(() => {
+    if (!defileAuto) return;
+    let id: number;
+    const GAP = 4; // l'écart flex entre les icônes (style gap: 4)
+    const pas = () => {
+      const el = scrollRef.current;
+      if (el) {
+        const periode = (el.scrollWidth + GAP) / 2;
+        /* Si l'utilisateur a bougé le scroll lui-même (flèches, molette,
+           doigt), on se recale sur sa position. */
+        if (Math.abs(el.scrollLeft - posRef.current) > 2) posRef.current = el.scrollLeft;
+        if (!pauseRef.current) posRef.current += 0.4;
+        if (posRef.current >= periode) posRef.current -= periode;
+        else if (posRef.current < 1) posRef.current += periode;
+        el.scrollLeft = posRef.current;
+      }
+      id = requestAnimationFrame(pas);
+    };
+    id = requestAnimationFrame(pas);
+    return () => cancelAnimationFrame(id);
+  }, [defileAuto]);
 
   // Met à jour l'état des flèches selon la position de scroll.
   function majFleches() {
@@ -328,26 +377,10 @@ export default function PartageInline({
 
   const l = url || undefined;
 
-  return (
-    <div style={{ position: "relative", marginTop: 4 }}>
-      <style>{`.pi-scroll::-webkit-scrollbar{display:none}`}</style>
-      <Fleche cote="g" actif={peutG} onClick={() => defiler(-1)} />
-      <Fleche cote="d" actif={peutD} onClick={() => defiler(1)} />
-      <div
-        ref={scrollRef}
-        onScroll={majFleches}
-        className="pi-scroll"
-        style={{
-          display: "flex",
-          gap: 4,
-          overflowX: "auto",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          padding: 0,
-          marginLeft: -9,
-          scrollBehavior: "smooth",
-        }}
-      >
+  /* La rangée d'icônes, extraite pour pouvoir la rendre DEUX fois quand le
+     défilement automatique est actif (boucle infinie). */
+  const ronds = (
+    <>
       <Rond label="WhatsApp" couleur="#25D366" encre="#fff" d={IC.whatsapp} href={l && `https://wa.me/?text=${enc(`${msg} ${url}`)}`} />
       <Rond label="Messenger" couleur={MSGR_GRADIENT} encre="#fff" d={IC.messenger} onClick={viaApp} />
       <Rond label="Facebook" couleur="#1877F2" encre="#fff" d={IC.facebook} href={l && `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`} />
@@ -372,6 +405,40 @@ export default function PartageInline({
       {montrerQR && (
         <Rond label="QR code" couleur="rgba(51,164,116,0.85)" node={QR_NODE} onClick={() => setQrOuvert(true)} />
       )}
+    </>
+  );
+
+  return (
+    <div style={{ position: "relative", marginTop: 4 }}>
+      <style>{`.pi-scroll::-webkit-scrollbar{display:none}`}</style>
+      <Fleche cote="g" actif={defileAuto || peutG} onClick={() => defiler(-1)} ecart={ecartFleches} />
+      <Fleche cote="d" actif={defileAuto || peutD} onClick={() => defiler(1)} ecart={ecartFleches} />
+      <div
+        ref={scrollRef}
+        onScroll={majFleches}
+        className="pi-scroll"
+        /* Pause du défilement auto quand la souris (ou le doigt) est dessus */
+        onMouseEnter={defileAuto ? () => (pauseRef.current = true) : undefined}
+        onMouseLeave={defileAuto ? () => (pauseRef.current = false) : undefined}
+        onTouchStart={defileAuto ? () => (pauseRef.current = true) : undefined}
+        onTouchEnd={defileAuto ? () => (pauseRef.current = false) : undefined}
+        style={{
+          display: "flex",
+          gap: 4,
+          overflowX: "auto",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          padding: 0,
+          marginLeft: -9,
+          /* ⚠️ scroll-behavior:smooth ferait ANIMER chaque petit pas du
+             défilement auto (mouvement erratique) → coupé dans ce mode.
+             Les flèches gardent leur douceur (scrollBy smooth explicite). */
+          scrollBehavior: defileAuto ? "auto" : "smooth",
+        }}
+      >
+        {ronds}
+        {/* Seconde copie : la boucle infinie se recale dessus, invisible */}
+        {defileAuto && ronds}
       </div>
 
       {qrOuvert && (
@@ -380,7 +447,9 @@ export default function PartageInline({
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(0,0,0,0.45)",
+            background: "rgba(255,255,255,0.45)",
+            backdropFilter: "blur(4px)",
+            WebkitBackdropFilter: "blur(4px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

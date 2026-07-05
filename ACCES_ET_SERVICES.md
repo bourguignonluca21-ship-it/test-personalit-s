@@ -2,7 +2,7 @@
 
 > Mémo des services branchés sur le site et de leurs accès.
 > RÈGLE : aucune clé secrète ici. Les vraies clés vivent dans `.env.local` (non commité).
-> Mis à jour : session du 3 juillet 2026 (connexion par code = parcours principal, table `resultats`, page profil). Voir `ETAT_DU_PROJET.md` §8 undecies.
+> Mis à jour : session du 5 juillet 2026 (table `liens` : invitation au parcours à deux, mail « Son portrait est prêt », pastille Nouveau). Voir `ETAT_DU_PROJET.md` §8 quaterdecies.
 
 ## Supabase (comptes utilisateurs + base de données)
 
@@ -41,6 +41,44 @@
   alter table public.resultats enable row level security;
   create policy "lire ses propres resultats"
     on public.resultats for select using (auth.uid() = user_id);
+  ```
+- Table `public.parcours_progression` (id, user_id → auth.users ON DELETE CASCADE, parcours, module, etat, reponse, created_at, UNIQUE (user_id, parcours, module)) : les modules terminés des parcours (Relations), rattachés au compte. RLS : chacun ne LIT que ses lignes, écriture via `service_role` uniquement (route `/api/parcours/progression`, appelée par la fenêtre du parcours solo). La colonne `reponse` est prête pour les réponses d'exercices (plus tard). SQL de création :
+  ```sql
+  create table if not exists public.parcours_progression (
+    id uuid primary key default gen_random_uuid(),
+    user_id uuid not null references auth.users(id) on delete cascade,
+    parcours text not null default 'relations-seul',
+    module int not null,
+    etat text not null default 'fait',
+    reponse text,
+    created_at timestamptz not null default now(),
+    unique (user_id, parcours, module)
+  );
+  alter table public.parcours_progression enable row level security;
+  create policy "lire sa progression"
+    on public.parcours_progression for select using (auth.uid() = user_id);
+  ```
+- Table `public.liens` (id, inviteur_user_id → auth.users ON DELETE CASCADE, type `partenaire`, statut, invite_user_id nullable, invite_prenom, test, slug, scores_s, scores_v, vu_le, created_at, **UNIQUE (inviteur_user_id, type)** = un seul ou une seule partenaire, l'upsert remplace) : le rattachement inviteur ↔ invité du parcours à deux. RLS : lecture = l'inviteur OU l'invité connecté ; écriture via `service_role` uniquement (page résultat de l'invité + route `vu`). SQL de création :
+  ```sql
+  create table if not exists public.liens (
+    id uuid primary key default gen_random_uuid(),
+    inviteur_user_id uuid not null references auth.users(id) on delete cascade,
+    type text not null default 'partenaire',
+    statut text not null default 'complete',
+    invite_user_id uuid references auth.users(id) on delete set null,
+    invite_prenom text,
+    test text not null default 'personnalite',
+    slug text,
+    scores_s text,
+    scores_v text,
+    created_at timestamptz not null default now(),
+    unique (inviteur_user_id, type)
+  );
+  alter table public.liens enable row level security;
+  create policy "lire ses liens"
+    on public.liens for select
+    using (auth.uid() = inviteur_user_id or auth.uid() = invite_user_id);
+  alter table public.liens add column if not exists vu_le timestamptz;
   ```
 - **Connexion par code email (OTP)** : Email OTP Length = **6**, Email OTP Expiration = **600 s** (Authentication → Providers → Email). C'est désormais LE parcours de connexion principal du site (`components/FenetreConnexion.tsx`, ouvert par la navbar) : email → code → (si compte neuf) configuration du profil dans la fenêtre → `/profil`.
 - **SMTP custom = Gmail (TEMPORAIRE, pour les tests)** : `smtp.gmail.com:465`, identifiants = adresse gmail + **mot de passe d'application** (16 caractères, généré sur https://myaccount.google.com/apppasswords). Obligatoire pour pouvoir personnaliser les templates d'email. À remplacer par Resend SMTP + domaine à la mise en ligne.
@@ -99,6 +137,7 @@
 - Fenêtre de partage : `src/app/components/FenetrePartage.tsx`
 - Route mail de sécurité (Resend) : `src/app/api/auth/notif-mot-de-passe/route.ts`
 - Route « mail de profil + newsletter » (Resend + Supabase) : `src/app/api/rapport/route.ts` (appelée en fin de test ; envoie le lien /p par mail et stocke l'adresse si newsletter cochée). Gabarit : `src/app/lib/emails/rapportPartage.ts`.
+- **Parcours à deux (invitation)** : jeton signé `src/app/lib/duo.ts` (HMAC, réutilise `ACCES_SIGNING_SECRET`, préfixe `duo:`) ; écriture/lecture du lien `src/app/lib/liens.ts` (table `liens`, service_role) ; marquage « vu » de la pastille Nouveau `src/app/api/duo/vu/route.ts` ; mail à l'inviteur `src/app/lib/emails/partenairePret.ts` (envoyé par la page résultat de l'invité, via Resend, bouton → `/profil?onglet=relations`). Aucune nouvelle clé env.
 - Visuels des mails (source partagée aperçu + envoi) : `src/app/lib/emails/motDePasseChange.ts`, `src/app/lib/emails/codeConnexion.ts`
 - Page nouveau mot de passe (filet de secours) : `src/app/nouveau-mot-de-passe/page.tsx`
 - Page d'aperçu des mails (**TEMPORAIRE, à supprimer avant la prod**) : `src/app/apercu-mail/page.tsx`

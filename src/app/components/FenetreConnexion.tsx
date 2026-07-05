@@ -189,7 +189,7 @@ export default function FenetreConnexion({
           position: "fixed",
           inset: 0,
           zIndex: 60,
-          background: "rgba(20,22,21,0.16)",
+          background: "rgba(255,255,255,0.45)",
           backdropFilter: "blur(4px)",
           WebkitBackdropFilter: "blur(4px)",
           opacity: open ? 1 : 0,

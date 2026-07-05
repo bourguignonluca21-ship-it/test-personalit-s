@@ -64,8 +64,8 @@ export default function ContenuModule1({
 
       {/* 3. La micro-action */}
       <div className="mt-6 rounded-2xl border border-gray-100 bg-white p-7 shadow-sm">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-          Ta micro-action, avant le prochain module
+        <p className="text-sm font-semibold" style={{ color: VERT }}>
+          Si tu le souhaites, avant le prochain module :
         </p>
         <p className="mt-2 text-sm leading-relaxed text-gray-600">
           Cette semaine, repère UN moment où un échange reste en surface alors

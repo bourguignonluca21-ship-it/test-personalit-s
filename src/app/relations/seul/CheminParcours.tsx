@@ -138,6 +138,7 @@ const ACTES: {
 /* Pastille d'état d'un module sur le chemin. */
 function IconeEtat({ etat }: { etat: EtatModule }) {
   if (etat === "fait") {
+    /* Validé : COCHE de validation dans un cercle vert. */
     return (
       <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full" style={{ background: VERT }}>
         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#fff" strokeWidth="2.5">
@@ -147,13 +148,12 @@ function IconeEtat({ etat }: { etat: EtatModule }) {
     );
   }
   if (etat === "en-cours") {
+    /* En cours : cercle VIDE (plus de point au milieu, demande Luca). */
     return (
       <span
         className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-white"
         style={{ border: `2px solid ${VERT}` }}
-      >
-        <span className="h-2 w-2 rounded-full" style={{ background: VERT }} />
-      </span>
+      />
     );
   }
   /* Verrouillé : cadenas VERT sur pastille vert pâle (comme la galerie
@@ -249,8 +249,13 @@ export default function CheminParcours({
             <div className="flex w-9 flex-col items-center">
               <Troncon vert={vertHaut} haut={premier ? 0 : item.type === "acte" ? 40 : 14} />
               {/* Plus de rond numéroté pour les actes (le numéro vit dans le
-                  titre) ; seuls les modules gardent leur pastille. */}
-              {item.type === "module" && <IconeEtat etat={item.etat} />}
+                  titre), et plus AUCUNE pastille dans la colonne : les états
+                  vivent DANS les cartes (fait = cercle-flèche à droite,
+                  en cours et cadenas = bas droite). L'espaceur garde le
+                  rythme de la colonne. */}
+              {item.type === "module" && (
+                <span className="h-6 w-6 flex-shrink-0" aria-hidden="true" />
+              )}
               {!dernier && <Troncon vert={vertBas} />}
             </div>
 
@@ -271,7 +276,7 @@ export default function CheminParcours({
               <div className="flex-1 pb-6 pt-1">
                 {(() => {
                   const classes =
-                    "block w-full text-left rounded-2xl border-2 bg-white p-6 shadow-sm transition-all hover:shadow-md hover:scale-[1.01] cursor-pointer";
+                    "relative block w-full text-left rounded-2xl border-2 bg-white p-6 shadow-sm transition-all hover:shadow-md hover:scale-[1.01] cursor-pointer";
                   const interieur = (
                     <>
                       <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: VERT }}>
@@ -290,6 +295,11 @@ export default function CheminParcours({
                         style={{ background: VERT }}
                       >
                         Continuer
+                      </span>
+                      {/* Pastille « en cours » en bas à droite de la carte
+                          (demande Luca, comme le cadenas des verrouillés) */}
+                      <span className="absolute bottom-4 right-4">
+                        <IconeEtat etat="en-cours" />
                       </span>
                     </>
                   );
@@ -320,9 +330,9 @@ export default function CheminParcours({
                       <span className="text-sm font-semibold" style={{ color: INK }}>
                         {item.m.n}. {item.m.titre}
                       </span>
-                      <span className="text-xs font-semibold" style={{ color: VERT }}>
-                        {item.m.duree}
-                      </span>
+                      {/* Cercle-flèche de validation à droite (remplace la
+                          durée, demande Luca) */}
+                      <IconeEtat etat="fait" />
                     </>
                   );
                   return onOuvrirModule ? (
@@ -340,7 +350,7 @@ export default function CheminParcours({
               /* Module verrouillé : une VRAIE carte qui vend (titre plein
                  + ligne teaser en italique), pas une ligne morte. */
               <div className="flex-1 pb-4">
-                <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+                <div className="relative rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
                   <div className="flex items-center justify-between gap-4">
                     <span className="text-sm font-semibold" style={{ color: INK }}>
                       {item.m.n}. {item.m.titre}
@@ -350,10 +360,15 @@ export default function CheminParcours({
                     </span>
                   </div>
                   {item.m.teaser && (
-                    <p className="mt-1.5 text-sm italic leading-relaxed text-gray-500">
+                    /* pr-10 : réserve le coin bas droit pour le cadenas */
+                    <p className="mt-1.5 pr-10 text-sm italic leading-relaxed text-gray-500">
                       {item.m.teaser}
                     </p>
                   )}
+                  {/* Cadenas en bas à droite de la carte (demande Luca) */}
+                  <span className="absolute bottom-4 right-4">
+                    <IconeEtat etat="verrouille" />
+                  </span>
                 </div>
               </div>
             )}

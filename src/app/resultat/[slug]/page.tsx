@@ -10,10 +10,14 @@ import ProgressionMenu from "../../components/ProgressionMenu";
 import FenetrePaiement from "../../components/FenetrePaiement";
 import PartageInline from "../../components/PartageInline";
 import ScrollHaut from "../../components/ScrollHaut";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { createClient } from "../../lib/supabase/server";
 import { enregistrerResultat } from "../../lib/resultats";
 import { COOKIE_ACCES, decoderAcces } from "../../lib/acces";
+import { decoderInvitation } from "../../lib/duo";
+import { enregistrerLien, infosInviteur } from "../../lib/liens";
+import { htmlPartenairePret, sujetPartenairePret } from "../../lib/emails/partenairePret";
+import MessageInvite from "../../components/MessageInvite";
 import {
   getProfil,
   PROFIL_SECTIONS,
@@ -639,10 +643,10 @@ export default async function ResultatPage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ s?: string; v?: string; paid?: string }>;
+  searchParams: Promise<{ s?: string; v?: string; paid?: string; invite?: string }>;
 }) {
   const { slug } = await params;
-  const { s, v } = await searchParams;
+  const { s, v, invite } = await searchParams;
   const { code, variante } = parseSlug(slug);
   const profil = getProfil(code, variante);
 
@@ -682,6 +686,64 @@ export default async function ResultatPage({
   ) {
     await enregistrerResultat(user.id, slug, s, v);
   }
+
+  // PARCOURS À DEUX, côté invité : si l'URL porte un jeton d'invitation
+  // VALIDE (signé, lib/duo.ts) et des scores complets, on enregistre le
+  // résultat de l'invité sur le compte de l'INVITEUR (table `liens`,
+  // upsert = un seul ou une seule partenaire) et on affiche le message
+  // « ton résumé est disponible… ». Jeton bidon = page normale.
+  const inviteurId = decoderInvitation(invite);
+  let prenomInviteur: string | null = null;
+  if (
+    inviteurId &&
+    inviteurId !== user?.id && // ouvrir son propre lien ne fait rien
+    profil &&
+    s &&
+    v &&
+    s.split("-").length === 4 &&
+    v.split("-").length === 3
+  ) {
+    const nouveau = await enregistrerLien({
+      inviteurId,
+      slug,
+      scoresS: s,
+      scoresV: v,
+      inviteUserId: user?.id ?? null,
+      invitePrenom: (user?.user_metadata?.prenom as string | undefined) ?? null,
+    });
+    const inviteur = await infosInviteur(inviteurId);
+    prenomInviteur = inviteur.prenom ?? "Ton ou ta partenaire";
+    // Mail « son portrait est prêt » à l'INVITEUR, UNIQUEMENT s'il y a du
+    // nouveau (une re-visite de la page par l'invité ne renvoie rien).
+    // ⚠️ Resend mode test : ne délivre qu'à l'adresse du compte Resend.
+    if (nouveau && inviteur.email && process.env.RESEND_API_KEY) {
+      try {
+        const h = await headers();
+        const origine = `${h.get("x-forwarded-proto") ?? "http"}://${h.get("host") ?? "localhost:3000"}`;
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "Ton profil <onboarding@resend.dev>",
+            to: [inviteur.email],
+            subject: sujetPartenairePret(),
+            html: htmlPartenairePret({
+              nomType: profil.nomType,
+              code: profil.code,
+              nomVariante: profil.nomVariante,
+              // Directement sur la partie Relations du profil (pas de galère)
+              url: `${origine}/profil?onglet=relations`,
+            }),
+          }),
+        });
+      } catch {
+        // le mail est best-effort, la page de l'invité s'affiche quoi qu'il arrive
+      }
+    }
+  }
   // Lien propre qui conserve les scores s/v (le déblocage se fait par la fenêtre de paiement,
   // plus par un ?paid=1 dans l'URL).
   const unlockHref = `?${new URLSearchParams({ ...(s ? { s } : {}), ...(v ? { v } : {}) }).toString()}`;
@@ -709,6 +771,8 @@ export default async function ResultatPage({
   return (
     <div className="bg-white">
       <ScrollHaut />
+      {/* Message à l'INVITÉ du parcours à deux (visuel provisoire) */}
+      {prenomInviteur && <MessageInvite prenom={prenomInviteur} />}
       {/* HÉROS — colonne centrée au milieu de l'écran (le menu flotte à gauche, hors de ce bloc) */}
       <div className="max-w-3xl mx-auto px-4 md:px-0 mt-4">
         <section className="relative isolate overflow-hidden rounded-3xl px-6 md:px-8 pt-16 pb-14" style={{ background: GREEN }}>

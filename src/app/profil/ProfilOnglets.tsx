@@ -22,13 +22,18 @@ const INK = "rgba(0,0,0,0.75)";
 
 const ONGLETS = [
   { id: "profils", titre: "Mes profils", sousLigne: "Tes résultats de tests" },
-  { id: "relations", titre: "Relations", sousLigne: "Comprends ce qui se joue entre toi et les autres. Seul, ou à deux." },
+  { id: "relations", titre: "Mes relations", sousLigne: "Comprends ce qui se joue entre toi et les autres. Seul, ou à deux." },
   { id: "developpement", titre: "Développement", sousLigne: "Ton parcours sur mesure" },
   { id: "ia", titre: "L'IA", sousLigne: "Discute avec ton profil" },
   { id: "parametres", titre: "Paramètres", sousLigne: "Ton compte, tes choix" },
 ] as const;
 
 type OngletId = (typeof ONGLETS)[number]["id"];
+
+/* Cache (durée de vie de la page) : le parcours seul est-il entamé ?
+   Rempli au premier passage sur l'onglet Relations, réutilisé ensuite.
+   Un module validé dans la session met aussi ce cache à jour. */
+let cacheParcoursEntame: boolean | null = null;
 
 /* État d'attente d'une partie pas encore construite. */
 function EnConstruction({ titre, texte }: { titre: string; texte: string }) {
@@ -106,9 +111,20 @@ function Fleche({
 function CarrouselRelations({
   profil,
   partage,
+  descriptionsVariantes,
+  lienInvitation,
+  pctDuo = 0,
 }: {
   profil?: { sousTitre: string } | null;
   partage?: { code: string; nomVariante: string; slug: string; s: string; v: string } | null;
+  /* Les petites descriptions des 48 variantes (bloc d'aide de la fenêtre duo). */
+  descriptionsVariantes?: Record<string, string>;
+  /* Le lien d'invitation SIGNÉ au parcours à deux (construit côté serveur,
+     /test?invite={jeton}) ; repli /test si absent. */
+  lienInvitation?: string | null;
+  /* Progression du duo (anneau « Avancez ensemble ») : somme partenaire
+     trouvé (2) + parcours non payé (5) / payé (98). */
+  pctDuo?: number;
 }) {
   void profil; // plus affiché (ligne « Construit sur ton profil » retirée), la tuyauterie reste pour plus tard
   const railRef = useRef<HTMLDivElement>(null);
@@ -116,6 +132,24 @@ function CarrouselRelations({
   /* UNE seule fenêtre de parcours, ouverte par le bouton OU par les 3 étapes
      (même progression partout). */
   const [parcoursOuvert, setParcoursOuvert] = useState(false);
+  /* Au moins un module du parcours seul déjà validé sur le compte ?
+     → le bouton devient « Continuer mon parcours ». Réponse mise en CACHE
+     (module) : on ne re-interroge pas l'API à chaque retour sur l'onglet
+     Relations (c'était une source de latence). */
+  const [parcoursEntame, setParcoursEntame] = useState(cacheParcoursEntame === true);
+  useEffect(() => {
+    if (cacheParcoursEntame !== null) {
+      setParcoursEntame(cacheParcoursEntame);
+      return;
+    }
+    fetch("/api/parcours/progression?parcours=relations-seul")
+      .then((r) => r.json())
+      .then((d) => {
+        cacheParcoursEntame = typeof d?.faits === "number" && d.faits > 0;
+        setParcoursEntame(cacheParcoursEntame);
+      })
+      .catch(() => {});
+  }, []);
   /* Survoler une étape fait AUSSI grossir « Commencer mon parcours »
      (comme si on le survolait). */
   const [etapeSurvolee, setEtapeSurvolee] = useState(false);
@@ -156,7 +190,7 @@ function CarrouselRelations({
     void n; // numéro plus affiché (demande Luca), gardé dans la signature
     return (
       <div className={centre ? "flex-1 min-w-0 text-center" : "flex-1 min-w-0"}>
-        <p className="text-sm font-bold" style={{ color: surVert ? "#fff" : INK }}>
+        <p className="text-sm font-bold" style={{ color: surVert ? "#fff" : VERT }}>
           {titre}
         </p>
         <p
@@ -193,12 +227,12 @@ function CarrouselRelations({
             <div className="absolute top-7 right-7 md:top-10 md:right-10">
               <CercleProgression pct={0} taille={44} />
             </div>
-            <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: VERT }}>
+            <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: INK }}>
               Parcours seul
             </p>
             {/* Contenu aligné EN HAUT comme le bloc Parcours à deux
                 (demande Luca, fini le centrage vertical). */}
-            <h3 className="mt-3 text-2xl font-bold md:text-3xl" style={{ color: INK }}>
+            <h3 className="mt-3 text-2xl font-bold md:text-3xl" style={{ color: VERT }}>
               Comprends tes schémas
             </h3>
             <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-gray-600">
@@ -215,10 +249,7 @@ function CarrouselRelations({
                 onClick={() => setParcoursOuvert(true)}
                 onMouseEnter={() => setEtapeSurvolee(true)}
                 onMouseLeave={() => setEtapeSurvolee(false)}
-                className="flex flex-1 min-w-0 flex-col items-start rounded-2xl p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
-                /* Notre VERT CLAIR (le même que les pastilles cadenas et
-                   l'emblème de la galerie). */
-                style={{ background: "rgba(51,164,116,0.12)", border: "none" }}
+                className="flex flex-1 min-w-0 flex-col items-start rounded-2xl border border-gray-100 bg-white p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
               >
                 <Etape
                   n={1}
@@ -231,10 +262,7 @@ function CarrouselRelations({
                 onClick={() => setParcoursOuvert(true)}
                 onMouseEnter={() => setEtapeSurvolee(true)}
                 onMouseLeave={() => setEtapeSurvolee(false)}
-                className="flex flex-1 min-w-0 flex-col items-start rounded-2xl p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
-                /* Notre VERT CLAIR (le même que les pastilles cadenas et
-                   l'emblème de la galerie). */
-                style={{ background: "rgba(51,164,116,0.12)", border: "none" }}
+                className="flex flex-1 min-w-0 flex-col items-start rounded-2xl border border-gray-100 bg-white p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
               >
                 <Etape
                   n={2}
@@ -247,10 +275,7 @@ function CarrouselRelations({
                 onClick={() => setParcoursOuvert(true)}
                 onMouseEnter={() => setEtapeSurvolee(true)}
                 onMouseLeave={() => setEtapeSurvolee(false)}
-                className="flex flex-1 min-w-0 flex-col items-start rounded-2xl p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
-                /* Notre VERT CLAIR (le même que les pastilles cadenas et
-                   l'emblème de la galerie). */
-                style={{ background: "rgba(51,164,116,0.12)", border: "none" }}
+                className="flex flex-1 min-w-0 flex-col items-start rounded-2xl border border-gray-100 bg-white p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
               >
                 <Etape
                   n={3}
@@ -275,7 +300,7 @@ function CarrouselRelations({
                    grossit aussi quand une ÉTAPE est survolée */
                 style={{ background: VERT, transform: etapeSurvolee ? "scale(1.05)" : undefined }}
               >
-                Commencer mon parcours
+                {parcoursEntame ? "Continuer mon parcours" : "Commencer mon parcours"}
               </button>
               <FenetreParcours ouvert={parcoursOuvert} onFermer={() => setParcoursOuvert(false)} />
             </div>
@@ -286,18 +311,17 @@ function CarrouselRelations({
             order-1 : affiché en PREMIER (décision Luca). */}
         <section className="order-1 w-full flex-shrink-0 snap-center">
           <div className="relative flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-7 pb-[36px] text-left shadow-sm md:p-10 md:pb-[48px]">
-            {/* Anneau de progression du parcours (chaque parcours vaut 50 %
-                de la partie Relations ; branché sur la vraie progression
-                plus tard). */}
+            {/* Anneau de progression du DUO : partenaire trouvé (2) +
+                parcours non payé (5) / payé (98) = 100 quand tout est fait. */}
             {/* Calé sur la marge du contenu : le haut de l'anneau tombe à la
                 hauteur de la ligne « Parcours … » (p-7 / md:p-10). */}
             <div className="absolute top-7 right-7 md:top-10 md:right-10">
-              <CercleProgression pct={0} taille={44} />
+              <CercleProgression pct={pctDuo} taille={44} />
             </div>
-            <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: VERT }}>
+            <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: INK }}>
               Parcours à deux
             </p>
-            <h3 className="mt-3 text-2xl font-bold md:text-3xl" style={{ color: INK }}>
+            <h3 className="mt-3 text-2xl font-bold md:text-3xl" style={{ color: VERT }}>
               Avancez ensemble
             </h3>
             <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-gray-600">
@@ -314,7 +338,7 @@ function CarrouselRelations({
               {/* min-w-0 : indispensable pour que le bloc réseaux DÉFILE
                   (sinon la carte s'élargit au contenu et déborde). */}
               <div className="flex-1 min-w-0 rounded-2xl border border-gray-100 bg-white p-6 text-left shadow-sm transition-shadow hover:shadow-md">
-                <p className="text-base font-bold" style={{ color: INK }}>
+                <p className="text-base font-bold" style={{ color: VERT }}>
                   L&apos;inviter
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-gray-500">
@@ -329,9 +353,11 @@ function CarrouselRelations({
                     <PartageInline
                       code={partage.code}
                       nomVariante={partage.nomVariante}
-                      lien="/test"
+                      lien={lienInvitation ?? "/test"}
                       message="Hey, j'aimerais qu'on fasse notre parcours à deux. Passe le test de ton côté et rejoins-moi :"
                       montrerQR={false}
+                      defileAuto
+                      ecartFleches={14}
                     />
                   </div>
                 )}
@@ -339,8 +365,11 @@ function CarrouselRelations({
               {/* La carte OUVRE la fenêtre « Décrire mon ou ma partenaire »
                   (même patron que le parcours solo). flex-col items-start :
                   un <button> centre son contenu verticalement par défaut. */}
-              <FenetreParcoursDuo triggerClassName="flex flex-1 min-w-0 flex-col items-start rounded-2xl border border-gray-100 bg-white p-6 text-left shadow-sm transition-all hover:shadow-md hover:scale-[1.01] cursor-pointer">
-                <p className="text-base font-bold" style={{ color: INK }}>
+              <FenetreParcoursDuo
+                descriptions={descriptionsVariantes}
+                triggerClassName="flex flex-1 min-w-0 flex-col items-start rounded-2xl border border-gray-100 bg-white p-6 text-left shadow-sm transition-all hover:shadow-md hover:scale-[1.01] cursor-pointer"
+              >
+                <p className="text-base font-bold" style={{ color: VERT }}>
                   Répondre pour lui ou elle
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-gray-500">
@@ -387,10 +416,196 @@ export { CercleProgression };
 
 type InfosPartage = { code: string; nomVariante: string; slug: string; s: string; v: string };
 
+/* Le ou la partenaire décrit(e) via le lien d'invitation (table `liens`). */
+type InfosPartenaire = {
+  prenom: string | null;
+  nomType: string;
+  sousTitre: string;
+  date: string;
+  href: string;
+  /* true tant que l'inviteur n'a pas survolé la pastille « Nouveau ». */
+  nouveau?: boolean;
+  /* Petite description du profil (les 48 descriptions courtes). */
+  description?: string | null;
+};
+
+/* Barème de la progression du DUO (validé par Luca) : chaque bloc a SA
+   valeur : partenaire trouvé = 2 %, parcours à deux non payé = 5 %
+   (98 % une fois payé). Les deux s'ADDITIONNENT dans l'anneau de la
+   section « Avancez ensemble » (2 + 98 = 100 quand tout est fait), et ce
+   total pèse 70 % de la progression de la partie « Mes relations »
+   (calcul dans profil/page.tsx). */
+const PCT_PARTENAIRE_TROUVE = 2;
+const PCT_PARCOURS_DUO_NON_PAYE = 5; // passera à 98 une fois payé
+
+/* ————— ESPACE « PARTENAIRE » (sous le carrousel Relations) —————
+   VISUEL PROVISOIRE (à reprendre avec Luca) : le résultat du ou de la
+   partenaire arrivé par le lien d'invitation. Pastille « Nouveau » en bas
+   à droite de la carte : grossit/dégrossit sur place, s'efface au survol
+   (et le serveur retient le « vu » via /api/duo/vu). */
+function EspacePartenaire({
+  partenaire,
+  monCode,
+}: {
+  partenaire: InfosPartenaire;
+  /* Le code du CLIENT (ex. « INFP ») : l'identité du duo sous le texte du
+     volet parcours (son code + celui du ou de la partenaire). */
+  monCode?: string | null;
+}) {
+  const codePartenaire = partenaire.sousTitre.split(" · ")[0];
+  const [nouveau, setNouveau] = useState(!!partenaire.nouveau);
+  const [effacement, setEffacement] = useState(false);
+  function marquerVu() {
+    if (effacement) return;
+    setEffacement(true); // fondu de sortie…
+    window.setTimeout(() => setNouveau(false), 300); // …puis démontage
+    // Le serveur retient le vu (best-effort, la pastille part quoi qu'il arrive)
+    fetch("/api/duo/vu", { method: "POST", keepalive: true }).catch(() => {});
+  }
+  return (
+    <div className="mt-8">
+      {/* Pulsation de la pastille : keyframes DANS le composant (pas
+          globals.css, file-watch OneDrive peu fiable dessus). */}
+      <style>{`@keyframes part-nouveau{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}`}</style>
+      {/* 2 volets côte à côte : la carte du ou de la partenaire PLUS LARGE
+          (3/5) que le volet parcours (2/5), demande Luca. Anneau de
+          progression du duo en haut à droite de CHACUN des 2 blocs. */}
+      <div className="mt-3 grid gap-5 sm:grid-cols-5">
+      <div className="relative flex h-full flex-col items-center rounded-2xl border border-gray-100 bg-white p-6 text-center shadow-sm sm:col-span-3">
+        <div className="absolute right-4 top-4">
+          <CercleProgression pct={PCT_PARTENAIRE_TROUVE} taille={32} />
+        </div>
+        {nouveau && (
+          <span
+            onMouseEnter={marquerVu}
+            className="absolute bottom-4 right-4 rounded-full px-3 py-1 text-xs font-semibold text-white"
+            style={{
+              background: VERT,
+              animation: "part-nouveau 1.6s ease-in-out infinite",
+              opacity: effacement ? 0 : 1,
+              transition: "opacity .3s ease",
+            }}
+          >
+            Nouveau
+          </span>
+        )}
+        {/* En-tête à HAUTEUR FIXE (96 px, comme celui du volet parcours) :
+            les textes descriptifs des 2 blocs démarrent sur la même ligne. */}
+        <div className="flex h-[96px] w-full flex-col items-center">
+        <p className="text-xs font-semibold italic tracking-wide text-gray-400">
+          Ton ou ta partenaire
+        </p>
+        {/* Le NOM de la personne en titre (son compte est le partenaire de
+            ce compte) ; repli sur le nom du type (« Avocat ») tant que le
+            ou la partenaire n'a pas de compte avec un prénom. À sa droite,
+            l'emblème carré du code (patron de la carte Personnalité). */}
+        <div className="mt-2 flex items-center justify-center gap-4">
+          <div>
+            <p className="text-2xl font-bold" style={{ color: INK }}>
+              {partenaire.prenom ?? partenaire.nomType}
+            </p>
+            <p className="mt-1 text-sm font-semibold" style={{ color: VERT }}>
+              {partenaire.sousTitre}
+            </p>
+          </div>
+          <div
+            className="flex h-[64px] w-[64px] flex-shrink-0 items-center justify-center rounded-2xl"
+            style={{ background: "rgba(51,164,116,0.10)" }}
+          >
+            <span className="text-sm font-bold tracking-wide" style={{ color: VERT }}>
+              {codePartenaire}
+            </span>
+          </div>
+        </div>
+        </div>
+        {/* Petite description du profil du ou de la partenaire */}
+        {partenaire.description && (
+          <p className="mt-3 text-sm leading-relaxed text-gray-500">
+            {partenaire.description}
+          </p>
+        )}
+        <p className="mt-3 text-xs text-gray-400">Profil décrit le {partenaire.date}</p>
+        <div className="mt-auto flex justify-center pt-5">
+          <a
+            href={partenaire.href}
+            className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105"
+            style={{ background: VERT }}
+          >
+            Voir son profil
+          </a>
+        </div>
+      </div>
+      {/* Second volet : « Mon parcours à deux » (le bouton n'est pas encore
+          branché, comme la flèche « suite » de la fenêtre duo : l'écran
+          d'après reste à construire). */}
+      <div className="relative flex h-full flex-col items-center rounded-2xl border border-gray-100 bg-white p-6 text-center shadow-sm sm:col-span-2">
+        <div className="absolute right-4 top-4">
+          <CercleProgression pct={PCT_PARCOURS_DUO_NON_PAYE} taille={32} />
+        </div>
+        {/* En-tête à HAUTEUR FIXE (96 px, comme celui de la carte
+            partenaire) : les textes des 2 blocs démarrent sur la même
+            ligne. */}
+        <div className="flex h-[96px] w-full flex-col items-center">
+        <p className="text-base font-bold" style={{ color: VERT }}>
+          Mon parcours à deux
+        </p>
+        {/* L'identité du duo EN HAUT : les 2 codes côte à côte (emblèmes
+            carrés vert pâle), le texte descend dessous, au niveau du texte
+            de la carte partenaire. */}
+        <div className="mt-4 flex items-center justify-center gap-3">
+          {monCode && (
+            <div
+              className="flex h-[56px] w-[56px] items-center justify-center rounded-2xl"
+              style={{ background: "rgba(51,164,116,0.10)" }}
+            >
+              <span className="text-sm font-bold tracking-wide" style={{ color: VERT }}>
+                {monCode}
+              </span>
+            </div>
+          )}
+          {/* « + » vert entre les deux profils du duo */}
+          {monCode && (
+            <span className="text-xl font-bold leading-none" style={{ color: VERT }} aria-hidden="true">
+              +
+            </span>
+          )}
+          <div
+            className="flex h-[56px] w-[56px] items-center justify-center rounded-2xl"
+            style={{ background: "rgba(51,164,116,0.10)" }}
+          >
+            <span className="text-sm font-bold tracking-wide" style={{ color: VERT }}>
+              {codePartenaire}
+            </span>
+          </div>
+        </div>
+        </div>
+        <p className="mt-3 text-sm leading-relaxed text-gray-500">
+          Votre parcours est là, construit sur vos deux profils. Tu y reviens
+          quand tu veux.
+        </p>
+        <div className="mt-auto flex justify-center pt-5">
+          <button
+            type="button"
+            className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105 cursor-pointer"
+            style={{ background: VERT }}
+          >
+            Notre parcours
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProfilOnglets({
   progression,
   profil,
   partage,
+  descriptionsVariantes,
+  lienInvitation,
+  partenaire,
+  ongletInitial,
   children,
 }: {
   progression: Record<string, number>;
@@ -400,9 +615,27 @@ export default function ProfilOnglets({
   /* Les infos de partage du profil (bloc réseaux de l'invitation du
      parcours à deux) ; null si aucun test passé. */
   partage?: InfosPartage | null;
+  /* Les petites descriptions des 48 variantes (clé `CODE-Vx`), construites
+     côté serveur (page.tsx) ; pour le bloc d'aide au survol du menu des 48. */
+  descriptionsVariantes?: Record<string, string>;
+  /* Le lien d'invitation SIGNÉ au parcours à deux (côté serveur). */
+  lienInvitation?: string | null;
+  /* Le ou la partenaire décrit(e) (table `liens`), pour l'espace Partenaire. */
+  partenaire?: InfosPartenaire | null;
+  /* La partie active mémorisée (cookie lu par le serveur) : le HTML arrive
+     déjà sur la bonne partie après un refresh. */
+  ongletInitial?: string;
   children: ReactNode;
 }) {
-  const [actif, setActif] = useState<OngletId>("profils");
+  /* La partie active SURVIT au rechargement via un COOKIE lu PAR LE SERVEUR
+     (prop ongletInitial) : le HTML arrive déjà sur la bonne partie, zéro
+     flash. (Les tentatives client, sessionStorage + useLayoutEffect,
+     flashaient : le HTML serveur est peint avant l'hydratation.) */
+  const [actif, setActif] = useState<OngletId>(
+    ongletInitial && ONGLETS.some((o) => o.id === ongletInitial)
+      ? (ongletInitial as OngletId)
+      : "profils",
+  );
   const scrollRef = useRef<HTMLDivElement>(null);
   const [peutG, setPeutG] = useState(false);
   const [peutD, setPeutD] = useState(false);
@@ -458,7 +691,7 @@ export default function ProfilOnglets({
   // Quand « 1. Mes profils » (le haut du contenu) franchit les 70 px sous la
   // navbar (~57 px), le fondu se déclenche et se joue en entier tout seul
   // (transition CSS) ; en remontant au-dessus du seuil, ils réapparaissent.
-  const POINT_DISPARITION = 57 + 170;
+  const POINT_DISPARITION = 130; // déclenchement à 130 px du haut de l'écran (validé par Luca)
   const [blocsVisibles, setBlocsVisibles] = useState(true);
   // Et symétriquement : le CONTENU disparaît en douceur quand, en remontant,
   // les cercles de progression des parties (bas du carrousel) arrivent à
@@ -523,6 +756,8 @@ export default function ProfilOnglets({
                 type="button"
                 onClick={() => {
                   setActif(o.id);
+                  /* Cookie lisible par le SERVEUR au prochain refresh */
+                  document.cookie = `profil_onglet=${o.id}; path=/profil; max-age=31536000; samesite=lax`;
                   defilerVersContenu();
                 }}
                 className={`rounded-3xl p-6 w-[242.7px] min-h-[184px] text-left transition-all cursor-pointer border ${
@@ -577,21 +812,27 @@ export default function ProfilOnglets({
           pointerEvents: contenuVisible ? "auto" : "none",
         }}
       >
-        <h2 className="mb-2 text-left text-xl font-bold" style={{ color: INK }}>
-          {ongletActif.titre}
-        </h2>
-        {/* Ligne d'orientation sous le titre (même motif prévu pour chaque
-            partie ; les textes des autres viendront avec leur construction). */}
-        {actif === "profils" && (
-          <p className="text-left text-sm leading-relaxed text-gray-500">
-            Tes résultats de tests, conservés pour toujours. Et les prochains
-            à explorer.
-          </p>
+        {/* pl-7/md:pl-10 : titre et ligne alignés sur la marge des TEXTES
+            des sections (padding interne des cartes), pas sur le bord des
+            blocs (demande Luca). */}
+        {actif !== "profils" && actif !== "relations" && (
+          <h2 className="mb-2 pl-7 text-left text-xl font-bold md:pl-10" style={{ color: INK }}>
+            {ongletActif.titre}
+          </h2>
         )}
         {actif === "profils" && children}
         {actif === "relations" && (
           <>
-            <CarrouselRelations profil={profil} partage={partage} />
+            <CarrouselRelations
+              profil={profil}
+              partage={partage}
+              descriptionsVariantes={descriptionsVariantes}
+              lienInvitation={lienInvitation}
+              pctDuo={partenaire ? PCT_PARTENAIRE_TROUVE + PCT_PARCOURS_DUO_NON_PAYE : 0}
+            />
+            {/* Espace « Partenaire » : n'apparaît que lorsqu'un invité a
+                fini le test depuis le lien d'invitation. */}
+            {partenaire && <EspacePartenaire partenaire={partenaire} monCode={partage?.code} />}
             {/* Flèche « remonter » sous le carrousel, comme sur Mes profils */}
             <FlecheRemonter />
           </>

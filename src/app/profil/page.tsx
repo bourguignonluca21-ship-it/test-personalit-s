@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import MeshGradient from "../components/MeshGradient";
+import ScrollHaut from "../components/ScrollHaut";
 import ProfilOnglets, { CercleProgression } from "./ProfilOnglets";
+import CarrouselProfils from "./CarrouselProfils";
 import PartageInline from "../components/PartageInline";
 import FlecheRemonter from "./FlecheRemonter";
+import { cookies } from "next/headers";
 import { createClient } from "../lib/supabase/server";
-import { getTypeByCode } from "../data/types";
+import { getTypeByCode, TYPES } from "../data/types";
 import { NOMS_VARIANTES } from "../data/moteur";
+import { getDescriptionVariante } from "../data/profils";
+import { DESCRIPTIONS_VARIANTES_COURTES } from "../data/descriptionsVariantesCourtes";
+import { encoderInvitation } from "../lib/duo";
 
 export const metadata: Metadata = {
   title: "Mon profil",
@@ -27,6 +33,25 @@ function rareteFactice(slug: string): number {
   return 2 + (h % 7); // 2 à 8 %
 }
 
+/* Les petites descriptions des 48 variantes, construites ICI (côté serveur,
+   profils.ts est trop lourd pour le client) et passées en prop au carrousel
+   Relations (bloc d'aide au survol du menu des 48, fenêtre du duo). */
+function descriptionsDesVariantes(): Record<string, string> {
+  const map: Record<string, string> = {};
+  for (const t of TYPES) {
+    for (const v of ["V1", "V2", "V3"] as const) {
+      const nom = NOMS_VARIANTES[t.code]?.[v] ?? v;
+      /* Version COURTE dédiée (phrases complètes, ≤ ~170 caractères = 4
+         lignes max dans le bloc d'aide). Repli sur la description longue
+         si une clé venait à manquer. */
+      map[`${t.code}-${v}`] =
+        DESCRIPTIONS_VARIANTES_COURTES[`${t.code}-${v}`] ??
+        getDescriptionVariante(t.code, v, nom);
+    }
+  }
+  return map;
+}
+
 /*
  * Page « Mon profil », version 1 : la galerie « Mes profils ».
  * Décision de cadrage (cf. ANALYSE_PARCOURS_16P.md) : contrairement à 16P
@@ -36,7 +61,14 @@ function rareteFactice(slug: string): number {
  * Serveur : lit la session (cookies) + la table `resultats` (RLS : chacun ne
  * lit que les siens) + `achats` pour le badge « rapport débloqué ».
  */
-export default async function ProfilPage() {
+export default async function ProfilPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ onglet?: string }>;
+}) {
+  /* ?onglet=relations (bouton du mail « son portrait est prêt ») : arrive
+     DIRECTEMENT sur la bonne partie, prioritaire sur le cookie. */
+  const { onglet } = await searchParams;
   const supabase = await createClient();
   const {
     data: { user },
@@ -65,26 +97,80 @@ export default async function ProfilPage() {
 
   const prenom = (user.user_metadata?.prenom as string | undefined) ?? "";
 
-  // Dernier résultat du test de personnalité (l'historique viendra plus tard).
-  const { data: resultat } = await supabase
-    .from("resultats")
-    .select("slug, scores_s, scores_v, created_at")
-    .eq("user_id", user.id)
-    .eq("test", "personnalite")
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  /* Lien d'invitation au PARCOURS À DEUX : jeton signé (lib/duo.ts) qui
+     porte l'user_id de l'inviteur. C'est LUI qui part dans le bloc réseaux
+     « L'inviter » (remplace le placeholder /test). L'invité qui l'ouvre
+     verra le bloc d'invitation sur la page du test. */
+  const lienInvitation = `/test?invite=${encoderInvitation(user.id)}`;
 
-  // Dark personnalité : le test n'existe pas encore, mais la carte s'allumera
-  // toute seule le jour où un résultat `test = "dark"` sera enregistré.
-  const { data: resultatDark } = await supabase
-    .from("resultats")
-    .select("slug, created_at")
-    .eq("user_id", user.id)
-    .eq("test", "dark")
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  // Dernier résultat du test de personnalité + dark : les DEUX requêtes
+  // partent EN PARALLÈLE (Promise.all) au lieu de s'attendre l'une l'autre,
+  // un aller-retour Supabase de gagné sur le chargement de la page.
+  const [{ data: resultat }, { data: resultatDark }] = await Promise.all([
+    supabase
+      .from("resultats")
+      .select("slug, scores_s, scores_v, created_at")
+      .eq("user_id", user.id)
+      .eq("test", "personnalite")
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+    // Le test dark n'existe pas encore ; la carte s'allumera toute seule le
+    // jour où un résultat `test = "dark"` sera enregistré.
+    supabase
+      .from("resultats")
+      .select("slug, created_at")
+      .eq("user_id", user.id)
+      .eq("test", "dark")
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+  ]);
+
+  // PARCOURS À DEUX : le ou la partenaire décrit(e) via le lien d'invitation
+  // (table `liens`, RLS : l'inviteur lit ses liens). Rempli quand un invité
+  // a fini le test depuis le lien signé. Affiché dans l'espace « Partenaire »
+  // de l'onglet Relations.
+  let partenaire: {
+    prenom: string | null;
+    nomType: string;
+    sousTitre: string;
+    date: string;
+    href: string;
+    nouveau: boolean;
+    description: string | null;
+  } | null = null;
+  {
+    const { data: lien } = await supabase
+      .from("liens")
+      .select("invite_prenom, slug, scores_s, scores_v, created_at, vu_le")
+      .eq("inviteur_user_id", user.id)
+      .eq("type", "partenaire")
+      .eq("statut", "complete")
+      .maybeSingle();
+    if (lien?.slug) {
+      const [codeBrut, varianteBrute] = lien.slug.split("-");
+      const codeP = codeBrut?.toUpperCase() ?? "";
+      const vP = varianteBrute?.toUpperCase() ?? "";
+      const typeP = getTypeByCode(codeP);
+      const nomVarianteP = NOMS_VARIANTES[codeP]?.[vP];
+      partenaire = {
+        prenom: lien.invite_prenom,
+        nomType: typeP?.name ?? codeP,
+        sousTitre: `${codeP} · ${nomVarianteP ?? vP}`,
+        date: new Date(lien.created_at).toLocaleDateString("fr-FR", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }),
+        href: `/p/${lien.slug}?s=${lien.scores_s}&v=${lien.scores_v}`,
+        nouveau: !lien.vu_le, // pastille « Nouveau » tant que pas survolée
+        // Petite description du profil du ou de la partenaire (les 48
+        // descriptions courtes, mêmes que le bloc d'aide de la fenêtre duo).
+        description: DESCRIPTIONS_VARIANTES_COURTES[`${codeP}-${vP}`] ?? null,
+      };
+    }
+  }
 
   // Rapport complet acheté pour ce profil ?
   let rapportAchete = false;
@@ -140,9 +226,14 @@ export default async function ProfilPage() {
   // rapport = 5 %, test pas fait = 0 %.
   const pctPersonnalite = resultat ? (rapportAchete ? 100 : 5) : 0;
   const pctDark = resultatDark ? 5 : 0; // passera à 100 quand son rapport sera acheté
+  /* Progression du DUO (barème Luca) : partenaire trouvé = 2, parcours à
+     deux non payé = 5 (98 payé) → 100 quand tout est fait. Ce total pèse
+     70 % de la partie « Mes relations » (les 30 restants viendront du
+     parcours seul). */
+  const pctDuo = partenaire ? 2 + 5 : 0; // le 5 passera à 98 une fois le parcours payé
   const progression = {
     profils: pointsPersonnalite + pointsDark,
-    relations: 0, // partenaire + amis ajoutés (données à venir avec la partie Relations)
+    relations: Math.round(pctDuo * 0.7),
     developpement: 0, // avancement du parcours (données à venir avec la partie Développement)
     ia: 0, // conversations engagées (données à venir avec la partie IA)
     parametres: prenom ? 100 : 50, // compte configuré (prénom) ; email toujours présent
@@ -158,6 +249,8 @@ export default async function ProfilPage() {
 
   return (
     <div>
+      {/* Au rechargement, la page repart en HAUT (comme résultat + test) */}
+      <ScrollHaut />
       {/* Héros (même squelette que le reste du site) */}
       <section className="relative overflow-hidden text-center px-6 pt-24 md:pt-28 pb-16">
         <MeshGradient />
@@ -199,6 +292,10 @@ export default async function ProfilPage() {
           <ProfilOnglets
             progression={progression}
             profil={carte ? { sousTitre: carte.sousTitre } : null}
+            descriptionsVariantes={descriptionsDesVariantes()}
+            lienInvitation={lienInvitation}
+            partenaire={partenaire}
+            ongletInitial={onglet ?? (await cookies()).get("profil_onglet")?.value}
             partage={
               carte && resultat
                 ? {
@@ -211,7 +308,9 @@ export default async function ProfilPage() {
                 : null
             }
           >
-          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+          {/* CARROUSEL des cartes de test : 2 visibles, les autres au
+              défilement (flèches rondes vertes). */}
+          <CarrouselProfils>
             {/* Carte Personnalité (cercle de progression à sa GAUCHE au survol) */}
             {carte ? (
               <Link
@@ -345,7 +444,54 @@ export default async function ProfilPage() {
                 </div>
               </Link>
             )}
-          </div>
+
+            {/* Carte Test de logique (test à construire ; carte visuelle,
+                état vide qui vend, sera branchée sur sa route plus tard). */}
+            <div className="flex h-full flex-col rounded-2xl border border-dashed border-gray-200 bg-white/60 p-6 text-left">
+              <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                Test de logique
+              </p>
+              <p className="mt-2 text-2xl font-bold" style={{ color: INK }}>
+                Ta façon de raisonner
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                Déduction, intuition, angles morts : mesure la mécanique de
+                ton esprit, et apprends à t&apos;en servir.
+              </p>
+              <div className="mt-auto flex items-center justify-between pt-5">
+                <span
+                  className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white"
+                  style={{ background: VERT }}
+                >
+                  Faire le test
+                </span>
+                <CercleProgression pct={0} taille={32} />
+              </div>
+            </div>
+
+            {/* Carte Test de bonheur (même statut que la logique). */}
+            <div className="flex h-full flex-col rounded-2xl border border-dashed border-gray-200 bg-white/60 p-6 text-left">
+              <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                Test de bonheur
+              </p>
+              <p className="mt-2 text-2xl font-bold" style={{ color: INK }}>
+                Où en es-tu, vraiment ?
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                Fais le point sur ce qui te nourrit, ce qui te pèse, et ce
+                qui te manque pour te sentir bien.
+              </p>
+              <div className="mt-auto flex items-center justify-between pt-5">
+                <span
+                  className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white"
+                  style={{ background: VERT }}
+                >
+                  Faire le test
+                </span>
+                <CercleProgression pct={0} taille={32} />
+              </div>
+            </div>
+          </CarrouselProfils>
 
           {/* Le bloc de partage (le même qu'en fin de rapport), sous les
               cartes de test — le lien /p est construit depuis le résultat

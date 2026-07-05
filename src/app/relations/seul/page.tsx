@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 };
 
 const INK = "rgba(0,0,0,0.75)";
+const VERT = "rgba(51,164,116,0.85)";
 
 /*
  * PARCOURS RELATIONNEL SOLO — la page (accès direct par l'URL).
@@ -23,7 +24,7 @@ export default function ParcoursSeulPage() {
         <MeshGradient />
         <h1
           className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] min-h-[1.2em]"
-          style={{ color: INK }}
+          style={{ color: VERT }}
         >
           Comprends tes schémas
         </h1>
