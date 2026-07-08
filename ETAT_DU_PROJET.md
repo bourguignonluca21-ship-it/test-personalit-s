@@ -451,6 +451,39 @@ Tout est dans `components/FenetrePaiement.tsx` (la modale) sauf mention contrair
 
 **Nouveaux fichiers de la session** : `lib/duo.ts`, `lib/liens.ts`, `lib/emails/partenairePret.ts`, `components/MessageInvite.tsx`, `api/duo/vu/route.ts`, `profil/CarrouselProfils.tsx`. **Aucune nouvelle clé d'environnement** (rien à ajouter dans Vercel). Docs mises à jour : `ACCES_ET_SERVICES.md`, §9.
 
+## 8 quindecies. POINT DE REPRISE, session 8 juillet 2026 (AUDIT UX COMPLET + refonte HOME en 5 actes + navbar + entrée immersive de la page test)
+
+**A. AUDIT UX complet réalisé avec Cowork** (rapport : `AUDIT_UX_COMPLET.md`, dossier Cowork « test du projet », priorisation P0/P1/P2). Constat central : chaque étage du funnel ne vendait que lui-même ; stratégie = faire descendre la promesse d'un étage partout. **P0 restants NON traités** (choix de Luca, à reprendre) : mail de fin de test avec le lien du VRAI résultat (pas seulement /p), prix 7,90 € affiché sur les CTA de déblocage avant la modale, « Ton logo » placeholder dans la fenêtre de paiement, mot « diagnostic » sur la page dark.
+
+**B. HOME entièrement refondue** (validée écran par écran) :
+- `page.tsx` : Hero + `<HomeActes />` (NOUVEAU `components/HomeActes.tsx`, client, styles injectés). **Stats 96/48/10min SUPPRIMÉES** (doublons des actes) ; ancienne section verte IA supprimée.
+- `Hero.tsx` : plein écran (100svh), titre jusqu'à lg:7xl, entrée en cascade (keyframes locales), flèche Lottie scroll-down cliquable (glisse vers l'acte 1), couleur EXACTE du bouton injectée dans le shadow DOM du player (`rgb(102,187,151)`) depuis HomeActes.
+- Actes dans l'ordre : « Et si un test, te ressemblait enfin ? » (3 lignes mots-clés verts + grand 96 % compteur + bouton Faire le test, section plein écran) → « 48 nuances. Pas 16 cases. » (16→48 automatique en 3 s, défilé des 16 types à la largeur du contenu, molette horizontale au survol) → monde vert « Vous comprendre, ensemble. » (largeur 768, tampon « Exclusivité » qui s'écrase à 0°, puzzle Lottie BLANC — filter brightness(0) invert(1) — redressé `translateY(-26px) scale(1.9) rotate(-45deg)`, texte gauche / animation + CTA « Découvrir le parcours à deux » à droite, alignés haut/bas sur le texte) → « Un espace, rien qu'à toi. » (« toi » en vert ; 3 colonnes SANS boîtes : anneaux 96 px trait 8, % compté au centre, recharge au survol ; **Mes profils 18 % / Mes relations 34 % « Votre quête à deux, construite sur vos deux profils. » / Mon équilibre 62 % « Te comprendre, t'apaiser, avancer. Pas à pas. »** ; pas de vert dans les textes des anneaux ; bouton « Découvrir mon espace » aligné à gauche) → bandeau final PUR pleine largeur (un seul CTA ; réseaux sociaux refusés = portes de sortie).
+- Mécanique : ressort molette (un cran = un acte, atterrissage CENTRÉ, arrêts REMESURÉS à chaque geste), points fullpage à droite (actif = acte le plus proche du centre, clic = glisse), voile d'atmosphère GPU (dégradé fixe déplacé par transform), dissolution des actes SANS blur, animations réversibles (IntersectionObserver qui pose/retire .vu), bouton remonter qui sautille (keyframes dans le composant) centré sous le bandeau final, ScrollHaut branché.
+- Alignements : tout le contenu sur la colonne **max-w-3xl = 768 px** ; sur desktop `.ha .acte` SANS padding horizontal → les textes commencent pile sous les libellés de la navbar.
+
+**C. NAVBAR refondue** (`Navbar.tsx`) :
+- Coin droit : « Se connecter » en surface (ouvre FenetreConnexion, masqué si connecté) + **CTA vert permanent « Faire le test »** + drapeau.
+- « **Explore-toi** » = PUR déroulé (les 4 tests, Personnalité incluse) ; « **La personnalité, expliquée** » = nouveau nom FIXE du hub SEO (l'item annuaire du déroulé renommé « Les 48 personnalités », le déroulé montre les 4 rubriques) ; « **Mon espace** » (Mes profils / Mes relations / **Mon équilibre**, hrefs ?onglet= inchangés).
+- Les 3 déclencheurs alignés sur la colonne max-w-3xl (conteneur absolu centré, justify-between) ; l'alignement de l'extension mesuré par getBoundingClientRect.
+- **Transparente sur le héros de la home** (scrollY < 24, hors menu), fond blanc flouté sinon. Mobile : CTA « Faire le test » en tête de menu.
+- Nommage (décision) : la section « Développement » = registre de QUÊTE, nom retenu **« Mon équilibre »** (« Ma quête » et « Connais-toi toi-même » rejetés) ; l'introspection + la philosophie (Socrate, stoïciens, Fromm) = le CONTENU futur des parcours solo ET duo (quête à deux). Le renommage reste à propager dans /profil.
+
+**D. PAGE TEST — entrée immersive** (`Quiz.tsx`, `TestPersonnalite.tsx`, `test/page.tsx`, NOUVEAU `components/RessortEntree.tsx`) :
+- Haut de page : titre/sous-titre/**micro-ligne « Gratuit · 10 minutes · 69 questions »** alignés À GAUCHE sur la marge du texte des cartes étape (colonne + pl-6) ; entrée en cascade ; bandeau resserré (min-h-450 supprimé) ; **Q1 entièrement visible dès l'arrivée** (question + pastilles + consignes PLEINES : règles `scrollY < 150`) ; **fond MeshGradient jusqu'en bas de l'écran d'arrivée** (hauteur calée en JS) qui **disparaît en fondu sur 350 px de scroll, sans bouger** ; l'ancienne flèche SUPPRIMÉE ; **les 3 cartes étape cliquables** → Q1 calée à **78 px** du haut (`scroll-mt-[78px]`, les 3 premières questions visibles).
+- `RessortEntree` (réutilisable, molette desktop uniquement) : zone [haut de page → Q1@78px] et zone [`#intro-variante` → `#premiere-question-variante`] ; glisse smootherstep, durée selon distance, **verrou post-atterrissage 380 ms** (avale l'inertie de la molette).
+- **Mise en scène « 3 questions »** : opacité/échelle de chaque question pilotées par sa distance au centre (centre décalé de `DECALAGE_BARRE = 45 px` sous la barre, aligné sur `smoothCenter`) ; voisines ~50 %, la 4e quasi invisible (pente 2.7) ; positions en CACHE (aucune mesure au scroll) + ResizeObserver(body) ; will-change.
+- **PERF anti-saccades** : fondu des blocs étape (`exitP`), barre de progression et consignes convertis en **DOM DIRECT** (plus AUCUN setState au scroll, sauf les consignes Q1 quantifiées au dixième).
+
+**E. Pièges découverts (importants) :**
+- **Tailwind v4 : `-translate-x-1/2` = propriété CSS `translate`**, qui S'ADDITIONNE à un `transform` posé par animation/JS → élément décalé de sa propre largeur. Ne jamais cumuler les deux.
+- **`MeshGradient` (z-index:-10) exige un contexte d'empilement** (`isolate` sur le conteneur), sinon il passe DERRIÈRE le fond blanc de la page. L'ancien `<Reveal>` en créait un par sa transform : le retirer avait « supprimé » le fond.
+- **Recolorer une Lottie à une couleur EXACTE** : injecter un `<style>` dans le `shadowRoot` du `dotlottie-player` (fill/stroke !important). Les filtres CSS = approximations, à bannir.
+- **Crashs dev « Internal Server Error » sans page d'erreur formatée** = `.next` corrompu par OneDrive → `rmdir /s /q .next` puis relancer (arrivé 3 fois dans la session).
+- `blur()` piloté au scroll sur de grandes sections + dégradé changé à chaque frame = saccades ; toujours transform/opacity composités + positions en cache.
+
+**Avant la prod** : les Lottie passent par les CDN unpkg/lottiefiles (à héberger en local si on veut couper la dépendance). **Passe responsive mobile de la home et du test NON faite.**
+
 ## 9. Prochaines étapes
 
 **Chantier RELATIONS / parcours (en cours, cf. §8 duodecies + terdecies) — c'est le chantier actif :**

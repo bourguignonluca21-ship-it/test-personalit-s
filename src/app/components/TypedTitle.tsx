@@ -16,7 +16,16 @@ const PHRASES = [
   ],
   [
     { t: "“", c: FAINT },
-    { t: "Impressionnant.", c: BLACK },
+    { t: "Et ", c: BLACK },
+    { t: "nous", c: GREEN },
+    { t: " deux ?", c: BLACK },
+    { t: "”", c: FAINT },
+  ],
+  [
+    { t: "“", c: FAINT },
+    { t: "Me ", c: BLACK },
+    { t: "connaître", c: GREEN },
+    { t: " pour avancer.", c: BLACK },
     { t: "”", c: FAINT },
   ],
 ];

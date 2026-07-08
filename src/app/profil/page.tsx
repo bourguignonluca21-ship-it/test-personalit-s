@@ -74,58 +74,63 @@ export default async function ProfilPage({
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Pas connecté → invitation (la fenêtre de connexion vit dans la navbar).
-  if (!user) {
-    return (
-      <div>
-        <section className="relative overflow-hidden text-center px-6 pt-24 md:pt-28 pb-16 min-h-[420px]">
-          <MeshGradient />
-          <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1]"
-            style={{ color: INK }}
-          >
-            Mon profil
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto mt-7 leading-relaxed">
-            Connecte-toi pour retrouver tes profils, où que tu sois.
-            Clique sur « Se connecter » en haut à droite.
-          </p>
-        </section>
-      </div>
-    );
-  }
+  /* Non connecté : on affiche désormais le MÊME écran que les connectés
+     (bandeau + les 5 onglets + galerie), mais avec des données vides — le
+     menu montre déjà le potentiel (tests à passer, parcours). Les CTA
+     seront réorientés vers la création de compte dans un second temps. */
+  const connecte = !!user;
+  const prenom = (user?.user_metadata?.prenom as string | undefined) ?? "";
 
-  const prenom = (user.user_metadata?.prenom as string | undefined) ?? "";
+  /* Mode « invité » pour un visiteur NON connecté : que faire quand il clique
+     un réseau ou « Commencer mon parcours » ?
+     - a fait le test (cookie a_fait_test posé par le proxy) → fenêtre de
+       connexion, pour l'inciter à créer un compte et garder son profil.
+     - pas fait le test → on le renvoie vers /test.
+     Un connecté garde le comportement normal (undefined). */
+  const aFaitTest = !!(await cookies()).get("a_fait_test")?.value;
+  const inviteMode: "connexion" | "test" | undefined = connecte
+    ? undefined
+    : aFaitTest
+      ? "connexion"
+      : "test";
 
   /* Lien d'invitation au PARCOURS À DEUX : jeton signé (lib/duo.ts) qui
      porte l'user_id de l'inviteur. C'est LUI qui part dans le bloc réseaux
      « L'inviter » (remplace le placeholder /test). L'invité qui l'ouvre
-     verra le bloc d'invitation sur la page du test. */
-  const lienInvitation = `/test?invite=${encoderInvitation(user.id)}`;
+     verra le bloc d'invitation sur la page du test. (Connecté seulement.) */
+  const lienInvitation = user ? `/test?invite=${encoderInvitation(user.id)}` : null;
 
-  // Dernier résultat du test de personnalité + dark : les DEUX requêtes
-  // partent EN PARALLÈLE (Promise.all) au lieu de s'attendre l'une l'autre,
-  // un aller-retour Supabase de gagné sur le chargement de la page.
-  const [{ data: resultat }, { data: resultatDark }] = await Promise.all([
-    supabase
-      .from("resultats")
-      .select("slug, scores_s, scores_v, created_at")
-      .eq("user_id", user.id)
-      .eq("test", "personnalite")
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle(),
-    // Le test dark n'existe pas encore ; la carte s'allumera toute seule le
-    // jour où un résultat `test = "dark"` sera enregistré.
-    supabase
-      .from("resultats")
-      .select("slug, created_at")
-      .eq("user_id", user.id)
-      .eq("test", "dark")
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle(),
-  ]);
+  // Dernier résultat du test de personnalité + dark (connecté seulement) :
+  // les DEUX requêtes partent EN PARALLÈLE (Promise.all) au lieu de
+  // s'attendre l'une l'autre, un aller-retour Supabase de gagné.
+  let resultat:
+    | { slug: string; scores_s: string; scores_v: string; created_at: string }
+    | null = null;
+  let resultatDark: { slug: string; created_at: string } | null = null;
+  if (user) {
+    const [rP, rD] = await Promise.all([
+      supabase
+        .from("resultats")
+        .select("slug, scores_s, scores_v, created_at")
+        .eq("user_id", user.id)
+        .eq("test", "personnalite")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+      // Le test dark n'existe pas encore ; la carte s'allumera toute seule le
+      // jour où un résultat `test = "dark"` sera enregistré.
+      supabase
+        .from("resultats")
+        .select("slug, created_at")
+        .eq("user_id", user.id)
+        .eq("test", "dark")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+    ]);
+    resultat = rP.data;
+    resultatDark = rD.data;
+  }
 
   // PARCOURS À DEUX : le ou la partenaire décrit(e) via le lien d'invitation
   // (table `liens`, RLS : l'inviteur lit ses liens). Rempli quand un invité
@@ -140,7 +145,7 @@ export default async function ProfilPage({
     nouveau: boolean;
     description: string | null;
   } | null = null;
-  {
+  if (user) {
     const { data: lien } = await supabase
       .from("liens")
       .select("invite_prenom, slug, scores_s, scores_v, created_at, vu_le")
@@ -174,7 +179,7 @@ export default async function ProfilPage({
 
   // Rapport complet acheté pour ce profil ?
   let rapportAchete = false;
-  if (resultat) {
+  if (user && resultat) {
     const { data: achat } = await supabase
       .from("achats")
       .select("id")
@@ -236,7 +241,7 @@ export default async function ProfilPage({
     relations: Math.round(pctDuo * 0.7),
     developpement: 0, // avancement du parcours (données à venir avec la partie Développement)
     ia: 0, // conversations engagées (données à venir avec la partie IA)
-    parametres: prenom ? 100 : 50, // compte configuré (prénom) ; email toujours présent
+    parametres: connecte ? (prenom ? 100 : 50) : 0, // compte configuré (prénom) ; 0 si non connecté
   };
   // Le % global du profil : moyenne des 5 parties.
   const progressionGlobale = Math.round(
@@ -290,6 +295,7 @@ export default async function ProfilPage({
       <section className="relative z-10 px-6 pb-20 -mt-[68px]">
         <div className="mx-auto max-w-3xl">
           <ProfilOnglets
+            invite={inviteMode}
             progression={progression}
             profil={carte ? { sousTitre: carte.sousTitre } : null}
             descriptionsVariantes={descriptionsDesVariantes()}
@@ -494,21 +500,22 @@ export default async function ProfilPage({
           </CarrouselProfils>
 
           {/* Le bloc de partage (le même qu'en fin de rapport), sous les
-              cartes de test — le lien /p est construit depuis le résultat
-              du compte (props slug + scores). */}
-          {carte && resultat && (
-            <div
-              className="mt-10 rounded-2xl p-7 md:p-10 transition-shadow hover:shadow-sm"
-              style={{ background: "rgba(51,164,116,0.08)" }}
-            >
-              <h3 className="text-2xl md:text-3xl font-bold text-[rgba(0,0,0,0.8)] mb-4">
-                Et tes proches, qui sont-ils vraiment ?
-              </h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Partage les grandes lignes de ton profil. Tes proches
-                n&apos;en verront que l&apos;essentiel, jamais ton analyse
-                intime, et ça leur donnera sûrement envie de découvrir le leur.
-              </p>
+              cartes de test. Affiché TOUJOURS (y compris non connecté /
+              sans profil). Avec profil : lien /p construit depuis le
+              résultat (slug + scores). Sans profil : repli vers /test. */}
+          <div
+            className="mt-10 rounded-2xl p-7 md:p-10 transition-shadow hover:shadow-sm"
+            style={{ background: "rgba(51,164,116,0.08)" }}
+          >
+            <h3 className="text-2xl md:text-3xl font-bold text-[rgba(0,0,0,0.8)] mb-4">
+              Et tes proches, qui sont-ils vraiment ?
+            </h3>
+            <p className="text-gray-600 leading-relaxed mb-6">
+              Partage les grandes lignes de ton profil. Tes proches
+              n&apos;en verront que l&apos;essentiel, jamais ton analyse
+              intime, et ça leur donnera sûrement envie de découvrir le leur.
+            </p>
+            {carte && resultat ? (
               <PartageInline
                 code={carte.code}
                 nomVariante={carte.nomVariante}
@@ -516,8 +523,10 @@ export default async function ProfilPage({
                 s={resultat.scores_s}
                 v={resultat.scores_v}
               />
-            </div>
-          )}
+            ) : (
+              <PartageInline code="" nomVariante="" interception={inviteMode ?? "test"} />
+            )}
+          </div>
 
           {/* Flèche « remonter » : apparaît quand le footer entre à l'écran */}
           <FlecheRemonter />

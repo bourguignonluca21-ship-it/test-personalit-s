@@ -118,6 +118,11 @@ export default function TestPersonnalite({
       title="Test de personnalité"
       titleNode={<TestPageTitle />}
       subtitle="48 portraits possibles · Un seul te ressemble"
+      microligne={
+        <>
+          <span className="font-semibold" style={{ color: "rgb(82,178,137)" }}>Gratuit</span> · 10 minutes · 69 questions
+        </>
+      }
       questions={allQuestions.map((q) => q.texte)}
       questionIds={allQuestions.map((q) => q.id)}
       total={TOTAL}

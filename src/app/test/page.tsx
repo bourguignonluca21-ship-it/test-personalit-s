@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import TestPersonnalite from "../components/TestPersonnalite";
+import RessortEntree from "../components/RessortEntree";
 import { decoderInvitation } from "../lib/duo";
 import { createAdminClient } from "../lib/supabase/admin";
 
@@ -35,5 +36,14 @@ export default async function TestPage({
       invitation = null; // problème serveur = test normal, jamais de page cassée
     }
   }
-  return <TestPersonnalite invitation={invitation} />;
+  return (
+    <>
+      {/* Du haut de page, la molette propulse vers la première question, calée
+          comme au clic sur une étape (78 px du haut = les 3 premières questions) */}
+      <RessortEntree cible="#premiere-question" haut={78} />
+      {/* Même retenue entre « Trouve ta variante » et sa première question */}
+      <RessortEntree cible="#premiere-question-variante" depuis="#intro-variante" />
+      <TestPersonnalite invitation={invitation} />
+    </>
+  );
 }

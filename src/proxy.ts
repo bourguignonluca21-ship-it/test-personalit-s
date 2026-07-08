@@ -33,6 +33,23 @@ export async function proxy(request: NextRequest) {
 
   await supabase.auth.getUser();
 
+  // Trace « a fait le test » (même pour un visiteur non connecté) : quand il
+  // ouvre une page résultat valide (/resultat/{slug}?s&v), on pose un petit
+  // cookie. La page /profil s'en sert pour orienter les non connectés : test
+  // fait → fenêtre de connexion (créer un compte) ; test pas fait → /test.
+  const mResultat = request.nextUrl.pathname.match(/^\/resultat\/([^/]+)$/);
+  if (mResultat) {
+    const s = request.nextUrl.searchParams.get("s");
+    const v = request.nextUrl.searchParams.get("v");
+    if (s && v) {
+      response.cookies.set("a_fait_test", `${mResultat[1]}|${s}|${v}`, {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: "lax",
+      });
+    }
+  }
+
   return response;
 }
 

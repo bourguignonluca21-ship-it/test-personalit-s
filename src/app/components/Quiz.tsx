@@ -19,6 +19,7 @@ export interface QuizProps {
   title: string;
   titleNode?: ReactNode; // si fourni, remplace le rendu par défaut du titre (titre animé).
   subtitle: string;
+  microligne?: ReactNode; // petite ligne sous le sous-titre (ex. « Gratuit · 10 minutes · 69 questions »)
   badge?: string;
   titleAccent?: string;
   questions: string[];
@@ -43,11 +44,16 @@ const INDIC_MILIEU = ["Plutôt pas d'accord", "Neutre / un peu des deux", "Plut�
 
 // Défilement fluide maison : le scroll-behavior natif est capricieux sur cette page (il téléporte
 // ou ne bouge pas selon le navigateur), donc on anime nous-mêmes le scroll, ce qui marche partout.
+// La zone utile commence sous la navbar + barre de progression (~90 px) : on
+// centre dans CETTE zone, sinon la marge du bas paraît plus grande que celle
+// du haut (décalage = moitié de la hauteur occupée en haut).
+const DECALAGE_BARRE = 45;
+
 function smoothCenter(el: HTMLElement | null) {
   if (!el) return;
   const root = document.documentElement;
   const start = window.scrollY;
-  const target = start + el.getBoundingClientRect().top + el.offsetHeight / 2 - window.innerHeight / 2;
+  const target = start + el.getBoundingClientRect().top + el.offsetHeight / 2 - (window.innerHeight / 2 + DECALAGE_BARRE);
   const dist = target - start;
   if (Math.abs(dist) < 2) return;
   const dur = 480;
@@ -69,6 +75,7 @@ export default function Quiz({
   title,
   titleNode,
   subtitle,
+  microligne,
   badge,
   titleAccent,
   questions,
@@ -110,22 +117,75 @@ export default function Quiz({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answers]);
 
-  // Fondu de sortie quand les blocs remontent et quittent l'écran.
-  const [exitP, setExitP] = useState(0);
-  // Opacité de la flèche « descendre », pilotée par le scroll : pleine en haut, elle s'efface en
-  // douceur sur les ~150px (≈4cm) de scroll après les blocs étape, et réapparaît en remontant.
-  // Monotone, donc pas de réapparition parasite plus bas.
+  // Fondu de sortie des blocs étape + flèche + barre : PILOTÉS EN DOM DIRECT
+  // (aucun état React → aucun re-rendu des 69 questions pendant le scroll).
   const FLECHE_DEBUT = 110; // px de scroll où la flèche commence à disparaître
   const FLECHE_FIN = 260; // px de scroll où elle est totalement invisible
-  const [flecheOpacity, setFlecheOpacity] = useState(1);
-  // La flèche « sort du sol » (émerge du bas de la carte) quand elle apparaît,
-  // et « rentre dans le sol » avec le même rebond quand on scrolle vers les questions.
-  const [flecheSortie, setFlecheSortie] = useState(false); // porte d'entrée (après un court délai)
-  const [flecheBas, setFlecheBas] = useState(false); // true = repoussée dans le sol par le scroll
+  const stepsRef = useRef<HTMLElement>(null); // section des 3 blocs étape (fondu de sortie)
+  const barreRef = useRef<HTMLDivElement>(null); // barre de progression fixée
+  const fondRef = useRef<HTMLDivElement>(null); // dégradé plein écran (part vers le haut au scroll)
+
+
+  // Mise en scène « 3 questions » : l'opacité et l'échelle de chaque question
+  // suivent sa distance au centre de l'écran (pleine au centre, en retrait en
+  // haut/bas). PERF : les positions sont mises en cache (aucune mesure pendant
+  // le scroll), seules les questions proches de l'écran sont stylées, et le
+  // GPU compose (will-change).
   useEffect(() => {
-    const t = setTimeout(() => setFlecheSortie(true), 480);
-    return () => clearTimeout(t);
-  }, []);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let attente = false;
+    let cache: { el: HTMLElement; milieu: number; h: number; premiere: boolean }[] = [];
+
+    const mesurerCache = () => {
+      cache = [];
+      refs.current.forEach((el, idx) => {
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        el.style.willChange = "opacity, transform";
+        cache.push({ el, milieu: r.top + window.scrollY + r.height / 2, h: r.height, premiere: idx === 0 });
+      });
+    };
+
+    const appliquer = () => {
+      const vh = window.innerHeight;
+      const centre = window.scrollY + vh / 2 + DECALAGE_BARRE; // même centre que smoothCenter
+      for (const { el, milieu, h, premiere } of cache) {
+        let d = Math.abs((milieu - centre) / vh);
+        if (premiere) {
+          // La 1re question est AUSSI pleine à sa position d'atterrissage
+          // (calée à 78 px du haut, au clic d'une étape ou au ressort d'entrée)...
+          const dAtterrissage = Math.abs((milieu - (window.scrollY + 78 + h / 2)) / vh);
+          d = Math.min(d, dAtterrissage);
+          // ...et EN HAUT DE PAGE (elle dépasse en bas de l'écran d'arrivée : jamais estompée).
+          if (window.scrollY < 150) d = 0;
+        }
+        if (d > 1.6) continue; // loin de l'écran : aucune écriture
+        const op = d < 0.16 ? 1 : Math.max(0.04, 1 - (d - 0.16) * 2.7);
+        el.style.opacity = String(op);
+        el.style.transform = `scale(${Math.max(0.93, 1 - d * 0.06)})`;
+      }
+    };
+
+    const surScroll = () => {
+      if (attente) return;
+      attente = true;
+      requestAnimationFrame(() => { appliquer(); attente = false; });
+    };
+    const surResize = () => { mesurerCache(); appliquer(); };
+
+    mesurerCache();
+    appliquer();
+    // La mise en page peut bouger (intro de la phase 2 qui apparaît…) : on recale le cache.
+    const ro = new ResizeObserver(surResize);
+    ro.observe(document.body);
+    window.addEventListener("scroll", surScroll, { passive: true });
+    window.addEventListener("resize", surResize);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("scroll", surScroll);
+      window.removeEventListener("resize", surResize);
+    };
+  }, [questions.length]);
   // Indications de la 1re question : visibles quand elle entre à l'écran, masquées sinon.
   // Indications de Q1 : opacité pilotée directement par le scroll (fondu fluide à l'aller comme au
   // retour). Montées tant que Q1 n'a pas de réponse, et elles réservent leur place (aucun saut).
@@ -141,26 +201,66 @@ export default function Quiz({
     const t = setTimeout(() => setDelayPassed(true), 500);
     return () => clearTimeout(t);
   }, [inZone]);
+  const indicLastRef = useRef(-1);
   useEffect(() => {
-    function onScroll() {
+    let attente = false;
+    function majVisuels() {
       const y = window.scrollY;
-      setExitP(Math.max(0, Math.min(1, (y - 470) / 170)));
-      setFlecheOpacity(Math.max(0, Math.min(1, 1 - (y - FLECHE_DEBUT) / (FLECHE_FIN - FLECHE_DEBUT))));
-      setFlecheBas(y > (FLECHE_DEBUT + FLECHE_FIN) / 2); // rentre dans le sol au milieu de la zone de fondu
+      // Fondu de sortie des blocs étape (DOM direct).
+      const exitP = Math.max(0, Math.min(1, (y - 470) / 170));
+      if (stepsRef.current) {
+        stepsRef.current.style.opacity = String(1 - exitP);
+        stepsRef.current.style.transform = `translateY(${-exitP * 36}px)`;
+      }
+      // Fond dégradé : disparaît en fondu au scroll, sans bouger (réversible).
+      const pFond = Math.max(0, Math.min(1, y / 350));
+      if (fondRef.current) {
+        fondRef.current.style.opacity = String(1 - pFond);
+      }
+      // Barre de progression : apparaît quand la flèche s'efface (DOM direct).
+      const fo = Math.max(0, Math.min(1, 1 - (y - FLECHE_DEBUT) / (FLECHE_FIN - FLECHE_DEBUT)));
+      if (barreRef.current) {
+        barreRef.current.style.opacity = String(1 - fo);
+        barreRef.current.style.pointerEvents = fo > 0.99 ? "none" : "auto";
+      }
       // Indications de Q1 : fondu fluide des DEUX côtés selon la position du texte de Q1.
-      // Pleines dans la zone de lecture, elles se fondent en remontant (par le bas) ET en
-      // descendant au-delà de Q1 (par le haut). t = position du texte en fraction d'écran.
+      // Quantifié au dixième pour ne pas re-rendre à chaque frame.
       const q1 = q1Ref.current;
       if (q1) {
         const t = q1.getBoundingClientRect().top / window.innerHeight;
-        const opBas = (0.7 - t) / 0.3; // fondu d'arrivée (Q1 monte par le bas)
+        const opBas = (0.85 - t) / 0.3; // fondu d'arrivée (visible dès le haut de page, Q1 dépassant en bas)
         const opHaut = (t + 0.2) / 0.25; // fondu de sortie (Q1 part par le haut quand on descend)
-        setIndicOpacity(Math.max(0, Math.min(1, Math.min(opBas, opHaut))));
+        let op = Math.round(Math.max(0, Math.min(1, Math.min(opBas, opHaut))) * 10) / 10;
+        if (window.scrollY < 150) op = 1; // en haut de page : consignes pleines, jamais estompées
+        if (op !== indicLastRef.current) {
+          indicLastRef.current = op;
+          setIndicOpacity(op);
+        }
       }
     }
+    function onScroll() {
+      if (attente) return;
+      attente = true;
+      requestAnimationFrame(() => { majVisuels(); attente = false; });
+    }
+    // Le fond descend PILE jusqu'en bas de l'écran d'arrivée (ni plus, ni moins).
+    function calerFond() {
+      const fond = fondRef.current;
+      const parent = fond?.parentElement;
+      if (!fond || !parent) return;
+      const hautParent = parent.getBoundingClientRect().top + window.scrollY; // position document
+      fond.style.height = `${Math.max(0, Math.round(window.innerHeight - hautParent))}px`;
+    }
+    calerFond();
+    const tFond = setTimeout(calerFond, 600); // recale après les animations d'entrée
+    window.addEventListener("resize", calerFond);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      clearTimeout(tFond);
+      window.removeEventListener("resize", calerFond);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   function handleAnswer(i: number, v: number) {
@@ -225,13 +325,14 @@ export default function Quiz({
   return (
     <div className="bg-white">
 
-      {/* Barre + compteur FIXÉS sous la navbar */}
+      {/* Barre + compteur FIXÉS sous la navbar (opacité pilotée en DOM direct) */}
       <div
+        ref={barreRef}
         className="fixed left-0 right-0 z-30 bg-white/90 backdrop-blur py-3"
         style={{
           top: "53px",
-          opacity: 1 - flecheOpacity,
-          pointerEvents: flecheOpacity > 0.99 ? "none" : "auto",
+          opacity: 0,
+          pointerEvents: "none",
         }}
       >
         <div className="max-w-3xl mx-auto px-4 md:px-0 flex items-center gap-4">
@@ -244,75 +345,69 @@ export default function Quiz({
         </div>
       </div>
 
-      {/* Titre — même espacement que le hero de l'accueil */}
-      <Reveal>
-        <section className="relative overflow-hidden text-center px-6 pt-24 md:pt-28 pb-16 min-h-[450px]">
-          <MeshGradient />
-          {titleNode ?? (
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-800 mb-3 inline-flex items-center justify-center gap-2.5 flex-wrap">
-              <span>{title}</span>
-              {titleAccent && <span style={{ color: agreeColor }}>{titleAccent}</span>}
-              {badge && (
-                <span className="text-white text-lg font-bold px-3 py-1 rounded-xl" style={{ background: agreeColor }}>
-                  {badge}
-                </span>
+      {/* Titre — entrée en cascade (comme le héros de la home), bandeau resserré */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes tq-entre{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+            .tq-e{animation:tq-entre .9s cubic-bezier(.22,.9,.3,1) both;}
+            .tq-e2{animation-delay:.25s;}
+            .tq-e3{animation-delay:.45s;}
+            .tq-e4{animation-delay:.65s;}
+            @keyframes tq-tampon{from{opacity:0;transform:scale(2.6) rotate(-6deg);}to{opacity:1;transform:scale(1) rotate(0deg);}}
+            .tq-t{animation:tq-tampon .4s cubic-bezier(.2,1.35,.45,1) both;}
+            @media (prefers-reduced-motion: reduce){.tq-e,.tq-t{animation:none;}}
+          `,
+        }}
+      />
+      {/* Le fond (MeshGradient) : PLEIN ÉCRAN à l'arrivée, il part vers le haut
+          au scroll (piloté en DOM direct dans majVisuels).
+          `isolate` : garde le dégradé (z:-10) devant le fond blanc de la page. */}
+      <div className="relative isolate">
+      {/* Hauteur calée par JS : du haut de page jusqu'au trait sous la 1re question */}
+      <div ref={fondRef} className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[100svh]" style={{ willChange: "opacity" }}>
+        <MeshGradient />
+      </div>
+      <section className="relative pt-10 md:pt-12 pb-20">
+        {/* Aligné à gauche sur la même marge que le texte des cartes étape
+            (colonne max-w-3xl + retrait de 24 px, le padding interne des cartes) */}
+        <div className="max-w-3xl mx-auto px-4 md:px-0">
+          <div className="pl-6 text-left">
+            <div className="tq-e">
+              {titleNode ?? (
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-800 mb-3 inline-flex items-center gap-2.5 flex-wrap">
+                  <span>{title}</span>
+                  {titleAccent && <span style={{ color: agreeColor }}>{titleAccent}</span>}
+                  {badge && (
+                    <span className="text-white text-lg font-bold px-3 py-1 rounded-xl" style={{ background: agreeColor }}>
+                      {badge}
+                    </span>
+                  )}
+                </h1>
               )}
-            </h1>
-          )}
-          <p className="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto mt-7 leading-relaxed">{subtitle}</p>
-        </section>
-      </Reveal>
+            </div>
+            <p className="tq-e tq-e2 text-xl md:text-2xl text-gray-500 max-w-2xl mt-4 leading-relaxed">{subtitle}</p>
+            {microligne && (
+              <p className="tq-e tq-e3 mt-3 text-sm text-gray-500">{microligne}</p>
+            )}
+          </div>
+        </div>
+      </section>
 
       {/* Les 3 étapes — cartes arrondies, fondu au scroll */}
       {steps && steps.length > 0 && (
         <section
-          className="relative z-10 max-w-3xl mx-auto px-4 md:px-0 mb-16 -mt-[68px]"
-          style={{ opacity: 1 - exitP, transform: `translateY(${-exitP * 36}px)` }}
+          ref={stepsRef}
+          className="relative z-10 max-w-3xl mx-auto px-4 md:px-0 mb-4 -mt-[68px]"
         >
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {steps.map((s, idx) => (
               <Reveal key={s.step} delay={idx * 90}>
                 <div
-                  className={`relative rounded-3xl p-6 h-full border border-white/50 backdrop-blur-md${
-                    idx === 0 ? " overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]" : ""
-                  }`}
+                  className="relative rounded-3xl p-6 h-full border border-white/50 backdrop-blur-md overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]"
                   style={{ background: s.bg }}
-                  onClick={
-                    idx === 0
-                      ? () => refs.current[0]?.scrollIntoView({ behavior: "smooth", block: "center" })
-                      : undefined
-                  }
+                  onClick={() => refs.current[0]?.scrollIntoView({ behavior: "smooth", block: "start" })}
                 >
-                  {idx === 0 && (
-                    <div
-                      className="pointer-events-none absolute bottom-1 left-1/2 -translate-x-1/2 z-20"
-                      aria-hidden
-                    >
-                      <div
-                        style={{
-                          transform:
-                            flecheSortie && !flecheBas ? "translateY(0)" : "translateY(170%)",
-                          transition: "transform 720ms cubic-bezier(0.34, 1.56, 0.64, 1)",
-                        }}
-                      >
-                        <div className="animate-bounce">
-                          <svg
-                            width="26"
-                            height="26"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="rgb(51,164,116)"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M8 10.5l4 4 4-4" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                   <div className="relative z-10">
                     <span
                       className="inline-block text-[10px] font-bold text-white px-2.5 py-1 rounded-full mb-3 uppercase tracking-wider"
@@ -327,8 +422,10 @@ export default function Quiz({
               </Reveal>
             ))}
           </div>
+
         </section>
       )}
+      </div>
 
       {/* Questions — plus d'air entre chaque */}
       <section className="max-w-3xl mx-auto px-4 md:px-0 mb-10 w-full">
@@ -338,7 +435,7 @@ export default function Quiz({
           return (
           <Fragment key={i}>
             {phase1Count != null && i === phase1Count && phase2Intro && (
-              <div ref={introRef} className="scroll-mt-28">
+              <div ref={introRef} id="intro-variante" className="scroll-mt-28">
                 {phase2Intro}
               </div>
             )}
@@ -347,8 +444,13 @@ export default function Quiz({
               refs.current[i] = el;
               if (i === 0) q1Ref.current = el;
             }}
-            className={`py-11 scroll-mt-32 ${i > 0 ? "border-t border-gray-100" : ""}`}
+            id={i === 0 ? "premiere-question" : phase1Count != null && i === phase1Count ? "premiere-question-variante" : undefined}
+            className={`${i === 0 ? "pt-6 pb-11 scroll-mt-[78px]" : "py-11 scroll-mt-32"} ${i > 0 ? "border-t border-gray-100" : ""}`}
           >
+            {/* Entrée en cascade de Q1 au chargement : wrapper INTERNE (le bloc
+                lui-même est piloté en DOM direct par la mise en scène « 3 questions »,
+                une animation dessus écraserait ses styles inline). */}
+            <div className={i === 0 ? "tq-e tq-e4" : undefined}>
             {montrerIndic && (
               <div className="text-left mb-7" style={{ opacity: indicOp, transition: "opacity 0.45s ease" }}>
                 <span
@@ -385,7 +487,7 @@ export default function Quiz({
                     <button
                       aria-label={`Niveau ${v}`}
                       onClick={() => handleAnswer(i, v)}
-                      className="rounded-full cursor-pointer transition-all hover:scale-105"
+                      className={`rounded-full cursor-pointer transition-all hover:scale-105${i === 0 ? " tq-t" : ""}`}
                       style={{
                         width: SIZE,
                         height: SIZE,
@@ -393,6 +495,9 @@ export default function Quiz({
                         borderStyle: "solid",
                         borderColor: c,
                         background: active ? c : "transparent",
+                        // Entrée « tampon » (comme Exclusivité sur la home), un cercle
+                        // après l'autre de gauche à droite, après l'arrivée du bloc Q1.
+                        ...(i === 0 ? { animationDelay: `${0.9 + idx * 0.12}s` } : {}),
                       }}
                     />
                     {montrerIndic && indic && (
@@ -420,6 +525,7 @@ export default function Quiz({
               <span className="text-[18px] whitespace-nowrap" style={{ color: "rgba(51,164,116,0.85)", fontWeight: 450 }}>
                 D&apos;accord
               </span>
+            </div>
             </div>
           </div>
           </Fragment>

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import FenetreConnexion from "./FenetreConnexion";
+import FenetreFaireTest from "./FenetreFaireTest";
 
 // Chemins SVG (viewBox 24x24) des logos de marque.
 const IC = {
@@ -236,6 +238,7 @@ export default function PartageInline({
   message,
   defileAuto = false,
   ecartFleches = 0,
+  interception,
 }: {
   code: string;
   nomVariante: string;
@@ -256,7 +259,14 @@ export default function PartageInline({
   /* Écarte les flèches vers l'extérieur (px), vers le bord du bloc.
      0 par défaut : les blocs alignés au pixel (fin de rapport) ne bougent pas. */
   ecartFleches?: number;
+  /* Mode « invité » (non connecté) : cliquer un réseau ne partage rien.
+     "connexion" ouvre la fenêtre de connexion (email → code) pour créer un
+     compte ; "test" renvoie vers /test. Les flèches de défilement restent
+     utilisables. Absent = partage normal. */
+  interception?: "connexion" | "test";
 }) {
+  const [connexionOuverte, setConnexionOuverte] = useState(false);
+  const [testOuvert, setTestOuvert] = useState(false);
   const [url, setUrl] = useState("");
   const [urlPartage, setUrlPartage] = useState("");
   const [copie, setCopie] = useState(false);
@@ -417,6 +427,18 @@ export default function PartageInline({
         ref={scrollRef}
         onScroll={majFleches}
         className="pi-scroll"
+        /* Invité : tout clic sur une icône (lien OU bouton) est capté AVANT
+           son action → on annule, puis connexion OU renvoi au test. */
+        onClickCapture={
+          interception
+            ? (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (interception === "connexion") setConnexionOuverte(true);
+                else setTestOuvert(true);
+              }
+            : undefined
+        }
         /* Pause du défilement auto quand la souris (ou le doigt) est dessus */
         onMouseEnter={defileAuto ? () => (pauseRef.current = true) : undefined}
         onMouseLeave={defileAuto ? () => (pauseRef.current = false) : undefined}
@@ -440,6 +462,17 @@ export default function PartageInline({
         {/* Seconde copie : la boucle infinie se recale dessus, invisible */}
         {defileAuto && ronds}
       </div>
+
+      {/* Invité (mode connexion) : la fenêtre de connexion (email → code)
+          ouverte au clic sur n'importe quel réseau. */}
+      {interception === "connexion" && (
+        <FenetreConnexion open={connexionOuverte} onClose={() => setConnexionOuverte(false)} />
+      )}
+      {/* Invité (mode test) : la fenêtre « Faire le test » au lieu d'un renvoi
+          sec vers /test. */}
+      {interception === "test" && (
+        <FenetreFaireTest open={testOuvert} onClose={() => setTestOuvert(false)} />
+      )}
 
       {qrOuvert && (
         <div

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import FenetreParcours from "./FenetreParcours";
 import FenetreParcoursDuo from "./FenetreParcoursDuo";
+import FenetreConnexion from "../components/FenetreConnexion";
+import FenetreFaireTest from "../components/FenetreFaireTest";
 import PartageInline from "../components/PartageInline";
 import FlecheRemonter from "./FlecheRemonter";
 import { CercleProgression } from "./CercleProgression";
@@ -109,12 +111,16 @@ function Fleche({
    (cf. VISION_RELATIONS_PARCOURS.md — règle : on vend le service, on ne
    pointe jamais les faiblesses du client.) */
 function CarrouselRelations({
+  invite,
   profil,
   partage,
   descriptionsVariantes,
   lienInvitation,
   pctDuo = 0,
 }: {
+  /* Mode « invité » (non connecté) : réseaux de « L'inviter » et bouton
+     « Commencer mon parcours » → "connexion" (créer un compte) ou "test". */
+  invite?: "connexion" | "test";
   profil?: { sousTitre: string } | null;
   partage?: { code: string; nomVariante: string; slug: string; s: string; v: string } | null;
   /* Les petites descriptions des 48 variantes (bloc d'aide de la fenêtre duo). */
@@ -132,6 +138,16 @@ function CarrouselRelations({
   /* UNE seule fenêtre de parcours, ouverte par le bouton OU par les 3 étapes
      (même progression partout). */
   const [parcoursOuvert, setParcoursOuvert] = useState(false);
+  /* Invité non connecté : « Commencer mon parcours » n'ouvre pas le parcours,
+     il ouvre la connexion (mode "connexion") ou renvoie au test (mode "test").
+     Connecté (invite absent) → ouverture normale du parcours. */
+  const [connexionOuverte, setConnexionOuverte] = useState(false);
+  const [testOuvert, setTestOuvert] = useState(false);
+  function demarrerParcours() {
+    if (invite === "connexion") setConnexionOuverte(true);
+    else if (invite === "test") setTestOuvert(true);
+    else setParcoursOuvert(true);
+  }
   /* Au moins un module du parcours seul déjà validé sur le compte ?
      → le bouton devient « Continuer mon parcours ». Réponse mise en CACHE
      (module) : on ne re-interroge pas l'API à chaque retour sur l'onglet
@@ -246,7 +262,7 @@ function CarrouselRelations({
             <div className="mt-9 flex flex-col gap-6 sm:flex-row sm:gap-8">
               <button
                 type="button"
-                onClick={() => setParcoursOuvert(true)}
+                onClick={demarrerParcours}
                 onMouseEnter={() => setEtapeSurvolee(true)}
                 onMouseLeave={() => setEtapeSurvolee(false)}
                 className="flex flex-1 min-w-0 flex-col items-start rounded-2xl border border-gray-100 bg-white p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
@@ -259,7 +275,7 @@ function CarrouselRelations({
               </button>
               <button
                 type="button"
-                onClick={() => setParcoursOuvert(true)}
+                onClick={demarrerParcours}
                 onMouseEnter={() => setEtapeSurvolee(true)}
                 onMouseLeave={() => setEtapeSurvolee(false)}
                 className="flex flex-1 min-w-0 flex-col items-start rounded-2xl border border-gray-100 bg-white p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
@@ -272,7 +288,7 @@ function CarrouselRelations({
               </button>
               <button
                 type="button"
-                onClick={() => setParcoursOuvert(true)}
+                onClick={demarrerParcours}
                 onMouseEnter={() => setEtapeSurvolee(true)}
                 onMouseLeave={() => setEtapeSurvolee(false)}
                 className="flex flex-1 min-w-0 flex-col items-start rounded-2xl border border-gray-100 bg-white p-5 text-left shadow-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
@@ -294,7 +310,7 @@ function CarrouselRelations({
             <div className="mt-auto pt-8">
               <button
                 type="button"
-                onClick={() => setParcoursOuvert(true)}
+                onClick={demarrerParcours}
                 className="inline-block rounded-full px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-105 cursor-pointer"
                 /* transform inline : prioritaire sur la classe → le bouton
                    grossit aussi quand une ÉTAPE est survolée */
@@ -346,21 +362,22 @@ function CarrouselRelations({
                   parcours se construit sur vos deux vrais profils.
                 </p>
                 {/* Même système de partage que le rapport, mais LIEN et
-                    MESSAGE d'invitation dédiés. ⚠️ Lien placeholder /test en
-                    attendant le vrai lien d'invitation signé (table liens). */}
-                {partage && (
-                  <div className="mt-4">
-                    <PartageInline
-                      code={partage.code}
-                      nomVariante={partage.nomVariante}
-                      lien={lienInvitation ?? "/test"}
-                      message="Hey, j'aimerais qu'on fasse notre parcours à deux. Passe le test de ton côté et rejoins-moi :"
-                      montrerQR={false}
-                      defileAuto
-                      ecartFleches={14}
-                    />
-                  </div>
-                )}
+                    MESSAGE d'invitation dédiés. Affiché TOUJOURS (y compris
+                    non connecté / sans profil) : le message et le lien sont
+                    surchargés, donc code/nomVariante ne servent pas ici.
+                    Lien de repli /test quand pas de lien signé. */}
+                <div className="mt-4">
+                  <PartageInline
+                    code={partage?.code ?? ""}
+                    nomVariante={partage?.nomVariante ?? ""}
+                    lien={lienInvitation ?? "/test"}
+                    message="Hey, j'aimerais qu'on fasse notre parcours à deux. Passe le test de ton côté et rejoins-moi :"
+                    montrerQR={false}
+                    defileAuto
+                    ecartFleches={14}
+                    interception={invite}
+                  />
+                </div>
               </div>
               {/* La carte OUVRE la fenêtre « Décrire mon ou ma partenaire »
                   (même patron que le parcours solo). flex-col items-start :
@@ -390,6 +407,15 @@ function CarrouselRelations({
           </div>
         </section>
       </div>
+
+      {/* Invité (mode connexion) : fenêtre ouverte par « Commencer mon parcours ». */}
+      {invite === "connexion" && (
+        <FenetreConnexion open={connexionOuverte} onClose={() => setConnexionOuverte(false)} />
+      )}
+      {/* Invité (mode test) : fenêtre « Faire le test ». */}
+      {invite === "test" && (
+        <FenetreFaireTest open={testOuvert} onClose={() => setTestOuvert(false)} />
+      )}
 
       {/* Les 2 points indicateurs (cliquables) */}
       <div className="mt-4 flex justify-center gap-2">
@@ -599,6 +625,7 @@ function EspacePartenaire({
 }
 
 export default function ProfilOnglets({
+  invite,
   progression,
   profil,
   partage,
@@ -608,6 +635,10 @@ export default function ProfilOnglets({
   ongletInitial,
   children,
 }: {
+  /* Mode « invité » (non connecté) : "connexion" (a fait le test → créer un
+     compte) ou "test" (pas fait → /test). Absent = connecté, comportement
+     normal. Sert aux réseaux et au bouton « Commencer mon parcours ». */
+  invite?: "connexion" | "test";
   progression: Record<string, number>;
   /* Le profil du client (ex. « INFP · le Poète ») pour personnaliser la
      partie Relations ; null si aucun test passé. */
@@ -636,6 +667,14 @@ export default function ProfilOnglets({
       ? (ongletInitial as OngletId)
       : "profils",
   );
+  /* Navigation douce (ex. depuis la navbar « Mon espace personnel » vers un
+     autre onglet alors qu'on est déjà sur /profil) : la page ne se remonte
+     pas, donc on resynchronise l'onglet actif quand l'onglet demandé change. */
+  useEffect(() => {
+    if (ongletInitial && ONGLETS.some((o) => o.id === ongletInitial)) {
+      setActif(ongletInitial as OngletId);
+    }
+  }, [ongletInitial]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [peutG, setPeutG] = useState(false);
   const [peutD, setPeutD] = useState(false);
@@ -824,6 +863,7 @@ export default function ProfilOnglets({
         {actif === "relations" && (
           <>
             <CarrouselRelations
+              invite={invite}
               profil={profil}
               partage={partage}
               descriptionsVariantes={descriptionsVariantes}
