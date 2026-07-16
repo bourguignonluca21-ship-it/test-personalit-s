@@ -123,7 +123,6 @@ export default function Quiz({
   const FLECHE_FIN = 260; // px de scroll où elle est totalement invisible
   const stepsRef = useRef<HTMLElement>(null); // section des 3 blocs étape (fondu de sortie)
   const barreRef = useRef<HTMLDivElement>(null); // barre de progression fixée
-  const fondRef = useRef<HTMLDivElement>(null); // dégradé plein écran (part vers le haut au scroll)
 
 
   // Mise en scène « 3 questions » : l'opacité et l'échelle de chaque question
@@ -212,11 +211,6 @@ export default function Quiz({
         stepsRef.current.style.opacity = String(1 - exitP);
         stepsRef.current.style.transform = `translateY(${-exitP * 36}px)`;
       }
-      // Fond dégradé : disparaît en fondu au scroll, sans bouger (réversible).
-      const pFond = Math.max(0, Math.min(1, y / 350));
-      if (fondRef.current) {
-        fondRef.current.style.opacity = String(1 - pFond);
-      }
       // Barre de progression : apparaît quand la flèche s'efface (DOM direct).
       const fo = Math.max(0, Math.min(1, 1 - (y - FLECHE_DEBUT) / (FLECHE_FIN - FLECHE_DEBUT)));
       if (barreRef.current) {
@@ -243,22 +237,9 @@ export default function Quiz({
       attente = true;
       requestAnimationFrame(() => { majVisuels(); attente = false; });
     }
-    // Le fond descend PILE jusqu'en bas de l'écran d'arrivée (ni plus, ni moins).
-    function calerFond() {
-      const fond = fondRef.current;
-      const parent = fond?.parentElement;
-      if (!fond || !parent) return;
-      const hautParent = parent.getBoundingClientRect().top + window.scrollY; // position document
-      fond.style.height = `${Math.max(0, Math.round(window.innerHeight - hautParent))}px`;
-    }
-    calerFond();
-    const tFond = setTimeout(calerFond, 600); // recale après les animations d'entrée
-    window.addEventListener("resize", calerFond);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
-      clearTimeout(tFond);
-      window.removeEventListener("resize", calerFond);
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
@@ -356,16 +337,22 @@ export default function Quiz({
             .tq-e4{animation-delay:.65s;}
             @keyframes tq-tampon{from{opacity:0;transform:scale(2.6) rotate(-6deg);}to{opacity:1;transform:scale(1) rotate(0deg);}}
             .tq-t{animation:tq-tampon .4s cubic-bezier(.2,1.35,.45,1) both;}
-            @media (prefers-reduced-motion: reduce){.tq-e,.tq-t{animation:none;}}
+            @keyframes tq-fade{from{opacity:0;}to{opacity:1;}}
+            .tq-f{animation:tq-fade .4s ease both;}
+            @keyframes tq-respire{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
+            .tq-r{display:inline-block;animation:tq-respire 2.6s ease-in-out infinite;}
+            /* fondu d'entrée + respiration sur le MÊME élément (délais séparés en inline) */
+            .tq-fr{display:inline-block;animation:tq-fade .4s ease both, tq-respire 2.6s ease-in-out infinite;}
+            @media (prefers-reduced-motion: reduce){.tq-e,.tq-t,.tq-f,.tq-r,.tq-fr{animation:none;}}
           `,
         }}
       />
-      {/* Le fond (MeshGradient) : PLEIN ÉCRAN à l'arrivée, il part vers le haut
-          au scroll (piloté en DOM direct dans majVisuels).
-          `isolate` : garde le dégradé (z:-10) devant le fond blanc de la page. */}
+      {/* Le fond (MeshGradient) : FIXÉ au viewport, il suit l'écran sur toute la
+          page (comme la home), sans bouger ni s'effacer.
+          `isolate` : garde le dégradé (z:-10) devant le fond blanc de la page
+          (piège documenté : sans contexte d'empilement, il passe derrière le bg-white). */}
       <div className="relative isolate">
-      {/* Hauteur calée par JS : du haut de page jusqu'au trait sous la 1re question */}
-      <div ref={fondRef} className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[100svh]" style={{ willChange: "opacity" }}>
+      <div className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-[100svh]">
         <MeshGradient />
       </div>
       <section className="relative pt-10 md:pt-12 pb-20">
@@ -398,7 +385,7 @@ export default function Quiz({
       {steps && steps.length > 0 && (
         <section
           ref={stepsRef}
-          className="relative z-10 max-w-3xl mx-auto px-4 md:px-0 mb-4 -mt-[68px]"
+          className="relative z-10 max-w-3xl mx-auto px-4 md:px-0 mb-4 -mt-[48px]"
         >
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {steps.map((s, idx) => (
@@ -431,7 +418,9 @@ export default function Quiz({
       <section className="max-w-3xl mx-auto px-4 md:px-0 mb-10 w-full">
         {questions.map((q, i) => {
           const montrerIndic = i === 0; // montées en permanence sur Q1 (place réservée stable, pas de saut)
-          const indicOp = answers[keyOf(0)] == null && delayPassed ? indicOpacity : 0; // nulle avant le délai d'1 s et dès que Q1 est répondue
+          const q1Repondue = answers[keyOf(0)] != null;
+          const indicOp = !q1Repondue && delayPassed ? indicOpacity : 0; // nulle avant le délai d'1 s et dès que Q1 est répondue
+          const noteOp = delayPassed ? indicOpacity : 0; // la note, elle, reste visible après la réponse (elle se transforme)
           return (
           <Fragment key={i}>
             {phase1Count != null && i === phase1Count && phase2Intro && (
@@ -452,12 +441,22 @@ export default function Quiz({
                 une animation dessus écraserait ses styles inline). */}
             <div className={i === 0 ? "tq-e tq-e4" : undefined}>
             {montrerIndic && (
-              <div className="text-left mb-7" style={{ opacity: indicOp, transition: "opacity 0.45s ease" }}>
+              <div className="relative text-left mb-2" style={{ opacity: noteOp, transition: "opacity 0.45s ease" }}>
+                {/* À la 1re réponse : la note se transforme À LA VITESSE de la
+                    descente vers la question suivante (smoothCenter = 480 ms) */}
                 <span
-                  className="inline-block italic text-[15px] font-medium"
-                  style={{ color: "rgba(51,164,116,0.85)" }}
+                  className="inline-block italic text-[15px] font-medium tq-r"
+                  style={{ color: "rgba(51,164,116,0.85)", opacity: q1Repondue ? 0 : 1, transition: "opacity 0.48s ease" }}
                 >
                   Clic sur la pastille pour faire ton choix
+                </span>
+                {/* …et « À toi de jouer ! » apparaît à sa place (typo strictement identique) */}
+                <span
+                  className="absolute left-0 top-0 inline-block italic text-[15px] font-medium tq-r whitespace-nowrap"
+                  style={{ color: "rgba(51,164,116,0.85)", opacity: q1Repondue ? 1 : 0, transition: "opacity 0.48s ease" }}
+                  aria-hidden={!q1Repondue}
+                >
+                  À toi de jouer !
                 </span>
               </div>
             )}
@@ -465,7 +464,9 @@ export default function Quiz({
               {q}
             </p>
             <div className="relative flex items-center justify-between">
-              <span className="text-[18px] whitespace-nowrap" style={{ color: "rgba(51,164,116,0.85)", fontWeight: 450 }}>
+              {/* Sur Q1, « Pas d'accord » arrive avec le 1er cercle, « D'accord » avec le dernier,
+                  et les deux respirent doucement (comme les indications) */}
+              <span className={`text-[18px] whitespace-nowrap${i === 0 ? " tq-fr" : ""}`} style={{ color: "rgba(51,164,116,0.85)", fontWeight: i === 0 ? 500 : 450, ...(i === 0 ? { animationDelay: "0.9s, 0s" } : {}) }}>
                 Pas d&apos;accord
               </span>
               {VALUES.map((v, idx) => {
@@ -475,8 +476,8 @@ export default function Quiz({
                 const above = idx === 2; // « Neutre » se place au-dessus de son cercle
                 const label = (
                   <span
-                    className="italic whitespace-nowrap leading-tight"
-                    style={{ padding: "4px 6px", color: "rgba(51,164,116,0.85)", fontSize: "15px", fontWeight: 400 }}
+                    className="italic whitespace-nowrap leading-tight tq-r"
+                    style={{ padding: "4px 6px", color: "rgba(51,164,116,0.85)", fontSize: "15px", fontWeight: 500 }}
                   >
                     {indic}
                   </span>
@@ -502,10 +503,14 @@ export default function Quiz({
                     />
                     {montrerIndic && indic && (
                       <div
-                        className="pointer-events-none absolute left-1/2 -translate-x-1/2 flex flex-col items-center"
+                        className="pointer-events-none absolute left-1/2 -translate-x-1/2"
                         style={{ opacity: indicOp, transition: "opacity 0.45s ease", ...(above ? { bottom: "100%" } : { top: "100%" }) }}
                         aria-hidden
                       >
+                        {/* Le libellé arrive EN MÊME TEMPS que son cercle (même délai
+                            que le tampon) — wrapper interne : l'opacité au scroll
+                            reste pilotée par le parent */}
+                        <div className="tq-f flex flex-col items-center" style={{ animationDelay: `${0.9 + idx * 0.12}s` }}>
                         {above ? (
                           <>
                             {label}
@@ -517,12 +522,13 @@ export default function Quiz({
                             {label}
                           </>
                         )}
+                        </div>
                       </div>
                     )}
                   </div>
                 );
               })}
-              <span className="text-[18px] whitespace-nowrap" style={{ color: "rgba(51,164,116,0.85)", fontWeight: 450 }}>
+              <span className={`text-[18px] whitespace-nowrap${i === 0 ? " tq-fr" : ""}`} style={{ color: "rgba(51,164,116,0.85)", fontWeight: i === 0 ? 500 : 450, ...(i === 0 ? { animationDelay: "1.38s, 0s" } : {}) }}>
                 D&apos;accord
               </span>
             </div>
@@ -533,7 +539,11 @@ export default function Quiz({
         })}
       </section>
 
-      <section ref={endRef} className="max-w-md mx-auto px-6 pt-12 pb-24 text-center scroll-mt-28">
+      {/* pb en vh : repousse le footer hors de l'écran quand la carte
+          « Test terminé » est centrée (son trait du haut gâchait la vue).
+          Le centrage incluant le padding, il faut que la section dépasse
+          la hauteur d'écran : 60vh couvre les grands écrans. */}
+      <section ref={endRef} className="max-w-md mx-auto px-6 pt-12 pb-[60vh] text-center scroll-mt-28">
         {!showEnd ? (
           <p className="text-sm text-gray-400">{note}</p>
         ) : (
