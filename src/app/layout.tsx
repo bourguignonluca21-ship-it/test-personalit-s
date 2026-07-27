@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Apparitions from "./components/Apparitions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col">
         <div className="grain-overlay" aria-hidden />
+        <Apparitions />
         <a href="#contenu" className="skip-link">
           Passer au contenu principal
         </a>

@@ -101,6 +101,7 @@ function Rond({
           <img
             src={img}
             alt={label}
+            className="pi-tuile"
             style={{
               width: 54,
               height: 54,
@@ -113,7 +114,7 @@ function Rond({
             }}
           />
         ) : (
-          <span style={{ width: 54, height: 54, display: "grid", placeItems: "center" }}>
+          <span className="pi-tuile" style={{ width: 54, height: 54, display: "grid", placeItems: "center" }}>
             <img
               src={img}
               alt={label}
@@ -123,6 +124,7 @@ function Rond({
         )
       ) : (
         <span
+          className="pi-tuile"
           style={{
             width: 54,
             height: 54,
@@ -167,13 +169,13 @@ function Rond({
   };
   if (href) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} style={style}>
+      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="pi-rond" style={style}>
         {cercle}
       </a>
     );
   }
   return (
-    <button type="button" aria-label={label} onClick={onClick} style={style}>
+    <button type="button" aria-label={label} onClick={onClick} className="pi-rond" style={style}>
       {cercle}
     </button>
   );
@@ -288,7 +290,10 @@ export default function PartageInline({
     const GAP = 4; // l'écart flex entre les icônes (style gap: 4)
     const pas = () => {
       const el = scrollRef.current;
-      if (el) {
+      /* Pendant une glisse de page (ressort, descente, remontée), on ne
+         touche pas au scroll du rail : pas d'écritures concurrentes. */
+      const glisse = (window as unknown as { __glissePageEnCours?: boolean }).__glissePageEnCours;
+      if (el && !glisse) {
         const periode = (el.scrollWidth + GAP) / 2;
         /* Si l'utilisateur a bougé le scroll lui-même (flèches, molette,
            doigt), on se recale sur sa position. */
@@ -420,7 +425,10 @@ export default function PartageInline({
 
   return (
     <div style={{ position: "relative", marginTop: 4 }}>
-      <style>{`.pi-scroll::-webkit-scrollbar{display:none}`}</style>
+      <style>{`.pi-scroll::-webkit-scrollbar{display:none}
+.pi-rond .pi-tuile{transition:transform .4s cubic-bezier(.22,.9,.3,1);}
+.pi-rond:hover .pi-tuile{transform:scale(1.25) rotate(-2deg);}
+@media (prefers-reduced-motion: reduce){.pi-rond .pi-tuile{transition:none;}.pi-rond:hover .pi-tuile{transform:none;}}`}</style>
       <Fleche cote="g" actif={defileAuto || peutG} onClick={() => defiler(-1)} ecart={ecartFleches} />
       <Fleche cote="d" actif={defileAuto || peutD} onClick={() => defiler(1)} ecart={ecartFleches} />
       <div
@@ -450,7 +458,9 @@ export default function PartageInline({
           overflowX: "auto",
           scrollbarWidth: "none",
           msOverflowStyle: "none",
-          padding: 0,
+          padding: "10px 0",
+          marginTop: -10,
+          marginBottom: -10,
           marginLeft: -9,
           /* ⚠️ scroll-behavior:smooth ferait ANIMER chaque petit pas du
              défilement auto (mouvement erratique) → coupé dans ce mode.

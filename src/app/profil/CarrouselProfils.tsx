@@ -32,12 +32,67 @@ export default function CarrouselProfils({ children }: { children: ReactNode }) 
     return () => ro.disconnect();
   }, []);
 
+  /* Glisse « ressort » horizontale : même courbe que le ressort vertical de
+     la page (easeGlisse), au lieu du smooth natif du navigateur. Le snap CSS
+     est coupé pendant la glisse (sinon il tire par à-coups), puis rétabli. */
+  const animRef = useRef(0);
+  const glisseActiveRef = useRef(false); // vraie pendant la glisse (la molette n'empile pas les sauts)
+  function easeGlisse(t: number) { return t * t * t * (t * (t * 6 - 15) + 10); }
+  function glisserVers(cible: number) {
+    const el = railRef.current;
+    if (!el) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.scrollTo({ left: cible, behavior: "auto" });
+      return;
+    }
+    cancelAnimationFrame(animRef.current);
+    const depart = el.scrollLeft, delta = cible - depart;
+    if (!delta) return;
+    glisseActiveRef.current = true;
+    el.style.scrollSnapType = "none";
+    const D = Math.min(1200, 500 + Math.abs(delta) * 0.35);
+    const t0 = performance.now();
+    const pas = (t: number) => {
+      const p = Math.min(1, (t - t0) / D);
+      el.scrollLeft = depart + delta * easeGlisse(p);
+      if (p < 1) animRef.current = requestAnimationFrame(pas);
+      else { el.style.scrollSnapType = ""; setTimeout(() => { glisseActiveRef.current = false; }, 160); }
+    };
+    animRef.current = requestAnimationFrame(pas);
+  }
   function defiler(sens: 1 | -1) {
     const el = railRef.current;
     if (!el) return;
     // Une « page » = la largeur visible (2 cartes) + l'écart de 20 px.
-    el.scrollBy({ left: sens * (el.clientWidth + 20), behavior: "smooth" });
+    const max = el.scrollWidth - el.clientWidth;
+    glisserVers(Math.min(max, Math.max(0, el.scrollLeft + sens * (el.clientWidth + 20))));
   }
+
+  /* Un geste HORIZONTAL (trackpad, ou Maj+molette) au-dessus des cartes =
+     une « page » entière (2 cartes), même glisse que les flèches. Le geste
+     vertical n'est pas touché : c'est la page qui descend (ressort global). */
+  useEffect(() => {
+    const el = railRef.current;
+    if (!el) return;
+    let dernierEvtT = 0; // amortissement trackpad (traîne d'inertie avalée)
+    const surMolette = (e: WheelEvent) => {
+      const horizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey;
+      if (!horizontal) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const tEvt = performance.now();
+      const ecartEvt = tEvt - dernierEvtT;
+      dernierEvtT = tEvt;
+      if (glisseActiveRef.current) return;
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(delta) < 8) return;
+      if (Math.abs(delta) < 50 && ecartEvt < 140) return;
+      defiler(delta > 0 ? 1 : -1);
+    };
+    el.addEventListener("wheel", surMolette, { passive: false });
+    return () => el.removeEventListener("wheel", surMolette);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function Fleche({ sens }: { sens: 1 | -1 }) {
     const visible = sens === 1 ? peutD : peutG;
@@ -63,7 +118,7 @@ export default function CarrouselProfils({ children }: { children: ReactNode }) 
   }
 
   return (
-    <div className="relative mt-8 min-w-0">
+    <div data-anim="up" className="relative mt-8 min-w-0">
       <style>{`.cprof-noscroll{scrollbar-width:none}.cprof-noscroll::-webkit-scrollbar{display:none}`}</style>
       <Fleche sens={-1} />
       <Fleche sens={1} />

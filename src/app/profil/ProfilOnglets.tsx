@@ -40,7 +40,7 @@ let cacheParcoursEntame: boolean | null = null;
 /* État d'attente d'une partie pas encore construite. */
 function EnConstruction({ titre, texte }: { titre: string; texte: string }) {
   return (
-    <div className="rounded-2xl border border-dashed border-gray-200 bg-white/60 p-8 text-left">
+    <div data-anim="up" className="rounded-2xl border border-dashed border-gray-200 bg-white/60 p-8 text-left">
       <p className="text-2xl font-bold" style={{ color: INK }}>
         {titre}
       </p>
@@ -180,11 +180,58 @@ function CarrouselRelations({
     setIdx(Math.round(el.scrollLeft / (el.clientWidth + ECART)));
   }
 
+  /* Glisse « ressort » (même courbe que partout), snap coupé pendant la
+     glisse ; un geste horizontal (trackpad, ou Maj+molette) = une section
+     entière, comme les autres carrousels. */
+  const animGlisseRelRef = useRef(0);
+  const glisseRelActiveRef = useRef(false);
   function aller(i: number) {
     const el = railRef.current;
     if (!el) return;
-    el.scrollTo({ left: i * (el.clientWidth + ECART), behavior: "smooth" });
+    const cible = i * (el.clientWidth + ECART);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.scrollTo({ left: cible, behavior: "auto" });
+      return;
+    }
+    cancelAnimationFrame(animGlisseRelRef.current);
+    const depart = el.scrollLeft, delta = cible - depart;
+    if (!delta) return;
+    glisseRelActiveRef.current = true;
+    el.style.scrollSnapType = "none";
+    const ease = (t: number) => t * t * t * (t * (t * 6 - 15) + 10);
+    const D = Math.min(1200, 500 + Math.abs(delta) * 0.35);
+    const t0 = performance.now();
+    const pas = (t: number) => {
+      const pr = Math.min(1, (t - t0) / D);
+      el.scrollLeft = depart + delta * ease(pr);
+      if (pr < 1) animGlisseRelRef.current = requestAnimationFrame(pas);
+      else { el.style.scrollSnapType = ""; setTimeout(() => { glisseRelActiveRef.current = false; }, 160); }
+    };
+    animGlisseRelRef.current = requestAnimationFrame(pas);
   }
+  useEffect(() => {
+    const el = railRef.current;
+    if (!el) return;
+    let dernierEvtT = 0; // amortissement trackpad (traîne d'inertie avalée)
+    const surMolette = (e: WheelEvent) => {
+      const horizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey;
+      if (!horizontal) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const tEvt = performance.now();
+      const ecartEvt = tEvt - dernierEvtT;
+      dernierEvtT = tEvt;
+      if (glisseRelActiveRef.current) return;
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(delta) < 8) return;
+      if (Math.abs(delta) < 50 && ecartEvt < 140) return;
+      const courant = Math.round(el.scrollLeft / (el.clientWidth + ECART));
+      aller(Math.min(1, Math.max(0, courant + (delta > 0 ? 1 : -1))));
+    };
+    el.addEventListener("wheel", surMolette, { passive: false });
+    return () => el.removeEventListener("wheel", surMolette);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Étape de la frise d'un parcours (acte ou temps) : même patron que les
   // titres d'acte du chemin, numéro + point collés au titre (plus de
@@ -220,7 +267,7 @@ function CarrouselRelations({
   }
 
   return (
-    <div className="relative mt-8">
+    <div data-anim="up" className="relative mt-8">
       <style>{`.rel-scroll::-webkit-scrollbar{display:none}`}</style>
       <Fleche cote="g" actif={idx > 0} onClick={() => aller(0)} top="50%" />
       <Fleche cote="d" actif={idx < 1} onClick={() => aller(1)} top="50%" />
@@ -489,7 +536,7 @@ function EspacePartenaire({
     fetch("/api/duo/vu", { method: "POST", keepalive: true }).catch(() => {});
   }
   return (
-    <div className="mt-8">
+    <div id="profil-partenaire" data-anim="up" data-delay="150" className="mt-8">
       {/* Pulsation de la pastille : keyframes DANS le composant (pas
           globals.css, file-watch OneDrive peu fiable dessus). */}
       <style>{`@keyframes part-nouveau{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}`}</style>
@@ -694,9 +741,67 @@ export default function ProfilOnglets({
   }, []);
 
   // Défilement d'environ une carte par clic (242,7 + 20 d'écart).
-  function defiler(sens: 1 | -1) {
-    scrollRef.current?.scrollBy({ left: sens * 263, behavior: "smooth" });
+  /* Glisse « ressort » horizontale (même courbe que partout ailleurs), avec
+     atterrissage sur un multiple de la largeur d'un bloc : le prochain bloc
+     arrive ENTIER, en douceur, jamais coupé au bord. */
+  const animGlisseRef = useRef(0);
+  const glisseActiveRef = useRef(false); // vraie pendant la glisse (la molette n'empile pas les sauts)
+  function easeGlisse(t: number) { return t * t * t * (t * (t * 6 - 15) + 10); }
+  function glisserVers(cible: number) {
+    const el = scrollRef.current;
+    if (!el) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.scrollTo({ left: cible, behavior: "auto" });
+      return;
+    }
+    cancelAnimationFrame(animGlisseRef.current);
+    const depart = el.scrollLeft, delta = cible - depart;
+    if (!delta) return;
+    glisseActiveRef.current = true;
+    const D = Math.min(1200, 500 + Math.abs(delta) * 0.35);
+    const t0 = performance.now();
+    const pas = (t: number) => {
+      const p = Math.min(1, (t - t0) / D);
+      el.scrollLeft = depart + delta * easeGlisse(p);
+      if (p < 1) animGlisseRef.current = requestAnimationFrame(pas);
+      else setTimeout(() => { glisseActiveRef.current = false; }, 160);
+    };
+    animGlisseRef.current = requestAnimationFrame(pas);
   }
+  function defiler(sens: 1 | -1) {
+    const el = scrollRef.current;
+    if (!el) return;
+    const PAS = 262.7; // largeur d'un bloc (242,7) + l'écart de 20 px
+    const max = el.scrollWidth - el.clientWidth;
+    const cible = Math.min(max, Math.max(0, Math.round((el.scrollLeft + sens * PAS) / PAS) * PAS));
+    glisserVers(cible);
+  }
+
+  /* Un geste HORIZONTAL (trackpad, ou Maj+molette) au-dessus de la rangée =
+     un bloc entier, avec la même glisse que les flèches. Un geste vertical
+     n'est pas touché : c'est la page qui descend (ressort global). */
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    let dernierEvtT = 0; // amortissement trackpad (traîne d'inertie avalée)
+    const surMolette = (e: WheelEvent) => {
+      const horizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey;
+      if (!horizontal) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const tEvt = performance.now();
+      const ecartEvt = tEvt - dernierEvtT;
+      dernierEvtT = tEvt;
+      if (glisseActiveRef.current) return;
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(delta) < 8) return;
+      if (Math.abs(delta) < 50 && ecartEvt < 140) return;
+      defiler(delta > 0 ? 1 : -1);
+    };
+    el.addEventListener("wheel", surMolette, { passive: false });
+    return () => el.removeEventListener("wheel", surMolette);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Au clic sur un bloc : descendre en douceur jusqu'à sa section.
   // Défilement maison via rAF, comme smoothCenter de la page test. PIÈGE : le
@@ -708,6 +813,10 @@ export default function ProfilOnglets({
     const el = contenuRef.current;
     if (!el) return;
     cancelAnimationFrame(animRef.current); // une descente déjà en cours ? on repart proprement
+    /* On coupe une éventuelle glisse du ressort et on prend la main (une
+       seule animation de page à la fois, sinon elles se battent → à-coups). */
+    window.dispatchEvent(new Event("arret-ressort"));
+    (window as unknown as { __glissePageEnCours?: boolean }).__glissePageEnCours = true;
     const root = document.documentElement;
     const prevBehavior = root.style.scrollBehavior;
     root.style.scrollBehavior = "auto";
@@ -721,7 +830,12 @@ export default function ProfilOnglets({
       const ease = 1 - Math.pow(1 - avancee, 3);
       window.scrollTo(0, depart + distance * ease);
       if (avancee < 1) animRef.current = requestAnimationFrame(tick);
-      else root.style.scrollBehavior = prevBehavior;
+      else {
+        root.style.scrollBehavior = prevBehavior;
+        setTimeout(() => {
+          (window as unknown as { __glissePageEnCours?: boolean }).__glissePageEnCours = false;
+        }, 160);
+      }
     };
     animRef.current = requestAnimationFrame(tick);
   }
@@ -751,11 +865,19 @@ export default function ProfilOnglets({
       }
     }
     majVisibilite();
-    window.addEventListener("scroll", majVisibilite, { passive: true });
-    window.addEventListener("resize", majVisibilite);
+    /* Au rythme des frames (pas à chaque événement scroll) : les mesures
+       getBoundingClientRect en rafale pendant les glisses saccadaient. */
+    let attente = false;
+    const surScroll = () => {
+      if (attente) return;
+      attente = true;
+      requestAnimationFrame(() => { attente = false; majVisibilite(); });
+    };
+    window.addEventListener("scroll", surScroll, { passive: true });
+    window.addEventListener("resize", surScroll);
     return () => {
-      window.removeEventListener("scroll", majVisibilite);
-      window.removeEventListener("resize", majVisibilite);
+      window.removeEventListener("scroll", surScroll);
+      window.removeEventListener("resize", surScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -769,6 +891,10 @@ export default function ProfilOnglets({
           fait pile 3 × 242,7 px + 2 écarts), les autres arrivent en scrollant
           ou avec les flèches — même patron que les icônes réseaux du résumé.
           Cartes = taille EXACTE des cartes « Étape » du test (242,7 × 184). */}
+      {/* data-anim sur une ENVELOPPE : l'apparition (montée en fondu) joue une
+          fois pour tout le carrousel ; les blocs, eux, restent normaux quand on
+          les fait défiler de gauche à droite (même choix que les cartes de test). */}
+      <div data-anim="up">
       <div
         ref={carrouselRef}
         className="relative"
@@ -838,12 +964,14 @@ export default function ProfilOnglets({
           })}
         </div>
       </div>
+      </div>
 
       {/* Le contenu de l'onglet actif — commence 30 px sous les cercles de
           progression ; cliquer sur un bloc fait descendre en douceur jusqu'ici.
           Il s'estompe quand on remonte (cercles à 100 px du bas de l'écran). */}
       <div
         ref={contenuRef}
+        id="profil-contenu"
         className="mt-[40px]"
         style={{
           opacity: contenuVisible ? 1 : 0,
@@ -855,7 +983,7 @@ export default function ProfilOnglets({
             des sections (padding interne des cartes), pas sur le bord des
             blocs (demande Luca). */}
         {actif !== "profils" && actif !== "relations" && (
-          <h2 className="mb-2 pl-7 text-left text-xl font-bold md:pl-10" style={{ color: INK }}>
+          <h2 data-anim="up" className="mb-2 pl-7 text-left text-xl font-bold md:pl-10" style={{ color: INK }}>
             {ongletActif.titre}
           </h2>
         )}

@@ -526,7 +526,7 @@ function BlocPartageFin({ code, nomVariante }: { code: string; nomVariante: stri
         Partage les grandes lignes de ton profil. Tes proches n&apos;en verront que l&apos;essentiel, jamais ton analyse
         intime, et ça leur donnera sûrement envie de découvrir le leur.
       </p>
-      <PartageInline code={code} nomVariante={nomVariante} />
+      <PartageInline code={code} nomVariante={nomVariante} defileAuto />
     </div>
   );
 }

@@ -10,11 +10,9 @@ export default function Hero() {
         dangerouslySetInnerHTML={{
           __html: `
             @keyframes hero-entre{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
-            @keyframes hero-entre-x{from{opacity:0;transform:translate(-50%,26px);}to{opacity:1;transform:translate(-50%,0);}}
             .hero-e{animation:hero-entre .9s cubic-bezier(.22,.9,.3,1) both;}
             .hero-e2{animation-delay:.25s;}
             .hero-e3{animation-delay:.5s;}
-            .hero-e4{animation-name:hero-entre-x;animation-delay:1.1s;}
             @media (prefers-reduced-motion: reduce){.hero-e{animation:none;}}
           `,
         }}
@@ -41,15 +39,6 @@ export default function Hero() {
         </Link>
       </div>
 
-      {/* Invitation à descendre : animation Lottie scroll-down */}
-      <a
-        href="#ha-acte1"
-        aria-label="Descendre vers la suite"
-        className="hero-e hero-e4 absolute bottom-4 left-1/2"
-        dangerouslySetInnerHTML={{
-          __html: `<dotlottie-player src="https://assets-v2.lottiefiles.com/a/f2a50142-1164-11ee-9f06-0f774aafc4a7/SkmRpW8Gfa.lottie" autoplay loop style="width:88px;height:88px"></dotlottie-player>`,
-        }}
-      />
     </section>
   );
 }

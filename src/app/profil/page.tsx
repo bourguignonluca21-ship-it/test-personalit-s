@@ -6,6 +6,7 @@ import ProfilOnglets, { CercleProgression } from "./ProfilOnglets";
 import CarrouselProfils from "./CarrouselProfils";
 import PartageInline from "../components/PartageInline";
 import FlecheRemonter from "./FlecheRemonter";
+import RessortDefilement from "../components/RessortDefilement";
 import { cookies } from "next/headers";
 import { createClient } from "../lib/supabase/server";
 import { getTypeByCode, TYPES } from "../data/types";
@@ -256,6 +257,16 @@ export default async function ProfilPage({
     <div>
       {/* Au rechargement, la page repart en HAUT (comme résultat + test) */}
       <ScrollHaut />
+      {/* Le ressort de la home : un geste de molette = une glisse jusqu'à la
+          partie suivante (haut → contenu des onglets → bas de page). */}
+      <RessortDefilement
+        arrets={[
+          { selecteur: "#profil-contenu", alignement: "haut", marge: 80 },
+          /* Onglet Relations : l'espace Partenaire est un arrêt CENTRÉ à
+             l'écran (absent des autres onglets → ignoré automatiquement). */
+          { selecteur: "#profil-partenaire", alignement: "centre" },
+        ]}
+      />
       {/* Héros (même squelette que le reste du site) */}
       <section className="relative overflow-hidden text-center px-6 pt-24 md:pt-28 pb-16">
         <MeshGradient />
@@ -263,6 +274,7 @@ export default async function ProfilPage({
             hauteurs réservées pour que le bandeau fasse EXACTEMENT les 450 px
             de l'accueil même avec un texte plus court (mesuré au navigateur). */}
         <h1
+          data-anim="up"
           className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] min-h-[1.2em]"
           style={{ color: INK }}
         >
@@ -273,7 +285,7 @@ export default async function ProfilPage({
             </>
           ) : ""}
         </h1>
-        <p className="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto mt-7 leading-relaxed min-h-[3.25em]">
+        <p data-anim="up" data-delay="150" className="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto mt-7 leading-relaxed min-h-[3.25em]">
           Tes tests, tes profils, ton évolution : tout vit ici.
         </p>
         {/* Le % global du profil : centré dans l'espace entre le sous-titre
@@ -281,7 +293,7 @@ export default async function ProfilPage({
             le bandeau garde EXACTEMENT ses 450 px). */}
         {/* marginTop négatif : le cercle mord légèrement sur la boîte du
             sous-titre (demande Luca) ; mb-14 compense pour garder 450 px. */}
-        <div className="mb-14 flex items-center justify-center" style={{ height: 56, marginTop: -16 }}>
+        <div data-anim="pop" data-delay="300" className="mb-14 flex items-center justify-center" style={{ height: 56, marginTop: -16 }}>
           <CercleProgression pct={progressionGlobale} taille={56} />
         </div>
       </section>
@@ -453,7 +465,10 @@ export default async function ProfilPage({
 
             {/* Carte Test de logique (test à construire ; carte visuelle,
                 état vide qui vend, sera branchée sur sa route plus tard). */}
-            <div className="flex h-full flex-col rounded-2xl border border-dashed border-gray-200 bg-white/60 p-6 text-left">
+            <Link
+              href="/logique"
+              className="group flex h-full flex-col rounded-2xl border border-dashed border-gray-200 bg-white/60 p-6 text-left transition-all hover:border-solid hover:border-gray-100 hover:bg-white hover:shadow-md"
+            >
               <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
                 Test de logique
               </p>
@@ -466,17 +481,20 @@ export default async function ProfilPage({
               </p>
               <div className="mt-auto flex items-center justify-between pt-5">
                 <span
-                  className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white"
+                  className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white transition-transform group-hover:scale-105"
                   style={{ background: VERT }}
                 >
                   Faire le test
                 </span>
                 <CercleProgression pct={0} taille={32} />
               </div>
-            </div>
+            </Link>
 
             {/* Carte Test de bonheur (même statut que la logique). */}
-            <div className="flex h-full flex-col rounded-2xl border border-dashed border-gray-200 bg-white/60 p-6 text-left">
+            <Link
+              href="/bonheur"
+              className="group flex h-full flex-col rounded-2xl border border-dashed border-gray-200 bg-white/60 p-6 text-left transition-all hover:border-solid hover:border-gray-100 hover:bg-white hover:shadow-md"
+            >
               <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
                 Test de bonheur
               </p>
@@ -489,14 +507,14 @@ export default async function ProfilPage({
               </p>
               <div className="mt-auto flex items-center justify-between pt-5">
                 <span
-                  className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white"
+                  className="inline-block rounded-full px-4 py-2 text-sm font-semibold text-white transition-transform group-hover:scale-105"
                   style={{ background: VERT }}
                 >
                   Faire le test
                 </span>
                 <CercleProgression pct={0} taille={32} />
               </div>
-            </div>
+            </Link>
           </CarrouselProfils>
 
           {/* Le bloc de partage (le même qu'en fin de rapport), sous les
@@ -504,6 +522,7 @@ export default async function ProfilPage({
               sans profil). Avec profil : lien /p construit depuis le
               résultat (slug + scores). Sans profil : repli vers /test. */}
           <div
+            data-anim="up"
             className="mt-10 rounded-2xl p-7 md:p-10 transition-shadow hover:shadow-sm"
             style={{ background: "rgba(51,164,116,0.08)" }}
           >
@@ -522,9 +541,10 @@ export default async function ProfilPage({
                 slug={resultat.slug}
                 s={resultat.scores_s}
                 v={resultat.scores_v}
+                defileAuto
               />
             ) : (
-              <PartageInline code="" nomVariante="" interception={inviteMode ?? "test"} />
+              <PartageInline code="" nomVariante="" interception={inviteMode ?? "test"} defileAuto />
             )}
           </div>
 
