@@ -30,8 +30,8 @@ export const ROLES: Record<RoleKey, Role> = {
     letters: "_NT_",
     description:
       "Types Intuitif (N) et Rationnel (T), reconnus pour leur rationalité, leur impartialité et leur excellence intellectuelle.",
-    color: "rgba(136,97,154,0.75)",
-    soft: "#f3eef6",
+    color: "rgba(51,164,116,0.85)",
+    soft: "#eef8f3",
   },
   diplomates: {
     key: "diplomates",
@@ -39,8 +39,8 @@ export const ROLES: Record<RoleKey, Role> = {
     letters: "_NF_",
     description:
       "Types Intuitif (N) et Sensible (F), connus pour leur empathie, leurs compétences diplomatiques et leur idéalisme passionné.",
-    color: "rgba(51,164,116,0.75)",
-    soft: "#eef8f3",
+    color: "rgb(62,146,102)",
+    soft: "#eaf4ee",
   },
   sentinelles: {
     key: "sentinelles",
@@ -48,8 +48,8 @@ export const ROLES: Record<RoleKey, Role> = {
     letters: "_S_J",
     description:
       "Types Observateur (S) et Organisé (J), connus pour leur sens pratique et leur attachement à l'ordre, à la sécurité et à la stabilité.",
-    color: "rgba(66,152,180,0.75)",
-    soft: "#eef7fa",
+    color: "rgb(48,122,85)",
+    soft: "#e6f1ea",
   },
   explorateurs: {
     key: "explorateurs",
@@ -57,15 +57,15 @@ export const ROLES: Record<RoleKey, Role> = {
     letters: "_S_P",
     description:
       "Types Observateur (S) et Prospectif (P), connus pour leur spontanéité, leur ingéniosité et leur flexibilité.",
-    color: "rgba(228,174,58,0.75)",
-    soft: "#fdf6e8",
+    color: "rgb(36,96,66)",
+    soft: "#e2eee6",
   },
 };
 
 export const TYPES: PersonalityType[] = [
   { code: "INTJ", slug: "intj", name: "Architecte", role: "analystes", variants: "INTJ-A / INTJ-T", tagline: "Esprits imaginatifs et stratèges, avec un plan pour tout." },
   { code: "INTP", slug: "intp", name: "Logicien", role: "analystes", variants: "INTP-A / INTP-T", tagline: "Inventeurs innovants avec une soif de connaissance insatiable." },
-  { code: "ENTJ", slug: "entj", name: "Commandant", role: "analystes", variants: "ENTJ-A / ENTJ-T", tagline: "Dirigeants audacieux et pleins de volonté, qui trouvent toujours un moyen — ou le créent." },
+  { code: "ENTJ", slug: "entj", name: "Commandant", role: "analystes", variants: "ENTJ-A / ENTJ-T", tagline: "Dirigeants audacieux et pleins de volonté, qui trouvent toujours un moyen, ou le créent." },
   { code: "ENTP", slug: "entp", name: "Innovateur", role: "analystes", variants: "ENTP-A / ENTP-T", tagline: "Esprits astucieux et curieux, incapables de résister à un défi intellectuel." },
   { code: "INFJ", slug: "infj", name: "Avocat", role: "diplomates", variants: "INFJ-A / INFJ-T", tagline: "Discrets et mystiques, source d'inspiration et idéalistes infatigables." },
   { code: "INFP", slug: "infp", name: "Médiateur", role: "diplomates", variants: "INFP-A / INFP-T", tagline: "Personnes poétiques, bienveillantes et altruistes, prêtes à aider une bonne cause." },

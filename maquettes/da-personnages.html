@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Direction artistique — les personnages</title>
+<style>
+  :root{--vert:rgb(82,178,137);--vertF:rgb(46,120,88);--vertC:rgb(168,222,196);--vert12:rgba(51,164,116,0.12);--noir:rgba(0,0,0,0.75);--gris:rgba(0,0,0,0.5);--creme:#F6EFE6;--peau:#F2C9A5;--peau2:#C98F63;}
+  *{box-sizing:border-box;margin:0;}
+  body{font-family:system-ui,Segoe UI,Roboto,sans-serif;background:#fff;color:var(--noir);padding:34px;max-width:1080px;margin:0 auto;}
+  h1{font-size:22px;letter-spacing:-0.01em;margin-bottom:6px;}
+  .sous{color:var(--gris);font-size:14px;margin-bottom:10px;line-height:1.5;}
+  .note{font-size:12.5px;color:var(--gris);background:var(--vert12);border-radius:12px;padding:10px 14px;margin-bottom:26px;line-height:1.5;}
+  .dir{border:1px solid rgba(0,0,0,0.07);border-radius:22px;padding:26px;margin-bottom:26px;}
+  .dir h2{font-size:18px;margin-bottom:4px;}
+  .dir .pitch{font-size:13.5px;color:var(--gris);line-height:1.55;margin-bottom:18px;max-width:640px;}
+  .scenes{display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;}
+  .scene{flex:1 1 280px;background:linear-gradient(to top,rgba(51,164,116,0.10),transparent 70%);border-radius:16px;display:flex;align-items:flex-end;justify-content:center;padding:18px 10px 0;min-height:260px;}
+  .legende{font-size:11.5px;color:var(--gris);text-align:center;margin-top:8px;}
+  .pastilles{display:flex;gap:8px;margin-top:14px;}
+  .pastille{width:26px;height:26px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);}
+  .usage{font-size:12.5px;color:var(--gris);margin-top:14px;line-height:1.55;}
+  .usage b{color:var(--vertF);}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<h1>La direction artistique des personnages — 3 pistes</h1>
+<div class="sous">Le même duo d'idées dans chaque style : un personnage seul (le miroir, « connais-toi »), et la scène de duo (le parcours à deux). Palette : tes verts + une peau chaleureuse + un crème doux.</div>
+<div class="note">Ce sont des prototypes de DIRECTION (proportions et esprit). Une fois le style choisi, chaque personnage sera redessiné finement et décliné : postures, accessoires par profil, scènes pour la home, le rapport, les 48 pages.</div>
+
+<!-- ————— DIRECTION 1 : APLATS DOUX ————— -->
+<div class="dir">
+  <h2>1 · Les aplats doux</h2>
+  <div class="pitch">Formes rondes, couleurs pleines, petits visages expressifs. Le style des marques chaleureuses (Headspace, Duolingo, 16P). Lisible en tout petit comme en géant, facile à décliner en 48 variantes par les tenues et les postures.</div>
+  <div class="scenes">
+    <div>
+      <div class="scene">
+        <svg width="200" height="240" viewBox="0 0 200 240">
+          <!-- personnage au miroir -->
+          <ellipse cx="100" cy="232" rx="52" ry="7" fill="rgba(0,0,0,0.06)"/>
+          <!-- jambes -->
+          <rect x="82" y="168" width="15" height="56" rx="7.5" fill="var(--vertF)"/>
+          <rect x="104" y="168" width="15" height="56" rx="7.5" fill="var(--vertF)"/>
+          <!-- torse pull vert -->
+          <path d="M70 110 Q70 96 84 94 L116 94 Q130 96 130 110 L128 168 Q100 176 72 168 Z" fill="var(--vert)"/>
+          <!-- bras gauche le long -->
+          <path d="M72 104 Q58 116 60 142 Q61 152 70 150 Q76 149 75 140 Q74 122 82 112 Z" fill="var(--vert)"/>
+          <!-- main gauche -->
+          <circle cx="66" cy="150" r="7" fill="var(--peau)"/>
+          <!-- bras droit levé, tient le miroir -->
+          <path d="M126 106 Q146 110 150 92 Q152 84 144 82 Q138 81 136 88 Q132 98 122 98 Z" fill="var(--vert)"/>
+          <!-- miroir -->
+          <g transform="rotate(-12 152 66)">
+            <rect x="148" y="86" width="7" height="18" rx="3.5" fill="var(--vertF)"/>
+            <circle cx="152" cy="66" r="21" fill="#fff" stroke="var(--vertF)" stroke-width="5"/>
+            <circle cx="146" cy="60" r="6" fill="var(--vertC)" opacity="0.8"/>
+          </g>
+          <!-- main droite -->
+          <circle cx="147" cy="86" r="6.5" fill="var(--peau)"/>
+          <!-- tête -->
+          <circle cx="100" cy="62" r="30" fill="var(--peau)"/>
+          <!-- cheveux -->
+          <path d="M70 60 Q68 30 100 28 Q132 30 130 60 Q130 42 114 40 Q118 48 110 46 Q92 40 78 50 Q72 54 70 60 Z" fill="#4A3628"/>
+          <!-- visage tourné vers le miroir -->
+          <circle cx="108" cy="62" r="3" fill="#33251A"/>
+          <circle cx="124" cy="62" r="3" fill="#33251A"/>
+          <path d="M112 74 Q118 78 124 74" stroke="#33251A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="128" cy="70" r="4" fill="rgba(230,120,100,0.35)"/>
+        </svg>
+      </div>
+      <div class="legende">« Connais-toi » — le miroir</div>
+    </div>
+    <div>
+      <div class="scene">
+        <svg width="260" height="240" viewBox="0 0 260 240">
+          <ellipse cx="130" cy="232" rx="90" ry="7" fill="rgba(0,0,0,0.06)"/>
+          <!-- perso A -->
+          <rect x="52" y="170" width="14" height="54" rx="7" fill="var(--vertF)"/>
+          <rect x="72" y="170" width="14" height="54" rx="7" fill="var(--vertF)"/>
+          <path d="M42 116 Q42 102 56 100 L84 100 Q98 102 98 116 L96 170 Q69 178 44 170 Z" fill="var(--vert)"/>
+          <path d="M92 110 Q108 116 116 128 Q121 136 113 140 Q107 143 103 136 Q96 124 86 122 Z" fill="var(--vert)"/>
+          <circle cx="70" cy="68" r="28" fill="var(--peau)"/>
+          <path d="M42 66 Q40 38 70 36 Q100 38 98 66 Q96 46 80 46 Q64 44 50 54 Q44 58 42 66 Z" fill="#6B4A2F"/>
+          <circle cx="76" cy="68" r="3" fill="#33251A"/><circle cx="90" cy="68" r="3" fill="#33251A"/>
+          <path d="M79 79 Q84 83 90 79" stroke="#33251A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- perso B -->
+          <rect x="172" y="170" width="14" height="54" rx="7" fill="#8A5A3B"/>
+          <rect x="192" y="170" width="14" height="54" rx="7" fill="#8A5A3B"/>
+          <path d="M162 116 Q162 102 176 100 L204 100 Q218 102 218 116 L216 170 Q189 178 164 170 Z" fill="var(--creme)"/>
+          <path d="M168 110 Q152 116 144 128 Q139 136 147 140 Q153 143 157 136 Q164 124 174 122 Z" fill="var(--creme)"/>
+          <circle cx="190" cy="68" r="28" fill="var(--peau2)"/>
+          <path d="M162 64 Q162 34 190 34 Q220 36 218 68 Q214 48 196 48 Q200 56 190 54 Q174 50 164 58 Z" fill="#241A12"/>
+          <circle cx="176" cy="68" r="3" fill="#1C130C"/><circle cx="190" cy="68" r="3" fill="#1C130C"/>
+          <path d="M176 79 Q182 84 189 79" stroke="#1C130C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- le lien : cœur-puzzle entre leurs mains -->
+          <circle cx="114" cy="136" r="6.5" fill="var(--peau)"/>
+          <circle cx="146" cy="136" r="6.5" fill="var(--peau2)"/>
+          <path d="M130 122 C 124 112 108 116 110 128 C 111 136 122 142 130 148 C 138 142 149 136 150 128 C 152 116 136 112 130 122 Z" fill="var(--vert)"/>
+          <path d="M130 122 L130 148" stroke="#fff" stroke-width="2" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+      <div class="legende">Le parcours à deux — le lien qu'on assemble</div>
+    </div>
+  </div>
+  <div class="pastilles">
+    <div class="pastille" style="background:rgb(82,178,137)"></div>
+    <div class="pastille" style="background:rgb(46,120,88)"></div>
+    <div class="pastille" style="background:rgb(168,222,196)"></div>
+    <div class="pastille" style="background:#F6EFE6"></div>
+    <div class="pastille" style="background:#F2C9A5"></div>
+    <div class="pastille" style="background:#C98F63"></div>
+  </div>
+  <div class="usage"><b>Où ça brille :</b> héros de la home, cartes des 48 profils (un personnage par type), écrans du rapport, images de partage. C'est le choix « grande marque grand public ».</div>
+</div>
+
+<!-- ————— DIRECTION 2 : LE TRAIT ————— -->
+<div class="dir">
+  <h2>2 · Le trait élégant</h2>
+  <div class="pitch">Des silhouettes dessinées d'un trait fin, une seule couleur, beaucoup d'air. Le style éditorial haut de gamme (presse, maisons d'édition). Plus adulte, plus posé, très raccord avec le sérieux de « La personnalité, expliquée ».</div>
+  <div class="scenes">
+    <div>
+      <div class="scene">
+        <svg width="200" height="240" viewBox="0 0 200 240" fill="none" stroke="var(--vertF)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <!-- silhouette assise en tailleur, miroir -->
+          <circle cx="97" cy="62" r="26"/>
+          <path d="M78 84 Q60 100 62 128 Q63 150 80 160"/>
+          <path d="M116 84 Q134 98 136 118"/>
+          <!-- bras au miroir -->
+          <path d="M136 118 Q150 112 152 96"/>
+          <circle cx="154" cy="80" r="15"/>
+          <!-- jambes en tailleur -->
+          <path d="M80 160 Q96 176 128 168 Q150 162 138 148 Q126 138 104 148 Q84 156 62 150"/>
+          <!-- sol -->
+          <path d="M46 196 Q100 206 156 196" stroke="rgba(82,178,137,0.4)"/>
+          <!-- respiration : petites ondes -->
+          <path d="M60 52 Q56 48 60 44" stroke="rgba(82,178,137,0.5)"/>
+          <path d="M52 58 Q46 52 52 46" stroke="rgba(82,178,137,0.35)"/>
+        </svg>
+      </div>
+      <div class="legende">« Connais-toi » — l'introspection</div>
+    </div>
+    <div>
+      <div class="scene">
+        <svg width="260" height="240" viewBox="0 0 260 240" fill="none" stroke="var(--vertF)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <!-- deux profils face à face qui forment presque un vase (figure-fond) -->
+          <path d="M92 44 Q76 52 78 70 Q79 82 72 88 Q68 92 73 95 Q78 97 76 103 Q74 110 80 114 Q90 120 92 134 Q93 148 88 162"/>
+          <path d="M168 44 Q184 52 182 70 Q181 82 188 88 Q192 92 187 95 Q182 97 184 103 Q186 110 180 114 Q170 120 168 134 Q167 148 172 162"/>
+          <!-- le lien entre les deux : fil qui devient cœur -->
+          <path d="M92 120 Q114 128 130 120 Q146 128 168 120" stroke="rgba(82,178,137,0.55)" stroke-dasharray="1 7"/>
+          <path d="M130 96 C 126 89 116 92 117 100 C 118 106 125 109 130 114 C 135 109 142 106 143 100 C 144 92 134 89 130 96 Z" stroke-width="2.6"/>
+          <path d="M60 196 Q130 208 200 196" stroke="rgba(82,178,137,0.4)"/>
+        </svg>
+      </div>
+      <div class="legende">Le parcours à deux — deux profils, un lien</div>
+    </div>
+  </div>
+  <div class="pastilles">
+    <div class="pastille" style="background:rgb(46,120,88)"></div>
+    <div class="pastille" style="background:rgb(82,178,137)"></div>
+    <div class="pastille" style="background:#fff;border:1px solid rgba(0,0,0,0.12)"></div>
+  </div>
+  <div class="usage"><b>Où ça brille :</b> les pages de fond (« La personnalité, expliquée »), le rapport, les emails. Chic et discret, mais moins de peps pour la home et les réseaux.</div>
+</div>
+
+<!-- ————— DIRECTION 3 : LES BOULES DE PERSONNALITÉ ————— -->
+<div class="dir">
+  <h2>3 · Les compagnons ronds</h2>
+  <div class="pitch">Des petites créatures rondes, chacune la couleur et l'humeur d'un profil. Pas des humains : des « personnalités » incarnées, mascottes déclinables à l'infini (48 humeurs !). Le choix le plus joueur et le plus mémorable, façon mascottes d'app.</div>
+  <div class="scenes">
+    <div>
+      <div class="scene">
+        <svg width="200" height="240" viewBox="0 0 200 240">
+          <ellipse cx="100" cy="226" rx="55" ry="7" fill="rgba(0,0,0,0.06)"/>
+          <!-- compagnon rond au miroir -->
+          <path d="M100 110 C 62 110 48 142 52 172 C 56 204 80 218 100 218 C 120 218 144 204 148 172 C 152 142 138 110 100 110 Z" fill="var(--vert)"/>
+          <path d="M100 110 C 96 100 102 92 110 92" stroke="var(--vertF)" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <circle cx="86" cy="158" r="6" fill="#1E3A2E"/>
+          <circle cx="118" cy="158" r="6" fill="#1E3A2E"/>
+          <circle cx="88" cy="156" r="2" fill="#fff"/><circle cx="120" cy="156" r="2" fill="#fff"/>
+          <path d="M94 176 Q101 182 110 176" stroke="#1E3A2E" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <circle cx="76" cy="170" r="6" fill="rgba(255,255,255,0.35)"/>
+          <circle cx="128" cy="170" r="6" fill="rgba(255,255,255,0.35)"/>
+          <!-- petit bras + miroir -->
+          <path d="M142 160 Q158 152 160 136" stroke="var(--vert)" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <circle cx="163" cy="120" r="16" fill="#fff" stroke="var(--vertF)" stroke-width="4.5"/>
+          <circle cx="158" cy="115" r="4.5" fill="var(--vertC)"/>
+        </svg>
+      </div>
+      <div class="legende">« Connais-toi » — chaque profil, sa bouille</div>
+    </div>
+    <div>
+      <div class="scene">
+        <svg width="260" height="240" viewBox="0 0 260 240">
+          <ellipse cx="130" cy="226" rx="92" ry="7" fill="rgba(0,0,0,0.06)"/>
+          <!-- compagnon A (vert, enjoué) -->
+          <path d="M84 122 C 52 122 40 150 44 176 C 48 204 68 216 84 216 C 100 216 120 204 124 176 C 128 150 116 122 84 122 Z" fill="var(--vert)"/>
+          <circle cx="72" cy="164" r="5.5" fill="#1E3A2E"/><circle cx="98" cy="164" r="5.5" fill="#1E3A2E"/>
+          <path d="M76 180 Q84 187 94 180" stroke="#1E3A2E" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <!-- compagnon B (crème, timide) -->
+          <path d="M176 130 C 148 130 138 154 141 176 C 144 200 162 212 176 212 C 190 212 208 200 211 176 C 214 154 204 130 176 130 Z" fill="var(--creme)" stroke="rgba(0,0,0,0.05)"/>
+          <path d="M166 162 Q169 158 172 162" stroke="#6B5A45" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M184 162 Q187 158 190 162" stroke="#6B5A45" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M172 178 Q177 181 183 178" stroke="#6B5A45" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="160" cy="172" r="5" fill="rgba(230,120,100,0.3)"/>
+          <!-- ils se tiennent « la main » -->
+          <path d="M120 172 Q132 180 143 172" stroke="var(--vertF)" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <!-- petit cœur au-dessus -->
+          <path d="M130 108 C 127 103 120 105 121 111 C 122 115 127 118 130 121 C 133 118 138 115 139 111 C 140 105 133 103 130 108 Z" fill="var(--vert)"/>
+        </svg>
+      </div>
+      <div class="legende">Le parcours à deux — deux humeurs qui s'apprivoisent</div>
+    </div>
+  </div>
+  <div class="pastilles">
+    <div class="pastille" style="background:rgb(82,178,137)"></div>
+    <div class="pastille" style="background:rgb(168,222,196)"></div>
+    <div class="pastille" style="background:#F6EFE6"></div>
+    <div class="pastille" style="background:rgb(46,120,88)"></div>
+  </div>
+  <div class="usage"><b>Où ça brille :</b> partout, et surtout les réseaux et le partage (très mèmable). Risque : moins « sérieux », à doser sur les pages de fond.</div>
+</div>
+
+<div class="sous" style="margin-top:6px">Mon avis de pro : la <b>1</b> est le meilleur équilibre chaleur/sérieux/déclinabilité pour ta marque ; la 3 est la plus virale mais tire vers l'app ludique ; la 2 est superbe en secondaire (pages de fond) et peut COEXISTER avec la 1.</div>
+</body>
+</html>

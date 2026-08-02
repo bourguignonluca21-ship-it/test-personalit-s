@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getType, ROLES, TYPES, TYPE_SECTIONS } from "../../data/types";
+import { getContenuType } from "../../data/contenuPagesTypes";
+import { BlocsRendu, NavPagesType } from "./RenduPageType";
 
 // Prérendu des 16 pages au build.
 export function generateStaticParams() {
@@ -16,6 +18,10 @@ export async function generateMetadata({
   const { code } = await params;
   const type = getType(code);
   if (!type) return { title: "Type introuvable" };
+  const contenu = getContenuType(type.code);
+  if (contenu) {
+    return { title: contenu.intro.titreSeo, description: contenu.intro.description };
+  }
   return {
     title: `${type.name} (${type.code})`,
     description: `${type.name} (${type.code}) : ${type.tagline}`,
@@ -41,6 +47,7 @@ export default async function TypePage({ params }: { params: Promise<{ code: str
 
   const role = ROLES[type.role];
   const letters = type.code.split("");
+  const contenu = getContenuType(type.code);
 
   return (
     <article>
@@ -78,56 +85,102 @@ export default async function TypePage({ params }: { params: Promise<{ code: str
         </div>
       </section>
 
-      {/* Onglets (ancres) */}
-      <nav
-        className="sticky top-[57px] z-40 bg-white border-b border-gray-100"
-        aria-label="Sections du type"
-      >
-        <div className="max-w-3xl mx-auto px-6 flex gap-1 overflow-x-auto">
-          {TYPE_SECTIONS.map((s, i) => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
-              className="whitespace-nowrap py-3.5 px-3 text-sm font-semibold border-b-[3px] transition-colors"
-              style={i === 0 ? { color: role.color, borderColor: role.color } : { color: "#6b7280", borderColor: "transparent" }}
-            >
-              {s.label}
-            </a>
-          ))}
-        </div>
-      </nav>
+      {contenu ? (
+        <>
+          {/* Navigation entre les pages du portrait */}
+          <NavPagesType type={type} role={role} actif="" />
 
-      {/* Corps */}
-      <div className="max-w-3xl mx-auto px-6 py-12">
-        <section id="introduction" className="py-6 border-b border-gray-100 scroll-mt-32">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Introduction</h2>
-          <blockquote
-            className="border-l-4 pl-4 italic text-gray-600 mb-6"
-            style={{ borderColor: role.color }}
-          >
-            « Une citation inspirante ira ici. »
-            <span className="block not-italic font-semibold text-gray-800 mt-1">— Auteur</span>
-          </blockquote>
-          <div className="bg-[#fdf6e8] border border-dashed border-[rgba(228,174,58,0.75)] rounded-lg p-4 text-sm text-[#8a6d1f] mb-5">
-            🔧 Emplacement du texte d&apos;introduction de ton profil <strong>{type.name}</strong>. À
-            rédiger avec tes propres mots (le contenu de 16Personalities est protégé).
+          {/* Corps : l'introduction rédigée */}
+          <div className="max-w-3xl mx-auto px-6 py-12">
+            {contenu.intro.exergue && (
+              <blockquote
+                className="border-l-4 pl-4 italic text-gray-600 mb-6 text-lg"
+                style={{ borderColor: role.color }}
+              >
+                {contenu.intro.exergue}
+              </blockquote>
+            )}
+            <BlocsRendu blocs={contenu.intro.blocs} role={role} />
+
+            {/* Suite du portrait : liens vers les sous-pages */}
+            <h2 className="text-2xl font-bold text-gray-800 mt-12 mb-4">
+              La suite du portrait
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {contenu.pages.map((p) => (
+                <Link
+                  key={p.slug}
+                  href={`/types-de-personnalite/${type.slug}/${p.slug}`}
+                  className="border border-gray-200 rounded-xl px-4 py-3 font-semibold text-gray-800 hover:border-gray-300 hover:shadow-sm transition-all"
+                >
+                  <span
+                    className="block text-xs font-bold uppercase tracking-wider mb-0.5"
+                    style={{ color: role.color }}
+                  >
+                    {type.code}
+                  </span>
+                  {p.titre} →
+                </Link>
+              ))}
+            </div>
           </div>
-          <p className="text-gray-600 leading-relaxed">
-            Présentation générale du type {type.code} : tempérament, valeurs, rapport au monde.
-            (Texte de démonstration.)
-          </p>
-        </section>
+        </>
+      ) : (
+        <>
+          {/* Onglets (ancres) — gabarit de démonstration */}
+          <nav
+            className="sticky top-[57px] z-40 bg-white border-b border-gray-100"
+            aria-label="Sections du type"
+          >
+            <div className="max-w-3xl mx-auto px-6 flex gap-1 overflow-x-auto">
+              {TYPE_SECTIONS.map((s, i) => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  className="whitespace-nowrap py-3.5 px-3 text-sm font-semibold border-b-[3px] transition-colors"
+                  style={i === 0 ? { color: role.color, borderColor: role.color } : { color: "#6b7280", borderColor: "transparent" }}
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </nav>
 
-        {TYPE_SECTIONS.slice(1).map((s) => (
-          <section key={s.id} id={s.id} className="py-6 border-b border-gray-100 scroll-mt-32">
-            <h2 className="text-2xl font-bold text-gray-800 mb-3">{s.label}</h2>
-            <p className="text-gray-600 leading-relaxed">
-              Section « {s.label} » du type {type.name} — texte de démonstration à remplacer.
-            </p>
-          </section>
-        ))}
+          {/* Corps de démonstration */}
+          <div className="max-w-3xl mx-auto px-6 py-12">
+            <section id="introduction" className="py-6 border-b border-gray-100 scroll-mt-32">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">Introduction</h2>
+              <blockquote
+                className="border-l-4 pl-4 italic text-gray-600 mb-6"
+                style={{ borderColor: role.color }}
+              >
+                « Une citation inspirante ira ici. »
+                <span className="block not-italic font-semibold text-gray-800 mt-1">— Auteur</span>
+              </blockquote>
+              <div className="bg-[#fdf6e8] border border-dashed border-[rgba(228,174,58,0.75)] rounded-lg p-4 text-sm text-[#8a6d1f] mb-5">
+                🔧 Emplacement du texte d&apos;introduction de ton profil <strong>{type.name}</strong>. À
+                rédiger avec tes propres mots (le contenu de 16Personalities est protégé).
+              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Présentation générale du type {type.code} : tempérament, valeurs, rapport au monde.
+                (Texte de démonstration.)
+              </p>
+            </section>
 
-        {/* CTA premium */}
+            {TYPE_SECTIONS.slice(1).map((s) => (
+              <section key={s.id} id={s.id} className="py-6 border-b border-gray-100 scroll-mt-32">
+                <h2 className="text-2xl font-bold text-gray-800 mb-3">{s.label}</h2>
+                <p className="text-gray-600 leading-relaxed">
+                  Section « {s.label} » du type {type.name} — texte de démonstration à remplacer.
+                </p>
+              </section>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* CTA */}
+      <div className="max-w-3xl mx-auto px-6">
         <div className="text-center py-10">
           <p className="text-gray-500 mb-4">Tu n&apos;as vu qu&apos;un aperçu de ton profil.</p>
           <Link

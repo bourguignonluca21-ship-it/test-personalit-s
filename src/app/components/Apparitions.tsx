@@ -44,29 +44,50 @@ export default function Apparitions() {
       });
     };
 
-    /* Entrées réversibles, mêmes réglages que la home */
+    /* Entrées réversibles, mêmes réglages que la home.
+       ANTI-SACCADES : pendant une glisse de page (ressort, descente,
+       remontée), les APPARITIONS jouent normalement (même rendu), mais les
+       SORTIES (retrait de « vu » sur ce qui quitte l'écran) sont mises en
+       attente et appliquées à la FIN de la glisse : de gros blocs qui
+       s'animent en plein mouvement, c'était le principal casseur de
+       fluidité. Invisible à l'œil, on ne voit jamais ces blocs sortir. */
     const minuteurs = new WeakMap<Element, ReturnType<typeof setTimeout>>();
-    const io = new IntersectionObserver(
-      (es) =>
-        es.forEach((e) => {
-          const el = e.target as HTMLElement;
-          clearTimeout(minuteurs.get(el));
-          if (e.isIntersecting) {
-            minuteurs.set(
-              el,
-              setTimeout(() => el.classList.add("vu"), parseInt(el.dataset.delay || "0", 10))
-            );
-          } else {
-            el.classList.remove("vu");
-          }
-        }),
-      { threshold: 0.18, rootMargin: "0px 0px -40px 0px" }
-    );
+    const sortiesEnAttente = new Set<HTMLElement>();
+    const glisseEnCours = () =>
+      (window as unknown as { __glissePageEnCours?: boolean }).__glissePageEnCours === true;
+    const traiter = (es: IntersectionObserverEntry[]) =>
+      es.forEach((e) => {
+        const el = e.target as HTMLElement;
+        clearTimeout(minuteurs.get(el));
+        if (e.isIntersecting) {
+          sortiesEnAttente.delete(el);
+          minuteurs.set(
+            el,
+            setTimeout(() => el.classList.add("vu"), parseInt(el.dataset.delay || "0", 10))
+          );
+        } else if (glisseEnCours()) {
+          sortiesEnAttente.add(el);
+        } else {
+          el.classList.remove("vu");
+        }
+      });
+    const io = new IntersectionObserver(traiter, { threshold: 0.18, rootMargin: "0px 0px -40px 0px" });
+    /* Les éléments marqués data-tot (aperçus qui dépassent sous le pli) se
+       révèlent dès le PREMIER pixel visible : sans ça, la zone morte de
+       40 px du réglage normal les laissait invisibles en bas d'écran. */
+    const ioTot = new IntersectionObserver(traiter, { threshold: 0.01 });
+    const viderSorties = () => {
+      sortiesEnAttente.forEach((el) => el.classList.remove("vu"));
+      sortiesEnAttente.clear();
+    };
+    window.addEventListener("fin-glisse-page", viderSorties);
 
     const observerTout = (racine: ParentNode) => {
       decouperMots(racine);
       racine.querySelectorAll("[data-anim],[data-mots]").forEach((el) => {
-        if (horsHome(el)) io.observe(el);
+        if (!horsHome(el)) return;
+        if ((el as HTMLElement).dataset.tot !== undefined) ioTot.observe(el);
+        else io.observe(el);
       });
     };
     observerTout(document.body);
@@ -89,7 +110,9 @@ export default function Apparitions() {
 
     return () => {
       io.disconnect();
+      ioTot.disconnect();
       mo.disconnect();
+      window.removeEventListener("fin-glisse-page", viderSorties);
     };
   }, [pathname]);
 

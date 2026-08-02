@@ -51,6 +51,10 @@ export default function RessortDefilement({ arrets }: { arrets: Arret[] }) {
       const top = topPage(el);
       const docH = document.documentElement.scrollHeight - innerHeight;
       if (a.alignement === "haut") return clamp(top - (a.marge ?? 80), 0, docH);
+      /* Un bloc VRAIMENT plus haut que l'écran ne se centre pas (son haut
+         serait coupé sous la navbar) : il se cale en haut, à 70 px. Un bloc
+         d'exactement un écran (100svh), lui, se centre normalement. */
+      if (el.offsetHeight > innerHeight + 40) return clamp(top - 70, 0, docH);
       return clamp(top + (el.offsetHeight - innerHeight) / 2, 0, docH);
     }
     function mesurer() {
@@ -111,6 +115,7 @@ export default function RessortDefilement({ arrets }: { arrets: Arret[] }) {
         else setTimeout(() => {
           anim = false;
           (window as unknown as { __glissePageEnCours?: boolean }).__glissePageEnCours = false;
+          dispatchEvent(new Event("fin-glisse-page"));
         }, 160);
       };
       idAnim = requestAnimationFrame(pas);

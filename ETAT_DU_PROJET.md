@@ -484,6 +484,40 @@ Tout est dans `components/FenetrePaiement.tsx` (la modale) sauf mention contrair
 
 **Avant la prod** : les Lottie passent par les CDN unpkg/lottiefiles (à héberger en local si on veut couper la dépendance). **Passe responsive mobile de la home et du test NON faite.**
 
+## 8 sexdecies. POINT DE REPRISE, session 30 juillet 2026 (animations globales ressort/apparitions + espace personnel fluide + page « Notre approche » + HUB des 48 personnalités en camaïeu de verts) — ⚠️ TOUT NON COMMITÉ
+
+**A. SYSTÈME D'ANIMATIONS PARTAGÉ (nouveau, monté dans le layout) :**
+- **`components/Apparitions.tsx`** (NOUVEAU, monté dans `layout.tsx`) : révélations au scroll pour TOUT le site via attributs `data-anim="up|left|right|pop"` (+ `data-delay`, `data-mots` pour découper en mots). Réversibles (la classe `.vu` se pose ET se retire). **`data-tot`** = variante « révélé dès le 1er pixel » (2e observer, threshold 0.01, sans la zone morte de 40 px) pour les éléments d'APERÇU sous le pli. Ignore `.ha` (la home garde son propre système).
+- **`components/RessortDefilement.tsx`** (NOUVEAU, réutilisable) : le ressort molette de la home généralisé. Props `arrets=[{selecteur, alignement:"haut"|"centre", marge}]` ; arrêts implicites 0 et bas de page ; cibles mesurées par la chaîne `offsetTop` (**topPage()**, insensible aux transform des reveals — piège du décalage de 44 px) ; section plus haute que l'écran → calée en haut à 70 px (condition `offsetHeight > innerHeight + 40`, sinon les écrans pile 100svh ne se centraient plus) ; amortissement de l'inertie TRACKPAD (petits deltas rapprochés avalés).
+- **Coordination anti-saccades** (règle pour TOUTE nouvelle animation de page) : drapeau `window.__glissePageEnCours` + événements `arret-ressort` / `fin-glisse-page`. Pendant une glisse : les sorties de reveals sont DIFFÉRÉES (Set vidé à la fin), le marquee des réseaux se met en pause, les listeners scroll sont throttlés en rAF, `overflow-anchor:none`. Une seule animation de page à la fois (les points, le ressort et les carrousels s'interrompent mutuellement).
+- `Hero.tsx` : la flèche Lottie scroll-down du haut de la home SUPPRIMÉE (demande Luca).
+
+**B. `/profil` (Mon espace personnel) — passe complète d'animations, tout validé :**
+- Révélations sur le héros + ressort de page (contenu des onglets calé en haut à 80 px, bloc partenaire centré).
+- **Carrousels avec glisse ressort horizontale PARTOUT** (onglets Mes profils/Mes relations/Mon équilibre, carrousel Mes profils, carrousel des 2 parcours de Relations) : flèches ET molette/trackpad horizontal (deltaX dominant ou shift), atterrissage bloc entier, snap désactivé pendant la glisse, anti-empilement (`glisseActiveRef`).
+- Icônes réseaux (`PartageInline`) : défilé marquee (mêmes codes que le défilé des 16 types de la home) + grossissement au survol (`scale(1.25) rotate(-2deg)`) — appliqué aux DEUX variantes du bloc partage.
+- Cartes Logique et Bonheur cliquables (→ `/logique`, `/bonheur`) avec le motif hover des cartes sombres.
+- `FlecheRemonter` : pastille centrée dynamiquement entre le dernier bloc et le footer (mesure + ResizeObserver).
+
+**C. PAGE « NOTRE APPROCHE » (`/notre-approche`) — NOUVELLE, la 1re page de la rubrique « La personnalité, expliquée » :**
+- Positionnement décidé : le VRAI SEO vivra dans les 48 pages de types + articles ; cette page = page de CONFIANCE/marque, ton sérieux-professionnel, narration éditoriale (pas une page d'aide).
+- Structure : ouverture plein écran (titre-question « Que peut-on vraiment apprendre de soi ? », chapeau, trait centré, aperçu du chapitre 1 garanti sur toute taille d'écran — contraintes FIGÉES, cf. mémoire Cowork `consignes-validees-figees.md`) → Un siècle de recherche (grand « 1921 », **bascule auto sur 2 cartes photos dès que `public/histoire/jung.jpg` + `hippocrate.jpg` existent — À TÉLÉCHARGER par Luca, domaine public Wikimedia**) → 48 nuances (tuiles INFP V1/V2/V3) → La méthode (barre de spectre) → bandeau vert IA → Les limites (citation RÉELLE de Montaigne « Il n'est description pareille en difficulté à la description de soi-même », carte calée à la hauteur du texte) → 3 principes → final « Et maintenant, si on te lisait, toi ? ».
+- `NavigationApproche.tsx` : points fixes à droite + glisse coordonnée (mêmes codes que la home).
+- Expériences REJETÉES et retirées de la page : cerveau de particules (« flippant »), constellation de tuiles, nuée organique. **Les 3 fichiers orphelins restent sur le disque** (`CerveauParticules.tsx`, `ConstellationProfils.tsx`, `NueeOrganique.tsx` dans `notre-approche/`) : à supprimer APRÈS accord de Luca. Leçon actée : le « waouh » doit être HUMAIN (photos, matière), pas technologique.
+
+**D. HUB `/types-de-personnalite` — ENTIÈREMENT REFAIT (le menu visuel des 48) :**
+- Patron 16P analysé dans le Chrome de Luca : le hub = une galerie qui donne envie de cliquer, la profondeur vit dans les pages de types. Différenciateur affiché AU NIVEAU du hub : chaque carte type montre ses **3 variantes nommées** (puces `NOMS_VARIANTES`) → 48 profils, pas 16 cases.
+- Ouverture (même patron validé que Notre approche) : « Seize types. / Trois variantes chacun. / **Quarante-huit personnalités.** » + chapeau + trait ; **une famille = un écran** (ressort + points à droite), colonne 768 px partout, textes SANS max-width réduite (consigne : le texte va au bout à droite) ; final = bandeau vert « Quarante-huit profils. Un seul est le tien. » + CTA brillant.
+- **PALETTE : camaïeu de VERTS (décision Luca, exit violet/bleu/jaune)** — `data/types.ts` ROLES : analystes `rgba(51,164,116,0.85)` (vert de marque), diplomates `rgb(62,146,102)`, sentinelles `rgb(48,122,85)`, explorateurs `rgb(36,96,66)` (progression pure en teinte verte, PAS de dérive bleu/sarcelle — recadré une fois). Les `soft` assortis.
+- **VERT AMBIANT** (`NavigationHub.tsx`) : la famille à l'écran pose `--vert-ambiant` sur `<html>` ; les points de droite ET le bouton navbar « Faire le test » (override `!important` + fondu .6s) suivent la couleur pendant la descente.
+- Première famille (analystes) : mise en page de CHARGEMENT figée (titre famille + description + haut des cartes Architecte/Logicien visibles sous le pli, `justify-content:flex-start;padding-top:76px` + `data-tot` sur ces éléments) ; l'ATTERRISSAGE centré est obtenu en visant le CONTENU (`#fam-contenu-analystes`, wrapper) et non la section 100svh. Vérifié dans Chrome : 104 px au-dessus / 103 px en dessous.
+
+**E. Divers session :**
+- **Panne Supabase élucidée** : le projet free-tier se met en PAUSE après ~7 jours d'inactivité → « failed to fetch » à la connexion, et TOUT le site sans réaction car `src/proxy.ts` appelle `supabase.auth.getUser()` sur CHAQUE route sans try/catch. Réveil : dashboard Supabase → Restore. Durcissement du proxy PROPOSÉ mais PAS fait.
+- `types.ts` : tagline ENTJ, tiret long remplacé par une virgule (règle typographique du site).
+
+**Prochaine étape décidée : le GABARIT des pages de types** (`/types-de-personnalite/[slug]`) — le cœur SEO : structure à la 16P (sections longues) avec NOS 3 variantes en sections majeures. En attente aussi : photos histoire (Luca), sort des 3 fichiers orphelins, points de droite sur Notre approche (question posée, sans réponse), DA « compagnons ronds » (GO explicite requis), amortissement trackpad à porter dans le ressort propre de la home (`HomeActes`), durcissement `proxy.ts`.
+
 ## 9. Prochaines étapes
 
 **Chantier RELATIONS / parcours (en cours, cf. §8 duodecies + terdecies) — c'est le chantier actif :**

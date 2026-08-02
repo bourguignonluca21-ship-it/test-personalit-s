@@ -89,6 +89,7 @@ export default function FlecheRemonter() {
         root.style.scrollBehavior = prevBehavior;
         setTimeout(() => {
           (window as unknown as { __glissePageEnCours?: boolean }).__glissePageEnCours = false;
+          window.dispatchEvent(new Event("fin-glisse-page"));
         }, 160);
       }
     };
