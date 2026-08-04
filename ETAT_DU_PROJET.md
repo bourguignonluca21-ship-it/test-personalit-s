@@ -518,6 +518,52 @@ Tout est dans `components/FenetrePaiement.tsx` (la modale) sauf mention contrair
 
 **Prochaine étape décidée : le GABARIT des pages de types** (`/types-de-personnalite/[slug]`) — le cœur SEO : structure à la 16P (sections longues) avec NOS 3 variantes en sections majeures. En attente aussi : photos histoire (Luca), sort des 3 fichiers orphelins, points de droite sur Notre approche (question posée, sans réponse), DA « compagnons ronds » (GO explicite requis), amortissement trackpad à porter dans le ressort propre de la home (`HomeActes`), durcissement `proxy.ts`.
 
+## 8 septdecies. POINT DE REPRISE, session 4 août 2026 (pages de type : bloc de partage + ESPACE COMMENTAIRES complet avec modération, console d'admin, signalement DSA et j'aime) — ⚠️ NON COMMITÉ (à vérifier avant de pousser)
+
+> Le détail technique de l'espace commentaires vit dans **`3_SITE/1_infrastructure/ESPACE_COMMENTAIRES.md`** (où sont les 11 fichiers, les seuils, ce qui échoue ouvert / fermé). Ci-dessous : ce qui a été décidé, et les pièges.
+
+**A. LANGAGE VISUEL DES PAGES DE TYPE — FIGÉ (consigne de Luca, à ne plus rediscuter) :**
+Colonne de texte 768 px sur l'axe de la navbar, texte justifié, **vert réservé aux titres**, emphase en noir plus gras, fond blanc **sans bande teintée ni carte encadrée**, **aucune animation d'apparition** sauf le bandeau final, sommaire dans la gouttière gauche, aparté dans la droite. Toute nouvelle section reprend un motif que le site possède déjà (`/notre-approche`, `components/HomeActes.tsx`, le hub) — on ne redessine pas.
+
+**B. BLOC DE PARTAGE sous le carrousel des célébrités :**
+- Réutilise **`components/PartageInline.tsx`** (jamais réécrit ; deux options ajoutées : `texteQR`, `fleches: "cotes"|"dessous"|"aucune"`, défaut = comportement historique de /profil et /resultat).
+- Le lien pointe la page exacte (type + sous-page). Qui arrive par ce lien voit une fenêtre : « un ami t'a partagé cette description », invitation à faire le test après lecture, fermeture sur « Compris ». **Jamais pour quelqu'un qui vient d'une recherche.**
+- **Piège coûteux** : les constantes du paramètre de partage étaient exportées depuis un module `"use client"` et importées par un composant SERVEUR → Next les remplace par une fonction proxy, et le lien contenait du charabia. Corrigé par un module neutre **`paramPartage.ts`**. Invisible à l'œil : seulement en mesurant le lien produit.
+
+**C. UN SEUL MODÈLE DE CARROUSEL — `src/app/lib/useRailDefilant.ts` (NOUVEAU) :**
+Boucle infinie sur 3 copies, dérive 0,45 px/frame, pause au survol/au toucher et pendant une glisse de page (`window.__glissePageEnCours`), prise à la souris avec clic avalé, aucune lecture de mise en page dans le gestionnaire de scroll. Utilisé par le carrousel des célébrités ET celui des réseaux. **Consigne de Luca : on ne re-règle plus un carrousel détail par détail, on branche celui-ci.**
+- Carrousel des célébrités : 5 fiches pleines à l'écran (`flex:0 0 calc((100% - 96px)/5)`, gap 24), rail 768 comme le texte, flou de 14 px aux extrémités, `overflow-y:hidden`, **étoile ★ à la place de l'illustration à venir**, pas de flèches, grossissement de l'étoile au survol.
+
+**D. LE VERT DES TITRES, ET LES DEUX-POINTS :**
+- Le mot vert d'un titre est désormais **marqué à la main** par des astérisques dans `data/contenuPagesTypes.ts` (`*mot*`) — 128 titres de bloc traités par script (niveaux d'indentation 8 et 10 uniquement : jamais les titres de page, jamais les items de liste). **Un titre sans astérisques reste entièrement noir** : plus de vert tombé au hasard.
+- `typo()` est appliqué à TOUT texte affiché (et `&nbsp;:` dans le JSX écrit en dur) : **un « : » ne commence jamais une ligne**.
+
+**E. ESPACE COMMENTAIRES (le gros morceau) :**
+- Inscrits pour écrire, un fil par page, publication directe **après trois contrôles**, réponses sur un seul niveau (imposé côté serveur), 5 par page avec pagination numérotée en vert, cœur pour aimer, petit drapeau pour signaler.
+- **Règle d'architecture** : le navigateur ne peut PAS écrire dans la table `commentaires` (aucune règle d'insertion). Toute écriture passe par la route serveur, seule à lancer la modération.
+- Contrôles : garde-fous mécaniques → **OpenAI `omni-moderation-latest`** (gratuit ; seuils 0,5 bloqué / 0,15 à revoir / **0,06 détresse**, calibrés sur 25 phrases françaises mesurées — au seuil commun, de la vraie détresse en français passait à 0,096) → **`gpt-5-mini`** pour le ton (~0,02 centime par message). Le préjudice échoue FERMÉ, le ton échoue OUVERT. La détresse n'est jamais bloquée, seulement mise de côté.
+- **Console de modération** `/admin/commentaires` : protégée côté serveur par `ADMIN_EMAILS` (404 pour les autres, et la page n'existe pas dans le HTML envoyé), droit revérifié à CHAQUE appel d'API. Onglets À revoir / Signalés / Refusés / Publiés ; la détresse remonte en tête, en rouge ; un refus peut être défait (« Remettre en ligne »).
+- **Signalement (DSA)** : sans compte (le règlement l'exige), 5/heure par empreinte SHA-256 (adresse jamais en clair), enregistré AVANT l'examen, second examen AVEC le contexte de la page et du message parent. **Le commentaire reste en ligne** sauf verdict `confirme`. Le verdict n'est jamais renvoyé à qui signale.
+- **J'aime SANS COMPTE** (demande de Luca) : compte → le compte tient le cœur ; sinon **jeton de visite** (numéro au hasard, aucune donnée personnelle) posé en cookie. Le compteur vit dans la base et vaut pour tout le monde. Doublon interdit par la base, 30 poses/heure par empreinte, retrait jamais limité.
+- **Effacement** : purge hebdomadaire `pg_cron` (bloqués et signalements traités > 6 mois, sauf `AUTORITES%`). **Reste à faire** : effacer la colonne `empreinte` des j'aime à 30 jours.
+
+**F. PIÈGES DE CETTE SESSION (à ne pas repayer) :**
+- **Le bandeau vert qui « clignotait »** : trois corrections plausibles (animation en `transform`, lectures de mise en page sorties du scroll, `overflow-y:hidden`) n'ont RIEN changé. La vraie cause : `Apparitions.tsx` **retire** la classe `vu` à la sortie, donc le grand bandeau rejouait son entrée. Correctif : `data-anim` retiré de `.final-carte`. **Leçon : chercher d'abord une apparition, c'est ce qui se voit.**
+- **Mesurer dans un onglet en arrière-plan ment** : `visibilityState:"hidden"` gèle les transitions CSS et rAF ; `getComputedStyle` renvoie la valeur de DÉPART (un cœur vert a été lu gris pendant dix minutes). Mettre `style.transition='none'` avant de mesurer.
+- **Un accent grave (backtick) dans un commentaire CSS** au milieu d'un template literal coupe la feuille de style en deux → page 500. Ne jamais en mettre dans les blocs `STYLE`.
+- **Une prop déclarée dans le type mais pas reçue en paramètre** (`onConnexion` dans `Fil`) fait boucler React jusqu'à **tuer l'onglet** : Chrome affiche « This page couldn't load », qui ressemble à un serveur mort. Vérifier la console avant d'accuser le serveur.
+- **Tester en écrivant depuis le navigateur de Luca écrit en base** : une requête « qui devait renvoyer 401 » a créé une vraie ligne, sa session étant connectée. Ne jamais supposer un état non connecté.
+- **Une route de diagnostic publique coûte de l'argent** : `api/diagnostic-seuils` faisait 26 appels OpenAI par visite. Les deux routes de diagnostic ont été déplacées dans `Next_js/_to_delete/` — **à supprimer**.
+- **`429` d'OpenAI ≠ mauvaise clé** : c'était un compte sans crédit. Luca a mis 5 €.
+
+**G. À FAIRE AVANT DE POUSSER :**
+1. **`ADMIN_EMAILS`** dans les variables d'environnement Vercel (**Production + Preview**) — sans elle, la console répond 404 en ligne : site publié sans moyen de modérer. Une variable ne s'applique qu'au déploiement suivant.
+2. Supprimer **`Next_js/_to_delete/`**.
+3. **Prévenir l'auteur d'un message refusé** — obligation DSA, PAS faite. Resend est déjà branché.
+4. `auteur_type` (la pastille du type à côté du pseudo) n'est jamais rempli — à remplir depuis le résultat de la personne, ou à retirer.
+
+**Décision notée (à ne pas rouvrir sans Luca)** : la modération met en attente des phrases anodines contenant « disparaître », « trancher » — le classificateur les lit au sens littéral. Un second examen par `gpt-5-mini` pour les rattraper a été proposé et **refusé par Luca**. Conséquence assumée : des faux positifs dans la file, et un vrai signal de détresse moins visible au milieu.
+
 ## 9. Prochaines étapes
 
 **Chantier RELATIONS / parcours (en cours, cf. §8 duodecies + terdecies) — c'est le chantier actif :**

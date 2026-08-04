@@ -154,7 +154,7 @@ export default function Navbar() {
     <>
       {/* Voile flou du site quand un menu est ouvert (barre + menu restent nets). */}
       <div
-        className="fixed inset-x-0 bottom-0 top-14 z-40 transition-opacity duration-500 ease-in-out"
+        className="fixed inset-x-0 bottom-0 top-[68px] z-40 transition-opacity duration-500 ease-in-out"
         style={{
           background: "rgba(255,255,255,0.45)",
           backdropFilter: "blur(8px)",
@@ -177,7 +177,7 @@ export default function Navbar() {
           {/* Rangée du haut : 4 colonnes égales (pleine largeur, donc logo et
               « Mon espace personnel » symétriques). Le drapeau flotte en absolu
               au coin droit sans décaler les colonnes. */}
-          <div className="relative flex h-14 items-center text-[13px] text-gray-500">
+          <div className="relative flex h-[68px] items-center text-[13px] text-gray-500">
             {/* 1. Logo (à gauche) */}
             <div className="flex h-full items-center pl-8 pr-6" onMouseEnter={() => setMenu(null)}>
               <Link

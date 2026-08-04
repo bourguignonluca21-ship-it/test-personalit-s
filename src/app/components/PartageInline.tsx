@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import FenetreConnexion from "./FenetreConnexion";
 import FenetreFaireTest from "./FenetreFaireTest";
+import { useRailDefilant } from "../lib/useRailDefilant";
 
 // Chemins SVG (viewBox 24x24) des logos de marque.
 const IC = {
@@ -187,12 +188,15 @@ function Fleche({
   actif,
   onClick,
   ecart = 0,
+  dessous = false,
 }: {
   cote: "g" | "d";
   actif: boolean;
   onClick: () => void;
   /* Décalage vers l'extérieur (px) : rapproche la flèche du bord du bloc. */
   ecart?: number;
+  /* Posée SOUS la rangée, dans le flux, au lieu d'être collée sur ses bords. */
+  dessous?: boolean;
 }) {
   const gauche = cote === "g";
   return (
@@ -202,11 +206,12 @@ function Fleche({
       onClick={onClick}
       disabled={!actif}
       style={{
-        position: "absolute",
-        top: 31,
-        transform: "translateY(-50%)",
-        left: gauche ? -ecart : undefined,
-        right: gauche ? undefined : -ecart,
+        position: dessous ? "static" : "absolute",
+        top: dessous ? undefined : 31,
+        transform: dessous ? undefined : "translateY(-50%)",
+        left: dessous || !gauche ? undefined : -ecart,
+        right: dessous || gauche ? undefined : -ecart,
+        flex: dessous ? "0 0 auto" : undefined,
         width: 34,
         height: 34,
         borderRadius: "50%",
@@ -238,6 +243,8 @@ export default function PartageInline({
   v: vProp,
   lien,
   message,
+  texteQR,
+  fleches = "cotes",
   defileAuto = false,
   ecartFleches = 0,
   interception,
@@ -254,6 +261,14 @@ export default function PartageInline({
      mais un lien et un message dédiés à la place du /p du profil. */
   lien?: string; // chemin relatif (ex. "/test"), l'origin est ajouté
   message?: string;
+  /* Phrase de la fenêtre QR. Par défaut celle du profil ; on la surcharge
+     quand ce n'est pas un profil qu'on partage (ex. une page de type). */
+  texteQR?: string;
+  /* Où vont les flèches. "cotes" (défaut, comportement historique) : posées sur
+     les bords de la rangée. "dessous" : côte à côte et centrées sous la rangée.
+     "aucune" : pas de flèches du tout, la rangée défile toute seule (choix de
+     Luca sur les pages de type). Les autres pages gardent le défaut. */
+  fleches?: "cotes" | "dessous" | "aucune";
   /* DÉFILEMENT AUTOMATIQUE (ex. bloc « L'inviter » du parcours à deux) :
      boucle infinie lente de droite à gauche, en pause au survol ; les
      flèches et le scroll manuel continuent de marcher. */
@@ -277,37 +292,11 @@ export default function PartageInline({
   const [peutG, setPeutG] = useState(false);
   const [peutD, setPeutD] = useState(false);
 
-  /* Défilement automatique : avance lente au rAF, pause au survol / au
-     doigt (pauseRef). La rangée étant rendue DEUX fois, on recale le scroll
-     d'une période (largeur d'une copie + un écart) quand on la dépasse :
-     le contenu étant identique, le saut est invisible → boucle infinie. */
-  const pauseRef = useRef(false);
-  const posRef = useRef(0); // position en FLOTTANT (piège : scrollLeft est arrondi
-  // à l'entier par le navigateur → += 0.4 directement n'avancerait jamais)
-  useEffect(() => {
-    if (!defileAuto) return;
-    let id: number;
-    const GAP = 4; // l'écart flex entre les icônes (style gap: 4)
-    const pas = () => {
-      const el = scrollRef.current;
-      /* Pendant une glisse de page (ressort, descente, remontée), on ne
-         touche pas au scroll du rail : pas d'écritures concurrentes. */
-      const glisse = (window as unknown as { __glissePageEnCours?: boolean }).__glissePageEnCours;
-      if (el && !glisse) {
-        const periode = (el.scrollWidth + GAP) / 2;
-        /* Si l'utilisateur a bougé le scroll lui-même (flèches, molette,
-           doigt), on se recale sur sa position. */
-        if (Math.abs(el.scrollLeft - posRef.current) > 2) posRef.current = el.scrollLeft;
-        if (!pauseRef.current) posRef.current += 0.4;
-        if (posRef.current >= periode) posRef.current -= periode;
-        else if (posRef.current < 1) posRef.current += periode;
-        el.scrollLeft = posRef.current;
-      }
-      id = requestAnimationFrame(pas);
-    };
-    id = requestAnimationFrame(pas);
-    return () => cancelAnimationFrame(id);
-  }, [defileAuto]);
+  /* LE COMPORTEMENT DU RAIL VIENT DU MODÈLE PARTAGÉ, comme le carrousel des
+     célébrités : boucle infinie sur trois copies, dérive lente, pause au survol
+     et au doigt, et on peut attraper le rail à la souris pour le faire tourner.
+     Plus rien de tout ça n'est réécrit ici. */
+  useRailDefilant(scrollRef, { actif: defileAuto });
 
   // Met à jour l'état des flèches selon la position de scroll.
   function majFleches() {
@@ -429,8 +418,12 @@ export default function PartageInline({
 .pi-rond .pi-tuile{transition:transform .4s cubic-bezier(.22,.9,.3,1);}
 .pi-rond:hover .pi-tuile{transform:scale(1.25) rotate(-2deg);}
 @media (prefers-reduced-motion: reduce){.pi-rond .pi-tuile{transition:none;}.pi-rond:hover .pi-tuile{transform:none;}}`}</style>
-      <Fleche cote="g" actif={defileAuto || peutG} onClick={() => defiler(-1)} ecart={ecartFleches} />
-      <Fleche cote="d" actif={defileAuto || peutD} onClick={() => defiler(1)} ecart={ecartFleches} />
+      {fleches === "cotes" && (
+        <>
+          <Fleche cote="g" actif={defileAuto || peutG} onClick={() => defiler(-1)} ecart={ecartFleches} />
+          <Fleche cote="d" actif={defileAuto || peutD} onClick={() => defiler(1)} ecart={ecartFleches} />
+        </>
+      )}
       <div
         ref={scrollRef}
         onScroll={majFleches}
@@ -447,15 +440,12 @@ export default function PartageInline({
               }
             : undefined
         }
-        /* Pause du défilement auto quand la souris (ou le doigt) est dessus */
-        onMouseEnter={defileAuto ? () => (pauseRef.current = true) : undefined}
-        onMouseLeave={defileAuto ? () => (pauseRef.current = false) : undefined}
-        onTouchStart={defileAuto ? () => (pauseRef.current = true) : undefined}
-        onTouchEnd={defileAuto ? () => (pauseRef.current = false) : undefined}
+        /* La pause au survol et au doigt est gérée par le modèle de rail. */
         style={{
           display: "flex",
           gap: 4,
           overflowX: "auto",
+          overflowY: "hidden",
           scrollbarWidth: "none",
           msOverflowStyle: "none",
           padding: "10px 0",
@@ -469,9 +459,18 @@ export default function PartageInline({
         }}
       >
         {ronds}
-        {/* Seconde copie : la boucle infinie se recale dessus, invisible */}
+        {/* Deux copies de plus : la boucle infinie du modèle de rail se recale
+            dessus, et le contenu étant identique le saut est invisible. */}
+        {defileAuto && ronds}
         {defileAuto && ronds}
       </div>
+
+      {fleches === "dessous" && (
+        <div className="pi-fleches" style={{ display: "flex", justifyContent: "center", gap: 14, marginTop: 34 }}>
+          <Fleche cote="g" actif={defileAuto || peutG} onClick={() => defiler(-1)} dessous />
+          <Fleche cote="d" actif={defileAuto || peutD} onClick={() => defiler(1)} dessous />
+        </div>
+      )}
 
       {/* Invité (mode connexion) : la fenêtre de connexion (email → code)
           ouverte au clic sur n'importe quel réseau. */}
@@ -515,7 +514,8 @@ export default function PartageInline({
               Partager depuis ton téléphone
             </h3>
             <p style={{ fontSize: 14, color: "rgba(0,0,0,0.6)", margin: "0 0 18px", lineHeight: 1.5 }}>
-              Scanne ce code avec ton téléphone pour ouvrir le partage et envoyer ton profil à tes amis.
+              {texteQR ??
+                "Scanne ce code avec ton téléphone pour ouvrir le partage et envoyer ton profil à tes amis."}
             </p>
             <div
               style={{
