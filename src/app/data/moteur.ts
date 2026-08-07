@@ -1,5 +1,5 @@
 // Moteur de calcul — port de moteur_calcul.py (100% déterministe).
-// Phase 1 : 60 réponses → type (4 lettres). Phase 2 : 9 réponses → variante (V1/V2/V3).
+// Phase 1 : 60 réponses → type (4 lettres). Puis 20 réponses → cinquième axe (R/M/C).
 // Les réponses sont indexées par id de question (comme le Python).
 
 import type { Phase1Question } from "./questions";
@@ -33,6 +33,7 @@ export function calculerType(
 }
 
 // Noms des 48 variantes (recopiés de moteur_calcul.py).
+// Conservé : encore utilisé par api/rapport et data/variantes.
 export const NOMS_VARIANTES: Record<string, Record<string, string>> = {
   INTJ: { V1: "Architecte-Bâtisseur", V2: "Stratège de Conviction", V3: "Visionnaire" },
   INTP: { V1: "Architecte Logique", V2: "Explorateur d'Idées", V3: "Penseur Humaniste" },
@@ -112,36 +113,36 @@ export function encoderScores(questions: Phase1Question[], reponses: Record<stri
   return AXES.map((a) => sommes[a]).join("-");
 }
 
-export interface VarianteResult {
-  variante: "V1" | "V2" | "V3";
+
+// ————— AXE 5 : réactivité émotionnelle —————
+// 20 items, score brut 20 à 100, pourcentage = ((score - 20) / 80) * 100.
+// Seuils validés : 35 % et 65 %, la borne appartient au niveau supérieur.
+// N'intervient PAS dans le calcul du type : les 4 axes sont inchangés.
+
+import type { Axe5Question } from "./questions";
+
+export interface Axe5Result {
+  scoreBrut: number;   // 20 à 100
+  pct: number;         // 0 à 100
+  lettre: "R" | "M" | "C";
   nom: string;
-  scores: Record<string, number>;
 }
 
-// questionsVariante : les 9 questions du type (champs id + variante).
-// reponses : clé = id de la question, valeur = 1 à 5.
-export function calculerVariante(
-  type: string,
-  questionsVariante: { id: string; variante: string }[],
+export const AXE5_NOMS: Record<string, string> = { R: "Réactif", M: "Mesuré", C: "Calme" };
+
+export function calculerAxe5(
+  questions: Axe5Question[],
   reponses: Record<string, number>,
-): VarianteResult {
-  const scores: Record<string, number> = { V1: 0, V2: 0, V3: 0 };
-  questionsVariante.forEach((q) => {
+): Axe5Result {
+  let scoreBrut = 0;
+  questions.forEach((q) => {
     const valeur = reponses[q.id];
     if (valeur == null) return;
-    scores[q.variante] += valeur;
+    scoreBrut += q.sens === "direct" ? valeur : 6 - valeur;
   });
 
-  // Variante gagnante : score max, tie-break V1 > V2 > V3.
-  const ordre: ("V1" | "V2" | "V3")[] = ["V1", "V2", "V3"];
-  let gagnante: "V1" | "V2" | "V3" = "V1";
-  ordre.forEach((v) => {
-    if (scores[v] > scores[gagnante]) gagnante = v;
-  });
+  const pct = ((scoreBrut - 20) / 80) * 100;
+  const lettre: "R" | "M" | "C" = pct >= 65 ? "R" : pct < 35 ? "C" : "M";
 
-  return {
-    variante: gagnante,
-    nom: NOMS_VARIANTES[type]?.[gagnante] ?? gagnante,
-    scores,
-  };
+  return { scoreBrut, pct: Math.round(pct * 10) / 10, lettre, nom: AXE5_NOMS[lettre] };
 }

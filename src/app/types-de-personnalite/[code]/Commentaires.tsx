@@ -48,7 +48,7 @@ const STYLE = `
 /* ————— Écrire ————— */
 /* Au repos, un seul bouton. La zone de saisie ne se déplie qu'au clic : l'encart
    toujours ouvert prenait trop de place pour ce qu'il disait. */
-.pt .com-ouvrir{display:inline-flex;align-items:center;gap:11px;flex:none;background:rgba(51,164,116,0.85);color:#fff;border:none;border-radius:999px;padding:12px 26px 12px 30px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:transform .25s var(--ease);}
+.pt .com-ouvrir{display:inline-flex;align-items:center;gap:11px;flex:none;background:var(--accent);color:#fff;border:none;border-radius:999px;padding:12px 26px 12px 30px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:transform .25s var(--ease);}
 .pt .com-ouvrir:hover{transform:scale(1.04);}
 /* La flèche pointe vers le bas pour ouvrir, vers le haut pour refermer. */
 .pt .com-ouvrir .fl{display:inline-flex;transition:transform .35s var(--ease);}
@@ -58,13 +58,13 @@ const STYLE = `
    des célébrités : pas de rondelle teintée, pas d'initiales — le signe seul, en
    vert, dans l'emplacement que le dessin occupera plus tard. */
 .pt .com-avatar{width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:26px;line-height:1;}
-.pt .com-zone{width:100%;box-sizing:border-box;min-height:96px;resize:vertical;border:1px solid rgba(0,0,0,0.14);border-radius:14px;padding:14px 16px;font:inherit;font-size:15.5px;line-height:1.6;color:var(--noir);background:#fff;transition:border-color .25s;}
+.pt .com-zone{width:100%;box-sizing:border-box;min-height:96px;resize:none;overflow:hidden;border:1px solid rgba(0,0,0,0.14);border-radius:14px;padding:14px 16px;font:inherit;font-size:15.5px;line-height:1.6;color:var(--noir);background:#fff;transition:border-color .25s;}
 .pt .com-zone::placeholder{color:rgba(0,0,0,0.35);}
 .pt .com-zone:focus{outline:none;border-color:var(--accent);}
 .pt .com-pied{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:12px;}
 .pt .com-compte{font-size:12.5px;color:var(--gris);}
 .pt .com-compte.trop{color:var(--noir);font-weight:700;}
-.pt .com-publier{background:rgba(51,164,116,0.85);color:#fff;border:none;border-radius:999px;padding:10px 26px;font-size:15px;font-weight:600;cursor:pointer;transition:transform .25s var(--ease),opacity .25s;}
+.pt .com-publier{background:var(--accent);color:#fff;border:none;border-radius:999px;padding:10px 26px;font-size:15px;font-weight:600;cursor:pointer;transition:transform .25s var(--ease),opacity .25s;}
 .pt .com-publier:hover{transform:scale(1.04);}
 .pt .com-publier:disabled{opacity:0.4;cursor:default;transform:none;}
 .pt .com-note{grid-column:2;margin-top:10px;font-size:12.5px;line-height:1.55;color:var(--gris);}
@@ -77,8 +77,8 @@ const STYLE = `
 .pt .com-vide{margin-top:26px;font-size:15px;color:var(--gris);}
 
 /* ————— Le fil ————— */
-.pt .com-barre{margin-top:52px;padding-bottom:14px;border-bottom:1px solid rgba(51,164,116,0.3);font-size:13px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gris);}
-.pt .com{display:grid;grid-template-columns:40px minmax(0,1fr);gap:16px;padding:26px 0;border-bottom:1px solid rgba(51,164,116,0.18);}
+.pt .com-barre{margin-top:52px;padding-bottom:14px;border-bottom:1px solid color-mix(in srgb, var(--accent) 30%, transparent);font-size:13px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gris);}
+.pt .com{display:grid;grid-template-columns:40px minmax(0,1fr);gap:16px;padding:26px 0;border-bottom:1px solid color-mix(in srgb, var(--accent) 18%, transparent);}
 /* Une réponse est simplement DÉCALÉE : aucun filet à sa gauche. */
 .pt .com.reponse{margin-left:56px;}
 .pt .com-tete{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
@@ -488,7 +488,7 @@ export default function Commentaires({ code, fil }: { code: string; fil: string 
                   : `Ce que la description ${code} t'inspire…`
               }
               value={texte}
-              onChange={(e) => setTexte(e.target.value)}
+              onChange={(e) => { setTexte(e.target.value); e.target.style.height = 'auto'; e.target.style.height = e.target.scrollHeight + 'px'; }}
             />
             <div className="com-pied">
               <span className={trop ? "com-compte trop" : "com-compte"}>
@@ -504,10 +504,6 @@ export default function Commentaires({ code, fil }: { code: string; fil: string 
               </button>
             </div>
           </div>
-          <p className="com-note">
-            Chaque message passe par plusieurs contrôles automatiques avant
-            d&apos;être publié.
-          </p>
         </div>
       )}
 
@@ -523,11 +519,6 @@ export default function Commentaires({ code, fil }: { code: string; fil: string 
 
       {chargement && <p className="com-vide">Chargement…</p>}
 
-      {!chargement && commentaires.length === 0 && (
-        <p className="com-vide">
-          Personne n&apos;a encore écrit ici. À toi de commencer.
-        </p>
-      )}
 
       {commentaires.map((c) => (
         <Fil

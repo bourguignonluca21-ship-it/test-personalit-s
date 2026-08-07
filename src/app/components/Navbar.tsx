@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import CouronnePremium from "./CouronnePremium";
 import FenetreConnexion from "./FenetreConnexion";
 import { createClient } from "../lib/supabase/client";
 
@@ -11,7 +12,7 @@ import { createClient } from "../lib/supabase/client";
    /profil. Logique et Bonheur ont une page de présentation (le test lui-même
    viendra plus tard). */
 const TESTS = [
-  { href: "/test", label: "Personnalité", navLabel: "Test de personnalité", menuLabel: "Test de personnalité" },
+  { href: "/test", label: "Personnalitées", navLabel: "Test de personnalité", menuLabel: "Test de personnalité" },
   { href: "/dark-personnalite", label: "Dark", navLabel: "Dark personnalité", menuLabel: "Test ton côté sombre" },
   { href: "/logique", label: "Logique", navLabel: "Test de logique", menuLabel: "Test de raisonnement" },
   { href: "/bonheur", label: "Bonheur", navLabel: "Test de bonheur", menuLabel: "Test du bonheur" },
@@ -19,18 +20,15 @@ const TESTS = [
 
 /* Le menu « Comprendre le fonctionnement » : le pôle savoir/marque. */
 const COMPRENDRE = [
-  { href: "/notre-approche", label: "Notre approche", desc: "Notre vision de la personnalité, et ce qui la rend sérieuse." },
   { href: "/types-de-personnalite", label: "Les 48 personnalités", desc: "Les différents profils et leurs descriptions." },
-  { href: "/personnalite-et-amour", label: "Personnalité et vie amoureuse", desc: "Comment ta personnalité influence tes relations." },
+  { href: "/personnalite-et-amour", label: "Personnalitées et vie amoureuse", desc: "Comment ta personnalité influence tes relations." },
   { href: "/developpement-personnel", label: "Développement personnel", desc: "Utiliser ta personnalité à ton avantage." },
 ];
 
 /* Le menu « Mon espace personnel » : raccourcis vers les onglets de /profil
    (le paramètre ?onglet= est lu par la page profil). */
 const ESPACE = [
-  { href: "/profil?onglet=profils", label: "Mes profils" },
-  { href: "/profil?onglet=relations", label: "Mes relations" },
-  { href: "/profil?onglet=developpement", label: "Mon équilibre" },
+  { href: "/profil", label: "Mon profil" },
 ];
 
 // Chevron du menu (tourne quand le menu est ouvert).
@@ -47,6 +45,47 @@ function Chevron({ ouvert }: { ouvert: boolean }) {
   );
 }
 
+function Pousse() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="15"
+      height="15"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M12 20v-6" />
+      <path d="M12 14c0-3.3 2.7-6 6-6 0 3.3-2.7 6-6 6z" />
+      <path d="M12 14c0-2.5-2-4.5-4.5-4.5 0 2.5 2 4.5 4.5 4.5z" />
+    </svg>
+  );
+}
+
+/* Couronne à l'essai, à comparer avec la pousse. Réduite au strict : trois
+   pointes et une base, sans joyaux — à 15 px, tout ornement devient une bavure.
+   Pour revenir à la pousse : remplacer <Couronne /> par <Pousse /> plus bas. */
+function Couronne() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="15"
+      height="15"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M3 8l3.5 3L12 5l5.5 6L21 8l-2 10H5L3 8z" />
+    </svg>
+  );
+}
+
 type MenuId = "tests" | "decouvrir" | "espace";
 
 export default function Navbar() {
@@ -57,12 +96,20 @@ export default function Navbar() {
   const [menuAffiche, setMenuAffiche] = useState<MenuId | null>(null);
   const [mobile, setMobile] = useState(false);
   const [connexionOuverte, setConnexionOuverte] = useState(false);
+  const [survolPremium, setSurvolPremium] = useState(false);
   const [connecte, setConnecte] = useState(false);
   const pathname = usePathname();
 
   const testCourant = TESTS.find((t) => t.href === pathname) ?? TESTS[0];
   const defautComprendre = COMPRENDRE.find((c) => c.href === "/types-de-personnalite")!;
   const comprendreCourant = COMPRENDRE.find((c) => c.href === pathname) ?? defautComprendre;
+
+  const sectionActive: MenuId | "premium" | null =
+    TESTS.some((t) => t.href === pathname) ? "tests"
+    : COMPRENDRE.some((c) => c.href === pathname) || pathname.startsWith("/types-de-personnalite/") ? "decouvrir"
+    : pathname.startsWith("/profil") ? "espace"
+    : pathname === "/suivi-premium" ? "premium"
+    : null;
 
   // Le contenu affiché reste le temps de la fermeture (300 ms).
   useEffect(() => {
@@ -167,7 +214,7 @@ export default function Navbar() {
         className={`sticky top-0 z-50 transition-colors duration-500 ${
           transparente
             ? "border-b border-transparent bg-transparent"
-            : "border-b border-black/[0.03] bg-white/70 backdrop-blur-xl backdrop-saturate-150"
+            : `border-b border-black/[0.03] ${menu ? "bg-white" : "bg-white/70 backdrop-blur-xl backdrop-saturate-150"}`
         }`}
       >
         {/* Desktop : la barre + son extension (le menu) partagent le fond de la
@@ -185,8 +232,8 @@ export default function Navbar() {
                 onClick={reloadIfSame("/")}
                 className="group flex h-full items-center"
               >
-                <span ref={logoRef} className="font-semibold text-[17px] tracking-tight text-gray-800 transition-transform duration-200 group-hover:scale-105">
-                  LOGO
+                <span ref={logoRef} className="font-semibold text-[17px] tracking-tight transition-transform duration-200 group-hover:scale-105">
+                  <span style={{ color: "rgba(51,164,116,0.85)", fontWeight: 700 }}>3000</span><span className="text-gray-800">Personnalitées</span>
                 </span>
               </Link>
             </div>
@@ -194,17 +241,16 @@ export default function Navbar() {
             {/* Les 3 menus : alignés sur la colonne de contenu du site (max-w-3xl),
                 le premier au bord gauche, le dernier au bord droit. */}
             <div className="absolute inset-y-0 left-1/2 flex w-full max-w-3xl -translate-x-1/2 items-stretch justify-between px-4 md:px-0">
-              {/* 2. Explore-toi : pur déroulé (les 4 tests dedans) */}
-              <div ref={testCellRef} className="relative flex h-full items-center" onMouseEnter={() => setMenu("tests")}>
-                <button
-                  type="button"
-                  className="group flex h-full items-center cursor-default"
+              {/* 2. CTA Faire le test */}
+              <div className="relative flex h-full items-center" onMouseEnter={() => setMenu(null)}>
+                <Link
+                  href="/test"
+                  onClick={reloadIfSame("/test")}
+                  className="whitespace-nowrap rounded-full px-5 py-2 text-[15px] font-semibold text-white transition-transform duration-200 hover:scale-105"
+                  style={{ background: "var(--accent-page, rgba(51,164,116,0.85))" }}
                 >
-                  <span ref={testTriggerRef} className="inline-flex origin-left items-center gap-1 whitespace-nowrap transition-transform duration-200 group-hover:scale-105 group-hover:text-gray-900">
-                    Explore-toi
-                    <Chevron ouvert={menu === "tests"} />
-                  </span>
-                </button>
+                  Faire le test
+                </Link>
               </div>
 
               {/* 3. Les différentes personnalités */}
@@ -214,47 +260,80 @@ export default function Navbar() {
                   onClick={reloadIfSame(comprendreCourant.href)}
                   className="group flex h-full items-center cursor-pointer"
                 >
-                  <span ref={decTriggerRef} className="inline-flex origin-left items-center gap-1 whitespace-nowrap transition-transform duration-200 group-hover:scale-105 group-hover:text-gray-900">
+                  <span ref={decTriggerRef} className="inline-flex origin-left items-center gap-1 whitespace-nowrap transition-transform duration-200 group-hover:scale-105 group-hover:text-gray-900" style={sectionActive === "decouvrir" ? { color: "rgba(51,164,116,0.85)" } : undefined}>
                     La personnalité, expliquée
                     <Chevron ouvert={menu === "decouvrir"} />
                   </span>
                 </Link>
               </div>
 
-              {/* 4. Mon espace */}
-              <div ref={espaceCellRef} className="relative flex h-full items-center" onMouseEnter={() => setMenu("espace")}>
+              {/* 4. Notre approche */}
+              <div className="relative flex h-full items-center" onMouseEnter={() => setMenu(null)}>
                 <Link
-                  href="/profil"
-                  onClick={reloadIfSame("/profil")}
+                  href="/notre-approche"
+                  onClick={reloadIfSame("/notre-approche")}
                   className="group flex h-full items-center cursor-pointer"
                 >
-                  <span ref={espaceTriggerRef} className="inline-flex origin-left items-center gap-1 whitespace-nowrap transition-transform duration-200 group-hover:scale-105 group-hover:text-gray-900">
-                    Mon espace
+                  <span className="inline-flex origin-left items-center gap-1 whitespace-nowrap transition-transform duration-200 group-hover:scale-105 group-hover:text-gray-900" style={pathname === "/notre-approche" ? { color: "rgba(51,164,116,0.85)" } : undefined}>
+                    Notre approche
+                  </span>
+                </Link>
+              </div>
+
+              {/* 5. Suivi premium (dropdown avec Mon profil) */}
+              <div
+                ref={espaceCellRef}
+                className="relative flex h-full items-center"
+                onMouseEnter={() => {
+                  setMenu("espace");
+                  setSurvolPremium(true);
+                }}
+                onMouseLeave={() => setSurvolPremium(false)}
+              >
+                <Link
+                  href="/suivi-premium"
+                  onClick={reloadIfSame("/suivi-premium")}
+                  className="group flex h-full items-center cursor-pointer"
+                >
+                  <span ref={espaceTriggerRef} className="inline-flex origin-left items-center gap-2 whitespace-nowrap transition-transform duration-200 group-hover:scale-105 group-hover:text-gray-900" style={sectionActive === "premium" || sectionActive === "espace" ? { color: "rgba(51,164,116,0.85)" } : undefined}>
+                    <span style={{ color: "var(--accent-page, rgba(51,164,116,0.9))" }}>
+                      <CouronnePremium anime={survolPremium} />
+                    </span>
+                    Suivi premium
                     <Chevron ouvert={menu === "espace"} />
                   </span>
                 </Link>
               </div>
+
             </div>
 
             {/* Coin droit : Se connecter · CTA Faire le test · langue */}
             <div className="relative ml-auto flex h-full items-center gap-4 pl-6 pr-6" onMouseEnter={() => setMenu(null)}>
-              {!connecte && (
+              {connecte ? (
+                <button
+                  type="button"
+                  onClick={deconnexion}
+                  className="flex items-center text-gray-500 transition-colors hover:text-gray-900 cursor-pointer"
+                  title="Se déconnecter"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                  </svg>
+                </button>
+              ) : (
                 <button
                   type="button"
                   onClick={() => setConnexionOuverte(true)}
-                  className="whitespace-nowrap text-[13px] text-gray-500 transition-colors hover:text-gray-900 cursor-pointer"
+                  className="whitespace-nowrap rounded-full px-4 py-1.5 text-[13px] text-gray-500 border border-gray-500 bg-white transition-colors cursor-pointer"
+                  style={{}}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = "rgba(51,164,116,0.85)"; e.currentTarget.style.borderColor = "rgba(51,164,116,0.85)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = ""; e.currentTarget.style.borderColor = ""; }}
                 >
                   Se connecter
                 </button>
               )}
-              <Link
-                href="/test"
-                onClick={reloadIfSame("/test")}
-                className="whitespace-nowrap rounded-full px-4 py-1.5 text-[13px] font-semibold text-white transition-transform duration-200 hover:scale-105"
-                style={{ background: "rgba(51,164,116,0.85)" }}
-              >
-                Faire le test
-              </Link>
               <span
                 className="w-6 h-6 rounded-full border border-gray-200"
                 aria-label="Français"
@@ -282,18 +361,21 @@ export default function Navbar() {
                     paddingBottom: 16,
                   }}
                 >
-                  {contenu.items.map((it) => (
-                    <Link
-                      key={it.href}
-                      href={it.href}
-                      onClick={reloadIfSame(it.href)}
-                      className="group block py-1.5"
-                    >
-                      <span className="inline-block origin-left text-[16px] font-semibold tracking-tight text-[rgba(0,0,0,0.8)] transition-transform duration-200 group-hover:scale-[1.04]">
-                        {it.label}
-                      </span>
-                    </Link>
-                  ))}
+                  {contenu.items.map((it) => {
+                    const actif = menuAffiche === sectionActive && (it.href === pathname || (it.href !== "/" && pathname.startsWith(it.href + "/")));
+                    return (
+                      <Link
+                        key={it.href}
+                        href={it.href}
+                        onClick={reloadIfSame(it.href)}
+                        className="group block py-1.5"
+                      >
+                        <span className="inline-block origin-left text-[16px] font-semibold tracking-tight transition-transform duration-200 group-hover:scale-[1.04]" style={{ color: actif ? "rgba(51,164,116,0.85)" : "rgba(0,0,0,0.8)" }}>
+                          {it.label}
+                        </span>
+                      </Link>
+                    );
+                  })}
                   {/* Dans « Mon espace personnel » : connexion / déconnexion. */}
                   {menuAffiche === "espace" && (
                     <button
@@ -302,7 +384,7 @@ export default function Navbar() {
                       className="group block w-full py-1.5 text-left cursor-pointer"
                     >
                       <span className="inline-flex origin-left items-center gap-2 text-[16px] font-semibold tracking-tight text-[rgba(0,0,0,0.8)] transition-transform duration-200 group-hover:scale-[1.04]">
-                        {connecte ? "Déconnexion" : "Se connecter / Crée un compte"}
+                        {connecte ? "Se déconnecter" : "Se connecter / Crée un compte"}
                         {connecte ? (
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -330,9 +412,9 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={reloadIfSame("/")}
-            className="font-semibold text-[17px] tracking-tight text-gray-800"
+            className="font-semibold text-[17px] tracking-tight"
           >
-            LOGO
+            <span style={{ color: "rgba(51,164,116,0.85)", fontWeight: 700 }}>3000</span><span className="text-gray-800">Personnalitées</span>
           </Link>
           <button
             className="p-2"
@@ -356,7 +438,7 @@ export default function Navbar() {
                 reloadIfSame("/test")(e);
               }}
               className="rounded-full px-4 py-2 text-center text-sm font-semibold text-white"
-              style={{ background: "rgba(51,164,116,0.85)" }}
+              style={{ background: "var(--accent-page, rgba(51,164,116,0.85))" }}
             >
               Faire le test
             </Link>
@@ -411,7 +493,7 @@ export default function Navbar() {
               }}
               className="py-1 font-semibold text-left"
             >
-              {connecte ? "Déconnexion" : "Se connecter / Crée un compte"}
+              {connecte ? "Se déconnecter" : "Se connecter / Crée un compte"}
             </button>
           </div>
         )}

@@ -38,7 +38,7 @@ const MOTIFS: { cle: MotifSignalement; libelle: string }[] = [
   { cle: "autre", libelle: "Autre raison" },
 ];
 
-const VERT = "rgba(51,164,116,0.85)";
+const VERT = "var(--accent-page, rgba(51,164,116,0.85))";
 const NOIR = "rgba(0,0,0,0.8)";
 const GRIS = "rgba(0,0,0,0.55)";
 
@@ -152,7 +152,7 @@ export default function FenetreSignalement({
                       gap: 12,
                       width: "100%",
                       textAlign: "left",
-                      background: choisi ? "rgba(51,164,116,0.08)" : "none",
+                      background: choisi ? "color-mix(in srgb, var(--accent-page, rgb(51,164,116)) 8%, transparent)" : "none",
                       border: "none",
                       borderRadius: 12,
                       padding: "11px 12px",

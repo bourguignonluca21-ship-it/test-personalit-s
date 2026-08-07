@@ -15,7 +15,7 @@ import { PARAM_PARTAGE, VALEUR_PARTAGE } from "./paramPartage";
 // FenetrePartage et de la fenêtre QR de PartageInline.
 // =============================================================================
 
-const VERT = "rgba(51,164,116,0.85)";
+const VERT = "var(--accent-page, rgba(51,164,116,0.85))";
 
 export default function FenetreProche({ code }: { code: string }) {
   const [ouvert, setOuvert] = useState(false);

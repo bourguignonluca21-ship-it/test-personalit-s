@@ -27,39 +27,41 @@ export const metadata: Metadata = {
 const STYLES = `
 .hub{--vert-plein:rgb(82,178,137);--vert-clair:rgba(51,164,116,0.12);--noir:rgba(0,0,0,0.75);--gris:rgba(0,0,0,0.5);--ease:cubic-bezier(.22,.9,.3,1);color:var(--noir);}
 /* ————— L'ouverture (même patron validé que « Notre approche ») ————— */
-.hub .ouverture{max-width:768px;margin:0 auto;padding:48px 16px 0;min-height:calc(100svh - 290px);display:flex;flex-direction:column;box-sizing:border-box;}
+.hub .ouverture{max-width:768px;margin:0 auto;padding:48px 16px 0;display:flex;flex-direction:column;box-sizing:border-box;}
 @media (min-width:768px){.hub .ouverture{padding-left:0;padding-right:0;padding-top:60px;}}
 .hub .titre-hub{font-size:clamp(32px,4.4vw,50px);font-weight:700;letter-spacing:-0.02em;line-height:1.12;}
 .hub .titre-hub b{color:var(--vert-plein);font-weight:700;}
 .hub .chapeau{margin-top:16px;font-size:18.5px;color:var(--gris);line-height:1.6;}
-.hub .trait{border:none;border-top:1px solid rgba(51,164,116,0.3);margin:auto 0;transform:translateY(34px);width:100%;flex:none;}
+.hub .trait{border:none;border-top:1px solid rgba(51,164,116,0.3);margin:16px auto;max-width:768px;width:100%;flex:none;padding:0 16px;box-sizing:border-box;}
 /* ————— Une famille = une section (SCROLL LIBRE : le hub est un menu, on
    doit pouvoir le balayer d'un coup d'œil, pas le lire écran par écran) —————
    Le CONTENEUR monte à 1040 pour laisser respirer la galerie de cartes ; les
    TEXTES, eux, restent dans la colonne 768 du site, centrée sur le même axe :
    le titre de famille et sa description tombent donc exactement là où ils
    tombent sur toutes les autres pages. */
-.hub .famille{max-width:1072px;margin:0 auto;padding:56px 16px;display:flex;flex-direction:column;box-sizing:border-box;}
+.hub .famille{max-width:100%;margin:0 auto;padding:24px 16px;display:flex;flex-direction:column;box-sizing:border-box;}
 /* La première famille garde l'APERÇU DE CHARGEMENT validé :
    titre + description + haut des cartes visibles sous le pli. */
-.hub #fam-analystes .famille{padding-top:76px;}
-.hub .fam-entete{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;width:100%;max-width:768px;margin-left:auto;margin-right:auto;}
+.hub #fam-analystes .famille{padding-top:10px;}
+.hub .fam-entete{display:flex;flex-direction:column;align-items:flex-start;gap:8px;width:100%;max-width:768px;margin-left:auto;margin-right:auto;}
 .hub .fam-titre{font-size:clamp(30px,4.2vw,46px);font-weight:700;letter-spacing:-0.02em;line-height:1.1;}
-.hub .fam-lettres{font-size:13px;font-weight:700;letter-spacing:2px;color:#fff;border-radius:999px;padding:5px 13px;}
-.hub .fam-desc{margin-top:10px;font-size:15.5px;color:var(--gris);line-height:1.6;width:100%;max-width:768px;margin-left:auto;margin-right:auto;}
-.hub .grille{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.8vh,18px);margin-top:clamp(18px,3vh,34px);}
-@media (max-width:760px){.hub .grille{grid-template-columns:1fr;}}
+.hub .fam-lettres{font-size:13px;font-weight:700;letter-spacing:2px;color:#fff;border-radius:999px;padding:5px 13px;width:fit-content;margin:0 0 8px;}
+.hub .fam-desc{margin-top:10px;font-size:18.5px;color:var(--gris);line-height:1.6;max-width:768px;margin-left:auto;margin-right:auto;}
+.hub .grille{display:flex;justify-content:space-evenly;flex-wrap:nowrap;margin-top:clamp(18px,3vh,34px);}
+@media (max-width:900px){.hub .grille{grid-template-columns:1fr 1fr;}}
+@media (max-width:500px){.hub .grille{grid-template-columns:1fr;}}
 /* ————— La carte d'un type ————— */
-.hub .carte-type{position:relative;display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:20px;padding:clamp(16px,2.4vh,22px) 20px;box-shadow:0 10px 30px -18px rgba(0,0,0,0.18);transition:transform .3s var(--ease),box-shadow .3s;color:inherit;}
-.hub .carte-type:hover{transform:translateY(-4px);box-shadow:0 18px 44px -18px rgba(0,0,0,0.22);}
+.hub .carte-type{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;background:transparent;border:none;border-radius:20px;padding:clamp(16px,2.4vh,22px) 12px;transition:transform .3s var(--ease);color:inherit;flex:1 1 0;min-width:0;}
+.hub .carte-type:hover{transform:translateY(-4px);}
 /* Lien « étiré » : toute la carte reste cliquable vers la page du type… */
 .hub .ct-lien-type{color:inherit;}
 .hub .ct-lien-type::after{content:"";position:absolute;inset:0;border-radius:20px;z-index:1;}
-.hub .embleme{flex:none;width:62px;height:62px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14.5px;letter-spacing:0.04em;color:#fff;transition:transform .35s var(--ease);}
+.hub .embleme{flex:none;width:200px;height:200px;display:flex;align-items:center;justify-content:center;font-size:200px;line-height:1;transition:transform .35s var(--ease);}
 .hub .carte-type:hover .embleme{transform:scale(1.12) rotate(-3deg);}
 .hub .ct-nom{font-size:18px;font-weight:700;line-height:1.2;}
 .hub .ct-code{font-size:12px;font-weight:600;color:var(--gris);margin-left:8px;letter-spacing:0.06em;}
-.hub .ct-phrase{margin-top:5px;font-size:13.5px;color:var(--gris);line-height:1.5;}
+.hub .carte-type>span{max-width:220px;}
+.hub .ct-phrase{margin-top:5px;font-size:13.5px;color:var(--gris);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 /* Les 3 puces sont NOTRE différenciateur : sans un mot, on ne sait pas si ce
    sont des sous-types, des traits ou des déclinaisons. On le dit. */
 .hub .ct-libelle{margin-top:11px;font-size:11px;font-weight:600;color:var(--gris);letter-spacing:0.02em;display:block;}
@@ -119,26 +121,26 @@ export default function TypesPage() {
           d&apos;évoluer. Tu trouveras leurs grandes lignes, celles des seize
           types comme celles des quarante-huit variantes.
         </p>
-        <SommaireFamilles />
-        <hr className="trait" data-anim="up" data-delay="320" />
       </header>
+      <hr className="trait" data-anim="up" data-delay="320" />
 
       {/* ————— LES 4 FAMILLES ————— */}
       {ROLE_ORDER.map((cle, iFam) => {
         const role = ROLES[cle];
         return (
           <section key={cle} id={`fam-${cle}`}>
+            {iFam > 0 && <hr className="trait" data-anim="up" />}
             <div className="famille">
               <div id={iFam === 0 ? "fam-contenu-analystes" : undefined}>
               <div className="fam-entete">
-                <h2 className="fam-titre" data-anim="up" data-tot={iFam === 0 ? "" : undefined} style={{ color: role.color }}>
-                  {role.name}
-                </h2>
                 <span className="fam-lettres" data-anim="pop" data-delay="200" style={{ background: role.color }}>
                   {role.letters.replaceAll("_", "·")}
                 </span>
+                <h2 className="fam-titre" data-anim="up" data-tot={iFam === 0 ? "" : undefined} style={{ color: role.color }}>
+                  {role.name}
+                </h2>
               </div>
-              <p className="fam-desc" data-anim="up" data-delay="150">{role.description}</p>
+              <p className="fam-desc" data-anim="up" data-delay={iFam === 0 ? undefined : "150"} data-tot={iFam === 0 ? "" : undefined}>{role.description.split("\n").map((l, i) => i === 0 ? <span key={i}>{l}</span> : <span key={i}><br />{l}</span>)}</p>
               <div className="grille">
                 {typesByRole(cle).map((t, i) => (
                   /* La carte n'est plus un <Link> : les puces sont elles-mêmes
@@ -149,30 +151,16 @@ export default function TypesPage() {
                   <div
                     key={t.code}
                     className="carte-type"
-                    data-anim="pop"
-                    data-delay={String(250 + i * 120)}
-                    data-tot={iFam === 0 && i < 2 ? "" : undefined}
+                    data-anim="up"
+                    data-tot={iFam === 0 ? "" : undefined}
                   >
-                    <span className="embleme" style={{ background: role.color }}>{t.code}</span>
+                    <span className="embleme" style={{ color: role.color }}>★</span>
                     <span>
                       <Link href={`/types-de-personnalite/${t.slug}`} className="ct-lien-type">
                         <span className="ct-nom" style={{ color: role.color }}>{t.name}</span>
                         <span className="ct-code">{t.code}</span>
                       </Link>
                       <span className="ct-phrase" style={{ display: "block" }}>{t.tagline}</span>
-                      <span className="ct-libelle">3 façons d&apos;être {t.name} :</span>
-                      <span className="ct-variantes">
-                        {variantesDuType(t).map((v) => (
-                          <Link
-                            key={v.cle}
-                            href={v.href}
-                            className="puce-v"
-                            style={{ background: role.soft, color: role.color }}
-                          >
-                            {v.nom}
-                          </Link>
-                        ))}
-                      </span>
                     </span>
                   </div>
                 ))}

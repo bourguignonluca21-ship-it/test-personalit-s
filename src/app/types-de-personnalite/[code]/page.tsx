@@ -42,9 +42,7 @@ export default async function TypePage({ params }: { params: Promise<{ code: str
       actif=""
       titre={type.name}
       sousTitre={
-        <p className="sous-titre">
-          Personnalité <b>{type.code}</b>
-        </p>
+        <p className="sous-titre">Personnalité - {type.code}</p>
       }
       chapeau={typo(type.tagline)}
     >
@@ -54,7 +52,13 @@ export default async function TypePage({ params }: { params: Promise<{ code: str
           tete={
             contenu.intro.exergue ? (
               <p className="exergue">
-                {typo(contenu.intro.exergue)}
+                {/* Une phrase par ligne : la chute se détache au lieu de
+                    couler à la suite de la première. */}
+                {contenu.intro.exergue
+                  .split(/(?<=\.)\s+/)
+                  .map((phrase, i) => (
+                    <span key={i}>{typo(phrase)}</span>
+                  ))}
               </p>
             ) : undefined
           }

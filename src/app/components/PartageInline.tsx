@@ -215,7 +215,7 @@ function Fleche({
         width: 34,
         height: 34,
         borderRadius: "50%",
-        background: "rgba(51,164,116,0.85)",
+        background: "var(--accent-page, rgba(51,164,116,0.85))",
         border: "none",
         boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
         display: "grid",
@@ -401,13 +401,13 @@ export default function PartageInline({
       <Rond label="Email" couleur="#7A8290" encre="#fff" d={IC.email} href={l && `mailto:?subject=${enc("Et toi, qui es-tu vraiment ?")}&body=${enc(`${msg}\n\n${url}`)}`} />
       <Rond
         label={copie ? "Lien copié !" : "Copier le lien"}
-        couleur={copie ? "rgba(51,164,116,0.85)" : "#ECECE8"}
+        couleur={copie ? "var(--accent-page, rgba(51,164,116,0.85))" : "#ECECE8"}
         encre={copie ? "#fff" : "#555"}
         d={copie ? IC.check : IC.lien}
         onClick={copier}
       />
       {montrerQR && (
-        <Rond label="QR code" couleur="rgba(51,164,116,0.85)" node={QR_NODE} onClick={() => setQrOuvert(true)} />
+        <Rond label="QR code" couleur="var(--accent-page, rgba(51,164,116,0.85))" node={QR_NODE} onClick={() => setQrOuvert(true)} />
       )}
     </>
   );
@@ -534,7 +534,7 @@ export default function PartageInline({
                 onClick={() => setQrOuvert(false)}
                 style={{
                   marginTop: 18,
-                  background: "rgba(51,164,116,0.85)",
+                  background: "var(--accent-page, rgba(51,164,116,0.85))",
                   color: "#fff",
                   border: "none",
                   borderRadius: 999,

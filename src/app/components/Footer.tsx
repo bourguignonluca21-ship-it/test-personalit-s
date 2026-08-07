@@ -49,7 +49,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {col.links.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-sm text-[rgba(51,164,116,0.75)] hover:underline">
+                  <Link href={link.href} className="text-sm text-[var(--accent-page,rgba(51,164,116,0.75))] hover:underline">
                     {link.label}
                   </Link>
                 </li>

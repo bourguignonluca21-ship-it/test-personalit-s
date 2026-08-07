@@ -35,7 +35,7 @@ const STYLE = `
 .points-hub .point-item:hover .etiquette{opacity:1;transform:translateY(-50%) translateX(0);}
 @media (prefers-reduced-motion: reduce){.points-hub .etiquette{transition:opacity .01s;}}
 .points-hub button.actif{background:var(--vert-ambiant, rgb(82,178,137));border-color:var(--vert-ambiant, rgb(82,178,137));transform:scale(1.4);}
-nav a[href="/test"]{background:var(--vert-ambiant, rgba(51,164,116,0.85)) !important;transition:background .6s ease,transform .2s;}
+nav a[href="/test"].rounded-full{background:var(--vert-ambiant, rgba(51,164,116,0.85)) !important;transition:background .6s ease,transform .2s;}
 @media (max-width:900px){.points-hub{display:none;}}
 `;
 

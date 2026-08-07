@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import Quiz from "./Quiz";
 import ScrollHaut from "./ScrollHaut";
 import TestPageTitle from "./TestPageTitle";
-import { PHASE1_QUESTIONS, getPhase2Questions } from "../data/questions";
-import { calculerType, calculerVariante, encoderScores } from "../data/moteur";
+import { PHASE1_QUESTIONS, AXE5_QUESTIONS } from "../data/questions";
+import { calculerType, calculerAxe5, encoderScores } from "../data/moteur";
 import { getTypeByCode } from "../data/types";
 
 const STEPS = [
@@ -33,8 +33,8 @@ const STEPS = [
   },
 ];
 
-// 60 questions de phase 1 + 9 de variante = 69 (total affiché, sans rupture visible).
-const TOTAL = PHASE1_QUESTIONS.length + 9;
+// 60 questions de personnalité + 20 pour le cinquième axe = 80.
+const TOTAL = PHASE1_QUESTIONS.length + AXE5_QUESTIONS.length;
 
 export default function TestPersonnalite({
   invitation,
@@ -79,17 +79,15 @@ export default function TestPersonnalite({
     }
   }, [typeProvisoire, shownType]);
 
-  const phase2Questions = shownType ? getPhase2Questions(shownType) : [];
-
-  // Liste affichée : phase 1, puis (une fois le type connu) les 9 questions de variante.
+  // Liste affichée : les 60 questions, puis (une fois le type connu) les 20 du cinquième axe.
   const allQuestions = [
     ...PHASE1_QUESTIONS.map((q) => ({ id: q.id, texte: q.texte })),
-    ...phase2Questions.map((q) => ({ id: q.id, texte: q.texte })),
+    ...(shownType ? AXE5_QUESTIONS.map((q) => ({ id: q.id, texte: q.texte })) : []),
   ];
 
-  // Titre révélé juste avant les questions de variante : code + nom du type, puis « Trouve ta variante ».
+  // Encart révélé juste avant les 20 questions du cinquième axe : le type trouvé, puis la suite.
   const typeInfo = shownType ? getTypeByCode(shownType) : undefined;
-  const phase2Intro = shownType ? (
+  const axe5Intro = shownType ? (
     <div className={`my-12 ${leaving ? "variante-leave" : "variante-enter"}`}>
       <div
         className="text-white text-center py-16 px-6 rounded-3xl flex flex-col items-center gap-4"
@@ -99,13 +97,10 @@ export default function TestPersonnalite({
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight leading-none">{shownType}</h2>
           {typeInfo && <span className="text-xl text-white/80 leading-none">{typeInfo.name}</span>}
         </div>
-        <p className="text-2xl md:text-3xl font-bold tracking-tight leading-none">Trouve ta variante</p>
+        <p className="text-2xl md:text-3xl font-bold tracking-tight leading-none">Voici ta personnalité</p>
         <p className="text-base md:text-lg text-white/85 max-w-md mx-auto leading-[1.9] text-balance">
-          Les personnalités donnent les grandes lignes ; entre elles, 3 variantes te rendent presque
-          unique.
-        </p>
-        <p className="text-sm italic text-white leading-tight whitespace-nowrap">
-          Si une réponse précédente est modifiée, les questions de la variante s&apos;adapteront.
+          Il reste une dimension que ces quatre lettres ne mesurent pas : ta réactivité
+          émotionnelle. Vingt questions, et ton compte rendu est prêt.
         </p>
       </div>
     </div>
@@ -120,24 +115,24 @@ export default function TestPersonnalite({
       subtitle="48 portraits possibles · Un seul te ressemble"
       microligne={
         <>
-          <span className="font-semibold" style={{ color: "rgb(82,178,137)" }}>Gratuit</span> · 10 minutes · 69 questions
+          <span className="font-semibold" style={{ color: "rgb(82,178,137)" }}>Gratuit</span> · 12 minutes · 80 questions
         </>
       }
       questions={allQuestions.map((q) => q.texte)}
       questionIds={allQuestions.map((q) => q.id)}
       total={TOTAL}
       phase1Count={PHASE1_QUESTIONS.length}
-      phase2Intro={phase2Intro}
+      phase2Intro={axe5Intro}
       steps={STEPS}
       accent="rgba(51,164,116,0.75)"
       note="Réponds à toutes les questions pour découvrir ton profil."
       onAnswersChange={setAnswers}
       onSubmit={(ans, info) => {
         const code = calculerType(PHASE1_QUESTIONS, ans);
-        const v = calculerVariante(code, getPhase2Questions(code), ans);
+        const a5 = calculerAxe5(AXE5_QUESTIONS, ans);
         const scores = encoderScores(PHASE1_QUESTIONS, ans);
-        const vs = `${v.scores.V1}-${v.scores.V2}-${v.scores.V3}`;
-        const slug = `${code.toLowerCase()}-${v.variante.toLowerCase()}`;
+        const vs = String(a5.scoreBrut);
+        const slug = `${code.toLowerCase()}-${a5.lettre.toLowerCase()}`;
         // Envoi du mail « ton profil » + inscription newsletter (best-effort).
         // keepalive : la requête survit à la navigation vers la page résultat.
         if (info.email || info.newsletter) {

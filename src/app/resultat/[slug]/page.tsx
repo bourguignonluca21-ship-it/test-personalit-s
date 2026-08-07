@@ -1,911 +1,230 @@
-import Link from "next/link";
+// =============================================================================
+// PAGE RÉSULTAT — une page par profil.
+// 48 pages : 16 types × 3 niveaux du cinquième axe.  /resultat/enfp-r
+//
+// Le texte est figé (48 pages). Les 4 pourcentages viennent des scores du test,
+// passés dans l'URL et BORNÉS à 15-75 : aucun pourcentage aberrant n'est possible.
+//
+// Le cinquième axe n'est pas encore rédigé : les trois pages d'un même type
+// servent pour l'instant le même contenu.
+// =============================================================================
+
 import type { Metadata } from "next";
-import ResultatNav from "../../components/ResultatNav";
-import SpectreInteractif from "../../components/SpectreInteractif";
-import VarianteInteractif from "../../components/VarianteInteractif";
-import CompatibiliteBlocs from "../../components/CompatibiliteBlocs";
-import PrecisionRating from "../../components/PrecisionRating";
-import BlocVerrouille from "../../components/BlocVerrouille";
-import ProgressionMenu from "../../components/ProgressionMenu";
-import FenetrePaiement from "../../components/FenetrePaiement";
-import PartageInline from "../../components/PartageInline";
-import ScrollHaut from "../../components/ScrollHaut";
-import { cookies, headers } from "next/headers";
-import { createClient } from "../../lib/supabase/server";
-import { enregistrerResultat } from "../../lib/resultats";
-import { COOKIE_ACCES, decoderAcces } from "../../lib/acces";
-import { decoderInvitation } from "../../lib/duo";
-import { enregistrerLien, infosInviteur } from "../../lib/liens";
-import { htmlPartenairePret, sujetPartenairePret } from "../../lib/emails/partenairePret";
-import MessageInvite from "../../components/MessageInvite";
+import { notFound } from "next/navigation";
 import {
-  getProfil,
-  PROFIL_SECTIONS,
-  getDescriptionVariante,
-  getTexteVariante,
-  getVarianteDetail,
-  getSectionDetail,
-} from "../../data/profils";
-import type { SectionDetail, VarianteDetail } from "../../data/profils";
-import { spectreFromScores, NOMS_VARIANTES } from "../../data/moteur";
+  getCompteRendu,
+  tousLesSlugs,
+  NIVEAUX_AXE5,
+  NOMS_AXE5,
+  BLOCS_AXE5,
+  bornerScore,
+  MODULATIONS,
+  cleModulation,
+} from "../../data/comptesRendus";
+import type { BlocCR, NiveauAxe5 } from "../../data/comptesRendus";
+import { spectreFromScores } from "../../data/moteur";
+import type { SpectreAxe } from "../../data/moteur";
+import { getTypeByCode } from "../../data/types";
 
-const GREEN = "rgba(51,164,116,0.85)";
+const VERT = "#33a474";
+const VERT_DOUX = "rgba(51,164,116,0.08)";
 
-// Nombre de points forts / faibles laissés GRATUITS par bloc (les suivants sont
-// brouillés côté serveur et affichés floutés + cadenas). Voir GroupePoints + brouillerPoints.
-const POINTS_GRATUITS = 3;
-
-// ===== SQUELETTE FIGÉ — labels fixes communs à TOUS les profils =====
-// Ces libellés ne vivent qu'ici : on les change une fois, ils changent partout.
-// Le contenu propre à chaque profil (dans profils.ts) ne porte que le texte variable.
-const AGES = ["Enfance", "Jeunesse", "Adulte", "Ancien"] as const;
-const LABELS_BLOCS: Record<string, { negatif: string; positif: string }> = {
-  relations: { negatif: "Ce qui est toxique pour toi", positif: "Ce qui te réussit" },
-  carriere: { negatif: "Ce qui t'éteint", positif: "Ce qui te booste" },
-};
-const LABELS_COMPAT: Record<
-  string,
-  { negatif: string; positif: string; panelNegatif: string; panelPositif: string }
-> = {
-  relations: {
-    negatif: "Les –",
-    positif: "Les +",
-    panelNegatif: "Les profils les – compatible",
-    panelPositif: "Les profils les + compatible",
-  },
-  carriere: {
-    negatif: "Les environnements à éviter",
-    positif: "Les métiers faits pour toi",
-    panelNegatif: "Là où tu risques de t'éteindre",
-    panelPositif: "Des pistes qui te ressemblent",
-  },
+const NOMS_POLES: Record<string, string> = {
+  E: "Extraversion", I: "Introversion",
+  N: "Intuition", S: "Observation",
+  F: "Sentiment", T: "Logique",
+  P: "Perception", J: "Jugement",
 };
 
-function parseSlug(slug: string): { code: string; variante: string } {
-  const m = slug.match(/^(.+)-(v\d)$/i);
-  if (m) return { code: m[1].toUpperCase(), variante: m[2].toUpperCase() };
-  return { code: slug.toUpperCase(), variante: "V1" };
+/** "enfp-r" -> { code: "ENFP", niveau: "r" } ; tolère "enfp" et l'ancien "enfp-v1". */
+function lireSlug(slug: string): { code: string; niveau: NiveauAxe5 | null } {
+  const [brut, suffixe] = slug.toLowerCase().split("-");
+  const niveau = NIVEAUX_AXE5.includes(suffixe as NiveauAxe5)
+    ? (suffixe as NiveauAxe5)
+    : null;
+  return { code: brut.toUpperCase(), niveau };
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const { code, variante } = parseSlug(slug);
-  const p = getProfil(code, variante);
-  return {
-    title: `${p.code} · ${p.nomVariante} — ton résultat`,
-    description: `Ton profil ${p.code} (${p.nomType}), variante ${p.nomVariante}.`,
-  };
-}
+/** Les 48 slugs valides : 16 types × 3 niveaux. */
+export const SLUGS_VALIDES = tousLesSlugs();
 
-// Met en vert le mot-clé (accent) dans un titre, s'il est présent.
-function titreAccentue(texte: string, accent?: string) {
-  if (!accent || !texte.includes(accent)) return texte;
-  const [avant, apres] = texte.split(accent);
+function Riche({ texte }: { texte: string }) {
+  const parts = texte.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
   return (
     <>
-      {avant}
-      <span style={{ color: GREEN }}>{accent}</span>
-      {apres}
+      {parts.map((p, i) => {
+        if (p.startsWith("**") && p.endsWith("**")) return <strong key={i}>{p.slice(2, -2)}</strong>;
+        if (p.startsWith("*") && p.endsWith("*") && p.length > 2) return <em key={i}>{p.slice(1, -1)}</em>;
+        return <span key={i}>{p}</span>;
+      })}
     </>
   );
 }
 
-// Petit cadenas vert posé au centre d'un item verrouillé (même style que le menu de progression).
-function CadenasItem() {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-      <span
-        className="flex items-center justify-center w-7 h-7 rounded-full transition-transform duration-200 ease-out group-hover:scale-125"
-        style={{ background: "rgba(51,164,116,0.12)" }}
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <rect x="5" y="11" width="14" height="9" rx="2" fill={GREEN} />
-          <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke={GREEN} strokeWidth="2" />
-        </svg>
-      </span>
-    </div>
-  );
-}
-
-// Groupe « points forts / faibles » : pastille verte + items sur 2 colonnes + mots-clés verts.
-// Si non payé, les items au-delà de POINTS_GRATUITS sont affichés floutés + cadenas (leur texte
-// est déjà brouillé côté serveur, voir brouillerPoints, donc le vrai texte n'est jamais envoyé).
-function GroupePoints({
-  titre,
-  items,
-  isPaid = true,
-}: {
-  titre: string;
-  items: { titre: string; texte: string; accent?: string }[];
-  isPaid?: boolean;
-}) {
-  return (
-    <div>
-      <h3
-        className="inline-block text-base font-bold mb-6 rounded-full px-6 py-2 text-white"
-        style={{ background: GREEN }}
-      >
-        {titre}
-      </h3>
-      <ul className="grid md:grid-cols-2 gap-x-10 gap-y-5">
-        {items.map((it, idx) => {
-          const locked = !isPaid && idx >= POINTS_GRATUITS;
-          return (
-            <li key={idx} className={locked ? "group relative" : undefined}>
-              <div className={locked ? "select-none blur-[5px]" : undefined} aria-hidden={locked || undefined}>
-                <p className="font-semibold text-[rgba(0,0,0,0.8)]">{titreAccentue(it.titre, it.accent)}</p>
-                <p className="text-sm text-gray-600 leading-relaxed mt-0.5">{it.texte}</p>
-              </div>
-              {locked && <CadenasItem />}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
-
-// Encart « Ton paradoxe » : tension → deux faces (lumière / ombre) → bascule.
-function ParadoxeBlock({
-  paradoxe,
-  titre = "Ton paradoxe",
-}: {
-  paradoxe: { tension: string; lumiere: string; ombre: string; bascule: string };
-  titre?: string;
-}) {
-  return (
-    <div className="rounded-2xl p-6 md:p-8 transition-shadow hover:shadow-sm" style={{ background: "rgba(51,164,116,0.08)" }}>
-      <h3
-        className="inline-block text-base font-bold mb-5 rounded-full px-6 py-2 text-white"
-        style={{ background: GREEN }}
-      >
-        {titre}
-      </h3>
-      <p className="text-lg font-semibold text-[rgba(0,0,0,0.8)] leading-relaxed mb-6 whitespace-pre-line">
-        {paradoxe.tension}
-      </p>
-
-      <div className="grid md:grid-cols-2 gap-5">
-        <div className="rounded-2xl border border-gray-100 bg-white p-5">
-          <p className="text-xs font-bold uppercase tracking-wide mb-2" style={{ color: GREEN }}>
-            Ta lumière
-          </p>
-          <p className="text-sm text-[rgba(0,0,0,0.7)] leading-relaxed">{paradoxe.lumiere}</p>
+function Bloc({ bloc, spectre }: { bloc: BlocCR; spectre: SpectreAxe[] }) {
+  if (bloc.genre === "axe") {
+    const s = spectre.find((x) => x.axe === bloc.axe);
+    if (!s) return null;
+    const texte = MODULATIONS[cleModulation(s.lettre, s.pctDominant)] ?? "";
+    return (
+      <div style={{ background: VERT_DOUX, borderRadius: 16, padding: "22px 24px", margin: "28px 0" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
+          <strong style={{ fontSize: 18 }}>{bloc.libelle}</strong>
+          <span style={{ fontSize: 26, fontWeight: 700, color: VERT }}>{s.pctDominant} %</span>
         </div>
-        <div className="rounded-2xl border border-gray-100 bg-white p-5">
-          <p className="text-xs font-bold uppercase tracking-wide mb-2 text-[rgba(0,0,0,0.45)]">
-            Ton ombre
-          </p>
-          <p className="text-sm text-[rgba(0,0,0,0.7)] leading-relaxed">{paradoxe.ombre}</p>
+        <div style={{ height: 8, borderRadius: 99, background: "rgba(0,0,0,.08)", overflow: "hidden", marginBottom: 6 }}>
+          <div style={{ height: "100%", width: `${s.pctDominant}%`, background: VERT, borderRadius: 99 }} />
         </div>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, opacity: 0.55, marginBottom: 14 }}>
+          <span>{s.poleBas} {s.pctBas} %</span>
+          <span>intensité : {s.intensite}</span>
+          <span>{s.pctHaut} % {s.poleHaut}</span>
+        </div>
+        <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.7 }}>{texte}</p>
       </div>
-
-      <div className="mt-6 pl-4 border-l-2" style={{ borderColor: GREEN }}>
-        <p className="text-[rgba(0,0,0,0.75)] leading-relaxed italic">{paradoxe.bascule}</p>
-      </div>
-    </div>
-  );
-}
-
-// Paire de blocs côte à côte (ex. « toxique » / « te réussit », « Les + » / « Les - »).
-// Si verrouillé (locked), chaque carte est floutée (texte déjà brouillé côté serveur) et reçoit
-// un cadenas vert centré, qui grossit doucement au survol (même style que les points).
-function BlocsPaires({
-  blocs,
-  locked = false,
-}: {
-  blocs: { titre: string; ton: "positif" | "negatif"; items: string[] }[];
-  locked?: boolean;
-}) {
-  return (
-    <div className="grid sm:grid-cols-2 gap-5">
-      {blocs.map((b) => {
-        const positif = b.ton === "positif";
-        const couleur = positif ? GREEN : "rgba(214,69,69,0.7)";
-        const fond = positif ? "rgba(51,164,116,0.08)" : "rgba(214,69,69,0.035)";
-        return (
-          <div
-            key={b.titre}
-            className={`rounded-2xl border border-gray-100 p-5 transition-shadow hover:shadow-sm${locked ? " group relative" : ""}`}
-            style={{ background: fond }}
-          >
-            <div className={locked ? "select-none blur-[5px]" : undefined} aria-hidden={locked || undefined}>
-              <h4
-                className="inline-block text-sm font-bold mb-3 rounded-full px-4 py-1.5 text-white"
-                style={{ background: couleur }}
-              >
-                {b.titre}
-              </h4>
-              <ul className="space-y-2">
-                {b.items.map((it) => (
-                  <li key={it} className="text-sm text-[rgba(0,0,0,0.7)] leading-relaxed flex gap-2">
-                    <span style={{ color: positif ? GREEN : "rgba(214,69,69,0.7)" }}>
-                      {positif ? "+" : "–"}
-                    </span>
-                    <span>{it}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            {locked && <CadenasItem />}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-// Bloc enrichi de la variante : points forts / points faibles (gratuits) + paradoxe (verrouillé).
-function VarianteDetailBlock({
-  detail,
-  isPaid,
-  unlockHref,
-}: {
-  detail: VarianteDetail;
-  isPaid: boolean;
-  unlockHref: string;
-}) {
-  return (
-    <div className="mt-12 space-y-10">
-      <div data-prog="var-points" aria-hidden="true" />
-      <GroupePoints titre="Tes points faibles" items={detail.ombres} isPaid={isPaid} />
-      <GroupePoints titre="Tes points forts" items={detail.forces} isPaid={isPaid} />
-      <BlocVerrouille isPaid={isPaid} unlockHref={unlockHref}>
-        <div data-prog="var-paradoxe" aria-hidden="true" />
-        <ParadoxeBlock paradoxe={detail.paradoxe} />
-      </BlocVerrouille>
-    </div>
-  );
-}
-
-// « Tes leviers forts » : une colonne de forces à activer, formulées 100 % positif
-// (la faiblesse n'est jamais nommée). Cartes vertes, pas de paire ni de rouge.
-function LeviersBlock({ items, locked = false }: { items: { titre: string; texte: string }[]; locked?: boolean }) {
-  return (
-    <div className="mt-12">
-      <div className={locked ? "select-none blur-[5px]" : undefined} aria-hidden={locked || undefined}>
-        <h3 className="inline-block text-base font-bold mb-4 rounded-full px-6 py-2 text-white" style={{ background: GREEN }}>
-          Tes leviers forts
-        </h3>
-        <p className="text-gray-600 leading-relaxed mb-8">
-          Apprendre à se connaître est le chemin d&apos;une vie. Voici des clés qui sont déjà en toi, des forces à activer
-          pour devenir, jour après jour, la plus belle version de toi.
-        </p>
-      </div>
-      <div className="grid md:grid-cols-2 gap-4">
-        {items.map((l) => (
-          <div
-            key={l.titre}
-            className={`rounded-2xl border border-gray-100 p-5 md:p-6 transition-shadow hover:shadow-sm${locked ? " group relative" : ""}`}
-            style={{ background: "rgba(51,164,116,0.08)" }}
-          >
-            <div className={locked ? "select-none blur-[5px]" : undefined} aria-hidden={locked || undefined}>
-              <p className="font-semibold text-[rgba(0,0,0,0.8)] mb-1">{l.titre}</p>
-              <p className="text-sm text-gray-600 leading-relaxed">{l.texte}</p>
-            </div>
-            {locked && <CadenasItem />}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// Bloc C — « Les questions à te poser » : un plan d'action volontaire sous forme de
-// questions introspectives, branchées sur les schémas qui font souffrir ce profil.
-function QuestionsBlock({ items }: { items: { situation: string; question: string }[] }) {
-  return (
-    <div className="mt-12">
-      <h3 className="inline-block text-base font-bold mb-4 rounded-full px-6 py-2 text-white" style={{ background: GREEN }}>
-        Les questions à te poser
-      </h3>
-      <p className="text-gray-600 leading-relaxed mb-2">
-        Ton accomplissement n&apos;est pas une liste de consignes, c&apos;est un jeu de questions à te poser quand un
-        schéma te fait souffrir. Y répondre honnêtement, c&apos;est déjà commencer à le désamorcer.
-      </p>
-      <div className="divide-y divide-gray-100">
-        {items.map((q) => (
-          <div key={q.question} className="py-9 text-center max-w-2xl mx-auto">
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[rgba(0,0,0,0.8)] mb-3">
-              {q.situation}
-            </p>
-            <p className="text-xl md:text-2xl font-medium leading-snug text-[rgba(0,0,0,0.8)]">
-              <span className="text-3xl leading-none mr-0.5 align-middle" style={{ color: "rgba(0,0,0,0.8)" }}>
-                “
-              </span>
-              {q.question}
-              <span className="text-3xl leading-none ml-0.5 align-middle" style={{ color: "rgba(0,0,0,0.8)" }}>
-                ”
-              </span>
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// Détail d'une grande section façon 16P : traits influents (verrouillé) +
-// forts/faibles (gratuit) + encarts premium (super-pouvoirs, risques…).
-function SectionDetailBlock({
-  detail,
-  section,
-  isPaid,
-  unlockHref,
-}: {
-  detail: SectionDetail;
-  section: string;
-  isPaid: boolean;
-  unlockHref: string;
-}) {
-  return (
-    <div className="mt-10">
-      {/* « Comment tu évolues » — titre + texte verrouillés sous le CTA (calé en haut). */}
-      {detail.evolution && (
-        <BlocVerrouille isPaid={isPaid} unlockHref={unlockHref} ctaPosition="top">
-        <div data-prog={`${section}-evolution`} aria-hidden="true" />
-        <div className={detail.etapes ? "mb-8" : "mb-12"}>
-          <h3
-            className="inline-block text-base font-bold mb-5 rounded-full px-6 py-2 text-white"
-            style={{ background: GREEN }}
-          >
-            Comment tu évolues
-          </h3>
-          <p className="text-gray-600 leading-relaxed whitespace-pre-line">{detail.evolution}</p>
-        </div>
-        </BlocVerrouille>
-      )}
-
-      {/* Parcours de vie (Enfance → Ancien) — verrouillé carte par carte (cadenas vert),
-          texte brouillé côté serveur. */}
-      {detail.etapes && (
-        <div className="mb-12">
-          <div data-prog={`${section}-ages`} aria-hidden="true" />
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {detail.etapes.map((texte, i) => (
-              <div
-                key={AGES[i] ?? i}
-                className={`rounded-2xl border border-gray-100 p-5 transition-shadow hover:shadow-sm${!isPaid ? " group relative" : ""}`}
-                style={{ background: "rgba(51,164,116,0.08)" }}
-              >
-                <div className={!isPaid ? "select-none blur-[5px]" : undefined} aria-hidden={!isPaid || undefined}>
-                  <h4
-                    className="inline-block text-sm font-bold mb-3 rounded-full px-4 py-1.5 text-white"
-                    style={{ background: GREEN }}
-                  >
-                    {AGES[i]}
-                  </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">{texte}</p>
-                </div>
-                {!isPaid && <CadenasItem />}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Encart « Traits influents » — teaser verrouillé (noms + descriptions, scores cachés) */}
-      {detail.traitsInfluents && (
-        <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 p-6 mb-12">
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <h3 className="text-sm font-bold uppercase tracking-wide text-[rgba(0,0,0,0.75)]">
-              Traits influents
-            </h3>
-            <span className="text-xs text-gray-400">🔒 scores dans le rapport complet</span>
-          </div>
-          <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
-            {detail.traitsInfluents.map((t) => (
-              <li key={t.nom}>
-                <p className="font-semibold text-[rgba(0,0,0,0.8)]">{t.nom}</p>
-                <p className="text-sm text-gray-500 leading-relaxed mt-0.5">{t.texte}</p>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href="/pack-carriere-premium"
-            className="inline-block mt-5 text-sm font-semibold hover:underline"
-            style={{ color: GREEN }}
-          >
-            Débloquer tes scores →
-          </Link>
-        </div>
-      )}
-
-      {/* Forts / faibles — gratuit (même rendu que la variante) */}
-      {(detail.forces || detail.ombres) && (
-        <div className="space-y-10">
-          <div data-prog={`${section}-points`} aria-hidden="true" />
-          {detail.ombres && <GroupePoints titre="Tes points faibles" items={detail.ombres} isPaid={isPaid} />}
-          {detail.forces && <GroupePoints titre="Tes points forts" items={detail.forces} isPaid={isPaid} />}
-        </div>
-      )}
-
-      {/* Paires de blocs (toxique / te réussit) — verrouillées carte par carte (cadenas vert),
-          comme les points. Titres injectés depuis le squelette ; texte brouillé côté serveur. */}
-      {detail.blocs && (
-        <div className="mt-12">
-          <div data-prog={`${section}-blocs`} aria-hidden="true" />
-          <BlocsPaires
-            locked={!isPaid}
-            blocs={detail.blocs.map((b) => ({ ...b, titre: b.titre ?? LABELS_BLOCS[section]?.[b.ton] ?? "" }))}
-          />
-        </div>
-      )}
-
-      {/* Compatibilités (Les + / Les –) — verrouillées carte par carte (cadenas vert), comme les
-          paires ; texte brouillé côté serveur. Le panneau au survol reste flouté + cadenas. */}
-      {detail.compatibilites && (
-        <div className="mt-5">
-          <div data-prog={`${section}-compat`} aria-hidden="true" />
-          <CompatibiliteBlocs
-            locked={!isPaid}
-            blocs={detail.compatibilites.map((c) => ({
-              ...c,
-              titre: c.titre ?? LABELS_COMPAT[section]?.[c.ton] ?? "",
-              panelTitre:
-                c.panelTitre ??
-                (c.ton === "positif" ? LABELS_COMPAT[section]?.panelPositif : LABELS_COMPAT[section]?.panelNegatif),
-            }))}
-          />
-        </div>
-      )}
-
-      {/* Tes leviers forts — verrouillés carte par carte (cadenas vert), comme le parcours de vie. */}
-      {detail.leviersForts && (
-        <>
-          <div data-prog={`${section}-leviers`} aria-hidden="true" />
-          <LeviersBlock items={detail.leviersForts} locked={!isPaid} />
-        </>
-      )}
-
-      {/* Contenu verrouillé restant (premiums, questions) : flouté SANS CTA
-          (le CTA est porté par le paradoxe en dessous). */}
-      {(detail.premiums || detail.questions) && (
-      <BlocVerrouille isPaid={isPaid} unlockHref={unlockHref} showCta={false}>
-
-      {/* Encarts premium verrouillés (super-pouvoirs, risques…) */}
-      {detail.premiums && (
-        <div className="mt-12 grid sm:grid-cols-2 gap-5">
-          {detail.premiums.map((p) => (
-            <div key={p.titre} className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 p-5">
-              <p className="font-semibold text-[rgba(0,0,0,0.8)] mb-1">🔒 {p.titre}</p>
-              <p className="text-sm text-gray-500 leading-relaxed mb-3">{p.sousTitre}</p>
-              <Link
-                href="/pack-carriere-premium"
-                className="text-sm font-semibold hover:underline"
-                style={{ color: GREEN }}
-              >
-                Débloquer →
-              </Link>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Bloc C — Les questions à te poser */}
-      {detail.questions && (
-        <>
-          <div data-prog={`${section}-questions`} aria-hidden="true" />
-          <QuestionsBlock items={detail.questions} />
-        </>
-      )}
-
-      </BlocVerrouille>
-      )}
-
-      {/* Encart « Ton paradoxe » : c'est LUI qui porte le CTA, calé en haut du bloc, donc à la
-          même place dans chaque section (relations, pro, mindset), quelle que soit la hauteur au-dessus. */}
-      {detail.paradoxe && (
-        <BlocVerrouille isPaid={isPaid} unlockHref={unlockHref}>
-          <div className="mt-12">
-            <div data-prog={`${section}-paradoxe`} aria-hidden="true" />
-            <ParadoxeBlock paradoxe={detail.paradoxe} />
-          </div>
-        </BlocVerrouille>
-      )}
-
-      {/* Le « mot pour la route » a été remplacé par la carte premium de fin (voir CarteFinPremium). */}
-    </div>
-  );
-}
-
-// Carte premium de fin (inspirée de la fin de parcours 16P, réécrite à notre voix).
-// Bloc générique du template : s'affichera à l'identique sur tous les profils.
-// Bloc de partage en fin de rapport (version payée), à la place de la carte premium.
-function BlocPartageFin({ code, nomVariante }: { code: string; nomVariante: string }) {
-  return (
-    <div id="partage-fin" className="my-14 rounded-2xl p-7 md:p-10 scroll-mt-24 transition-shadow hover:shadow-sm" style={{ background: "rgba(51,164,116,0.08)" }}>
-      <h2 className="text-2xl md:text-3xl font-bold text-[rgba(0,0,0,0.8)] mb-4">
-        Et tes proches, qui sont-ils vraiment ?
-      </h2>
-      <p className="text-gray-600 leading-relaxed mb-6">
-        Partage les grandes lignes de ton profil. Tes proches n&apos;en verront que l&apos;essentiel, jamais ton analyse
-        intime, et ça leur donnera sûrement envie de découvrir le leur.
-      </p>
-      <PartageInline code={code} nomVariante={nomVariante} defileAuto />
-    </div>
-  );
-}
-
-function CarteFinPremium({ unlockHref, produitNom, profilId }: { unlockHref: string; produitNom: string; profilId: string }) {
-  const strong = "font-semibold text-[rgba(0,0,0,0.8)]";
-  return (
-    <div id="encart-final" className="my-14 rounded-2xl p-7 md:p-10 scroll-mt-24 transition-shadow hover:shadow-sm" style={{ background: "rgba(51,164,116,0.08)" }}>
-      <span
-        className="inline-block text-xs font-bold uppercase tracking-wide rounded-full px-4 py-1.5 text-white mb-5"
-        style={{ background: GREEN }}
-      >
-        Accéder maintenant
-      </span>
-      <h2 className="text-2xl md:text-3xl font-bold text-[rgba(0,0,0,0.8)] mb-5">
-        Va au bout de toi-même
-      </h2>
-      <p className="text-gray-600 leading-relaxed mb-6">
-        Ton résumé n&apos;effleure que la surface. Le rapport complet plonge dans le détail : ton{" "}
-        <strong className={strong}>spectre exact</strong> sur les 4 axes, ta{" "}
-        <strong className={strong}>variante analysée en profondeur</strong> (1 profil sur 48), tes{" "}
-        <strong className={strong}>forces et tes zones d&apos;ombre</strong>, tes paradoxes, ta façon d&apos;aimer, de te
-        lier et tes <strong className={strong}>compatibilités</strong>, comment tu évolues à chaque âge de ta vie, et ton{" "}
-        <strong className={strong}>chemin de croissance</strong> avec tes <strong className={strong}>leviers forts</strong>{" "}
-        et les bonnes questions à te poser.
-      </p>
-      <div className="mb-8 pl-4 border-l-2" style={{ borderColor: GREEN }}>
-        <p className="text-[rgba(0,0,0,0.7)] leading-relaxed italic">
-          Et ce n&apos;est que ta <strong className="font-bold">lumière</strong>. Tu pourras ensuite révéler ta part
-          d&apos;<strong className="font-bold">ombre</strong>, puis débloquer un parcours personnalisé qui confronte ton{" "}
-          <strong className="font-bold">meilleur</strong> et ton{" "}
-          <strong className="font-bold">pire</strong>{" "}
-          pour t&apos;apprendre à vraiment te comprendre.
-        </p>
-      </div>
-      <p className="text-4xl font-bold text-[rgba(0,0,0,0.8)] mb-6">7,90 €</p>
-      <div className="flex flex-wrap items-center gap-4">
-        <FenetrePaiement
-          unlockHref={unlockHref}
-          produitNom={produitNom}
-          profilId={profilId}
-          ancreRetour="encart-final"
-          triggerClassName="inline-block text-white font-semibold py-4 px-10 rounded-full text-lg hover:opacity-90 transition"
-          triggerStyle={{ background: GREEN }}
-        >
-          Débloquer mon rapport complet →
-        </FenetrePaiement>
-        <a
-          href="#partage-fin"
-          className="inline-block font-semibold py-4 px-9 rounded-full text-lg transition hover:opacity-90"
-          style={{ color: GREEN, background: "#fff" }}
-        >
-          Partager mon profil
-        </a>
-      </div>
-      <p className="text-sm text-gray-400 mt-4">
-        Ton test de personnalité s&apos;enregistre sur ton compte et pourra être confronté à ta dark personnalité, pour
-        bâtir ton parcours sur mesure Ombre et Lumière.
-      </p>
-    </div>
-  );
-}
-
-// Brouille le texte : remplace chaque lettre par une lettre aléatoire, en gardant EXACTEMENT
-// la structure (longueur, espaces, ponctuation, chiffres). Sert à afficher le contenu verrouillé
-// sans jamais envoyer le vrai texte au navigateur d'un non-payeur (sécurité réelle du paywall).
-function scrambleStr(s: string): string {
-  const a = "abcdefghijklmnopqrstuvwxyz";
-  return s.replace(/\p{L}/gu, () => a[Math.floor(Math.random() * 26)]);
-}
-function scrambleDeep<T>(v: T): T {
-  if (typeof v === "string") return scrambleStr(v) as unknown as T;
-  if (Array.isArray(v)) return v.map((x) => scrambleDeep(x)) as unknown as T;
-  if (v && typeof v === "object") {
-    const o: Record<string, unknown> = {};
-    const obj = v as Record<string, unknown>;
-    // On préserve les champs STRUCTURELS (pas du contenu) pour ne pas casser couleurs/libellés.
-    const garder = new Set(["ton"]);
-    for (const k in obj) o[k] = garder.has(k) ? obj[k] : scrambleDeep(obj[k]);
-    return o as T;
+    );
   }
-  return v;
-}
-// Champs verrouillés (floutés) à brouiller quand non payé.
-const CHAMPS_VERROUILLES = ["evolution", "etapes", "blocs", "compatibilites", "premiums", "leviersForts", "questions", "paradoxe"];
-// Forts/faibles : on garde les POINTS_GRATUITS premiers réels (gratuits) et on brouille les
-// suivants (le vrai texte des items verrouillés n'est donc jamais envoyé au navigateur).
-function brouillerPoints<T>(items: T[] | undefined, isPaid: boolean): T[] | undefined {
-  if (isPaid || !items) return items;
-  return items.map((it, idx) => (idx < POINTS_GRATUITS ? it : scrambleDeep(it)));
-}
-function brouillerSection(d: SectionDetail, isPaid: boolean): SectionDetail {
-  if (isPaid) return d;
-  const out = { ...d } as Record<string, unknown>;
-  for (const k of CHAMPS_VERROUILLES) {
-    if (out[k] !== undefined) out[k] = scrambleDeep(out[k]);
+
+  if (bloc.genre === "classement") {
+    const trie = [...spectre].sort((a, b) => b.pctDominant - a.pctDominant);
+    return (
+      <ol style={{ margin: "22px 0", padding: 0, listStyle: "none" }}>
+        {trie.map((s, i) => (
+          <li key={s.axe} style={{ display: "flex", alignItems: "center", gap: 12, padding: "7px 0", borderBottom: "1px solid rgba(0,0,0,.06)" }}>
+            <span style={{ opacity: 0.35, width: 18 }}>{i + 1}.</span>
+            <span style={{ fontWeight: 500, flex: 1 }}>{NOMS_POLES[s.lettre] ?? s.lettre}</span>
+            <span style={{ opacity: 0.7 }}>{s.pctDominant} %</span>
+            <span style={{ fontSize: 12, opacity: 0.5, width: 62, textAlign: "right" }}>{s.intensite}</span>
+          </li>
+        ))}
+      </ol>
+    );
   }
-  if (out.forces !== undefined) out.forces = brouillerPoints(d.forces, isPaid);
-  if (out.ombres !== undefined) out.ombres = brouillerPoints(d.ombres, isPaid);
-  return out as SectionDetail;
+
+  if (bloc.genre === "tableau") {
+    return (
+      <div style={{ margin: "28px 0" }}>
+        {bloc.titre && <h4 style={{ fontSize: 18, marginBottom: 12 }}><Riche texte={bloc.titre} /></h4>}
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 15.5 }}>
+          <thead>
+            <tr>{bloc.colonnes.map((c, i) => (
+              <th key={i} style={{ textAlign: "left", padding: "10px 12px", background: VERT_DOUX, fontWeight: 600 }}>{c}</th>
+            ))}</tr>
+          </thead>
+          <tbody>
+            {bloc.lignes.map((l, i) => (
+              <tr key={i}>{l.map((c, j) => (
+                <td key={j} style={{ padding: "10px 12px", borderTop: "1px solid rgba(0,0,0,.07)", verticalAlign: "top" }}>{c}</td>
+              ))}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ margin: "26px 0" }}>
+      {bloc.titre && <h4 style={{ fontSize: 19, marginBottom: 12, lineHeight: 1.35 }}><Riche texte={bloc.titre} /></h4>}
+      {bloc.paragraphes.map((p, i) => (
+        <p key={i} style={{ margin: "0 0 14px", lineHeight: 1.75, fontSize: 17 }}><Riche texte={p} /></p>
+      ))}
+    </div>
+  );
 }
-function brouillerVariante(d: VarianteDetail, isPaid: boolean): VarianteDetail {
-  if (isPaid) return d;
+
+type Props = { params: Promise<{ slug: string }>; searchParams: Promise<{ s?: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const { code, niveau } = lireSlug(slug);
+  const info = getTypeByCode(code);
   return {
-    ...d,
-    forces: brouillerPoints(d.forces, isPaid)!,
-    ombres: brouillerPoints(d.ombres, isPaid)!,
-    paradoxe: scrambleDeep(d.paradoxe),
+    title: info
+      ? `${code}${niveau ? `-${niveau.toUpperCase()}` : ""} · ${info.name}`
+      : `Compte rendu ${code}`,
   };
 }
 
-export default async function ResultatPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ s?: string; v?: string; paid?: string; invite?: string }>;
-}) {
+export default async function Page({ params, searchParams }: Props) {
   const { slug } = await params;
-  const { s, v, invite } = await searchParams;
-  const { code, variante } = parseSlug(slug);
-  const profil = getProfil(code, variante);
+  const { s } = await searchParams;
+  const { code, niveau } = lireSlug(slug);
 
-  // VRAI VERROU (gating serveur). Le rapport est débloqué si l'une des deux preuves existe :
-  //  1. une preuve d'achat anonyme : un cookie signé (posé par /api/paiement/acces après un
-  //     paiement vérifié) qui liste les profils débloqués sur ce navigateur ;
-  //  2. un compte connecté qui a un achat « payé » pour ce profil dans la table `achats`.
-  // À défaut, tout le contenu premium reste brouillé (voir brouillerSection/brouillerVariante).
-  const jar = await cookies();
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  let isPaid = decoderAcces(jar.get(COOKIE_ACCES)?.value).includes(slug);
-  if (!isPaid && user) {
-    const { data } = await supabase
-      .from("achats")
-      .select("id")
-      .eq("user_id", user.id)
-      .eq("profil", slug)
-      .eq("statut", "paye")
-      .limit(1);
-    isPaid = !!data?.length;
-  }
+  const cr = getCompteRendu(code);
+  if (!cr) notFound();
 
-  // Résultat rattaché au compte : si un utilisateur CONNECTÉ ouvre une page
-  // résultat valide (profil connu + scores complets), on enregistre ce
-  // résultat sur son compte (table `resultats`, sans doublon de re-visite).
-  // C'est ce qui alimente la galerie « Mes profils » de la page /profil.
-  if (
-    user &&
-    profil &&
-    s &&
-    v &&
-    s.split("-").length === 4 &&
-    v.split("-").length === 3
-  ) {
-    await enregistrerResultat(user.id, slug, s, v);
-  }
+  const info = getTypeByCode(code);
+  const numAxe5 = cr.chapitres.length + 1;
 
-  // PARCOURS À DEUX, côté invité : si l'URL porte un jeton d'invitation
-  // VALIDE (signé, lib/duo.ts) et des scores complets, on enregistre le
-  // résultat de l'invité sur le compte de l'INVITEUR (table `liens`,
-  // upsert = un seul ou une seule partenaire) et on affiche le message
-  // « ton résumé est disponible… ». Jeton bidon = page normale.
-  const inviteurId = decoderInvitation(invite);
-  let prenomInviteur: string | null = null;
-  if (
-    inviteurId &&
-    inviteurId !== user?.id && // ouvrir son propre lien ne fait rien
-    profil &&
-    s &&
-    v &&
-    s.split("-").length === 4 &&
-    v.split("-").length === 3
-  ) {
-    const nouveau = await enregistrerLien({
-      inviteurId,
-      slug,
-      scoresS: s,
-      scoresV: v,
-      inviteUserId: user?.id ?? null,
-      invitePrenom: (user?.user_metadata?.prenom as string | undefined) ?? null,
-    });
-    const inviteur = await infosInviteur(inviteurId);
-    prenomInviteur = inviteur.prenom ?? "Ton ou ta partenaire";
-    // Mail « son portrait est prêt » à l'INVITEUR, UNIQUEMENT s'il y a du
-    // nouveau (une re-visite de la page par l'invité ne renvoie rien).
-    // ⚠️ Resend mode test : ne délivre qu'à l'adresse du compte Resend.
-    if (nouveau && inviteur.email && process.env.RESEND_API_KEY) {
-      try {
-        const h = await headers();
-        const origine = `${h.get("x-forwarded-proto") ?? "http"}://${h.get("host") ?? "localhost:3000"}`;
-        await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            from: "Ton profil <onboarding@resend.dev>",
-            to: [inviteur.email],
-            subject: sujetPartenairePret(),
-            html: htmlPartenairePret({
-              nomType: profil.nomType,
-              code: profil.code,
-              nomVariante: profil.nomVariante,
-              // Directement sur la partie Relations du profil (pas de galère)
-              url: `${origine}/profil?onglet=relations`,
-            }),
-          }),
-        });
-      } catch {
-        // le mail est best-effort, la page de l'invité s'affiche quoi qu'il arrive
-      }
-    }
-  }
-  // Lien propre qui conserve les scores s/v (le déblocage se fait par la fenêtre de paiement,
-  // plus par un ?paid=1 dans l'URL).
-  const unlockHref = `?${new URLSearchParams({ ...(s ? { s } : {}), ...(v ? { v } : {}) }).toString()}`;
-
-  const scores = s ? s.split("-").map(Number) : [];
-  const spectre = scores.length === 4 && scores.every((n) => !Number.isNaN(n)) ? spectreFromScores(scores) : null;
-
-  // Les 3 variantes (V1/V2/V3) : part relative de chacune, la dominante en vert plein.
-  const vScores = v ? v.split("-").map(Number) : [];
-  const noms = NOMS_VARIANTES[code] ?? null;
-  const variantes =
-    vScores.length === 3 && vScores.every((n) => !Number.isNaN(n)) && noms
-      ? (() => {
-          const total = vScores.reduce((a, b) => a + b, 0) || 1;
-          return (["V1", "V2", "V3"] as const).map((cle, i) => ({
-            cle,
-            nom: noms[cle],
-            pct: Math.round((vScores[i] / total) * 100),
-            dominant: cle === variante,
-            description: getDescriptionVariante(code, cle, noms[cle]),
-          }));
-        })()
-      : null;
+  // Scores bruts. Bornés à 15-75 : un axe a 15 questions notées 1 à 5,
+  // aucun score ne peut sortir de là, donc aucun pourcentage aberrant.
+  const scores = (s ?? "45-45-45-45")
+    .split("-")
+    .map((n) => bornerScore(Number.parseInt(n, 10)));
+  const spectre = spectreFromScores(scores);
 
   return (
-    <div className="bg-white">
-      <ScrollHaut />
-      {/* Message à l'INVITÉ du parcours à deux (visuel provisoire) */}
-      {prenomInviteur && <MessageInvite prenom={prenomInviteur} />}
-      {/* HÉROS — colonne centrée au milieu de l'écran (le menu flotte à gauche, hors de ce bloc) */}
-      <div className="max-w-3xl mx-auto px-4 md:px-0 mt-4">
-        <section className="relative isolate overflow-hidden rounded-3xl px-6 md:px-8 pt-16 pb-14" style={{ background: GREEN }}>
-          <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
-            {/* Bloc texte : de « Voici ta personnalité » jusqu'à l'accroche */}
-            <div className="flex-1 text-center md:text-left order-2 md:order-1">
-              <p className="text-sm font-semibold tracking-wide mb-2 text-white/90">
-                Voici ta personnalité :
-              </p>
-              <h1
-                className="text-5xl md:text-6xl font-bold tracking-tight text-white"
-                style={{ textShadow: "0 6px 18px rgba(0,0,0,0.18)" }}
-              >
-                {profil.nomType}
-              </h1>
-              <p className="text-xl md:text-2xl font-semibold mt-2 text-white">
-                {profil.code} · {profil.nomVariante}
-              </p>
-              <p className="text-lg text-white/90 mt-5 leading-relaxed">
-                {profil.accroche}
-              </p>
-            </div>
-            {/* Emblème : haut aligné sur « Voici... », bas sur l'accroche (s'étire sur la hauteur du bloc texte) */}
-            <div
-              className="order-1 md:order-2 shrink-0 mx-auto md:mx-0 w-28 h-28 md:w-32 md:h-32 flex items-center justify-center rounded-3xl text-2xl font-semibold tracking-wide text-white"
-              style={{ background: "rgba(255,255,255,0.16)", border: "1.5px solid rgba(255,255,255,0.5)" }}
-            >
-              {profil.code}
-            </div>
-          </div>
-          {/* Boutons sous le bloc héros */}
-          <div className="mt-8 flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-3">
-            <a
-              href="#partage-fin"
-              className="inline-block bg-white font-semibold py-3.5 px-9 rounded-full text-base hover:opacity-90 transition"
-              style={{ color: GREEN }}
-            >
-              Partager mon profil
+    <main style={{ maxWidth: 740, margin: "0 auto", padding: "56px 24px 96px" }}>
+      <header style={{ marginBottom: 48 }}>
+        <p style={{ textTransform: "uppercase", letterSpacing: 2, fontSize: 12, opacity: 0.5, margin: 0 }}>
+          Ton compte rendu
+        </p>
+        <h1 style={{ fontSize: 56, fontWeight: 700, color: VERT, margin: "8px 0 4px" }}>
+          {cr.code}{niveau ? `-${niveau.toUpperCase()}` : ""}
+        </h1>
+        <p style={{ fontSize: 20, opacity: 0.7, margin: 0 }}>
+          {info?.name}
+          {niveau ? ` · ${NOMS_AXE5[niveau]}` : ""}
+        </p>
+      </header>
+
+      <nav style={{ background: VERT_DOUX, borderRadius: 16, padding: 24, marginBottom: 48 }}>
+        <p style={{ margin: "0 0 12px", fontSize: 12, textTransform: "uppercase", letterSpacing: 1.5, opacity: 0.6 }}>
+          Sommaire
+        </p>
+        <ol style={{ margin: 0, paddingLeft: 20 }}>
+          {cr.chapitres.map((c) => (
+            <li key={c.num} style={{ padding: "3px 0" }}>
+              <a href={`#ch-${c.num}`} style={{ color: "inherit", textDecoration: "none" }}>{c.titre}</a>
+            </li>
+          ))}
+          <li style={{ padding: "3px 0" }}>
+            <a href={`#ch-${numAxe5}`} style={{ color: "inherit", textDecoration: "none" }}>
+              Ta réactivité émotionnelle
+              {niveau ? ` · ${NOMS_AXE5[niveau]}` : ""}
             </a>
-          </div>
+          </li>
+        </ol>
+      </nav>
+
+      {cr.chapitres.map((c) => (
+        <section key={c.num} id={`ch-${c.num}`} style={{ marginBottom: 64, scrollMarginTop: 24 }}>
+          <h2 style={{ fontSize: 13, textTransform: "uppercase", letterSpacing: 2, color: VERT, borderBottom: "1px solid rgba(51,164,116,.25)", paddingBottom: 10, marginBottom: 8 }}>
+            Chapitre {c.num}
+          </h2>
+          <h3 style={{ fontSize: 30, fontWeight: 700, margin: "0 0 22px" }}>{c.titre}</h3>
+          {c.blocs.map((b, i) => <Bloc key={i} bloc={b} spectre={spectre} />)}
         </section>
-      </div>
+      ))}
 
-      {/* CONTENU centré au milieu de l'écran ; le menu flotte à gauche (xl) ou barre en haut (mobile/tablette) */}
-      <div className="relative max-w-3xl mx-auto px-4 md:px-0">
-        {/* RAIL MENU : flux normal (barre) sous le héros en mobile/tablette ; colonne flottante à gauche de la colonne centrée en xl */}
-        <div className="xl:absolute xl:top-0 xl:right-full xl:mr-8 xl:h-full">
-          <ResultatNav sections={PROFIL_SECTIONS} />
-        </div>
-        {/* RAIL DROIT : progression qui se révèle au scroll (xl uniquement) */}
-        <div className="hidden xl:block xl:absolute xl:top-0 xl:left-full xl:ml-8 xl:h-full">
-          <ProgressionMenu isPaid={isPaid} />
-        </div>
-        <div className="pt-10">
-        <p className="text-gray-600 leading-relaxed whitespace-pre-line mb-2">{profil.introduction}</p>
-        {PROFIL_SECTIONS.map((sec, i) => {
-          const isVariantes = sec.id === "variantes";
-          const isLast = i === PROFIL_SECTIONS.length - 1;
-          const content = isVariantes
-            ? null
-            : profil.sections[sec.id as "traits" | "carriere" | "developpement" | "relations"];
-          return (
-            <section
-              key={sec.id}
-              id={sec.id}
-              className={`pt-12 scroll-mt-32 ${isLast ? "pb-0" : "pb-12 border-b border-gray-100"}`}
-            >
-              <h2 className="text-2xl md:text-3xl font-bold text-[rgba(0,0,0,0.75)] mb-7">
-                <span className="mr-1" style={{ color: GREEN }}>{sec.num}.</span>
-                {sec.label}
-              </h2>
-
-              {sec.id === "traits" && spectre && (
-                <>
-                  <div data-prog="spectrum" aria-hidden="true" />
-                  <SpectreInteractif axes={spectre} isPaid={isPaid} />
-                </>
-              )}
-
-              {isVariantes && variantes && (
-                <>
-                  <div data-prog="var-bars" aria-hidden="true" />
-                  <VarianteInteractif variantes={variantes} isPaid={isPaid} />
-                  {getTexteVariante(code, variante) && (
-                    <>
-                      <div data-prog="var-text" aria-hidden="true" />
-                      <p className="text-gray-600 leading-relaxed whitespace-pre-line mt-6">
-                        {getTexteVariante(code, variante)}
-                      </p>
-                    </>
-                  )}
-                  {getVarianteDetail(code, variante) && (
-                    <VarianteDetailBlock
-                      detail={brouillerVariante(getVarianteDetail(code, variante)!, isPaid)}
-                      isPaid={isPaid}
-                      unlockHref={unlockHref}
-                    />
-                  )}
-                </>
-              )}
-
-              {content && (
-                <>
-                  <div data-prog={`apercu-${sec.id}`} aria-hidden="true" />
-                  <p className="text-gray-600 leading-relaxed whitespace-pre-line">{content.apercu}</p>
-                </>
-              )}
-
-              {getSectionDetail(code, variante, sec.id) && (
-                <SectionDetailBlock
-                  detail={brouillerSection(getSectionDetail(code, variante, sec.id)!, isPaid)}
-                  section={sec.id}
-                  isPaid={isPaid}
-                  unlockHref={unlockHref}
-                />
-              )}
-            </section>
-          );
-        })}
-
-        </div>
-
-        {/* CARTE PREMIUM DE FIN — dans la zone des menus, pour que les rails descendent jusqu'en bas de la carte (comme la version payée) */}
-        {!isPaid && (
-          <CarteFinPremium unlockHref={unlockHref} produitNom={`${profil.code} · ${profil.nomVariante}`} profilId={slug} />
+      <section id={`ch-${numAxe5}`} style={{ marginBottom: 64, scrollMarginTop: 24 }}>
+        <h2 style={{ fontSize: 13, textTransform: "uppercase", letterSpacing: 2, color: VERT, borderBottom: "1px solid rgba(51,164,116,.25)", paddingBottom: 10, marginBottom: 8 }}>
+          Chapitre {numAxe5}
+        </h2>
+        <h3 style={{ fontSize: 30, fontWeight: 700, margin: "0 0 22px" }}>
+          Ta réactivité émotionnelle
+          {niveau ? ` · ${NOMS_AXE5[niveau]}` : ""}
+        </h3>
+        {niveau ? (
+          BLOCS_AXE5[niveau].map((b, i) => <Bloc key={i} bloc={b} spectre={spectre} />)
+        ) : (
+          <p style={{ opacity: 0.45, fontSize: 15.5 }}>
+            Ce chapitre dépend de ton niveau sur le cinquième axe. Ajoute -r, -m ou -c à
+            l&apos;adresse pour l&apos;afficher.
+          </p>
         )}
-        <BlocPartageFin code={profil.code} nomVariante={profil.nomVariante} />
-      </div>
-
-      {/* RETOUR DE PRÉCISION — hors de la zone des menus collants */}
-      <div className="max-w-3xl mx-auto px-4 md:px-0">
-        <PrecisionRating />
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

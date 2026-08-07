@@ -29,7 +29,7 @@ export const ROLES: Record<RoleKey, Role> = {
     name: "Les analystes",
     letters: "_NT_",
     description:
-      "Types Intuitif (N) et Rationnel (T), reconnus pour leur rationalité, leur impartialité et leur excellence intellectuelle.",
+      "Types Intuitif (N) et Rationnel (T), reconnus pour leur\nrationalité, leur impartialité et leur excellence intellectuelle.",
     color: "rgba(51,164,116,0.85)",
     soft: "#eef8f3",
   },
@@ -38,7 +38,7 @@ export const ROLES: Record<RoleKey, Role> = {
     name: "Les diplomates",
     letters: "_NF_",
     description:
-      "Types Intuitif (N) et Sensible (F), connus pour leur empathie, leurs compétences diplomatiques et leur idéalisme passionné.",
+      "Types Intuitif (N) et Sensible (F), connus pour leur empathie,\nleurs compétences diplomatiques et leur idéalisme passionné.",
     color: "rgb(62,146,102)",
     soft: "#eaf4ee",
   },
@@ -47,7 +47,7 @@ export const ROLES: Record<RoleKey, Role> = {
     name: "Les sentinelles",
     letters: "_S_J",
     description:
-      "Types Observateur (S) et Organisé (J), connus pour leur sens pratique et leur attachement à l'ordre, à la sécurité et à la stabilité.",
+      "Types Observateur (S) et Organisé (J), connus pour leur\nsens pratique et leur attachement à l'ordre, à la sécurité et à la stabilité.",
     color: "rgb(48,122,85)",
     soft: "#e6f1ea",
   },
@@ -56,7 +56,7 @@ export const ROLES: Record<RoleKey, Role> = {
     name: "Les explorateurs",
     letters: "_S_P",
     description:
-      "Types Observateur (S) et Prospectif (P), connus pour leur spontanéité, leur ingéniosité et leur flexibilité.",
+      "Types Observateur (S) et Prospectif (P), connus\npour leur spontanéité, leur ingéniosité et leur flexibilité.",
     color: "rgb(36,96,66)",
     soft: "#e2eee6",
   },

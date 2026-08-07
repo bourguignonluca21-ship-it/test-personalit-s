@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import type { CSSProperties, ReactNode } from "react";
 import type { Metadata } from "next";
 import CarrouselCelebres from "./CarrouselCelebres";
+import CouronnePremium from "../../components/CouronnePremium";
+import ColonnesCentrees from "./ColonnesCentrees";
 import SectionPartage from "./SectionPartage";
 import Commentaires from "./Commentaires";
 import FenetreProche from "./FenetreProche";
@@ -49,16 +51,6 @@ const SIGNES: Record<string, string> = {
   ESFP: "✚",
 };
 
-const LETTRES: Record<string, string> = {
-  I: "Introverti",
-  E: "Extraverti",
-  N: "Intuitif",
-  S: "Observateur",
-  T: "Rationnel",
-  F: "Sensible",
-  J: "Organisé",
-  P: "Prospectif",
-};
 
 const STYLES = `
 .pt{--vert-plein:rgb(82,178,137);--noir:rgba(0,0,0,0.75);--gris:rgba(0,0,0,0.5);--ease:cubic-bezier(.22,.9,.3,1);--nav:68px;color:var(--noir);}
@@ -68,22 +60,20 @@ const STYLES = `
 .pt .ouverture{max-width:768px;margin:0 auto;padding:48px 16px 0;box-sizing:border-box;}
 @media (min-width:768px){.pt .ouverture{padding-left:0;padding-right:0;padding-top:60px;}}
 /* Titre + visuel, comme la pin-grid de la home (titre à gauche, visuel à droite) */
-.pt .tete{display:grid;grid-template-columns:minmax(0,1fr) 250px;column-gap:36px;align-items:center;}
+.pt .tete{display:grid;grid-template-columns:minmax(0,1fr) 300px;column-gap:36px;align-items:center;}
 @media (max-width:760px){.pt .tete{grid-template-columns:1fr;row-gap:30px;}}
-.pt .titre{font-size:clamp(32px,4.4vw,50px);font-weight:700;letter-spacing:-0.02em;line-height:1.12;margin:0;}
+.pt .titre{font-size:clamp(38px,5.2vw,64px);font-weight:700;letter-spacing:-0.02em;line-height:1.12;margin:0;color:var(--accent);}
 .pt .titre b{color:var(--accent);font-weight:700;}
 .pt .titre-section{font-size:clamp(30px,4.5vw,46px);font-weight:700;letter-spacing:-0.02em;line-height:1.12;margin:0;}
 /* La ligne d'identité sous le titre : « Personnalité INFJ » */
-.pt .sous-titre{margin:6px 0 0;font-size:clamp(20px,2.4vw,26px);font-weight:700;letter-spacing:-0.01em;line-height:1.2;color:rgba(0,0,0,0.55);}
+.pt .sous-titre{margin:8px 0 0;font-size:clamp(23px,2.9vw,32px);font-weight:700;letter-spacing:-0.01em;line-height:1.2;color:var(--noir);}
 .pt .sous-titre b{color:var(--accent);font-weight:700;}
 .pt a.sous-titre{display:inline-block;transition:opacity .25s;}
 .pt a.sous-titre:hover{opacity:0.75;}
-.pt .chapeau{margin-top:16px;font-size:18.5px;color:var(--gris);line-height:1.65;}
+.pt .chapeau{margin-top:20px;font-size:21px;color:var(--gris);line-height:1.65;}
 /* Le signe : l'emplacement du grand chiffre vert de la home. */
 .pt .visuel{display:flex;flex-direction:column;align-items:center;gap:14px;}
-.pt .signe{font-size:clamp(96px,12vw,150px);line-height:1;color:var(--accent);font-weight:400;}
-.pt .legende-visuel{font-size:14px;color:var(--gris);text-align:center;max-width:250px;line-height:1.5;}
-.pt .trait{border:none;border-top:1px solid rgba(51,164,116,0.3);margin:44px 0 0;width:100%;}
+.pt .signe{font-size:clamp(126px,16vw,208px);line-height:1;color:var(--accent);font-weight:400;}
 
 /* ————— Le sommaire : le .som de « Notre approche ».
    Sous 1280 px il vit dans le flux, sous l'en-tête, en deux colonnes.
@@ -92,31 +82,42 @@ const STYLES = `
 .pt .corps{position:relative;}
 .pt .som{max-width:768px;margin:38px auto 0;box-sizing:border-box;text-align:left;padding:0 16px;}
 @media (min-width:768px){.pt .som{padding-left:0;padding-right:0;}}
-.pt .som-entete{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gris);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.pt .som-entete{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--noir);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
 .pt .som-entete b{color:var(--accent);}
 .pt .som-grille{display:grid;grid-template-columns:1fr 1fr;gap:2px 22px;list-style:none;margin:0;padding:0;}
 @media (max-width:640px){.pt .som-grille{grid-template-columns:1fr;}}
-.pt .som-item{display:flex;align-items:center;gap:13px;padding:10px 12px;border-radius:12px;color:var(--noir);transition:background .25s,color .25s,transform .25s;text-align:left;width:100%;}
-.pt .som-item:hover{background:rgba(51,164,116,0.08);transform:translateX(3px);}
+.pt .som-item{display:flex;align-items:center;gap:13px;padding:10px 12px;border-radius:12px;color:var(--noir);transition:color .25s;text-align:left;width:100%;}
+/* Au survol : rien ne se colore en bloc, c'est le TEXTE qui grossit et
+   passe au vert. Le grossissement est un scale, pas un changement de
+   taille : la ligne ne pousse pas ses voisines. */
+.pt .som-item:hover{color:var(--accent);}
+.pt .som-item .lbl{transform-origin:left center;transition:transform .25s var(--ease);}
+.pt .som-item:hover .lbl{transform:scale(1.08);}
 .pt .som-item .lbl{flex:1;font-size:15px;font-weight:600;}
-.pt .som-item .fl{margin-left:auto;color:var(--accent);opacity:0;transition:opacity .25s,transform .25s;}
+/* La couronne du suivi premium : elle prend la place de la puce, donc on
+   retire le retrait de gauche de cette entrée pour que le texte reste
+   aligné sur celui des dix autres. */
+/* La couronne sort dans la marge (marge négative) : le libellé « Suivi
+   premium » retombe ainsi sur la même verticale que les dix autres. */
+.pt .som-couronne{display:flex;flex:none;align-items:center;margin-left:-27px;margin-right:-7px;color:var(--accent);}
+.pt .som-item .fl{margin-left:auto;display:flex;align-items:center;color:var(--accent);opacity:0;transition:opacity .25s,transform .25s;}
 .pt .som-item:hover .fl{opacity:1;transform:translateX(2px);}
-.pt .som-grille li.actif .som-item{background:rgba(51,164,116,0.08);color:var(--accent);}
+/* Page courante : le texte seul est vert, aucun fond. */
+.pt .som-grille li.actif .som-item{color:var(--accent);}
 .pt .som-grille li.actif .fl{opacity:1;}
 
 /* ————— L'aparté de droite : composition typographique, texte seul.
    CONTENU PROVISOIRE : le design est arrêté, les mots seront remplacés. ————— */
 .pt .aparte{max-width:768px;margin:40px auto 0;padding:0 16px;box-sizing:border-box;}
 @media (min-width:768px){.pt .aparte{padding-left:0;padding-right:0;}}
-.pt .ap-eyebrow{font-size:11px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
-.pt .ap-titre{font-size:clamp(25px,2.1vw,31px);font-weight:700;letter-spacing:-0.025em;line-height:1.06;}
-.pt .ap-titre span{display:block;}
-.pt .ap-titre .p1{color:var(--noir);}
-.pt .ap-titre .p2{color:var(--gris);font-size:0.6em;font-weight:600;letter-spacing:-0.01em;margin-top:5px;}
-.pt .ap-titre .p3{color:var(--accent);font-size:1.22em;margin-top:1px;}
-.pt .ap-trait{width:38px;height:2px;background:rgba(51,164,116,0.35);margin:22px 0;}
-.pt .ap-texte{font-size:14.5px;line-height:1.72;color:var(--gris);}
+.pt .ap-titre{font-size:clamp(24px,2.05vw,30px);font-weight:700;letter-spacing:-0.025em;line-height:1.08;}
+.pt .ap-titre span{display:block;white-space:nowrap;}
+.pt .ap-titre .p1{color:var(--gris);font-size:0.58em;font-weight:600;letter-spacing:-0.01em;}
+.pt .ap-titre .p2{color:var(--noir);font-size:0.86em;margin-top:6px;}
+.pt .ap-titre .p3{color:var(--accent);font-size:1.3em;margin-top:4px;}
+.pt .ap-texte{margin-top:22px;font-size:14.5px;line-height:1.72;color:var(--gris);font-style:italic;}
 .pt .ap-texte b{color:var(--noir);font-weight:700;}
+.pt .ap-ref{margin-top:14px;text-align:left;font-style:normal;font-size:13px;font-variant-caps:small-caps;letter-spacing:0.07em;color:var(--noir);}
 
 /* ————— Les deux gouttières, au-dessus de 1280 px ————— */
 @media (min-width:1280px){
@@ -124,8 +125,10 @@ const STYLES = `
      le haut du corps, la valeur de .acte.premier) et suivent la descente. */
   .pt .som,.pt .aparte{position:absolute;top:86px;bottom:0;width:min(292px,calc(50% - 384px - 32px - 40px));margin:0;padding:0;z-index:2;}
   .pt .som{left:32px;}
+  .pt .enveloppe-aparte{position:relative;}
   .pt .aparte{right:32px;}
-  .pt .som-dedans,.pt .ap-dedans{position:sticky;top:calc(var(--nav) + 30px);}
+  .pt .som-dedans{position:sticky;top:max(calc(var(--nav) + 20px),calc((100svh + var(--nav) - var(--som-h,420px)) / 2));}
+  .pt .ap-dedans{position:sticky;top:max(calc(var(--nav) + 20px),calc((100svh + var(--nav) - var(--ap-h,300px)) / 2));}
   .pt .som-entete{padding:0 12px;margin-bottom:10px;}
   .pt .som-grille{grid-template-columns:1fr;gap:0;}
   .pt .som-item .lbl{font-size:14.5px;}
@@ -148,7 +151,7 @@ const STYLES = `
    les trous entre les mots. La dernière ligne d'un paragraphe reste libre. */
 .pt .ligne,.pt .fond{text-align:justify;-webkit-hyphens:auto;hyphens:auto;}
 .pt .chapeau,.pt .ap-texte,.pt .tableau td{text-wrap:pretty;}
-.pt .titre,.pt .titre-section,.pt .sous-titre,.pt .acte h2,.pt .ap-titre{text-wrap:balance;}
+.pt .titre,.pt .titre-section,.pt .sous-titre,.pt .acte h2{text-wrap:balance;}
 .pt .ligne{font-size:16px;line-height:1.6;}
 .pt .ligne.doux{color:var(--noir);}
 /* DANS LE CONTENU, RIEN N'EST VERT. Le vert est réservé aux TITRES.
@@ -157,35 +160,69 @@ const STYLES = `
 /* Hors titre, une mise en évidence est en NOIR PLUS GRAS, jamais en vert :
    le vert du contenu est réservé aux titres. */
 .pt .exergue{font-size:clamp(19px,2.3vw,24px);line-height:1.45;font-weight:700;letter-spacing:-0.015em;color:var(--noir);}
+/* Chaque phrase de l'exergue occupe sa propre ligne, et une seule :
+   si une phrase future dépasse, elle débordera visiblement plutôt que
+   de se replier en silence. */
+.pt .exergue span{display:block;white-space:nowrap;}
 /* Le paragraphe de fond de « Notre approche » : sert au « revers » d'une force. */
 .pt .fond{margin-top:2px;font-size:14px;color:var(--noir);line-height:1.65;}
 .pt .fond b{color:var(--noir);font-weight:700;}
 /* Le tableau : des filets verts, pas d'encadré. */
 .pt .tableau{width:100%;border-collapse:collapse;}
-.pt .tableau th{text-align:left;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--noir);padding:0 20px 12px 0;border-bottom:1px solid rgba(51,164,116,0.3);}
+.pt .tableau th{text-align:left;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--noir);padding:0 20px 12px 0;border-bottom:1px solid color-mix(in srgb, var(--accent) 30%, transparent);}
 .pt .tableau th + th{color:var(--noir);}
-.pt .tableau td{padding:14px 20px 14px 0;font-size:15.5px;line-height:1.6;font-style:italic;vertical-align:top;border-bottom:1px solid rgba(51,164,116,0.18);}
+.pt .tableau td{padding:14px 20px 14px 0;font-size:15.5px;line-height:1.6;font-style:italic;vertical-align:top;border-bottom:1px solid color-mix(in srgb, var(--accent) 18%, transparent);}
 .pt .tableau td + td{padding-right:0;}
 @media (max-width:560px){.pt .tableau th,.pt .tableau td{font-size:14px;padding-right:12px;}}
 
-/* ————— La suite du portrait : deux blocs côte à côte, séparés par un
-   filet vert vertical. Filet horizontal au-dessus pour clore le contenu. ————— */
+/* ————— La suite du portrait : une seule rangée. À gauche la pastille de
+   retour suivie du titre de la page précédente, à droite le titre de la page
+   à venir suivi de sa pastille. Tout est centré dans la rangée, donc sur la
+   même ligne. Le titre de gauche est plus petit : revenir en arrière est
+   l'action secondaire. ————— */
 .pt .suite{max-width:768px;margin:0 auto;padding:0 16px;box-sizing:border-box;}
 @media (min-width:768px){.pt .suite{padding-left:0;padding-right:0;}}
-.pt .suite-grille{display:grid;grid-template-columns:1fr 1fr;margin-top:96px;border-top:1px solid rgba(51,164,116,0.3);}
-.pt .lien-suite{display:block;padding:28px 26px 30px 0;transition:background .3s var(--ease);}
-.pt .lien-suite.suiv{padding:28px 0 30px 26px;text-align:right;border-left:1px solid rgba(51,164,116,0.3);}
-.pt .lien-suite:hover{background:rgba(51,164,116,0.05);}
-.pt .suite-eyebrow{display:block;font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--gris);margin-bottom:9px;}
-.pt .suite-titre{display:block;font-size:19px;font-weight:700;line-height:1.25;letter-spacing:-0.01em;color:var(--noir);}
-.pt .lien-suite .fl{display:inline-block;color:var(--accent);transition:transform .3s var(--ease);}
-.pt .lien-suite.suiv:hover .fl{transform:translateX(5px);}
-.pt .lien-suite.prec:hover .fl{transform:translateX(-5px);}
-@media (max-width:640px){
-  .pt .suite-grille{grid-template-columns:1fr;}
-  .pt .lien-suite,.pt .lien-suite.suiv{padding:24px 0;text-align:left;border-left:none;}
-  .pt .lien-suite.suiv{border-top:1px solid rgba(51,164,116,0.3);}
-}
+.pt .suite-dedans{margin-top:110px;}
+.pt .suite-barre{display:flex;justify-content:space-between;align-items:center;gap:24px;}
+.pt .pastille{display:flex;align-items:center;justify-content:center;flex:none;width:44px;height:44px;border-radius:999px;background:#fff;border:1px solid rgba(0,0,0,0.12);color:var(--gris);transition:transform .3s var(--ease),color .25s,border-color .25s;}
+.pt .lien-precedent,.pt .lien-suivant{display:inline-flex;align-items:center;gap:18px;min-width:0;}
+.pt .suite-titre{font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:rgba(0,0,0,0.12);transition:color .3s;}
+.pt .lien-suivant .suite-titre{font-size:clamp(20px,2.6vw,27px);text-align:right;}
+.pt .lien-precedent .suite-titre{font-size:clamp(15px,1.9vw,20px);text-align:left;}
+.pt .lien-precedent:hover .suite-titre,.pt .lien-suivant:hover .suite-titre{color:var(--accent);}
+.pt .lien-precedent:hover .pastille{transform:translateX(-4px);border-color:var(--accent);color:var(--accent);}
+.pt .lien-suivant:hover .pastille{transform:translateX(4px);border-color:var(--accent);color:var(--accent);}
+
+/* ————— La page « Suivi premium ». Elle SORT du portrait : pas de gouttières,
+   donc pas de sommaire ni d'aparté. Elle réutilise la colonne et les actes. ————— */
+.pt .prem-bas{margin-top:20px;}
+.pt .prem-retour{max-width:768px;margin:56px auto 0;padding:0 16px 120px;box-sizing:border-box;}
+@media (min-width:768px){.pt .prem-retour{padding-left:0;padding-right:0;}}
+.pt .prem-retour .suite-titre{font-size:clamp(15px,1.9vw,20px);}
+.pt .prem-offre{max-width:768px;margin:60px auto 0;padding:0 16px;box-sizing:border-box;}
+@media (min-width:768px){.pt .prem-offre{padding-left:0;padding-right:0;}}
+.pt .prem-carte{width:100%;border-radius:24px;background:var(--accent);text-align:center;padding:clamp(44px,7vh,72px) 24px;color:#fff;}
+.pt .prem-carte h2{color:#fff;font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-0.02em;line-height:1.14;max-width:560px;margin:0 auto;}
+.pt .prem-carte p{color:rgba(255,255,255,0.85);font-size:18px;margin:18px auto 0;max-width:480px;line-height:1.6;}
+.pt .prem-prix{display:block;margin-top:26px;font-size:clamp(38px,5vw,54px);font-weight:700;letter-spacing:-0.03em;line-height:1;font-variant-numeric:tabular-nums;}
+.pt .prem-cta{display:inline-block;background:#fff;color:var(--accent);font-weight:600;padding:15px 38px;border-radius:999px;font-size:17px;transition:transform .3s;margin-top:26px;}
+.pt .prem-cta:hover{transform:scale(1.05);}
+.pt .prem-garantie{margin-top:16px;font-size:14px;color:rgba(255,255,255,0.75);}
+/* FAQ : un dépliant natif, sans script. Filets verts, comme les tableaux. */
+.pt .faq{border-top:1px solid color-mix(in srgb, var(--accent) 25%, transparent);margin-top:34px;}
+.pt .faq details{border-bottom:1px solid color-mix(in srgb, var(--accent) 25%, transparent);}
+.pt .faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 0;font-size:17px;font-weight:700;line-height:1.35;transition:color .25s;}
+.pt .faq summary::-webkit-details-marker{display:none;}
+.pt .faq summary:hover{color:var(--accent);}
+.pt .faq .signe-plus{flex:none;color:var(--accent);font-size:22px;font-weight:400;line-height:1;transition:transform .3s var(--ease);}
+.pt .faq details[open] .signe-plus{transform:rotate(45deg);}
+.pt .faq .reponse{padding:0 0 22px;font-size:16px;line-height:1.6;text-align:justify;-webkit-hyphens:auto;hyphens:auto;}
+/* Témoignages : des paroles posées, séparées par un filet. Pas de cartes. */
+.pt .avis{margin-top:34px;}
+.pt .avis figure{margin:0;padding:26px 0;border-bottom:1px solid color-mix(in srgb, var(--accent) 25%, transparent);}
+.pt .avis figure:first-child{border-top:1px solid color-mix(in srgb, var(--accent) 25%, transparent);}
+.pt .avis blockquote{margin:0;font-size:16.5px;line-height:1.65;text-align:justify;-webkit-hyphens:auto;hyphens:auto;}
+.pt .avis figcaption{margin-top:12px;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gris);}
 
 /* ————— Le partage : la colonne 768 des actes, sous le carrousel. La rangée
    d'icônes est celle du site (components/PartageInline), posée telle quelle
@@ -198,16 +235,19 @@ const STYLES = `
    carrousel de la home (.ha .defile), reprise telle quelle. Le masque est posé
    sur le conteneur qui défile, donc uniquement ici : les autres pages qui
    utilisent PartageInline ne bougent pas. */
-.pt .partage .pi-scroll{-webkit-mask-image:linear-gradient(90deg,transparent,#000 64px,#000 calc(100% - 64px),transparent);mask-image:linear-gradient(90deg,transparent,#000 64px,#000 calc(100% - 64px),transparent);}
+/* Même fondu que le carrousel des célébrités : 14 px de chaque côté.
+   Les deux rails se suivent dans la page et font la même largeur ;
+   un fondu différent se verrait immédiatement. */
+.pt .partage .pi-scroll{-webkit-mask-image:linear-gradient(90deg,transparent,#000 6px,#000 calc(100% - 6px),transparent);mask-image:linear-gradient(90deg,transparent,#000 6px,#000 calc(100% - 6px),transparent);}
 @media (max-width:700px){.pt .partage{padding-bottom:96px;}}
 
 /* ————— Le final : le bandeau du hub, à l'identique ————— */
 .pt .final{max-width:768px;margin:0 auto;padding:120px 16px 0;box-sizing:border-box;}
 @media (min-width:768px){.pt .final{padding-left:0;padding-right:0;}}
-.pt .final-carte{width:100%;border-radius:24px;background:rgb(102,187,151);text-align:center;padding:clamp(56px,10vh,96px) 24px;color:#fff;overflow:hidden;position:relative;}
+.pt .final-carte{width:100%;border-radius:24px;background:var(--accent);text-align:center;padding:clamp(56px,10vh,96px) 24px;color:#fff;overflow:hidden;position:relative;}
 .pt .final-carte h2{color:#fff;font-size:clamp(30px,4.5vw,46px);font-weight:700;letter-spacing:-0.02em;line-height:1.12;max-width:640px;margin:0 auto;}
 .pt .final-carte p{color:rgba(255,255,255,0.85);font-size:19px;margin:22px auto 0;max-width:520px;line-height:1.6;}
-.pt .cta-pt{display:inline-block;background:#fff;color:rgba(51,164,116,0.95);font-weight:600;padding:15px 38px;border-radius:999px;font-size:17px;transition:transform .3s;margin-top:38px;position:relative;overflow:hidden;}
+.pt .cta-pt{display:inline-block;background:#fff;color:var(--accent);font-weight:600;padding:15px 38px;border-radius:999px;font-size:17px;transition:transform .3s;margin-top:38px;position:relative;overflow:hidden;}
 .pt .cta-pt:hover{transform:scale(1.05);}
 /* Le reflet du bouton s'anime en TRANSFORM, jamais en « left » : animer « left »
    en boucle infinie recalcule la mise en page à chaque image, et c'est ce qui
@@ -242,12 +282,52 @@ function typo(texte: string): string {
 }
 
 // -----------------------------------------------------------------------------
+/** La couronne du suivi premium, identique à celle de la navbar. */
+function Couronne({ taille = 15 }: { taille?: number }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={taille}
+      height={taille}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M3 8l3.5 3L12 5l5.5 6L21 8l-2 10H5L3 8z" />
+    </svg>
+  );
+}
+
+/** Le chevron du site : SVG au trait, viewBox 24, épaisseur 2, bouts arrondis. */
+function Chevron({ taille = 15, sens = "droite" }: { taille?: number; sens?: "droite" | "gauche" }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={taille}
+      height={taille}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d={sens === "gauche" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"} />
+    </svg>
+  );
+}
+
 function entreesPortrait(code: string) {
   const contenu = getContenuType(code);
   if (!contenu) return null;
   return [
     { slug: "", titre: "Introduction" },
     ...contenu.pages.map((p) => ({ slug: p.slug, titre: p.titre })),
+    // La page de conversion ferme le portrait. Elle n'est pas dans
+    // contenuPagesTypes : elle a son propre dossier de route.
+    { slug: "suivi-premium", titre: "Suivi premium" },
   ];
 }
 
@@ -272,9 +352,14 @@ function SommairePortrait({ type, actif }: { type: PersonalityType; actif: strin
                 className="som-item"
                 aria-current={estActif ? "page" : undefined}
               >
+                {e.slug === "suivi-premium" && (
+                  <span className="som-couronne">
+                    <CouronnePremium taille={20} />
+                  </span>
+                )}
                 <span className="lbl">{typo(e.titre)}</span>
                 <span className="fl" aria-hidden>
-                  →
+                  <Chevron />
                 </span>
               </Link>
             </li>
@@ -287,30 +372,53 @@ function SommairePortrait({ type, actif }: { type: PersonalityType; actif: strin
 }
 
 /**
- * L'aparté de la gouttière droite. Le DESSIN est ce qui compte ici : les mots
- * sont provisoires et seront remplacés par le contenu philosophique définitif,
- * en gardant exactement cette composition (accroche en trois temps, filet,
- * paragraphe).
+ * L'aparté de la gouttière droite. Composition figée : accroche en trois temps,
+ * filet, paragraphe. Le texte est une citation authentifiée de C. G. Jung,
+ * lettre du 22 octobre 1916 publiée dans sa correspondance. Calibrage des trois
+ * temps : 11 / 13 / 10 caractères, contre 13 / 12 / 9 pour le texte provisoire
+ * qu'elle remplace, donc la composition est conservée à l'identique.
  */
 function AparteDroite() {
+  const script = `
+(function(){
+  function ajuster(){
+    var c=document.querySelector('.final-carte');
+    var a=document.querySelector('.aparte');
+    var w=document.querySelector('.enveloppe-aparte');
+    if(!c||!a||!w||window.innerWidth<1280){if(a)a.style.bottom='';return;}
+    var wTop=w.getBoundingClientRect().top+window.scrollY;
+    var cR=c.getBoundingClientRect();
+    var centreCarte=cR.top+window.scrollY+cR.height/2-wTop;
+    var ad=a.querySelector('.ap-dedans');
+    var ah=ad?ad.offsetHeight:300;
+    var b=w.offsetHeight-centreCarte-ah/2;
+    a.style.bottom=(b>0?b:0)+'px';
+  }
+  var n=0;
+  function essayer(){
+    if(document.querySelector('.final-carte')&&document.querySelector('.aparte')){
+      ajuster();
+      window.addEventListener('resize',ajuster);
+      new ResizeObserver(ajuster).observe(document.querySelector('.enveloppe-aparte'));
+    }else if(n++<100){requestAnimationFrame(essayer);}
+  }
+  requestAnimationFrame(essayer);
+})()`;
   return (
-    <aside className="aparte" aria-label="Se connaître">
+    <aside className="aparte" aria-label="Citation de Carl Gustav Jung">
+      <script dangerouslySetInnerHTML={{ __html: script }} />
       <div className="ap-dedans">
-        <div className="ap-eyebrow">
-          Se connaître
-        </div>
         <p className="ap-titre">
-          <span className="p1">Se connaître,</span>
-          <span className="p2">ce n&apos;est pas</span>
-          <span className="p3">se juger.</span>
+          <span className="p1">Qui regarde</span>
+          <span className="p2">à l&apos;intérieur</span>
+          <span className="p3">s&apos;éveille.</span>
         </p>
-        <div className="ap-trait" aria-hidden />
         <p className="ap-texte">
-          C&apos;est comprendre pourquoi on répète les mêmes gestes, et
-          retrouver le choix là où on croyait n&apos;en avoir aucun. Un portrait
-          ne dit pas qui tu dois devenir&nbsp;: il te rend <b>lisible à toi-même</b>,
-          et c&apos;est de là que part tout le reste.
+          Ta vision ne deviendra claire que lorsque tu pourras regarder dans
+          ton propre cœur. Celui qui regarde à l&apos;extérieur <b>rêve</b>&nbsp;;
+          celui qui regarde à l&apos;intérieur <b>s&apos;éveille</b>.
         </p>
+        <p className="ap-ref">Carl Gustav Jung</p>
       </div>
     </aside>
   );
@@ -322,12 +430,6 @@ function SigneType({ type }: { type: PersonalityType }) {
     <div className="visuel">
       <div className="signe" aria-hidden>
         {SIGNES[type.code] ?? "◆"}
-      </div>
-      <div className="legende-visuel">
-        {type.code
-          .split("")
-          .map((l) => LETTRES[l])
-          .join(" · ")}
       </div>
     </div>
   );
@@ -341,35 +443,27 @@ function SuitePortrait({ type, actif }: { type: PersonalityType; actif: string }
   const i = entrees.findIndex((e) => e.slug === actif);
   const prec = i > 0 ? entrees[i - 1] : null;
   const suiv = i >= 0 && i < entrees.length - 1 ? entrees[i + 1] : null;
+  const lienPrec = prec ? (prec.slug ? `${base}/${prec.slug}` : base) : "/types-de-personnalite";
+  const titrePrec = prec ? prec.titre : "Les 48 personnalités";
   return (
     <div className="suite">
-      <div className="suite-grille">
-        <Link
-          href={prec ? (prec.slug ? `${base}/${prec.slug}` : base) : "/types-de-personnalite"}
-          className="lien-suite prec"
-        >
-          <span className="suite-eyebrow">Précédent</span>
-          <span className="suite-titre">
-            <span className="fl" aria-hidden>
-              ←
-            </span>{" "}
-            {prec ? typo(prec.titre) : "Les 48 personnalités"}
-          </span>
-        </Link>
-        {suiv && (
-          <Link
-            href={`${base}/${suiv.slug}`}
-            className="lien-suite suiv"
-          >
-            <span className="suite-eyebrow">Page suivante</span>
-            <span className="suite-titre">
-              {typo(suiv.titre)}{" "}
-              <span className="fl" aria-hidden>
-                →
-              </span>
+      <div className="suite-dedans">
+        <div className="suite-barre">
+          <Link href={lienPrec} className="lien-precedent">
+            <span className="pastille">
+              <Chevron sens="gauche" taille={19} />
             </span>
+            <span className="suite-titre">{typo(titrePrec)}</span>
           </Link>
-        )}
+          {suiv && (
+            <Link href={`${base}/${suiv.slug}`} className="lien-suivant">
+              <span className="suite-titre">{typo(suiv.titre)}</span>
+              <span className="pastille">
+                <Chevron taille={19} />
+              </span>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -430,6 +524,7 @@ export function PagePortrait({
     <div className="pt" style={accent}>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
       <ScrollHaut />
+      <ColonnesCentrees />
       <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-[100svh]">
         <MeshGradient />
       </div>
@@ -449,18 +544,19 @@ export function PagePortrait({
             </div>
             <SigneType type={type} />
           </div>
-          <hr className="trait" />
       </header>
 
       {/* Le corps : les deux gouttières (sommaire à gauche, aparté à droite)
           démarrent ici, au niveau du premier titre de section, et suivent. */}
-      <div className="corps">
-        <SommairePortrait type={type} actif={actif} />
+      <div className="enveloppe-aparte">
         <AparteDroite />
-        {children}
-        <SuitePortrait type={type} actif={actif} />
-        {/* Le carrousel passe AVANT le bandeau « Faire le test ». */}
-        <CarrouselCelebres code={type.code} />
+        <div className="corps">
+          <SommairePortrait type={type} actif={actif} />
+          {children}
+          <SuitePortrait type={type} actif={actif} />
+          {/* Le carrousel passe AVANT le bandeau « Faire le test ». */}
+          <CarrouselCelebres code={type.code} />
+        </div>
         <FinalPortrait />
       </div>
       <SectionPartage chemin={chemin} code={type.code} />
@@ -612,7 +708,7 @@ export function ActesRendu({ blocs, tete }: { blocs: BlocPage[]; tete?: ReactNod
 // Fabrique des sous-pages.
 // =============================================================================
 
-export { typo };
+export { typo, STYLES as STYLES_PORTRAIT };
 
 export function creerSection(slug: string) {
   async function generateMetadata({
