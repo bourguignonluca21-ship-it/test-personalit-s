@@ -53,7 +53,7 @@ const SIGNES: Record<string, string> = {
 
 
 const STYLES = `
-.pt{--vert-plein:rgb(82,178,137);--noir:rgba(0,0,0,0.75);--gris:rgba(0,0,0,0.5);--ease:cubic-bezier(.22,.9,.3,1);--nav:68px;color:var(--noir);}
+.pt{--vert-plein:rgb(82,178,137);--noir:rgba(0,0,0,0.75);--gris:rgba(0,0,0,0.5);--ease:cubic-bezier(.22,.9,.3,1);--nav:84px;color:var(--noir);}
 .pt a{color:inherit;}
 
 /* ————— L'ouverture : le patron de « Notre approche », colonne 768 ————— */

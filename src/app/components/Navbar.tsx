@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import CouronnePremium from "./CouronnePremium";
+import IconeMenu from "./IconeMenu";
 import FenetreConnexion from "./FenetreConnexion";
 import { createClient } from "../lib/supabase/client";
 
@@ -23,27 +24,12 @@ const COMPRENDRE = [
   { href: "/types-de-personnalite", label: "Les 48 personnalités", desc: "Les différents profils et leurs descriptions." },
   { href: "/personnalite-et-amour", label: "Personnalitées et vie amoureuse", desc: "Comment ta personnalité influence tes relations." },
   { href: "/developpement-personnel", label: "Développement personnel", desc: "Utiliser ta personnalité à ton avantage." },
+  { href: "/notre-approche", label: "Notre approche", desc: "Notre vision de la personnalité, et ce qui la rend sérieuse." },
 ];
 
 /* Le menu « Mon espace personnel » : raccourcis vers les onglets de /profil
    (le paramètre ?onglet= est lu par la page profil). */
-const ESPACE = [
-  { href: "/profil", label: "Mon profil" },
-];
-
-// Chevron du menu (tourne quand le menu est ouvert).
-function Chevron({ ouvert }: { ouvert: boolean }) {
-  return (
-    <svg
-      className={`w-3 h-3 transition-transform ${ouvert ? "rotate-180" : ""}`}
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-    </svg>
-  );
-}
+const ESPACE: { href: string; label: string }[] = [];
 
 function Pousse() {
   return (
@@ -124,14 +110,16 @@ export default function Navbar() {
   // Aligne le texte du menu sur le texte (centré) de sa colonne : on mesure la
   // position gauche du libellé du déclencheur (offsetLeft, insensible au zoom).
   const testTriggerRef = useRef<HTMLSpanElement>(null);
-  const decTriggerRef = useRef<HTMLSpanElement>(null);
   const espaceTriggerRef = useRef<HTMLSpanElement>(null);
   const testCellRef = useRef<HTMLDivElement>(null);
-  const decCellRef = useRef<HTMLDivElement>(null);
+  const menuCellRef = useRef<HTMLDivElement>(null);
+  const menuBoutonRef = useRef<HTMLButtonElement>(null);
   const espaceCellRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLSpanElement>(null);
   const [padTests, setPadTests] = useState(16);
-  const [padDec, setPadDec] = useState(16);
+  // L'extension s'aligne désormais sur le bord DROIT du bouton de menu :
+  // c'est de là qu'elle tombe. On mesure donc la distance au bord droit.
+  const [padDroite, setPadDroite] = useState(24);
   const [padEspace, setPadEspace] = useState(16);
   useEffect(() => {
     // Position gauche EXACTE du texte du déclencheur dans la barre = position
@@ -141,7 +129,9 @@ export default function Navbar() {
       // Position gauche à l'écran du texte du déclencheur (la nav démarre à x=0,
       // donc la coordonnée page = le padding gauche voulu pour l'extension).
       if (testTriggerRef.current) setPadTests(testTriggerRef.current.getBoundingClientRect().left);
-      if (decTriggerRef.current) setPadDec(decTriggerRef.current.getBoundingClientRect().left);
+      if (menuBoutonRef.current) {
+        setPadDroite(window.innerWidth - menuBoutonRef.current.getBoundingClientRect().right);
+      }
       if (espaceTriggerRef.current) setPadEspace(espaceTriggerRef.current.getBoundingClientRect().left);
     }
     mesurer();
@@ -193,7 +183,7 @@ export default function Navbar() {
         : menuAffiche === "decouvrir"
           ? {
               items: COMPRENDRE.map((c) => ({ href: c.href, label: c.label })),
-              pad: padDec,
+              pad: 0,
             }
           : null;
 
@@ -201,7 +191,7 @@ export default function Navbar() {
     <>
       {/* Voile flou du site quand un menu est ouvert (barre + menu restent nets). */}
       <div
-        className="fixed inset-x-0 bottom-0 top-[68px] z-40 transition-opacity duration-500 ease-in-out"
+        className="fixed inset-x-0 bottom-0 top-[84px] z-40 transition-opacity duration-500 ease-in-out"
         style={{
           background: "rgba(255,255,255,0.45)",
           backdropFilter: "blur(8px)",
@@ -224,122 +214,57 @@ export default function Navbar() {
           {/* Rangée du haut : 4 colonnes égales (pleine largeur, donc logo et
               « Mon espace personnel » symétriques). Le drapeau flotte en absolu
               au coin droit sans décaler les colonnes. */}
-          <div className="relative flex h-[68px] items-center text-[13px] text-gray-500">
+          <div className="relative flex h-[84px] items-center text-[13px] text-gray-500">
             {/* 1. Logo (à gauche) */}
-            <div className="flex h-full items-center pl-8 pr-6" onMouseEnter={() => setMenu(null)}>
+            <div className="flex h-full items-center pr-6" style={{ paddingLeft: 120 }} onMouseEnter={() => setMenu(null)}>
               <Link
                 href="/"
                 onClick={reloadIfSame("/")}
                 className="group flex h-full items-center"
               >
-                <span ref={logoRef} className="font-semibold text-[17px] tracking-tight transition-transform duration-200 group-hover:scale-105">
-                  <span style={{ color: "rgba(51,164,116,0.85)", fontWeight: 700 }}>3000</span><span className="text-gray-800">Personnalitées</span>
+                <span ref={logoRef} className="font-semibold text-[36px] tracking-tight text-black transition-transform duration-200 group-hover:scale-105">
+                  Oikos
                 </span>
               </Link>
             </div>
 
             {/* Les 3 menus : alignés sur la colonne de contenu du site (max-w-3xl),
                 le premier au bord gauche, le dernier au bord droit. */}
-            <div className="absolute inset-y-0 left-1/2 flex w-full max-w-3xl -translate-x-1/2 items-stretch justify-between px-4 md:px-0">
-              {/* 2. CTA Faire le test */}
-              <div className="relative flex h-full items-center" onMouseEnter={() => setMenu(null)}>
+            {/* Cette rangée est posée en absolu sur TOUTE la largeur : sans
+                  pointer-events-none elle recouvrirait le logo et lui volerait
+                  ses clics. Seuls ses enfants restent cliquables. */}
+              <div className="pointer-events-none absolute inset-y-0 inset-x-0 flex items-stretch justify-end gap-6" style={{ paddingLeft: 340, paddingRight: 140 }}>
+              {/* 3. Le bouton du test, puis le menu, collés l'un à l'autre
+                  et calés sur le bord droit de la colonne. Le menu ferme la
+                  marche ; « Faire le test » est juste à sa gauche. */}
+              <div className="pointer-events-auto relative flex h-full items-center gap-6">
                 <Link
                   href="/test"
                   onClick={reloadIfSame("/test")}
-                  className="whitespace-nowrap rounded-full px-5 py-2 text-[15px] font-semibold text-white transition-transform duration-200 hover:scale-105"
+                  onMouseEnter={() => setMenu(null)}
+                  className="whitespace-nowrap rounded-full px-6 py-2.5 text-[17px] font-semibold text-white transition-transform duration-200 hover:scale-105"
                   style={{ background: "var(--accent-page, rgba(51,164,116,0.85))" }}
                 >
                   Faire le test
                 </Link>
+                <div
+                  ref={menuCellRef}
+                  className="flex h-full items-center"
+                  onMouseEnter={() => setMenu("decouvrir")}
+                >
+                  <button
+                    ref={menuBoutonRef}
+                    type="button"
+                    aria-label="Menu"
+                    aria-expanded={menu === "decouvrir"}
+                    onClick={() => setMenu(menu === "decouvrir" ? null : "decouvrir")}
+                    className="flex items-center justify-center cursor-pointer"
+                  >
+                    <IconeMenu anime={menu === "decouvrir"} />
+                  </button>
+                </div>
               </div>
 
-              {/* 3. Les différentes personnalités */}
-              <div ref={decCellRef} className="relative flex h-full items-center" onMouseEnter={() => setMenu("decouvrir")}>
-                <Link
-                  href={comprendreCourant.href}
-                  onClick={reloadIfSame(comprendreCourant.href)}
-                  className="group flex h-full items-center cursor-pointer"
-                >
-                  <span ref={decTriggerRef} className="inline-flex origin-left items-center gap-1 whitespace-nowrap transition-transform duration-200 group-hover:scale-105 group-hover:text-gray-900" style={sectionActive === "decouvrir" ? { color: "rgba(51,164,116,0.85)" } : undefined}>
-                    La personnalité, expliquée
-                    <Chevron ouvert={menu === "decouvrir"} />
-                  </span>
-                </Link>
-              </div>
-
-              {/* 4. Notre approche */}
-              <div className="relative flex h-full items-center" onMouseEnter={() => setMenu(null)}>
-                <Link
-                  href="/notre-approche"
-                  onClick={reloadIfSame("/notre-approche")}
-                  className="group flex h-full items-center cursor-pointer"
-                >
-                  <span className="inline-flex origin-left items-center gap-1 whitespace-nowrap transition-transform duration-200 group-hover:scale-105 group-hover:text-gray-900" style={pathname === "/notre-approche" ? { color: "rgba(51,164,116,0.85)" } : undefined}>
-                    Notre approche
-                  </span>
-                </Link>
-              </div>
-
-              {/* 5. Suivi premium (dropdown avec Mon profil) */}
-              <div
-                ref={espaceCellRef}
-                className="relative flex h-full items-center"
-                onMouseEnter={() => {
-                  setMenu("espace");
-                  setSurvolPremium(true);
-                }}
-                onMouseLeave={() => setSurvolPremium(false)}
-              >
-                <Link
-                  href="/suivi-premium"
-                  onClick={reloadIfSame("/suivi-premium")}
-                  className="group flex h-full items-center cursor-pointer"
-                >
-                  <span ref={espaceTriggerRef} className="inline-flex origin-left items-center gap-2 whitespace-nowrap transition-transform duration-200 group-hover:scale-105 group-hover:text-gray-900" style={sectionActive === "premium" || sectionActive === "espace" ? { color: "rgba(51,164,116,0.85)" } : undefined}>
-                    <span style={{ color: "var(--accent-page, rgba(51,164,116,0.9))" }}>
-                      <CouronnePremium anime={survolPremium} />
-                    </span>
-                    Suivi premium
-                    <Chevron ouvert={menu === "espace"} />
-                  </span>
-                </Link>
-              </div>
-
-            </div>
-
-            {/* Coin droit : Se connecter · CTA Faire le test · langue */}
-            <div className="relative ml-auto flex h-full items-center gap-4 pl-6 pr-6" onMouseEnter={() => setMenu(null)}>
-              {connecte ? (
-                <button
-                  type="button"
-                  onClick={deconnexion}
-                  className="flex items-center text-gray-500 transition-colors hover:text-gray-900 cursor-pointer"
-                  title="Se déconnecter"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                    <polyline points="16 17 21 12 16 7" />
-                    <line x1="21" y1="12" x2="9" y2="12" />
-                  </svg>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setConnexionOuverte(true)}
-                  className="whitespace-nowrap rounded-full px-4 py-1.5 text-[13px] text-gray-500 border border-gray-500 bg-white transition-colors cursor-pointer"
-                  style={{}}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = "rgba(51,164,116,0.85)"; e.currentTarget.style.borderColor = "rgba(51,164,116,0.85)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = ""; e.currentTarget.style.borderColor = ""; }}
-                >
-                  Se connecter
-                </button>
-              )}
-              <span
-                className="w-6 h-6 rounded-full border border-gray-200"
-                aria-label="Français"
-                title="Français"
-                style={{ background: "linear-gradient(90deg,#0055A4 33%,#fff 33% 66%,#EF4135 66%)" }}
-              />
             </div>
           </div>
 
@@ -353,10 +278,10 @@ export default function Navbar() {
             <div className="overflow-hidden">
               {contenu && (
                 <div
-                  className="space-y-0.5"
+                  className="space-y-0.5 text-right"
                   style={{
-                    paddingLeft: contenu.pad,
-                    paddingRight: 12,
+                    paddingLeft: 12,
+                    paddingRight: menuAffiche === "decouvrir" ? padDroite : contenu.pad,
                     paddingTop: 6,
                     paddingBottom: 16,
                   }}
@@ -370,34 +295,45 @@ export default function Navbar() {
                         onClick={reloadIfSame(it.href)}
                         className="group block py-1.5"
                       >
-                        <span className="inline-block origin-left text-[16px] font-semibold tracking-tight transition-transform duration-200 group-hover:scale-[1.04]" style={{ color: actif ? "rgba(51,164,116,0.85)" : "rgba(0,0,0,0.8)" }}>
+                        <span className="inline-block origin-right text-[16px] font-semibold tracking-tight transition-transform duration-200 group-hover:scale-[1.04]" style={{ color: actif ? "rgba(51,164,116,0.85)" : "rgba(0,0,0,0.8)" }}>
                           {it.label}
                         </span>
                       </Link>
                     );
                   })}
-                  {/* Dans « Mon espace personnel » : connexion / déconnexion. */}
-                  {menuAffiche === "espace" && (
+                  {/* « Suivi premium » a quitté la barre : il vit ici, avec
+                      sa couronne. */}
+                  {menuAffiche === "decouvrir" && (
+                    <Link
+                      href="/suivi-premium"
+                      onClick={reloadIfSame("/suivi-premium")}
+                      onMouseEnter={() => setSurvolPremium(true)}
+                      onMouseLeave={() => setSurvolPremium(false)}
+                      className="group block py-1.5"
+                    >
+                      <span
+                        className="inline-flex origin-right items-center gap-2 text-[16px] font-semibold tracking-tight transition-transform duration-200 group-hover:scale-[1.04]"
+                        style={{ color: sectionActive === "premium" ? "rgba(51,164,116,0.85)" : "rgba(0,0,0,0.8)" }}
+                      >
+                        <span style={{ color: "var(--accent-page, rgba(51,164,116,0.9))" }}>
+                          <CouronnePremium anime={survolPremium} />
+                        </span>
+                        Suivi premium
+                      </span>
+                    </Link>
+                  )}
+                  {/* La connexion n'a plus d'icône à elle : elle vit ici. */}
+                  {menuAffiche === "decouvrir" && (
                     <button
                       type="button"
-                      onClick={connecte ? deconnexion : () => setConnexionOuverte(true)}
-                      className="group block w-full py-1.5 text-left cursor-pointer"
+                      onClick={() => {
+                        if (connecte) deconnexion();
+                        else setConnexionOuverte(true);
+                      }}
+                      className="group block w-full py-1.5 text-right cursor-pointer"
                     >
-                      <span className="inline-flex origin-left items-center gap-2 text-[16px] font-semibold tracking-tight text-[rgba(0,0,0,0.8)] transition-transform duration-200 group-hover:scale-[1.04]">
-                        {connecte ? "Se déconnecter" : "Se connecter / Crée un compte"}
-                        {connecte ? (
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                            <polyline points="16 17 21 12 16 7" />
-                            <line x1="21" y1="12" x2="9" y2="12" />
-                          </svg>
-                        ) : (
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                            <polyline points="10 17 15 12 10 7" />
-                            <line x1="15" y1="12" x2="3" y2="12" />
-                          </svg>
-                        )}
+                      <span className="inline-block origin-right text-[16px] font-semibold tracking-tight transition-transform duration-200 group-hover:scale-[1.04]" style={{ color: "rgba(0,0,0,0.8)" }}>
+                        {connecte ? "Se déconnecter" : "Se connecter"}
                       </span>
                     </button>
                   )}
@@ -414,7 +350,7 @@ export default function Navbar() {
             onClick={reloadIfSame("/")}
             className="font-semibold text-[17px] tracking-tight"
           >
-            <span style={{ color: "rgba(51,164,116,0.85)", fontWeight: 700 }}>3000</span><span className="text-gray-800">Personnalitées</span>
+            <span className="text-black">Oikos</span>
           </Link>
           <button
             className="p-2"
@@ -500,6 +436,14 @@ export default function Navbar() {
 
         <FenetreConnexion open={connexionOuverte} onClose={() => setConnexionOuverte(false)} />
       </nav>
+
+      {/* Drapeau langue — fixé en bas à droite */}
+      <span
+        className="fixed z-50 w-8 h-8 rounded-full border border-gray-200 cursor-pointer"
+        aria-label="Français"
+        title="Français"
+        style={{ bottom: 24, right: 24, background: "linear-gradient(90deg,#0055A4 33%,#fff 33% 66%,#EF4135 66%)" }}
+      />
     </>
   );
 }

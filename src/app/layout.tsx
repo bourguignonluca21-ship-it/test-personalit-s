@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -13,6 +13,20 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+/*
+ * La serif des grands titres. Le modèle était New Spirit (Adobe Fonts), qui
+ * est sous licence payante : Fraunces en est l'équivalent libre le plus proche
+ * — même serif contemporaine à contraste marqué, formes douces.
+ * `opsz` est son axe de taille optique : poussé au maximum, les déliés se
+ * creusent et les empattements s'affinent, ce qu'on veut sur un très grand
+ * titre. SOFT arrondit les angles, WONK laisse ses italiques penchées.
+ */
+const fraunces = Fraunces({
+  variable: "--font-titre",
+  subsets: ["latin"],
+  axes: ["SOFT", "WONK", "opsz"],
 });
 
 export const metadata: Metadata = {
@@ -32,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col">
         <div className="grain-overlay" aria-hidden />

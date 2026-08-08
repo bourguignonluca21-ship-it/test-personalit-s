@@ -13,7 +13,7 @@ export default function MeshGradient({ insetX }: { insetX?: string }) {
       style={{
         ...(insetX ? { left: insetX, right: insetX } : {}),
         background:
-          "linear-gradient(to top, rgba(51,164,116,0.12) 0%, rgba(51,164,116,0.05) 35%, transparent 65%)",
+          "linear-gradient(to top, rgba(51,164,116,0.18) 0%, rgba(51,164,116,0.085) 35%, transparent 70%)",
       }}
     />
   );
